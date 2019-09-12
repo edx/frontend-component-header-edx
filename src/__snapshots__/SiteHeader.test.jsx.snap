@@ -1,0 +1,179 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<SiteHeader /> renders correctly for desktop 1`] = `
+<header
+  className="site-header-desktop"
+>
+  <div
+    className="container-fluid"
+  >
+    <div
+      className="nav-container position-relative d-flex align-items-center"
+    >
+      <a
+        className="logo"
+        href="https://edx.org"
+      >
+        <img
+          alt="edX"
+          className="d-block"
+          src=""
+        />
+      </a>
+      <nav
+        aria-label="Main"
+        className="nav main-nav"
+      >
+        <div
+          className="menu nav-item"
+          onKeyDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+        >
+          <a
+            aria-expanded={false}
+            aria-haspopup="menu"
+            className="menu-trigger nav-link d-inline-flex align-items-center"
+            href="#"
+            onClick={[Function]}
+          >
+            Courses
+             
+            <IconMock
+              aria-hidden={true}
+              focusable="false"
+              role="img"
+            />
+          </a>
+        </div>
+        <a
+          className="nav-link"
+          href="#"
+        >
+          Programs
+        </a>
+        <a
+          className="nav-link"
+          href="#"
+        >
+          Schools & Partners
+        </a>
+      </nav>
+      <nav
+        aria-label="Secondary"
+        className="nav secondary-menu-container align-items-center ml-auto"
+      >
+        <a
+          className="btn mr-2 btn-link"
+          href="#"
+        >
+          Login
+        </a>
+        <a
+          className="btn mr-2 btn-outline-primary"
+          href="#"
+        >
+          Sign Up
+        </a>
+      </nav>
+    </div>
+  </div>
+</header>
+`;
+
+exports[`<SiteHeader /> renders correctly for mobile 1`] = `
+<header
+  aria-label="Main"
+  className="site-header-mobile d-flex justify-content-between align-items-center shadow sticky-top"
+>
+  <div
+    className="w-100 d-flex justify-content-start"
+  >
+    <div
+      className="menu position-static"
+      onKeyDown={[Function]}
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+    >
+      <button
+        aria-expanded={false}
+        aria-haspopup="menu"
+        aria-label="Main Menu"
+        className="menu-trigger icon-button"
+        onClick={[Function]}
+        title="Main Menu"
+      >
+        <IconMock
+          aria-hidden={true}
+          focusable="false"
+          role="img"
+          style={
+            Object {
+              "height": "1.5rem",
+              "width": "1.5rem",
+            }
+          }
+        />
+      </button>
+    </div>
+  </div>
+  <div
+    className="w-100 d-flex justify-content-center"
+  >
+    <a
+      className="logo"
+      href="https://edx.org"
+      itemType="http://schema.org/Organization"
+    >
+      <img
+        alt="edX"
+        className="d-block"
+        src=""
+      />
+    </a>
+  </div>
+  <div
+    className="w-100 d-flex justify-content-end align-items-center"
+  >
+    <nav
+      aria-label="Secondary"
+      className="menu position-static"
+      onKeyDown={[Function]}
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+    >
+      <button
+        aria-expanded={false}
+        aria-haspopup="menu"
+        aria-label="Account Menu"
+        className="menu-trigger icon-button"
+        onClick={[Function]}
+        title="Account Menu"
+      >
+        <span
+          className="avatar overflow-hidden d-inline-flex rounded-circle null"
+          style={
+            Object {
+              "height": "1.5rem",
+              "width": "1.5rem",
+            }
+          }
+        >
+          <IconMock
+            aria-hidden={true}
+            className="text-muted"
+            focusable="false"
+            role="img"
+            style={
+              Object {
+                "height": "1.5rem",
+                "width": "1.5rem",
+              }
+            }
+          />
+        </span>
+      </button>
+    </nav>
+  </div>
+</header>
+`;
