@@ -3,7 +3,22 @@ frontend-component-header-edx
 
 |Build Status| |Codecov| |npm_version| |npm_downloads| |license| |semantic-release|
 
-This repository is a work in progress.  Nothing found here is at all production-ready.
+This is the standard edX header for use in React applications.
+It default exports the `SiteHeader` and named exports messages
+for translations.
+
+TODO
+----
+
+This reposistory needs to be added to transifex translation jobs.
+
+Development
+-----------
+
+- Install requirements `npm install`
+- Install peer dependencies `npm install @edx/frontend-analytics @edx/frontend-base @edx/frontend-i18n prop-types react`
+- Start the example server `npm start`
+- Visit http://localhost:1234
 
 .. |Build Status| image:: https://api.travis-ci.org/edx/frontend-component-header-edx.svg?branch=master-edx
    :target: https://travis-ci.org/edx/frontend-component-header-edx
@@ -17,3 +32,4 @@ This repository is a work in progress.  Nothing found here is at all production-
    :target: @edx/frontend-component-header-edx
 .. |semantic-release| image:: https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg
    :target: https://github.com/semantic-release/semantic-release
+
