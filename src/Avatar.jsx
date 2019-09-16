@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 import { AvatarIcon } from './Icons';
 
-
 function Avatar({
   size,
   src,

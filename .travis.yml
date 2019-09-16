@@ -1,19 +1,17 @@
 language: node_js
 node_js: 12
-before_install:
-  - npm install -g npm@latest
 install:
-  - npm install
+- npm install
 script:
-  - npm run lint
-  - npm run test
-  - npm run build
+- npm run lint
+- npm run test
+- npm run build
 after_success:
-  - npm run travis-deploy-once "npm run semantic-release"
-  - codecov
+- npm run semantic-release
+- codecov
 env:
   global:
-  # NPM_TOKEN
-  - secure: G3RW/a/cbEMu+zKLCA+jVQmKObYOl+Gu2nPVcX8p6kUgEFxcu6HyZ96ZplKsC+It/ZbEPVJjdyx0JjTGMjON92vlvCiVxiCTzLPq9aH8tIxYC9mfEKO3Yh/m4TgOdgsfvNDy+thahKULkuNjW5HMxBI9jk8z/9zxd0isstnM8BIe5wyHm/GX6hgIl6ACfbUycWpvbrDRkyJmH/lRbla67VLWD1YJunfHKzptdpD+fm4Ay7JiJm6x5Dej+zJ9QgPM5k98Nlor2OHP2iFw7aSA5Xof/x6V1Cd1CM+GDjErarCRzVM9jEokmzBDyUx9srUTEpwphdm/HyoBur5iY93WIj/t766CTG1wTZUOfsDSPSMnv/whXfo2BTKE5DB2zeS7SFHs3G1AqGqk8ECQ0sOIsEfSfGhmtlMD1j7v69f2z3Gu05Ijl+2HGXHKBxNdumRgfxylArpiSTHu6tvAiDquNwzf99rQH5wnvrDQP7FHP6v01/h07S/5hiUTQEA7ZJnNybX5H4hE0frCszEnlWkOE+FMQlELUKBV9mfYyUNLw+Txp3CDhVRs92rmJCpy6KtrfQjXg8+KwZ1XxUQZ2C4N6npVIb5YD7EGCOlzUJwHrSz4FMpSjQ3gulcUY8MME9xAxVSHBk9zCdI4nxDTipmscJJGec0kqYFbTACU6vtjnOk=
   # GH_TOKEN - edx-semantic-release user on github.
   - secure: Wb2IEJQnRUTqOi74ztIsMx393NKv8QsRZ6g3hkseNTffZvmF/7SURyBPtc7HJs1CLFuws+sUfJROY94n8AJhMh4rK+DROVbgNC0phsDH84DM2D+zE0cE3HO1afhpPI7ne1Nkd62Bua8VI6PMmzpdmxW4t0PLUvBxL12nMbTQVfRFUyVMCUSR4e5M1s4u7+C0v7cptV8zEwfOCElHshCAMCYNwPhN5TSJGHYezA/vPou360D+z/8THCS0Ke3Bg9KTznsAKGDGPMg8wR+hsmU9eUo7/4/AIfOIrMZd7T4+U7fdYHeJ7HtbTEU3POVYGjONMAGXJuL4ni7wl3WzejG5UGL2h8NC1g6KUdgpRoob2n+m5BMi4xLloHvkCkfhPGlSaw3NpB5sYz1t/rqZZmrr85pzQxtDezDdrM8A/YVzX4YfgwS9rR7ggW2DYDVuOIu52ft1t9tI7vZdXshfBbZempTUtPMq1hPufhfn5BDkmxz09cI4qxiBhC8iwrkek5BbMLP8+zHSPKertcwsS8ojV1Ve12cvxcAjPSX5WguZEVPg8wDMgElKl5bT2ar9GO3/HuHLhIbLDHxiorX4XQk+hIwHa5Nwcnw37cN57PSPAalOgC1OVYPwxt2yb8w8I2bFOUl2eoiXbLjoqHIdYJATQlugk3HhdJX4vGCoDUk7+sQ=
+  # NPM_TOKEN
+  - secure: G3RW/a/cbEMu+zKLCA+jVQmKObYOl+Gu2nPVcX8p6kUgEFxcu6HyZ96ZplKsC+It/ZbEPVJjdyx0JjTGMjON92vlvCiVxiCTzLPq9aH8tIxYC9mfEKO3Yh/m4TgOdgsfvNDy+thahKULkuNjW5HMxBI9jk8z/9zxd0isstnM8BIe5wyHm/GX6hgIl6ACfbUycWpvbrDRkyJmH/lRbla67VLWD1YJunfHKzptdpD+fm4Ay7JiJm6x5Dej+zJ9QgPM5k98Nlor2OHP2iFw7aSA5Xof/x6V1Cd1CM+GDjErarCRzVM9jEokmzBDyUx9srUTEpwphdm/HyoBur5iY93WIj/t766CTG1wTZUOfsDSPSMnv/whXfo2BTKE5DB2zeS7SFHs3G1AqGqk8ECQ0sOIsEfSfGhmtlMD1j7v69f2z3Gu05Ijl+2HGXHKBxNdumRgfxylArpiSTHu6tvAiDquNwzf99rQH5wnvrDQP7FHP6v01/h07S/5hiUTQEA7ZJnNybX5H4hE0frCszEnlWkOE+FMQlELUKBV9mfYyUNLw+Txp3CDhVRs92rmJCpy6KtrfQjXg8+KwZ1XxUQZ2C4N6npVIb5YD7EGCOlzUJwHrSz4FMpSjQ3gulcUY8MME9xAxVSHBk9zCdI4nxDTipmscJJGec0kqYFbTACU6vtjnOk=

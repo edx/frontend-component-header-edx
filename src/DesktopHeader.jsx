@@ -131,7 +131,6 @@ DesktopHeader.propTypes = {
     PropTypes.node,
     PropTypes.array,
   ]),
-
   userMenu: PropTypes.arrayOf(PropTypes.shape({
     type: PropTypes.oneOf(['item', 'menu']),
     href: PropTypes.string,

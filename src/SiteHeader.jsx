@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Responsive from 'react-responsive';
 import { injectIntl, intlShape } from '@edx/frontend-i18n';
 import { sendTrackEvent } from '@edx/frontend-analytics';
@@ -8,23 +8,23 @@ import DesktopHeader from './DesktopHeader';
 import MobileHeader from './MobileHeader';
 
 import LogoSVG from './logo.svg';
-import messages from './SiteHeader.messages.jsx';
+
+import messages from './SiteHeader.messages';
 
 App.requireConfig([
   'LMS_BASE_URL',
-  'MARKETING_SITE_BASE_URL',
-  'ORDER_HISTORY_URL',
   'LOGOUT_URL',
   'LOGIN_URL',
-  'SITE_NAME',
+  'MARKETING_SITE_BASE_URL',
+  'ORDER_HISTORY_URL',
 ], 'Header component');
 
 const {
   LMS_BASE_URL,
-  MARKETING_SITE_BASE_URL,
-  ORDER_HISTORY_URL,
   LOGOUT_URL,
   LOGIN_URL,
+  ORDER_HISTORY_URL,
+  MARKETING_SITE_BASE_URL,
 } = App.config;
 
 function SiteHeader({ intl }) {
@@ -85,7 +85,7 @@ function SiteHeader({ intl }) {
   const loggedOutItems = [
     {
       type: 'item',
-      href: `${LMS_BASE_URL}/login`,
+      href: LOGIN_URL,
       content: intl.formatMessage(messages['header.user.menu.login']),
     },
     {
@@ -97,14 +97,15 @@ function SiteHeader({ intl }) {
 
   const props = {
     logo: LogoSVG,
-    loggedIn: !!username,
-    username: username,
-    avatar: avatar,
-    logoAltText: SITE_NAME,
+    logoAltText: 'edX',
+    siteName: 'edX',
     logoDestination: `${LMS_BASE_URL}/dashboard`,
-    mainMenu: mainMenu,
-    userMenu: userMenu,
-    loggedOutItems: loggedOutItems,
+    loggedIn: !!username,
+    username,
+    avatar,
+    mainMenu,
+    userMenu,
+    loggedOutItems,
   };
 
   return (
@@ -118,5 +119,9 @@ function SiteHeader({ intl }) {
     </React.Fragment>
   );
 }
+
+SiteHeader.propTypes = {
+  intl: intlShape.isRequired,
+};
 
 export default injectIntl(SiteHeader);

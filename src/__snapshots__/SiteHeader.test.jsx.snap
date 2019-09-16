@@ -12,51 +12,35 @@ exports[`<SiteHeader /> renders correctly for desktop 1`] = `
     >
       <a
         className="logo"
-        href="https://edx.org"
+        href="http://localhost:18000/dashboard"
       >
         <img
           alt="edX"
           className="d-block"
-          src=""
+          src="test-file-stub"
         />
       </a>
       <nav
         aria-label="Main"
         className="nav main-nav"
       >
-        <div
-          className="menu nav-item"
-          onKeyDown={[Function]}
-          onMouseEnter={[Function]}
-          onMouseLeave={[Function]}
-        >
-          <a
-            aria-expanded={false}
-            aria-haspopup="menu"
-            className="menu-trigger nav-link d-inline-flex align-items-center"
-            href="#"
-            onClick={[Function]}
-          >
-            Courses
-             
-            <IconMock
-              aria-hidden={true}
-              focusable="false"
-              role="img"
-            />
-          </a>
-        </div>
         <a
           className="nav-link"
-          href="#"
+          href="http://localhost:18000/dashboard"
+        >
+          Courses
+        </a>
+        <a
+          className="nav-link"
+          href="http://localhost:18000/dashboard/programs"
         >
           Programs
         </a>
         <a
           className="nav-link"
-          href="#"
+          href="http://localhost:18000/course"
         >
-          Schools & Partners
+          Discover New
         </a>
       </nav>
       <nav
@@ -65,13 +49,13 @@ exports[`<SiteHeader /> renders correctly for desktop 1`] = `
       >
         <a
           className="btn mr-2 btn-link"
-          href="#"
+          href="http://localhost:18000/login"
         >
           Login
         </a>
         <a
           className="btn mr-2 btn-outline-primary"
-          href="#"
+          href="http://localhost:18000/register"
         >
           Sign Up
         </a>
@@ -103,9 +87,10 @@ exports[`<SiteHeader /> renders correctly for mobile 1`] = `
         onClick={[Function]}
         title="Main Menu"
       >
-        <IconMock
+        <svg
           aria-hidden={true}
           focusable="false"
+          height="24px"
           role="img"
           style={
             Object {
@@ -113,7 +98,32 @@ exports[`<SiteHeader /> renders correctly for mobile 1`] = `
               "width": "1.5rem",
             }
           }
-        />
+          version="1.1"
+          viewBox="0 0 24 24"
+          width="24px"
+        >
+          <rect
+            fill="currentColor"
+            height="2"
+            width="20"
+            x="2"
+            y="5"
+          />
+          <rect
+            fill="currentColor"
+            height="2"
+            width="20"
+            x="2"
+            y="11"
+          />
+          <rect
+            fill="currentColor"
+            height="2"
+            width="20"
+            x="2"
+            y="17"
+          />
+        </svg>
       </button>
     </div>
   </div>
@@ -122,13 +132,13 @@ exports[`<SiteHeader /> renders correctly for mobile 1`] = `
   >
     <a
       className="logo"
-      href="https://edx.org"
+      href="http://localhost:18000/dashboard"
       itemType="http://schema.org/Organization"
     >
       <img
         alt="edX"
         className="d-block"
-        src=""
+        src="test-file-stub"
       />
     </a>
   </div>
@@ -159,10 +169,11 @@ exports[`<SiteHeader /> renders correctly for mobile 1`] = `
             }
           }
         >
-          <IconMock
+          <svg
             aria-hidden={true}
             className="text-muted"
             focusable="false"
+            height="24px"
             role="img"
             style={
               Object {
@@ -170,7 +181,15 @@ exports[`<SiteHeader /> renders correctly for mobile 1`] = `
                 "width": "1.5rem",
               }
             }
-          />
+            version="1.1"
+            viewBox="0 0 24 24"
+            width="24px"
+          >
+            <path
+              d="M4.10255106,18.1351061 C4.7170266,16.0581859 8.01891846,14.4720277 12,14.4720277 C15.9810815,14.4720277 19.2829734,16.0581859 19.8974489,18.1351061 C21.215206,16.4412566 22,14.3122775 22,12 C22,6.4771525 17.5228475,2 12,2 C6.4771525,2 2,6.4771525 2,12 C2,14.3122775 2.78479405,16.4412566 4.10255106,18.1351061 Z M12,24 C5.372583,24 0,18.627417 0,12 C0,5.372583 5.372583,0 12,0 C18.627417,0 24,5.372583 24,12 C24,18.627417 18.627417,24 12,24 Z M12,13 C9.790861,13 8,11.209139 8,9 C8,6.790861 9.790861,5 12,5 C14.209139,5 16,6.790861 16,9 C16,11.209139 14.209139,13 12,13 Z"
+              fill="currentColor"
+            />
+          </svg>
         </span>
       </button>
     </nav>
