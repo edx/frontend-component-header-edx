@@ -1,0 +1,7 @@
+{
+    "extends": "eslint-config-edx",
+    "parser": "babel-eslint",
+    "env": {
+        "jest": true
+    }
+}
