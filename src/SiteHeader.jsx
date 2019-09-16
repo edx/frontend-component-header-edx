@@ -11,21 +11,22 @@ import LogoSVG from './logo.svg';
 
 import messages from './SiteHeader.messages';
 
-App.requireConfig([
-  'LMS_BASE_URL',
-  'LOGOUT_URL',
-  'LOGIN_URL',
-  'MARKETING_SITE_BASE_URL',
-  'ORDER_HISTORY_URL',
-], 'Header component');
 
 const {
   LMS_BASE_URL,
   LOGOUT_URL,
   LOGIN_URL,
-  ORDER_HISTORY_URL,
   MARKETING_SITE_BASE_URL,
-} = App.config;
+  ORDER_HISTORY_URL,
+} = App.requireConfig([
+    'LMS_BASE_URL',
+    'LOGOUT_URL',
+    'LOGIN_URL',
+    'MARKETING_SITE_BASE_URL',
+    'ORDER_HISTORY_URL',
+  ],
+  'Header component',
+);
 
 function SiteHeader({ intl }) {
   const { username, avatar } = useContext(AuthenticationContext);
