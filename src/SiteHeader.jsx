@@ -18,7 +18,8 @@ const {
   LOGIN_URL,
   MARKETING_SITE_BASE_URL,
   ORDER_HISTORY_URL,
-} = App.requireConfig([
+} = App.requireConfig(
+  [
     'LMS_BASE_URL',
     'LOGOUT_URL',
     'LOGIN_URL',
