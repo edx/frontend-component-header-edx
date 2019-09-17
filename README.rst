@@ -3,9 +3,9 @@ frontend-component-header-edx
 
 |Build Status| |Codecov| |npm_version| |npm_downloads| |license| |semantic-release|
 
-This is the standard edX header for use in React applications.
-It default exports the `SiteHeader` and named exports messages
-for translations.
+This is the standard edX header for use in React applications. It has two exports:
+  - **default**: The Header Component
+  - **messages**: for i18n in the form of ``{ locale: { key: translatedString } }``
 
 TODO
 ----
