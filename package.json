@@ -8,8 +8,10 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "make build",
+    "coveralls": "cat ./coverage/lcov.info | coveralls",
     "i18n_extract": "BABEL_ENV=i18n babel src --quiet > /dev/null",
     "lint": "eslint --ext .js --ext .jsx .",
+    "precommit": "npm run lint",
     "semantic-release": "semantic-release",
     "start": "parcel ./example/index.html --no-source-maps --out-dir example/dist",
     "test": "jest --coverage --passWithNoTests"
