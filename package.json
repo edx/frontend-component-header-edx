@@ -8,6 +8,7 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "make build",
+    "i18n_extract": "BABEL_ENV=i18n babel src --quiet > /dev/null",
     "lint": "eslint --ext .js --ext .jsx .",
     "semantic-release": "semantic-release",
     "start": "parcel ./example/index.html --no-source-maps --out-dir example/dist",
@@ -41,6 +42,7 @@
     "@edx/frontend-logging": "^3.0.1",
     "@edx/paragon": "^7.1.2",
     "babel-eslint": "^10.0.3",
+    "babel-plugin-react-intl": "^4.1.18",
     "dotenv": "^8.1.0",
     "enzyme": "^3.10.0",
     "eslint": "^6.3.0",
@@ -53,6 +55,7 @@
     "react-redux": "^7.1.1",
     "react-router-dom": "^5.0.1",
     "react-test-renderer": "^16.9.0",
+    "reactifex": "^1.1.1",
     "redux": "^4.0.4",
     "redux-saga": "^1.0.5",
     "sass": "^1.22.12",
