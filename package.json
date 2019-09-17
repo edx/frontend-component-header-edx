@@ -8,7 +8,9 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "make build",
+    "coveralls": "cat ./coverage/lcov.info | coveralls",
     "lint": "eslint --ext .js --ext .jsx .",
+    "precommit": "npm run lint",
     "semantic-release": "semantic-release",
     "start": "parcel ./example/index.html --no-source-maps --out-dir example/dist",
     "test": "jest --coverage --passWithNoTests"
