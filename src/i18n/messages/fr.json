@@ -11,10 +11,10 @@
   "header.user.menu.login": "Connexion",
   "header.user.menu.register": "S'inscrire",
   "header.label.account.nav": "Compte",
-  "header.label.account.menu": "Account Menu",
-  "header.label.account.menu.for": "Account menu for {username}",
+  "header.label.account.menu": "Compte Menu",
+  "header.label.account.menu.for": "Compte menu pour {username}",
   "header.label.main.nav": "Principal",
-  "header.label.main.menu": "Main Menu",
+  "header.label.main.menu": "Menu Principal",
   "header.label.main.header": "Principal",
   "header.label.secondary.nav": "Secondaire"
 }
