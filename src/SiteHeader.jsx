@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import Responsive from 'react-responsive';
 import { injectIntl, intlShape } from '@edx/frontend-i18n';
 import { sendTrackEvent } from '@edx/frontend-analytics';
-import { App, AppContext, APP_CONFIGURED } from '@edx/frontend-base';
+import { App, AppContext } from '@edx/frontend-base';
 
 import DesktopHeader from './DesktopHeader';
 import MobileHeader from './MobileHeader';
@@ -11,15 +11,13 @@ import LogoSVG from './logo.svg';
 
 import messages from './SiteHeader.messages';
 
-App.subscribe(APP_CONFIGURED, () => {
-  App.requireConfig([
-    'LMS_BASE_URL',
-    'LOGOUT_URL',
-    'LOGIN_URL',
-    'MARKETING_SITE_BASE_URL',
-    'ORDER_HISTORY_URL',
-  ], 'Header component');
-});
+App.requireConfig([
+  'LMS_BASE_URL',
+  'LOGOUT_URL',
+  'LOGIN_URL',
+  'MARKETING_SITE_BASE_URL',
+  'ORDER_HISTORY_URL',
+], 'Header component');
 
 function SiteHeader({ intl }) {
   const { authenticatedUser, config } = useContext(AppContext);
