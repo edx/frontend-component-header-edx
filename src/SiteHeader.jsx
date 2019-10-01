@@ -11,7 +11,7 @@ import LogoSVG from './logo.svg';
 
 import messages from './SiteHeader.messages';
 
-App.requireConfig([
+App.ensureConfig([
   'LMS_BASE_URL',
   'LOGOUT_URL',
   'LOGIN_URL',
