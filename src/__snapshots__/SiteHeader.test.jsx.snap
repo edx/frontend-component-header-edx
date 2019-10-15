@@ -1,5 +1,46 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`<SiteHeader /> minimal renders correctly when minimal 1`] = `
+<header
+  className="site-header-desktop"
+>
+  <div
+    className="container-fluid"
+  >
+    <div
+      className="nav-container position-relative d-flex align-items-center"
+    >
+      <img
+        alt="edX"
+        className="logo"
+        src="test-file-stub"
+      />
+      <nav
+        aria-label="Main"
+        className="nav main-nav"
+      />
+      <nav
+        aria-label="Secondary"
+        className="nav secondary-menu-container align-items-center ml-auto"
+      >
+        <a
+          className="btn mr-2 btn-link"
+          href="http://localhost:18000/login"
+        >
+          Login
+        </a>
+        <a
+          className="btn mr-2 btn-outline-primary"
+          href="http://localhost:18000/register"
+        >
+          Sign Up
+        </a>
+      </nav>
+    </div>
+  </div>
+</header>
+`;
+
 exports[`<SiteHeader /> renders correctly for desktop 1`] = `
 <header
   className="site-header-desktop"
