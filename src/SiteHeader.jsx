@@ -1,8 +1,9 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Responsive from 'react-responsive';
 import { injectIntl, intlShape } from '@edx/frontend-i18n';
 import { sendTrackEvent } from '@edx/frontend-analytics';
 import { App, AppContext, APP_CONFIG_LOADED } from '@edx/frontend-base';
+import { getLearnerPortalLinks } from '@edx/frontend-enterprise';
 
 import DesktopHeader from './DesktopHeader';
 import MobileHeader from './MobileHeader';
@@ -27,6 +28,21 @@ App.subscribe(APP_CONFIG_LOADED, () => {
 
 function SiteHeader({ intl }) {
   const { authenticatedUser, config } = useContext(AppContext);
+  const [enterpriseLearnerPortalLinks, setEnterpriseLearnerPortalLinks] = useState([]);
+  useEffect(() => {
+    getLearnerPortalLinks(App.apiClient).then((learnerPortalLinks) => {
+      const links = [];
+      for (let i = 0; i < learnerPortalLinks.length; i += 1) {
+        const link = learnerPortalLinks[i];
+        links.push({
+          type: 'item',
+          href: link.url,
+          content: `${link.title} Dashboard`,
+        });
+      }
+      setEnterpriseLearnerPortalLinks(links);
+    });
+  }, []);
 
   const mainMenu = [
     {
@@ -66,6 +82,7 @@ function SiteHeader({ intl }) {
 
   let userMenu = [
     dashboardMenuItem,
+    ...enterpriseLearnerPortalLinks,
     {
       type: 'item',
       href: `${config.LMS_BASE_URL}/u/${authenticatedUser.username}`,
