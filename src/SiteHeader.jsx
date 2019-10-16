@@ -21,7 +21,7 @@ App.ensureConfig([
 
 App.subscribe(APP_CONFIG_LOADED, () => {
   App.mergeConfig({
-    MINIMAL_HEADER: process.env.MINIMAL_HEADER,
+    MINIMAL_HEADER: !!process.env.MINIMAL_HEADER,
   }, 'Header additional config');
 });
 
