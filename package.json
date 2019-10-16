@@ -65,6 +65,7 @@
     "semantic-release": "15.13.24"
   },
   "dependencies": {
+    "@edx/frontend-enterprise": "^1.0.2",
     "babel-polyfill": "6.26.0",
     "react-responsive": "8.0.1",
     "react-transition-group": "4.3.0"

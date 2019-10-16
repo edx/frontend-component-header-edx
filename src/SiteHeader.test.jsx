@@ -7,6 +7,12 @@ import { Context as ResponsiveContext } from 'react-responsive';
 
 import SiteHeader from './index';
 
+App.apiClient = {
+  get: jest.fn(),
+  getDecodedAccessToken: jest.fn(),
+  refreshAccessToken: jest.fn(),
+};
+
 describe('<SiteHeader />', () => {
   it('renders correctly for desktop', () => {
     const component = (
