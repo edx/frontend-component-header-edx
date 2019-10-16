@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import Responsive from 'react-responsive';
 import { injectIntl, intlShape } from '@edx/frontend-i18n';
 import { sendTrackEvent } from '@edx/frontend-analytics';
-import { App, AppContext } from '@edx/frontend-base';
+import { App, AppContext, APP_CONFIG_LOADED } from '@edx/frontend-base';
 
 import DesktopHeader from './DesktopHeader';
 import MobileHeader from './MobileHeader';
@@ -18,6 +18,12 @@ App.ensureConfig([
   'MARKETING_SITE_BASE_URL',
   'ORDER_HISTORY_URL',
 ], 'Header component');
+
+App.subscribe(APP_CONFIG_LOADED, () => {
+  App.mergeConfig({
+    MINIMAL_HEADER: process.env.MINIMAL_HEADER,
+  }, 'Header additional config');
+});
 
 function SiteHeader({ intl }) {
   const { authenticatedUser, config } = useContext(AppContext);
@@ -46,12 +52,20 @@ function SiteHeader({ intl }) {
     },
   ];
 
-  const userMenu = [
-    {
-      type: 'item',
-      href: `${config.LMS_BASE_URL}/dashboard`,
-      content: intl.formatMessage(messages['header.user.menu.dashboard']),
-    },
+  const dashboardMenuItem = {
+    type: 'item',
+    href: `${config.LMS_BASE_URL}/dashboard`,
+    content: intl.formatMessage(messages['header.user.menu.dashboard']),
+  };
+
+  const logoutMenuItem = {
+    type: 'item',
+    href: config.LOGOUT_URL,
+    content: intl.formatMessage(messages['header.user.menu.logout']),
+  };
+
+  let userMenu = [
+    dashboardMenuItem,
     {
       type: 'item',
       href: `${config.LMS_BASE_URL}/u/${authenticatedUser.username}`,
@@ -67,12 +81,15 @@ function SiteHeader({ intl }) {
       href: config.ORDER_HISTORY_URL,
       content: intl.formatMessage(messages['header.user.menu.order.history']),
     },
-    {
-      type: 'item',
-      href: config.LOGOUT_URL,
-      content: intl.formatMessage(messages['header.user.menu.logout']),
-    },
+    logoutMenuItem,
   ];
+
+  if (App.config.MINIMAL_HEADER) {
+    userMenu = [
+      dashboardMenuItem,
+      logoutMenuItem,
+    ];
+  }
 
   const loggedOutItems = [
     {
@@ -91,11 +108,11 @@ function SiteHeader({ intl }) {
     logo: LogoSVG,
     logoAltText: 'edX',
     siteName: 'edX',
-    logoDestination: `${config.LMS_BASE_URL}/dashboard`,
+    logoDestination: App.config.MINIMAL_HEADER ? null : `${config.LMS_BASE_URL}/dashboard`,
     loggedIn: !!authenticatedUser.username,
     username: authenticatedUser.username,
     avatar: authenticatedUser.avatar,
-    mainMenu,
+    mainMenu: App.config.MINIMAL_HEADER ? [] : mainMenu,
     userMenu,
     loggedOutItems,
   };
