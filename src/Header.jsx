@@ -10,7 +10,7 @@ import MobileHeader from './MobileHeader';
 
 import LogoSVG from './logo.svg';
 
-import messages from './SiteHeader.messages';
+import messages from './Header.messages';
 
 App.ensureConfig([
   'LMS_BASE_URL',
@@ -26,7 +26,7 @@ App.subscribe(APP_CONFIG_LOADED, () => {
   }, 'Header additional config');
 });
 
-function SiteHeader({ intl }) {
+function Header({ intl }) {
   const { authenticatedUser, config } = useContext(AppContext);
   const [enterpriseLearnerPortalLinks, setEnterpriseLearnerPortalLinks] = useState([]);
   useEffect(() => {
@@ -80,7 +80,7 @@ function SiteHeader({ intl }) {
     content: intl.formatMessage(messages['header.user.menu.logout']),
   };
 
-  let userMenu = [
+  let userMenu = authenticatedUser === null ? [] : [
     dashboardMenuItem,
     ...enterpriseLearnerPortalLinks,
     {
@@ -101,7 +101,7 @@ function SiteHeader({ intl }) {
     logoutMenuItem,
   ];
 
-  if (App.config.MINIMAL_HEADER) {
+  if (App.config.MINIMAL_HEADER && authenticatedUser !== null) {
     userMenu = [
       dashboardMenuItem,
       logoutMenuItem,
@@ -126,9 +126,9 @@ function SiteHeader({ intl }) {
     logoAltText: 'edX',
     siteName: 'edX',
     logoDestination: App.config.MINIMAL_HEADER ? null : `${config.LMS_BASE_URL}/dashboard`,
-    loggedIn: !!authenticatedUser.username,
-    username: authenticatedUser.username,
-    avatar: authenticatedUser.avatar,
+    loggedIn: authenticatedUser !== null,
+    username: authenticatedUser !== null ? authenticatedUser.username : null,
+    avatar: authenticatedUser !== null ? authenticatedUser.avatar : null,
     mainMenu: App.config.MINIMAL_HEADER ? [] : mainMenu,
     userMenu,
     loggedOutItems,
@@ -146,8 +146,8 @@ function SiteHeader({ intl }) {
   );
 }
 
-SiteHeader.propTypes = {
+Header.propTypes = {
   intl: intlShape.isRequired,
 };
 
-export default injectIntl(SiteHeader);
+export default injectIntl(Header);
