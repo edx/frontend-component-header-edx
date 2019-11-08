@@ -13,8 +13,6 @@ jest.mock('@edx/frontend-enterprise', () => ({
 
 App.apiClient = {
   get: jest.fn(),
-  getDecodedAccessToken: jest.fn(),
-  refreshAccessToken: jest.fn(),
 };
 
 describe('<Header />', () => {
