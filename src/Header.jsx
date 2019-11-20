@@ -1,18 +1,21 @@
 import React, { useContext, useEffect, useState } from 'react';
 import Responsive from 'react-responsive';
-import { injectIntl, intlShape } from '@edx/frontend-i18n';
-import { sendTrackEvent } from '@edx/frontend-analytics';
-import { App, AppContext, APP_CONFIG_LOADED } from '@edx/frontend-base';
-import { getLearnerPortalLinks } from '@edx/frontend-enterprise';
+import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
+import { sendTrackEvent } from '@edx/frontend-platform/analytics';
+import { AppContext } from '@edx/frontend-platform/react';
+import { APP_CONFIG_INITIALIZED } from '@edx/frontend-platform/init';
+import { ensureConfig, mergeConfig, getConfig } from '@edx/frontend-platform/config';
+import { subscribe } from '@edx/frontend-platform/pubSub';
 
 import DesktopHeader from './DesktopHeader';
 import MobileHeader from './MobileHeader';
+import getLearnerPortalLinks from './enterprise/getLearnerPortalLinks';
 
 import LogoSVG from './logo.svg';
 
 import messages from './Header.messages';
 
-App.ensureConfig([
+ensureConfig([
   'LMS_BASE_URL',
   'LOGOUT_URL',
   'LOGIN_URL',
@@ -20,8 +23,8 @@ App.ensureConfig([
   'ORDER_HISTORY_URL',
 ], 'Header component');
 
-App.subscribe(APP_CONFIG_LOADED, () => {
-  App.mergeConfig({
+subscribe(APP_CONFIG_INITIALIZED, () => {
+  mergeConfig({
     MINIMAL_HEADER: !!process.env.MINIMAL_HEADER,
   }, 'Header additional config');
 });
@@ -30,16 +33,12 @@ function Header({ intl }) {
   const { authenticatedUser, config } = useContext(AppContext);
   const [enterpriseLearnerPortalLinks, setEnterpriseLearnerPortalLinks] = useState([]);
   useEffect(() => {
-    getLearnerPortalLinks(App.apiClient).then((learnerPortalLinks) => {
-      const links = [];
-      for (let i = 0; i < learnerPortalLinks.length; i += 1) {
-        const link = learnerPortalLinks[i];
-        links.push({
-          type: 'item',
-          href: link.url,
-          content: `${link.title} Dashboard`,
-        });
-      }
+    getLearnerPortalLinks().then((learnerPortalLinks) => {
+      const links = learnerPortalLinks.map(({ url, title }) => ({
+        type: 'item',
+        href: url,
+        content: `${title} Dashboard`,
+      }));
       setEnterpriseLearnerPortalLinks(links);
     });
   }, []);
@@ -101,7 +100,7 @@ function Header({ intl }) {
     logoutMenuItem,
   ];
 
-  if (App.config.MINIMAL_HEADER && authenticatedUser !== null) {
+  if (getConfig().MINIMAL_HEADER && authenticatedUser !== null) {
     userMenu = [
       dashboardMenuItem,
       logoutMenuItem,
@@ -125,11 +124,11 @@ function Header({ intl }) {
     logo: LogoSVG,
     logoAltText: 'edX',
     siteName: 'edX',
-    logoDestination: App.config.MINIMAL_HEADER ? null : `${config.LMS_BASE_URL}/dashboard`,
+    logoDestination: getConfig().MINIMAL_HEADER ? null : `${config.LMS_BASE_URL}/dashboard`,
     loggedIn: authenticatedUser !== null,
     username: authenticatedUser !== null ? authenticatedUser.username : null,
     avatar: authenticatedUser !== null ? authenticatedUser.avatar : null,
-    mainMenu: App.config.MINIMAL_HEADER ? [] : mainMenu,
+    mainMenu: getConfig().MINIMAL_HEADER ? [] : mainMenu,
     userMenu,
     loggedOutItems,
   };

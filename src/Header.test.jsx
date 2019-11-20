@@ -1,19 +1,16 @@
 
 import React from 'react';
-import { IntlProvider } from '@edx/frontend-i18n';
+import { IntlProvider } from '@edx/frontend-platform/i18n';
 import TestRenderer from 'react-test-renderer';
-import { AppContext, App } from '@edx/frontend-base';
+import { AppContext } from '@edx/frontend-platform/react';
+import { getConfig } from '@edx/frontend-platform/config';
 import { Context as ResponsiveContext } from 'react-responsive';
 
 import Header from './index';
 
-jest.mock('@edx/frontend-enterprise', () => ({
-  getLearnerPortalLinks: () => ({ then: () => {} }), // Totally faked out promise.
-}));
+jest.mock('@edx/frontend-platform/config');
 
-App.apiClient = {
-  get: jest.fn(),
-};
+getConfig.mockReturnValue({});
 
 describe('<Header />', () => {
   it('renders correctly for unauthenticated users on desktop', () => {
@@ -132,11 +129,15 @@ describe('<Header />', () => {
 
   describe('minimal', () => {
     beforeEach(() => {
-      App.config.MINIMAL_HEADER = true;
+      getConfig.mockReturnValue({
+        MINIMAL_HEADER: true,
+      });
     });
 
     afterEach(() => {
-      App.config.MINIMAL_HEADER = false;
+      getConfig.mockReturnValue({
+        MINIMAL_HEADER: false,
+      });
     });
 
     it('renders correctly for unauthenticated users when minimal', () => {
