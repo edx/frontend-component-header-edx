@@ -3,12 +3,12 @@ import React from 'react';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
 import TestRenderer from 'react-test-renderer';
 import { AppContext } from '@edx/frontend-platform/react';
-import { getConfig } from '@edx/frontend-platform/config';
+import { getConfig } from '@edx/frontend-platform';
 import { Context as ResponsiveContext } from 'react-responsive';
 
 import Header from './index';
 
-jest.mock('@edx/frontend-platform/config');
+jest.mock('@edx/frontend-platform');
 
 getConfig.mockReturnValue({});
 

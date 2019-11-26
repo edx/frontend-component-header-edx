@@ -3,9 +3,13 @@ import Responsive from 'react-responsive';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import { sendTrackEvent } from '@edx/frontend-platform/analytics';
 import { AppContext } from '@edx/frontend-platform/react';
-import { APP_CONFIG_INITIALIZED } from '@edx/frontend-platform/init';
-import { ensureConfig, mergeConfig, getConfig } from '@edx/frontend-platform/config';
-import { subscribe } from '@edx/frontend-platform/pubSub';
+import {
+  APP_CONFIG_INITIALIZED,
+  ensureConfig,
+  mergeConfig,
+  getConfig,
+  subscribe,
+} from '@edx/frontend-platform';
 
 import DesktopHeader from './DesktopHeader';
 import MobileHeader from './MobileHeader';
