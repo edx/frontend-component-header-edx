@@ -1,1 +1,20 @@
-{}
+{
+  "header.links.courses": "Cursos",
+  "header.links.programs": "Programas",
+  "header.links.content.search": "Encontrar nuevo",
+  "header.links.schools": "Escuelas y Socios",
+  "header.user.menu.dashboard": "Panel de Control",
+  "header.user.menu.profile": "Perfil",
+  "header.user.menu.account.settings": "Cuenta",
+  "header.user.menu.order.history": "Historial de órdenes",
+  "header.user.menu.logout": "Cerrar sesión",
+  "header.user.menu.login": "Iniciar sesión",
+  "header.user.menu.register": "Registrarse",
+  "header.label.account.nav": "Cuenta",
+  "header.label.account.menu": "Menú de la cuenta",
+  "header.label.account.menu.for": "Menú de la cuenta para  {username}",
+  "header.label.main.nav": "Principal",
+  "header.label.main.menu": "Menú Principal",
+  "header.label.main.header": "Principal",
+  "header.label.secondary.nav": "Secundaria"
+}
