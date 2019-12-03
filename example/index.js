@@ -3,9 +3,7 @@ import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { AppContext, AppProvider } from '@edx/frontend-platform/react';
-import { initialize, APP_READY } from '@edx/frontend-platform/init';
-import { subscribe } from '@edx/frontend-platform/pubSub';
-import { getConfig } from '@edx/frontend-platform/config';
+import { initialize, getConfig, subscribe, APP_READY } from '@edx/frontend-platform';
 
 import './index.scss';
 import Header from '../src/';
