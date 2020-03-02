@@ -19,20 +19,24 @@ const cacheLinks = (userId, links) => {
 const fetchLearnerPortalLinks = async (userId) => {
   const httpClient = getAuthenticatedHttpClient();
   const enterpriseApiUrl = `${getConfig().LMS_BASE_URL}/enterprise/api/v1/enterprise-customer/`;
+  const enterpriseLearnerPortalHostname = process.env.ENTERPRISE_LEARNER_PORTAL_HOSTNAME;
+  if (!enterpriseLearnerPortalHostname) {
+    return [];
+  }
 
   try {
     const { data } = await httpClient.get(enterpriseApiUrl);
     const enterpriseCustomers = data.results.map(customer => ({
       name: customer.name,
       isEnabled: customer.enable_learner_portal,
-      hostname: customer.learner_portal_hostname,
+      slug: customer.slug,
     }));
 
     const links = enterpriseCustomers
-      .filter(({ isEnabled, hostname }) => isEnabled && hostname)
-      .map(({ name, hostname }) => ({
+      .filter(({ isEnabled, slug }) => isEnabled && slug)
+      .map(({ name, slug }) => ({
         title: name,
-        url: `https://${hostname}`,
+        url: `https://${enterpriseLearnerPortalHostname}/${slug}`,
       }));
 
     cacheLinks(userId, links);
