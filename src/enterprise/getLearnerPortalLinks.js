@@ -20,6 +20,9 @@ const fetchLearnerPortalLinks = async (userId) => {
   const httpClient = getAuthenticatedHttpClient();
   const enterpriseApiUrl = `${getConfig().LMS_BASE_URL}/enterprise/api/v1/enterprise-customer/`;
   const enterpriseLearnerPortalHostname = process.env.ENTERPRISE_LEARNER_PORTAL_HOSTNAME;
+  if (!enterpriseLearnerPortalHostname) {
+    return [];
+  }
 
   try {
     const { data } = await httpClient.get(enterpriseApiUrl);
