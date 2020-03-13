@@ -1,7 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react';
 import Responsive from 'react-responsive';
+import { getLearnerPortalLinks } from '@edx/frontend-enterprise';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import { sendTrackEvent } from '@edx/frontend-platform/analytics';
+import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
 import { AppContext } from '@edx/frontend-platform/react';
 import {
   APP_CONFIG_INITIALIZED,
@@ -13,7 +15,6 @@ import {
 
 import DesktopHeader from './DesktopHeader';
 import MobileHeader from './MobileHeader';
-import getLearnerPortalLinks from './enterprise/getLearnerPortalLinks';
 
 import LogoSVG from './logo.svg';
 
@@ -37,7 +38,8 @@ function Header({ intl }) {
   const { authenticatedUser, config } = useContext(AppContext);
   const [enterpriseLearnerPortalLinks, setEnterpriseLearnerPortalLinks] = useState([]);
   useEffect(() => {
-    getLearnerPortalLinks().then((learnerPortalLinks) => {
+    const httpClient = getAuthenticatedHttpClient();
+    getLearnerPortalLinks(httpClient, authenticatedUser).then((learnerPortalLinks) => {
       const links = learnerPortalLinks.map(({ url, title }) => ({
         type: 'item',
         href: url,

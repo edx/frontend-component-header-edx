@@ -39,6 +39,7 @@
     "@commitlint/prompt": "8.2.0",
     "@commitlint/prompt-cli": "8.2.0",
     "@edx/frontend-build": "^2.0.4",
+    "@edx/frontend-enterprise": "^4.0.0",
     "@edx/frontend-platform": "1.1.14",
     "@edx/paragon": "7.1.5",
     "codecov": "3.6.5",
@@ -61,6 +62,7 @@
     "react-transition-group": "4.3.0"
   },
   "peerDependencies": {
+    "@edx/frontend-enterprise": "^4.0.0",
     "@edx/frontend-platform": "^1.1.4",
     "@edx/paragon": "^7.0.0",
     "prop-types": "^15.5.10",
