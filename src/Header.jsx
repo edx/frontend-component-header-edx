@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import Responsive from 'react-responsive';
-import { getLearnerPortalLinks } from '@edx/frontend-enterprise';
+import { getLearnerPortalLinks, getSelectedEnterpriseUUID } from '@edx/frontend-enterprise';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import { sendTrackEvent } from '@edx/frontend-platform/analytics';
 import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
@@ -37,9 +37,21 @@ subscribe(APP_CONFIG_INITIALIZED, () => {
 function Header({ intl }) {
   const { authenticatedUser, config } = useContext(AppContext);
   const [enterpriseLearnerPortalLinks, setEnterpriseLearnerPortalLinks] = useState([]);
+  const [enterpriseCustomerBrandingConfig, setEnterpriseCustomerBrandingConfig] = useState(null);
   useEffect(() => {
     const httpClient = getAuthenticatedHttpClient();
     getLearnerPortalLinks(httpClient, authenticatedUser).then((learnerPortalLinks) => {
+      const preferredUUID = getSelectedEnterpriseUUID(authenticatedUser);
+      const preferredLearnerPortalLink = learnerPortalLinks.find(learnerPortalLink =>
+        learnerPortalLink.uuid === preferredUUID);
+      if (preferredLearnerPortalLink) {
+        setEnterpriseCustomerBrandingConfig({
+          logo: preferredLearnerPortalLink.branding_configuration.logo,
+          logoAltText: preferredLearnerPortalLink.title,
+          logoDestination: preferredLearnerPortalLink.url,
+        });
+      }
+
       const links = learnerPortalLinks.map(({ url, title }) => ({
         type: 'item',
         href: url,
@@ -85,9 +97,16 @@ function Header({ intl }) {
     content: intl.formatMessage(messages['header.user.menu.logout']),
   };
 
+  // If there are Enterprise LP links, use those instead of the B2C Dashboard
+  let baseUserMenuDashboardLinks = [];
+  if (enterpriseLearnerPortalLinks && enterpriseLearnerPortalLinks.length > 0) {
+    baseUserMenuDashboardLinks = [...enterpriseLearnerPortalLinks];
+  } else {
+    baseUserMenuDashboardLinks = [dashboardMenuItem];
+  }
+
   let userMenu = authenticatedUser === null ? [] : [
-    dashboardMenuItem,
-    ...enterpriseLearnerPortalLinks,
+    ...baseUserMenuDashboardLinks,
     {
       type: 'item',
       href: `${config.LMS_BASE_URL}/u/${authenticatedUser.username}`,
@@ -126,7 +145,7 @@ function Header({ intl }) {
     },
   ];
 
-  const props = {
+  let props = {
     logo: LogoSVG,
     logoAltText: 'edX',
     siteName: 'edX',
@@ -138,6 +157,13 @@ function Header({ intl }) {
     userMenu,
     loggedOutItems,
   };
+
+  if (enterpriseCustomerBrandingConfig) {
+    props = {
+      ...props,
+      ...enterpriseCustomerBrandingConfig,
+    };
+  }
 
   return (
     <React.Fragment>
