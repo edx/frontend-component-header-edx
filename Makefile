@@ -21,6 +21,9 @@ build:
 requirements:
 	npm install
 
+test:
+	npm run test
+
 i18n.extract:
 	# Pulling display strings from .jsx files into .json files...
 	rm -rf $(transifex_temp)

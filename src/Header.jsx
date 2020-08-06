@@ -1,9 +1,8 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import Responsive from 'react-responsive';
-import { getLearnerPortalLinks, getSelectedEnterpriseUUID } from '@edx/frontend-enterprise';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import { sendTrackEvent } from '@edx/frontend-platform/analytics';
-import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
+
 import { AppContext } from '@edx/frontend-platform/react';
 import {
   APP_CONFIG_INITIALIZED,
@@ -19,6 +18,8 @@ import MobileHeader from './MobileHeader';
 import LogoSVG from './logo.svg';
 
 import messages from './Header.messages';
+
+import useEnterpriseConfig from './data/hooks/enterprise';
 
 ensureConfig([
   'LMS_BASE_URL',
@@ -36,30 +37,10 @@ subscribe(APP_CONFIG_INITIALIZED, () => {
 
 function Header({ intl }) {
   const { authenticatedUser, config } = useContext(AppContext);
-  const [enterpriseLearnerPortalLinks, setEnterpriseLearnerPortalLinks] = useState([]);
-  const [enterpriseCustomerBrandingConfig, setEnterpriseCustomerBrandingConfig] = useState(null);
-  useEffect(() => {
-    const httpClient = getAuthenticatedHttpClient();
-    getLearnerPortalLinks(httpClient, authenticatedUser).then((learnerPortalLinks) => {
-      const preferredUUID = getSelectedEnterpriseUUID(authenticatedUser);
-      const preferredLearnerPortalLink = learnerPortalLinks.find(learnerPortalLink =>
-        learnerPortalLink.uuid === preferredUUID);
-      if (preferredLearnerPortalLink) {
-        setEnterpriseCustomerBrandingConfig({
-          logo: preferredLearnerPortalLink.branding_configuration.logo,
-          logoAltText: preferredLearnerPortalLink.title,
-          logoDestination: preferredLearnerPortalLink.url,
-        });
-      }
-
-      const links = learnerPortalLinks.map(({ url, title }) => ({
-        type: 'item',
-        href: url,
-        content: `${title} Dashboard`,
-      }));
-      setEnterpriseLearnerPortalLinks(links);
-    });
-  }, []);
+  const {
+    enterpriseLearnerPortalLink,
+    enterpriseCustomerBrandingConfig,
+  } = useEnterpriseConfig(authenticatedUser);
 
   const mainMenu = [
     {
@@ -97,10 +78,16 @@ function Header({ intl }) {
     content: intl.formatMessage(messages['header.user.menu.logout']),
   };
 
-  // If there are Enterprise LP links, use those instead of the B2C Dashboard
+  const orderHistoryItem = {
+    type: 'item',
+    href: config.ORDER_HISTORY_URL,
+    content: intl.formatMessage(messages['header.user.menu.order.history']),
+  };
+
+  // If there is an Enterprise LP link, use that instead of the B2C Dashboard
   let baseUserMenuDashboardLinks = [];
-  if (enterpriseLearnerPortalLinks && enterpriseLearnerPortalLinks.length > 0) {
-    baseUserMenuDashboardLinks = [...enterpriseLearnerPortalLinks];
+  if (enterpriseLearnerPortalLink) {
+    baseUserMenuDashboardLinks = [enterpriseLearnerPortalLink];
   } else {
     baseUserMenuDashboardLinks = [dashboardMenuItem];
   }
@@ -117,13 +104,16 @@ function Header({ intl }) {
       href: `${config.LMS_BASE_URL}/account/settings`,
       content: intl.formatMessage(messages['header.user.menu.account.settings']),
     },
-    {
-      type: 'item',
-      href: config.ORDER_HISTORY_URL,
-      content: intl.formatMessage(messages['header.user.menu.order.history']),
-    },
     logoutMenuItem,
   ];
+
+  // Users should only see Order History if they do not have an available
+  // learner portal, because an available learner portal currently means
+  // that they access content via Subscriptions, in which context an "order"
+  // is not relevant.
+  if (!enterpriseLearnerPortalLink) {
+    userMenu.splice(-1, 0, orderHistoryItem);
+  }
 
   if (getConfig().MINIMAL_HEADER && authenticatedUser !== null) {
     userMenu = [
