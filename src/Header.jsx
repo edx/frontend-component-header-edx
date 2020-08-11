@@ -32,6 +32,7 @@ ensureConfig([
 subscribe(APP_CONFIG_INITIALIZED, () => {
   mergeConfig({
     MINIMAL_HEADER: !!process.env.MINIMAL_HEADER,
+    ENTERPRISE_LEARNER_PORTAL_HOSTNAME: process.env.ENTERPRISE_LEARNER_PORTAL_HOSTNAME,
   }, 'Header additional config');
 });
 
@@ -40,7 +41,7 @@ function Header({ intl }) {
   const {
     enterpriseLearnerPortalLink,
     enterpriseCustomerBrandingConfig,
-  } = useEnterpriseConfig(authenticatedUser);
+  } = useEnterpriseConfig(authenticatedUser, config);
 
   const mainMenu = [
     {
