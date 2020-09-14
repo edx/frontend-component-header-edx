@@ -62,6 +62,7 @@ class DesktopHeader extends React.Component {
     return (
       <Menu transitionClassName="menu-dropdown" transitionTimeout={250}>
         <MenuTrigger
+          data-hj-suppress
           tag="button"
           aria-label={intl.formatMessage(messages['header.label.account.menu.for'], { username })}
           className="btn btn-light d-inline-flex align-items-center pl-2 pr-3"

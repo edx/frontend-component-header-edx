@@ -34,6 +34,7 @@ exports[`<Header /> minimal renders correctly for authenticated users when minim
             aria-haspopup="menu"
             aria-label="Account menu for edX"
             className="menu-trigger btn btn-light d-inline-flex align-items-center pl-2 pr-3"
+            data-hj-suppress={true}
             onClick={[Function]}
           >
             <span
@@ -191,6 +192,7 @@ exports[`<Header /> renders correctly for authenticated users on desktop 1`] = `
             aria-haspopup="menu"
             aria-label="Account menu for edX"
             className="menu-trigger btn btn-light d-inline-flex align-items-center pl-2 pr-3"
+            data-hj-suppress={true}
             onClick={[Function]}
           >
             <span
