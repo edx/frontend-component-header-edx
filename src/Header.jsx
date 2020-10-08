@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { useContext } from 'react';
 import Responsive from 'react-responsive';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
@@ -20,6 +21,7 @@ import LogoSVG from './logo.svg';
 import messages from './Header.messages';
 
 import useEnterpriseConfig from './data/hooks/enterprise';
+import { menuItemShape } from './data/shapes/header';
 
 ensureConfig([
   'LMS_BASE_URL',
@@ -36,36 +38,38 @@ subscribe(APP_CONFIG_INITIALIZED, () => {
   }, 'Header additional config');
 });
 
-function Header({ intl }) {
+function Header({ intl, variant, mainMenu }) {
   const { authenticatedUser, config } = useContext(AppContext);
   const {
     enterpriseLearnerPortalLink,
     enterpriseCustomerBrandingConfig,
   } = useEnterpriseConfig(authenticatedUser, config);
 
-  const mainMenu = [
-    {
-      type: 'item',
-      href: `${config.LMS_BASE_URL}/dashboard`,
-      content: intl.formatMessage(messages['header.links.courses']),
-    },
-    {
-      type: 'item',
-      href: `${config.LMS_BASE_URL}/dashboard/programs`,
-      content: intl.formatMessage(messages['header.links.programs']),
-    },
-    {
-      type: 'item',
-      href: `${config.MARKETING_SITE_BASE_URL}/course`,
-      content: intl.formatMessage(messages['header.links.content.search']),
-      onClick: () => {
-        sendTrackEvent(
-          'edx.bi.dashboard.find_courses_button.clicked',
-          { category: 'header', label: 'header' },
-        );
+  mainMenu = mainMenu.length > 0
+    ? mainMenu
+    : [
+      {
+        type: 'item',
+        href: `${config.LMS_BASE_URL}/dashboard`,
+        content: intl.formatMessage(messages['header.links.courses']),
       },
-    },
-  ];
+      {
+        type: 'item',
+        href: `${config.LMS_BASE_URL}/dashboard/programs`,
+        content: intl.formatMessage(messages['header.links.programs']),
+      },
+      {
+        type: 'item',
+        href: `${config.MARKETING_SITE_BASE_URL}/course`,
+        content: intl.formatMessage(messages['header.links.content.search']),
+        onClick: () => {
+          sendTrackEvent(
+            'edx.bi.dashboard.find_courses_button.clicked',
+            { category: 'header', label: 'header' },
+          );
+        },
+      },
+    ];
 
   const dashboardMenuItem = {
     type: 'item',
@@ -147,6 +151,7 @@ function Header({ intl }) {
     mainMenu: getConfig().MINIMAL_HEADER ? [] : mainMenu,
     userMenu,
     loggedOutItems,
+    variant,
   };
 
   if (enterpriseCustomerBrandingConfig) {
@@ -170,6 +175,12 @@ function Header({ intl }) {
 
 Header.propTypes = {
   intl: intlShape.isRequired,
+  mainMenu: PropTypes.arrayOf(menuItemShape).isRequired,
+  variant: PropTypes.string
+};
+
+Header.defaultProps = {
+  mainMenu: []
 };
 
 export default injectIntl(Header);
