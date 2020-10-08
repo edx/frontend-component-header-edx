@@ -33,8 +33,12 @@ class DesktopHeader extends React.Component {
       } = menuItem;
 
       if (type === 'item') {
+        const linkClasses = [window.location, window.location.href].indexOf(href) !== -1
+          ? "nav-link active"
+          : "nav-link";
+
         return (
-          <a key={`${type}-${content}`} className="nav-link" href={href}>{content}</a>
+          <a key={`${type}-${content}`} className={linkClasses} href={href}>{content}</a>
         );
       }
 
@@ -103,8 +107,10 @@ class DesktopHeader extends React.Component {
     } = this.props;
     const logoProps = { src: logo, alt: logoAltText, href: logoDestination };
 
+    const variantClassName = this.props.variant ? `${this.props.variant}-header` : '';
+
     return (
-      <header className="site-header-desktop">
+      <header className={`site-header-desktop ${variantClassName}`}>
         <div className="container-fluid">
           <div className="nav-container position-relative d-flex align-items-center">
             { logoDestination === null ? <Logo className="logo" src={logo} alt={logoAltText} /> : <LinkedLogo className="logo" {...logoProps} />}
@@ -151,6 +157,9 @@ DesktopHeader.propTypes = {
 
   // i18n
   intl: intlShape.isRequired,
+
+  // Header variations
+  variant: PropTypes.string,
 };
 
 DesktopHeader.defaultProps = {

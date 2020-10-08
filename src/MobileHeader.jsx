@@ -92,11 +92,12 @@ class MobileHeader extends React.Component {
     } = this.props;
     const logoProps = { src: logo, alt: logoAltText, href: logoDestination };
     const stickyClassName = stickyOnMobile ? 'sticky-top' : '';
+    const variantClassName = this.props.variant ? `${this.props.variant}-header` : '';
 
     return (
       <header
         aria-label={intl.formatMessage(messages['header.label.main.header'])}
-        className={`site-header-mobile d-flex justify-content-between align-items-center shadow ${stickyClassName}`}
+        className={`site-header-mobile d-flex justify-content-between align-items-center shadow ${stickyClassName} ${variantClassName}`}
       >
         <div className="w-100 d-flex justify-content-start">
           {mainMenu.length > 0 ?
@@ -167,6 +168,9 @@ MobileHeader.propTypes = {
 
   // i18n
   intl: intlShape.isRequired,
+
+  // Header variations
+  variant: PropTypes.string,
 };
 
 MobileHeader.defaultProps = {
