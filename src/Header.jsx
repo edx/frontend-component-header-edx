@@ -38,38 +38,38 @@ subscribe(APP_CONFIG_INITIALIZED, () => {
   }, 'Header additional config');
 });
 
-function Header({ intl, variant, mainMenu }) {
+function Header({
+  children, intl, variant, mainMenu,
+}) {
   const { authenticatedUser, config } = useContext(AppContext);
   const {
     enterpriseLearnerPortalLink,
     enterpriseCustomerBrandingConfig,
   } = useEnterpriseConfig(authenticatedUser, config);
 
-  mainMenu = mainMenu.length > 0
-    ? mainMenu
-    : [
-      {
-        type: 'item',
-        href: `${config.LMS_BASE_URL}/dashboard`,
-        content: intl.formatMessage(messages['header.links.courses']),
+  const menu = mainMenu || [
+    {
+      type: 'item',
+      href: `${config.LMS_BASE_URL}/dashboard`,
+      content: intl.formatMessage(messages['header.links.courses']),
+    },
+    {
+      type: 'item',
+      href: `${config.LMS_BASE_URL}/dashboard/programs`,
+      content: intl.formatMessage(messages['header.links.programs']),
+    },
+    {
+      type: 'item',
+      href: `${config.MARKETING_SITE_BASE_URL}/course`,
+      content: intl.formatMessage(messages['header.links.content.search']),
+      onClick: () => {
+        sendTrackEvent(
+          'edx.bi.dashboard.find_courses_button.clicked',
+          { category: 'header', label: 'header' },
+        );
       },
-      {
-        type: 'item',
-        href: `${config.LMS_BASE_URL}/dashboard/programs`,
-        content: intl.formatMessage(messages['header.links.programs']),
-      },
-      {
-        type: 'item',
-        href: `${config.MARKETING_SITE_BASE_URL}/course`,
-        content: intl.formatMessage(messages['header.links.content.search']),
-        onClick: () => {
-          sendTrackEvent(
-            'edx.bi.dashboard.find_courses_button.clicked',
-            { category: 'header', label: 'header' },
-          );
-        },
-      },
-    ];
+    },
+  ];
 
   const dashboardMenuItem = {
     type: 'item',
@@ -144,11 +144,11 @@ function Header({ intl, variant, mainMenu }) {
     logo: LogoSVG,
     logoAltText: 'edX',
     siteName: 'edX',
-    logoDestination: getConfig().MINIMAL_HEADER ? null : `${config.LMS_BASE_URL}/dashboard`,
+    logoDestination: getConfig().MINIMAL_HEADER ? null : '/',
     loggedIn: authenticatedUser !== null,
     username: authenticatedUser !== null ? authenticatedUser.username : null,
     avatar: authenticatedUser !== null ? authenticatedUser.avatar : null,
-    mainMenu: getConfig().MINIMAL_HEADER ? [] : mainMenu,
+    mainMenu: getConfig().MINIMAL_HEADER ? [] : menu,
     userMenu,
     loggedOutItems,
     variant,
@@ -167,7 +167,9 @@ function Header({ intl, variant, mainMenu }) {
         <MobileHeader {...props} />
       </Responsive>
       <Responsive minWidth={769}>
-        <DesktopHeader {...props} />
+        <DesktopHeader {...props}>
+          {children}
+        </DesktopHeader>
       </Responsive>
     </React.Fragment>
   );
@@ -175,12 +177,15 @@ function Header({ intl, variant, mainMenu }) {
 
 Header.propTypes = {
   intl: intlShape.isRequired,
-  mainMenu: PropTypes.arrayOf(menuItemShape).isRequired,
-  variant: PropTypes.string
+  mainMenu: PropTypes.arrayOf(menuItemShape),
+  variant: PropTypes.string,
+  children: PropTypes.node,
 };
 
 Header.defaultProps = {
-  mainMenu: []
+  mainMenu: null,
+  variant: null,
+  children: null,
 };
 
 export default injectIntl(Header);
