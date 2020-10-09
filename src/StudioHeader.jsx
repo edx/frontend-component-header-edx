@@ -6,6 +6,12 @@ import { AppContext } from '@edx/frontend-platform/react';
 import Header from './Header';
 import { menuItemShape, itemDetailsShape } from './data/shapes/header';
 import messages from './StudioHeader.messages';
+import { ensureConfig } from '@edx/frontend-platform';
+
+ensureConfig([
+  'STUDIO_BASE_URL',
+  'LIB_AUTHORING_BASE_URL',
+], 'StudioHeader component');
 
 export class StudioHeader extends React.Component {
   constructor(props) {
