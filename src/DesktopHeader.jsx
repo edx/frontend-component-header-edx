@@ -34,8 +34,8 @@ class DesktopHeader extends React.Component {
 
       if (type === 'item') {
         const linkClasses = [window.location, window.location.href].indexOf(href) !== -1
-          ? "nav-link active"
-          : "nav-link";
+          ? 'nav-link active'
+          : 'nav-link';
 
         return (
           <a key={`${type}-${content}`} className={linkClasses} href={href}>{content}</a>
@@ -47,7 +47,7 @@ class DesktopHeader extends React.Component {
           <MenuTrigger tag="a" className="nav-link d-inline-flex align-items-center" href={href}>
             {content} <CaretIcon role="img" aria-hidden focusable="false" />
           </MenuTrigger>
-          <MenuContent className="pin-left pin-right shadow py-2">
+          <MenuContent className="shadow p-0 py-3">
             {submenuContent}
           </MenuContent>
         </Menu>
@@ -114,6 +114,7 @@ class DesktopHeader extends React.Component {
         <div className="container-fluid">
           <div className="nav-container position-relative d-flex align-items-center">
             { logoDestination === null ? <Logo className="logo" src={logo} alt={logoAltText} /> : <LinkedLogo className="logo" {...logoProps} />}
+            { this.props.children }
             <nav
               aria-label={intl.formatMessage(messages['header.label.main.nav'])}
               className="nav main-nav"
@@ -160,6 +161,9 @@ DesktopHeader.propTypes = {
 
   // Header variations
   variant: PropTypes.string,
+
+  // Children
+  children: PropTypes.node,
 };
 
 DesktopHeader.defaultProps = {
@@ -172,6 +176,8 @@ DesktopHeader.defaultProps = {
   avatar: null,
   username: null,
   loggedIn: false,
+  variant: null,
+  children: null,
 };
 
 export default injectIntl(DesktopHeader);

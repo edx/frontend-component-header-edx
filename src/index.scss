@@ -1,6 +1,7 @@
 $spacer: 1rem;
 $blue: #007db8;
 $white: #fff;
+$baseline: 16px;
 
 @import './Menu/menu.scss';
 
@@ -87,8 +88,6 @@ $white: #fff;
       position: static;
       .menu-content {
         border-top: solid 2px $component-active-bg;
-        left: 0;
-        right: 0;
         box-shadow: 0 1px 2px rgba(0,0,0,.25);
         border-bottom-left-radius: 2px;
         border-bottom-right-radius: 2px;
@@ -98,5 +97,43 @@ $white: #fff;
   }
   .search-input {
     border-radius: $rounded-pill;
+  }
+}
+
+.site-header-desktop.studio-header {
+  .item-details-container {
+    margin-right: 1em;
+    width: 20%;
+    .item-details {
+      line-height: 1.11rem;
+      padding: 0.625rem 2rem 0.625rem 0.5rem;
+      border-right: 1px solid rgba(0,0,0,0.1); 
+      width: 100%;
+      .item-link {
+        color: $gray-800;
+        &:hover {
+          color: $link-color;
+          text-decoration: none;
+        }
+        .item-detail {
+          margin-right: 0.313rem;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+        .item-org,
+        .item-id {
+          color: $gray-800;
+          display: inline-block;
+          font-size: 0.75rem;
+        }
+        .item-title {
+          line-height: 1.25rem;
+          display: block;
+          font-size: 1rem;
+          font-weight: 600;
+        }
+      }
+    }
   }
 }
