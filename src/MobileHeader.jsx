@@ -184,7 +184,7 @@ MobileHeader.defaultProps = {
   username: null,
   loggedIn: false,
   stickyOnMobile: true,
-
+  variant: null,
 };
 
 export default injectIntl(MobileHeader);
