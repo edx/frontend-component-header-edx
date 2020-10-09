@@ -2,11 +2,11 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import { AppContext } from '@edx/frontend-platform/react';
+import { ensureConfig } from '@edx/frontend-platform';
 
 import Header from './Header';
 import { menuItemShape, itemDetailsShape } from './data/shapes/header';
 import messages from './StudioHeader.messages';
-import { ensureConfig } from '@edx/frontend-platform';
 
 ensureConfig([
   'STUDIO_BASE_URL',
