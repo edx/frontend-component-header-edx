@@ -146,7 +146,7 @@ exports[`<Header /> renders correctly for authenticated users on desktop 1`] = `
     >
       <a
         className="logo"
-        href="http://localhost:18000/dashboard"
+        href="/"
       >
         <img
           alt="edX"
@@ -318,7 +318,7 @@ exports[`<Header /> renders correctly for authenticated users on mobile 1`] = `
   >
     <a
       className="logo"
-      href="http://localhost:18000/dashboard"
+      href="/"
       itemType="http://schema.org/Organization"
     >
       <img
@@ -395,7 +395,7 @@ exports[`<Header /> renders correctly for unauthenticated users on desktop 1`] =
     >
       <a
         className="logo"
-        href="http://localhost:18000/dashboard"
+        href="/"
       >
         <img
           alt="edX"
@@ -515,7 +515,7 @@ exports[`<Header /> renders correctly for unauthenticated users on mobile 1`] = 
   >
     <a
       className="logo"
-      href="http://localhost:18000/dashboard"
+      href="/"
       itemType="http://schema.org/Organization"
     >
       <img
