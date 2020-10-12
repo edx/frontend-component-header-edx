@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { useContext } from 'react';
 import Responsive from 'react-responsive';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
@@ -20,6 +21,7 @@ import LogoSVG from './logo.svg';
 import messages from './Header.messages';
 
 import useEnterpriseConfig from './data/hooks/enterprise';
+import { menuItemShape } from './data/shapes/header';
 
 ensureConfig([
   'LMS_BASE_URL',
@@ -36,14 +38,16 @@ subscribe(APP_CONFIG_INITIALIZED, () => {
   }, 'Header additional config');
 });
 
-function Header({ intl }) {
+function Header({
+  children, intl, variant, mainMenu,
+}) {
   const { authenticatedUser, config } = useContext(AppContext);
   const {
     enterpriseLearnerPortalLink,
     enterpriseCustomerBrandingConfig,
   } = useEnterpriseConfig(authenticatedUser, config);
 
-  const mainMenu = [
+  const menu = mainMenu || [
     {
       type: 'item',
       href: `${config.LMS_BASE_URL}/dashboard`,
@@ -140,13 +144,14 @@ function Header({ intl }) {
     logo: LogoSVG,
     logoAltText: 'edX',
     siteName: 'edX',
-    logoDestination: getConfig().MINIMAL_HEADER ? null : `${config.LMS_BASE_URL}/dashboard`,
+    logoDestination: getConfig().MINIMAL_HEADER ? null : '/',
     loggedIn: authenticatedUser !== null,
     username: authenticatedUser !== null ? authenticatedUser.username : null,
     avatar: authenticatedUser !== null ? authenticatedUser.avatar : null,
-    mainMenu: getConfig().MINIMAL_HEADER ? [] : mainMenu,
+    mainMenu: getConfig().MINIMAL_HEADER ? [] : menu,
     userMenu,
     loggedOutItems,
+    variant,
   };
 
   if (enterpriseCustomerBrandingConfig) {
@@ -162,7 +167,9 @@ function Header({ intl }) {
         <MobileHeader {...props} />
       </Responsive>
       <Responsive minWidth={769}>
-        <DesktopHeader {...props} />
+        <DesktopHeader {...props}>
+          {children}
+        </DesktopHeader>
       </Responsive>
     </React.Fragment>
   );
@@ -170,6 +177,15 @@ function Header({ intl }) {
 
 Header.propTypes = {
   intl: intlShape.isRequired,
+  mainMenu: PropTypes.arrayOf(menuItemShape),
+  variant: PropTypes.string,
+  children: PropTypes.node,
+};
+
+Header.defaultProps = {
+  mainMenu: null,
+  variant: null,
+  children: null,
 };
 
 export default injectIntl(Header);

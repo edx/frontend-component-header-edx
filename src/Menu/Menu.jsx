@@ -35,6 +35,20 @@ MenuContent.defaultProps = {
   className: null,
 };
 
+function MenuContentItem({ tag, className, ...attributes }) {
+  return React.createElement(tag, {
+    className: ['menu-content-item', className].join(' '),
+    ...attributes,
+  });
+}
+MenuContentItem.propTypes = {
+  tag: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  className: PropTypes.string,
+};
+MenuContentItem.defaultProps = {
+  tag: 'div',
+  className: null,
+};
 
 class Menu extends React.Component {
   constructor(props) {
@@ -264,4 +278,4 @@ Menu.defaultProps = {
 };
 
 
-export { Menu, MenuTrigger, MenuContent };
+export { Menu, MenuTrigger, MenuContent, MenuContentItem };
