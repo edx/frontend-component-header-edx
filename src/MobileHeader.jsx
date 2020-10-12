@@ -92,12 +92,14 @@ class MobileHeader extends React.Component {
     } = this.props;
     const logoProps = { src: logo, alt: logoAltText, href: logoDestination };
     const stickyClassName = stickyOnMobile ? 'sticky-top' : '';
-    const variantClassName = this.props.variant ? `${this.props.variant}-header` : '';
+    const variantClassName = this.props.variant
+      ? `site-header-mobile ${this.props.variant}-header`
+      : 'site-header-mobile';
 
     return (
       <header
         aria-label={intl.formatMessage(messages['header.label.main.header'])}
-        className={`site-header-mobile d-flex justify-content-between align-items-center shadow ${stickyClassName} ${variantClassName}`}
+        className={`${variantClassName} d-flex justify-content-between align-items-center shadow ${stickyClassName}`}
       >
         <div className="w-100 d-flex justify-content-start">
           {mainMenu.length > 0 ?

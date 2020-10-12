@@ -107,10 +107,12 @@ class DesktopHeader extends React.Component {
     } = this.props;
     const logoProps = { src: logo, alt: logoAltText, href: logoDestination };
 
-    const variantClassName = this.props.variant ? `${this.props.variant}-header` : '';
+    const variantClassName = this.props.variant
+      ? `site-header-desktop ${this.props.variant}-header`
+      : 'site-header-desktop';
 
     return (
-      <header className={`site-header-desktop ${variantClassName}`}>
+      <header className={variantClassName}>
         <div className="container-fluid">
           <div className="nav-container position-relative d-flex align-items-center">
             { logoDestination === null ? <Logo className="logo" src={logo} alt={logoAltText} /> : <LinkedLogo className="logo" {...logoProps} />}
