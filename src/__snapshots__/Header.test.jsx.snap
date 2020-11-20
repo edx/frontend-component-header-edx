@@ -13,7 +13,7 @@ exports[`<Header /> minimal renders correctly for authenticated users when minim
       <img
         alt="edX"
         className="logo"
-        src="icon/mock/path"
+        src="https://edx-cdn.org/v3/default/logo-trademark.svg"
       />
       <nav
         aria-label="Main"
@@ -33,7 +33,7 @@ exports[`<Header /> minimal renders correctly for authenticated users when minim
             aria-expanded={false}
             aria-haspopup="menu"
             aria-label="Account menu for edX"
-            className="menu-trigger btn btn-light d-inline-flex align-items-center pl-2 pr-3"
+            className="menu-trigger btn btn-outline-primary d-inline-flex align-items-center pl-2 pr-3"
             data-hj-suppress={true}
             onClick={[Function]}
           >
@@ -48,7 +48,6 @@ exports[`<Header /> minimal renders correctly for authenticated users when minim
             >
               <svg
                 aria-hidden={true}
-                className="text-muted"
                 focusable="false"
                 height="24px"
                 role="img"
@@ -106,7 +105,7 @@ exports[`<Header /> minimal renders correctly for unauthenticated users when min
       <img
         alt="edX"
         className="logo"
-        src="icon/mock/path"
+        src="https://edx-cdn.org/v3/default/logo-trademark.svg"
       />
       <nav
         aria-label="Main"
@@ -151,7 +150,7 @@ exports[`<Header /> renders correctly for authenticated users on desktop 1`] = `
         <img
           alt="edX"
           className="d-block"
-          src="icon/mock/path"
+          src="https://edx-cdn.org/v3/default/logo-trademark.svg"
         />
       </a>
       <nav
@@ -191,7 +190,7 @@ exports[`<Header /> renders correctly for authenticated users on desktop 1`] = `
             aria-expanded={false}
             aria-haspopup="menu"
             aria-label="Account menu for edX"
-            className="menu-trigger btn btn-light d-inline-flex align-items-center pl-2 pr-3"
+            className="menu-trigger btn btn-outline-primary d-inline-flex align-items-center pl-2 pr-3"
             data-hj-suppress={true}
             onClick={[Function]}
           >
@@ -206,7 +205,6 @@ exports[`<Header /> renders correctly for authenticated users on desktop 1`] = `
             >
               <svg
                 aria-hidden={true}
-                className="text-muted"
                 focusable="false"
                 height="24px"
                 role="img"
@@ -324,7 +322,7 @@ exports[`<Header /> renders correctly for authenticated users on mobile 1`] = `
       <img
         alt="edX"
         className="d-block"
-        src="icon/mock/path"
+        src="https://edx-cdn.org/v3/default/logo-trademark.svg"
       />
     </a>
   </div>
@@ -357,7 +355,6 @@ exports[`<Header /> renders correctly for authenticated users on mobile 1`] = `
         >
           <svg
             aria-hidden={true}
-            className="text-muted"
             focusable="false"
             height="24px"
             role="img"
@@ -400,7 +397,7 @@ exports[`<Header /> renders correctly for unauthenticated users on desktop 1`] =
         <img
           alt="edX"
           className="d-block"
-          src="icon/mock/path"
+          src="https://edx-cdn.org/v3/default/logo-trademark.svg"
         />
       </a>
       <nav
@@ -521,7 +518,7 @@ exports[`<Header /> renders correctly for unauthenticated users on mobile 1`] = 
       <img
         alt="edX"
         className="d-block"
-        src="icon/mock/path"
+        src="https://edx-cdn.org/v3/default/logo-trademark.svg"
       />
     </a>
   </div>
@@ -554,7 +551,6 @@ exports[`<Header /> renders correctly for unauthenticated users on mobile 1`] = 
         >
           <svg
             aria-hidden={true}
-            className="text-muted"
             focusable="false"
             height="24px"
             role="img"

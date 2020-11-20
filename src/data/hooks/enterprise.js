@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { getLearnerPortalLinks, getSelectedEnterpriseUUID } from '@edx/frontend-enterprise';
 import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
 
+// TODO: remove since ``useEnterpriseConfig`` should be ideally used from @edx/frontend-enteprrise
 export default function useEnterpriseConfig(authenticatedUser, config) {
   const [enterpriseLearnerPortalLink, setEnterpriseLearnerPortalLink] = useState();
   const [enterpriseCustomerBrandingConfig, setEnterpriseCustomerBrandingConfig] = useState();
@@ -15,8 +16,9 @@ export default function useEnterpriseConfig(authenticatedUser, config) {
         config.LMS_BASE_URL,
       ).then((learnerPortalLinks) => {
         const preferredUUID = getSelectedEnterpriseUUID(authenticatedUser);
-        const preferredLearnerPortalLink = learnerPortalLinks.find(learnerPortalLink =>
-          learnerPortalLink.uuid === preferredUUID);
+        const preferredLearnerPortalLink = learnerPortalLinks.find(
+          learnerPortalLink => learnerPortalLink.uuid === preferredUUID,
+        );
         if (preferredLearnerPortalLink) {
           setEnterpriseCustomerBrandingConfig({
             logo: preferredLearnerPortalLink.branding_configuration.logo,

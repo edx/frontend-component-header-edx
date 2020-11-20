@@ -1,10 +1,9 @@
-
 import React from 'react';
 import { act } from 'react-dom/test-utils';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
 import TestRenderer from 'react-test-renderer';
 import { mount } from 'enzyme';
-import { getLearnerPortalLinks } from '@edx/frontend-enterprise';
+import { useEnterpriseConfig } from '@edx/frontend-enterprise';
 import { AppContext } from '@edx/frontend-platform/react';
 import { getConfig } from '@edx/frontend-platform';
 import { Context as ResponsiveContext } from 'react-responsive';
@@ -18,34 +17,42 @@ getConfig.mockReturnValue({});
 
 describe('<Header />', () => {
   beforeEach(() => {
-    getLearnerPortalLinks.mockReturnValue(Promise.resolve([]));
+    useEnterpriseConfig.mockReturnValue(Promise.resolve({
+      enterpriseLearnerPortalLink: null,
+      enterpriseCustomerBrandingConfig: null,
+    }));
   });
 
-  const mockLearnerPortalLinks = () => {
-    getLearnerPortalLinks.mockReturnValue(Promise.resolve([
-      {
-        url: 'http://localhost:8000',
-        title: 'My Enterprise',
-        branding_configuration: {
-          logo: 'my-logo',
-        },
+  const mockUseEnterpriseConfig = () => {
+    useEnterpriseConfig.mockReturnValue(Promise.resolve({
+      enterpriseLearnerPortalLink: {
+        type: 'item',
+        href: 'http://localhost:8000',
+        content: 'Dashboard',
       },
-    ]));
+      enterpriseCustomerBrandingConfig: {
+        logoAltText: 'fake-enterprise-name',
+        logoDestination: 'http://fake.url',
+        logo: 'http://fake-logo.url',
+      },
+    }));
   };
 
   it('renders correctly for unauthenticated users on desktop', () => {
     const component = (
       <ResponsiveContext.Provider value={{ width: 1280 }}>
         <IntlProvider locale="en" messages={{}}>
-          <AppContext.Provider value={{
-            authenticatedUser: null,
-            config: {
-              LMS_BASE_URL: process.env.LMS_BASE_URL,
-              LOGIN_URL: process.env.LOGIN_URL,
-              LOGOUT_URL: process.env.LOGOUT_URL,
-              MARKETING_SITE_BASE_URL: process.env.MARKETING_SITE_BASE_URL,
-              ORDER_HISTORY_URL: process.env.ORDER_HISTORY_URL,
-            },
+          <AppContext.Provider
+            value={{
+              authenticatedUser: null,
+              config: {
+                LMS_BASE_URL: process.env.LMS_BASE_URL,
+                LOGIN_URL: process.env.LOGIN_URL,
+                LOGOUT_URL: process.env.LOGOUT_URL,
+                MARKETING_SITE_BASE_URL: process.env.MARKETING_SITE_BASE_URL,
+                ORDER_HISTORY_URL: process.env.ORDER_HISTORY_URL,
+                LOGO_TRADEMARK_URL: process.env.LOGO_TRADEMARK_URL,
+              },
             }}
           >
             <Header />
@@ -63,20 +70,22 @@ describe('<Header />', () => {
     const component = (
       <ResponsiveContext.Provider value={{ width: 1280 }}>
         <IntlProvider locale="en" messages={{}}>
-          <AppContext.Provider value={{
-            authenticatedUser: {
-              userId: 'abc123',
-              username: 'edX',
-              roles: [],
-              administrator: false,
-            },
-            config: {
-              LMS_BASE_URL: process.env.LMS_BASE_URL,
-              LOGIN_URL: process.env.LOGIN_URL,
-              LOGOUT_URL: process.env.LOGOUT_URL,
-              MARKETING_SITE_BASE_URL: process.env.MARKETING_SITE_BASE_URL,
-              ORDER_HISTORY_URL: process.env.ORDER_HISTORY_URL,
-            },
+          <AppContext.Provider
+            value={{
+              authenticatedUser: {
+                userId: 'abc123',
+                username: 'edX',
+                roles: [],
+                administrator: false,
+              },
+              config: {
+                LMS_BASE_URL: process.env.LMS_BASE_URL,
+                LOGIN_URL: process.env.LOGIN_URL,
+                LOGOUT_URL: process.env.LOGOUT_URL,
+                MARKETING_SITE_BASE_URL: process.env.MARKETING_SITE_BASE_URL,
+                ORDER_HISTORY_URL: process.env.ORDER_HISTORY_URL,
+                LOGO_TRADEMARK_URL: process.env.LOGO_TRADEMARK_URL,
+              },
             }}
           >
             <Header />
@@ -90,25 +99,26 @@ describe('<Header />', () => {
     expect(wrapper.toJSON()).toMatchSnapshot();
   });
 
-
   it('renders correctly for authenticated users on desktop with or without learner portal links', async () => {
     const component = (
       <ResponsiveContext.Provider value={{ width: 1280 }}>
         <IntlProvider locale="en" messages={{}}>
-          <AppContext.Provider value={{
-            authenticatedUser: {
-              userId: 'abc123',
-              username: 'edX',
-              roles: [],
-              administrator: false,
-            },
-            config: {
-              LMS_BASE_URL: process.env.LMS_BASE_URL,
-              LOGIN_URL: process.env.LOGIN_URL,
-              LOGOUT_URL: process.env.LOGOUT_URL,
-              MARKETING_SITE_BASE_URL: process.env.MARKETING_SITE_BASE_URL,
-              ORDER_HISTORY_URL: process.env.ORDER_HISTORY_URL,
-            },
+          <AppContext.Provider
+            value={{
+              authenticatedUser: {
+                userId: 'abc123',
+                username: 'edX',
+                roles: [],
+                administrator: false,
+              },
+              config: {
+                LMS_BASE_URL: process.env.LMS_BASE_URL,
+                LOGIN_URL: process.env.LOGIN_URL,
+                LOGOUT_URL: process.env.LOGOUT_URL,
+                MARKETING_SITE_BASE_URL: process.env.MARKETING_SITE_BASE_URL,
+                ORDER_HISTORY_URL: process.env.ORDER_HISTORY_URL,
+                LOGO_TRADEMARK_URL: process.env.LOGO_TRADEMARK_URL,
+              },
             }}
           >
             <Header />
@@ -132,7 +142,7 @@ describe('<Header />', () => {
     // We do this in the same test to avoid weird things about jest wanting you to use
     // the "correct" act() function (even though it gives the same warning regardless
     // of where you import it from, be it react-dom/test-utils or react-test-renderer).
-    mockLearnerPortalLinks();
+    mockUseEnterpriseConfig();
     wrapper = mount(component);
     await act(async () => {
       await flushPromises();
@@ -147,15 +157,17 @@ describe('<Header />', () => {
     const component = (
       <ResponsiveContext.Provider value={{ width: 500 }}>
         <IntlProvider locale="en" messages={{}}>
-          <AppContext.Provider value={{
-            authenticatedUser: null,
-            config: {
-              LMS_BASE_URL: process.env.LMS_BASE_URL,
-              LOGIN_URL: process.env.LOGIN_URL,
-              LOGOUT_URL: process.env.LOGOUT_URL,
-              MARKETING_SITE_BASE_URL: process.env.MARKETING_SITE_BASE_URL,
-              ORDER_HISTORY_URL: process.env.ORDER_HISTORY_URL,
-            },
+          <AppContext.Provider
+            value={{
+              authenticatedUser: null,
+              config: {
+                LMS_BASE_URL: process.env.LMS_BASE_URL,
+                LOGIN_URL: process.env.LOGIN_URL,
+                LOGOUT_URL: process.env.LOGOUT_URL,
+                MARKETING_SITE_BASE_URL: process.env.MARKETING_SITE_BASE_URL,
+                ORDER_HISTORY_URL: process.env.ORDER_HISTORY_URL,
+                LOGO_TRADEMARK_URL: process.env.LOGO_TRADEMARK_URL,
+              },
             }}
           >
             <Header />
@@ -173,20 +185,22 @@ describe('<Header />', () => {
     const component = (
       <ResponsiveContext.Provider value={{ width: 500 }}>
         <IntlProvider locale="en" messages={{}}>
-          <AppContext.Provider value={{
-            authenticatedUser: {
-              userId: 'abc123',
-              username: 'edX',
-              roles: [],
-              administrator: false,
-            },
-            config: {
-              LMS_BASE_URL: process.env.LMS_BASE_URL,
-              LOGIN_URL: process.env.LOGIN_URL,
-              LOGOUT_URL: process.env.LOGOUT_URL,
-              MARKETING_SITE_BASE_URL: process.env.MARKETING_SITE_BASE_URL,
-              ORDER_HISTORY_URL: process.env.ORDER_HISTORY_URL,
-            },
+          <AppContext.Provider
+            value={{
+              authenticatedUser: {
+                userId: 'abc123',
+                username: 'edX',
+                roles: [],
+                administrator: false,
+              },
+              config: {
+                LMS_BASE_URL: process.env.LMS_BASE_URL,
+                LOGIN_URL: process.env.LOGIN_URL,
+                LOGOUT_URL: process.env.LOGOUT_URL,
+                MARKETING_SITE_BASE_URL: process.env.MARKETING_SITE_BASE_URL,
+                ORDER_HISTORY_URL: process.env.ORDER_HISTORY_URL,
+                LOGO_TRADEMARK_URL: process.env.LOGO_TRADEMARK_URL,
+              },
             }}
           >
             <Header />
@@ -217,15 +231,17 @@ describe('<Header />', () => {
       const component = (
         <ResponsiveContext.Provider value={{ width: 1280 }}>
           <IntlProvider locale="en" messages={{}}>
-            <AppContext.Provider value={{
-              authenticatedUser: null,
-              config: {
-                LMS_BASE_URL: process.env.LMS_BASE_URL,
-                LOGIN_URL: process.env.LOGIN_URL,
-                LOGOUT_URL: process.env.LOGOUT_URL,
-                MARKETING_SITE_BASE_URL: process.env.MARKETING_SITE_BASE_URL,
-                ORDER_HISTORY_URL: process.env.ORDER_HISTORY_URL,
-              },
+            <AppContext.Provider
+              value={{
+                authenticatedUser: null,
+                config: {
+                  LMS_BASE_URL: process.env.LMS_BASE_URL,
+                  LOGIN_URL: process.env.LOGIN_URL,
+                  LOGOUT_URL: process.env.LOGOUT_URL,
+                  MARKETING_SITE_BASE_URL: process.env.MARKETING_SITE_BASE_URL,
+                  ORDER_HISTORY_URL: process.env.ORDER_HISTORY_URL,
+                  LOGO_TRADEMARK_URL: process.env.LOGO_TRADEMARK_URL,
+                },
               }}
             >
               <Header />
@@ -243,20 +259,22 @@ describe('<Header />', () => {
       const component = (
         <ResponsiveContext.Provider value={{ width: 1280 }}>
           <IntlProvider locale="en" messages={{}}>
-            <AppContext.Provider value={{
-              authenticatedUser: {
-                userId: 'abc123',
-                username: 'edX',
-                roles: [],
-                administrator: false,
-              },
-              config: {
-                LMS_BASE_URL: process.env.LMS_BASE_URL,
-                LOGIN_URL: process.env.LOGIN_URL,
-                LOGOUT_URL: process.env.LOGOUT_URL,
-                MARKETING_SITE_BASE_URL: process.env.MARKETING_SITE_BASE_URL,
-                ORDER_HISTORY_URL: process.env.ORDER_HISTORY_URL,
-              },
+            <AppContext.Provider
+              value={{
+                authenticatedUser: {
+                  userId: 'abc123',
+                  username: 'edX',
+                  roles: [],
+                  administrator: false,
+                },
+                config: {
+                  LMS_BASE_URL: process.env.LMS_BASE_URL,
+                  LOGIN_URL: process.env.LOGIN_URL,
+                  LOGOUT_URL: process.env.LOGOUT_URL,
+                  MARKETING_SITE_BASE_URL: process.env.MARKETING_SITE_BASE_URL,
+                  ORDER_HISTORY_URL: process.env.ORDER_HISTORY_URL,
+                  LOGO_TRADEMARK_URL: process.env.LOGO_TRADEMARK_URL,
+                },
               }}
             >
               <Header />
