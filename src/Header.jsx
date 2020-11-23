@@ -2,7 +2,6 @@ import React, { useContext } from 'react';
 import Responsive from 'react-responsive';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import { sendTrackEvent } from '@edx/frontend-platform/analytics';
-
 import { AppContext } from '@edx/frontend-platform/react';
 import {
   APP_CONFIG_INITIALIZED,
@@ -11,15 +10,12 @@ import {
   getConfig,
   subscribe,
 } from '@edx/frontend-platform';
+import { useEnterpriseConfig } from '@edx/frontend-enterprise';
 
 import DesktopHeader from './DesktopHeader';
 import MobileHeader from './MobileHeader';
 
-import LogoSVG from './logo.svg';
-
 import messages from './Header.messages';
-
-import useEnterpriseConfig from './data/hooks/enterprise';
 
 ensureConfig([
   'LMS_BASE_URL',
@@ -27,6 +23,7 @@ ensureConfig([
   'LOGIN_URL',
   'MARKETING_SITE_BASE_URL',
   'ORDER_HISTORY_URL',
+  'LOGO_TRADEMARK_URL',
 ], 'Header component');
 
 subscribe(APP_CONFIG_INITIALIZED, () => {
@@ -42,7 +39,7 @@ function Header({ intl }) {
   const {
     enterpriseLearnerPortalLink,
     enterpriseCustomerBrandingConfig,
-  } = useEnterpriseConfig(authenticatedUser, config);
+  } = useEnterpriseConfig(authenticatedUser, config.ENTERPRISE_LEARNER_PORTAL_HOSTNAME, config.LMS_BASE_URL);
 
   const mainMenu = [
     {
@@ -138,7 +135,7 @@ function Header({ intl }) {
   ];
 
   let props = {
-    logo: LogoSVG,
+    logo: config.LOGO_TRADEMARK_URL,
     logoAltText: 'edX',
     siteName: 'edX',
     logoDestination: getConfig().MINIMAL_HEADER ? null : `${config.LMS_BASE_URL}/dashboard`,
@@ -158,14 +155,14 @@ function Header({ intl }) {
   }
 
   return (
-    <React.Fragment>
+    <>
       <Responsive maxWidth={768}>
         <MobileHeader {...props} />
       </Responsive>
       <Responsive minWidth={769}>
         <DesktopHeader {...props} />
       </Responsive>
-    </React.Fragment>
+    </>
   );
 }
 

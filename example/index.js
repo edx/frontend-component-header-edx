@@ -4,9 +4,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { AppContext, AppProvider } from '@edx/frontend-platform/react';
 import { initialize, getConfig, subscribe, APP_READY } from '@edx/frontend-platform';
+import Header from '@edx/frontend-component-header';
 
 import './index.scss';
-import Header from '../src/';
 
 subscribe(APP_READY, () => {
   ReactDOM.render(
