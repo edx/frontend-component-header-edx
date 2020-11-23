@@ -17,14 +17,11 @@ getConfig.mockReturnValue({});
 
 describe('<Header />', () => {
   beforeEach(() => {
-    useEnterpriseConfig.mockReturnValue(Promise.resolve({
-      enterpriseLearnerPortalLink: null,
-      enterpriseCustomerBrandingConfig: null,
-    }));
+    useEnterpriseConfig.mockReturnValue({});
   });
 
   const mockUseEnterpriseConfig = () => {
-    useEnterpriseConfig.mockReturnValue(Promise.resolve({
+    useEnterpriseConfig.mockReturnValue({
       enterpriseLearnerPortalLink: {
         type: 'item',
         href: 'http://localhost:8000',
@@ -35,7 +32,7 @@ describe('<Header />', () => {
         logoDestination: 'http://fake.url',
         logo: 'http://fake-logo.url',
       },
-    }));
+    });
   };
 
   it('renders correctly for unauthenticated users on desktop', () => {
