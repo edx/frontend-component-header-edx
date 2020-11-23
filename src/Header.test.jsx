@@ -15,6 +15,15 @@ jest.mock('@edx/frontend-enterprise');
 
 getConfig.mockReturnValue({});
 
+const APP_CONTEXT_CONFIG = {
+  LMS_BASE_URL: process.env.LMS_BASE_URL,
+  LOGIN_URL: process.env.LOGIN_URL,
+  LOGOUT_URL: process.env.LOGOUT_URL,
+  MARKETING_SITE_BASE_URL: process.env.MARKETING_SITE_BASE_URL,
+  ORDER_HISTORY_URL: process.env.ORDER_HISTORY_URL,
+  LOGO_TRADEMARK_URL: process.env.LOGO_TRADEMARK_URL,
+};
+
 describe('<Header />', () => {
   beforeEach(() => {
     useEnterpriseConfig.mockReturnValue({});
@@ -42,14 +51,7 @@ describe('<Header />', () => {
           <AppContext.Provider
             value={{
               authenticatedUser: null,
-              config: {
-                LMS_BASE_URL: process.env.LMS_BASE_URL,
-                LOGIN_URL: process.env.LOGIN_URL,
-                LOGOUT_URL: process.env.LOGOUT_URL,
-                MARKETING_SITE_BASE_URL: process.env.MARKETING_SITE_BASE_URL,
-                ORDER_HISTORY_URL: process.env.ORDER_HISTORY_URL,
-                LOGO_TRADEMARK_URL: process.env.LOGO_TRADEMARK_URL,
-              },
+              config: APP_CONTEXT_CONFIG,
             }}
           >
             <Header />
@@ -75,14 +77,7 @@ describe('<Header />', () => {
                 roles: [],
                 administrator: false,
               },
-              config: {
-                LMS_BASE_URL: process.env.LMS_BASE_URL,
-                LOGIN_URL: process.env.LOGIN_URL,
-                LOGOUT_URL: process.env.LOGOUT_URL,
-                MARKETING_SITE_BASE_URL: process.env.MARKETING_SITE_BASE_URL,
-                ORDER_HISTORY_URL: process.env.ORDER_HISTORY_URL,
-                LOGO_TRADEMARK_URL: process.env.LOGO_TRADEMARK_URL,
-              },
+              config: APP_CONTEXT_CONFIG,
             }}
           >
             <Header />
@@ -108,14 +103,7 @@ describe('<Header />', () => {
                 roles: [],
                 administrator: false,
               },
-              config: {
-                LMS_BASE_URL: process.env.LMS_BASE_URL,
-                LOGIN_URL: process.env.LOGIN_URL,
-                LOGOUT_URL: process.env.LOGOUT_URL,
-                MARKETING_SITE_BASE_URL: process.env.MARKETING_SITE_BASE_URL,
-                ORDER_HISTORY_URL: process.env.ORDER_HISTORY_URL,
-                LOGO_TRADEMARK_URL: process.env.LOGO_TRADEMARK_URL,
-              },
+              config: APP_CONTEXT_CONFIG,
             }}
           >
             <Header />
@@ -157,14 +145,7 @@ describe('<Header />', () => {
           <AppContext.Provider
             value={{
               authenticatedUser: null,
-              config: {
-                LMS_BASE_URL: process.env.LMS_BASE_URL,
-                LOGIN_URL: process.env.LOGIN_URL,
-                LOGOUT_URL: process.env.LOGOUT_URL,
-                MARKETING_SITE_BASE_URL: process.env.MARKETING_SITE_BASE_URL,
-                ORDER_HISTORY_URL: process.env.ORDER_HISTORY_URL,
-                LOGO_TRADEMARK_URL: process.env.LOGO_TRADEMARK_URL,
-              },
+              config: APP_CONTEXT_CONFIG,
             }}
           >
             <Header />
@@ -190,14 +171,7 @@ describe('<Header />', () => {
                 roles: [],
                 administrator: false,
               },
-              config: {
-                LMS_BASE_URL: process.env.LMS_BASE_URL,
-                LOGIN_URL: process.env.LOGIN_URL,
-                LOGOUT_URL: process.env.LOGOUT_URL,
-                MARKETING_SITE_BASE_URL: process.env.MARKETING_SITE_BASE_URL,
-                ORDER_HISTORY_URL: process.env.ORDER_HISTORY_URL,
-                LOGO_TRADEMARK_URL: process.env.LOGO_TRADEMARK_URL,
-              },
+              config: APP_CONTEXT_CONFIG,
             }}
           >
             <Header />
@@ -231,14 +205,7 @@ describe('<Header />', () => {
             <AppContext.Provider
               value={{
                 authenticatedUser: null,
-                config: {
-                  LMS_BASE_URL: process.env.LMS_BASE_URL,
-                  LOGIN_URL: process.env.LOGIN_URL,
-                  LOGOUT_URL: process.env.LOGOUT_URL,
-                  MARKETING_SITE_BASE_URL: process.env.MARKETING_SITE_BASE_URL,
-                  ORDER_HISTORY_URL: process.env.ORDER_HISTORY_URL,
-                  LOGO_TRADEMARK_URL: process.env.LOGO_TRADEMARK_URL,
-                },
+                config: APP_CONTEXT_CONFIG,
               }}
             >
               <Header />
@@ -264,14 +231,7 @@ describe('<Header />', () => {
                   roles: [],
                   administrator: false,
                 },
-                config: {
-                  LMS_BASE_URL: process.env.LMS_BASE_URL,
-                  LOGIN_URL: process.env.LOGIN_URL,
-                  LOGOUT_URL: process.env.LOGOUT_URL,
-                  MARKETING_SITE_BASE_URL: process.env.MARKETING_SITE_BASE_URL,
-                  ORDER_HISTORY_URL: process.env.ORDER_HISTORY_URL,
-                  LOGO_TRADEMARK_URL: process.env.LOGO_TRADEMARK_URL,
-                },
+                config: APP_CONTEXT_CONFIG,
               }}
             >
               <Header />
