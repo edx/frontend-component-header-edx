@@ -21,7 +21,7 @@ const APP_CONTEXT_CONFIG = {
   LOGOUT_URL: process.env.LOGOUT_URL,
   MARKETING_SITE_BASE_URL: process.env.MARKETING_SITE_BASE_URL,
   ORDER_HISTORY_URL: process.env.ORDER_HISTORY_URL,
-  LOGO_TRADEMARK_URL: process.env.LOGO_TRADEMARK_URL,
+  LOGO_URL: process.env.LOGO_URL,
 };
 
 describe('<Header />', () => {

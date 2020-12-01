@@ -23,7 +23,7 @@ ensureConfig([
   'LOGIN_URL',
   'MARKETING_SITE_BASE_URL',
   'ORDER_HISTORY_URL',
-  'LOGO_TRADEMARK_URL',
+  'LOGO_URL',
 ], 'Header component');
 
 subscribe(APP_CONFIG_INITIALIZED, () => {
@@ -135,7 +135,7 @@ function Header({ intl }) {
   ];
 
   let props = {
-    logo: config.LOGO_TRADEMARK_URL,
+    logo: config.LOGO_URL,
     logoAltText: 'edX',
     siteName: 'edX',
     logoDestination: getConfig().MINIMAL_HEADER ? null : `${config.LMS_BASE_URL}/dashboard`,
