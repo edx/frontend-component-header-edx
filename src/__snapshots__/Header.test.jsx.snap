@@ -13,7 +13,7 @@ exports[`<Header /> minimal renders correctly for authenticated users when minim
       <img
         alt="edX"
         className="logo"
-        src="https://edx-cdn.org/v3/prod/logo-trademark.svg"
+        src="https://edx-cdn.org/v3/prod/logo.svg"
       />
       <nav
         aria-label="Main"
@@ -105,7 +105,7 @@ exports[`<Header /> minimal renders correctly for unauthenticated users when min
       <img
         alt="edX"
         className="logo"
-        src="https://edx-cdn.org/v3/prod/logo-trademark.svg"
+        src="https://edx-cdn.org/v3/prod/logo.svg"
       />
       <nav
         aria-label="Main"
@@ -150,7 +150,7 @@ exports[`<Header /> renders correctly for authenticated users on desktop 1`] = `
         <img
           alt="edX"
           className="d-block"
-          src="https://edx-cdn.org/v3/prod/logo-trademark.svg"
+          src="https://edx-cdn.org/v3/prod/logo.svg"
         />
       </a>
       <nav
@@ -322,7 +322,7 @@ exports[`<Header /> renders correctly for authenticated users on mobile 1`] = `
       <img
         alt="edX"
         className="d-block"
-        src="https://edx-cdn.org/v3/prod/logo-trademark.svg"
+        src="https://edx-cdn.org/v3/prod/logo.svg"
       />
     </a>
   </div>
@@ -397,7 +397,7 @@ exports[`<Header /> renders correctly for unauthenticated users on desktop 1`] =
         <img
           alt="edX"
           className="d-block"
-          src="https://edx-cdn.org/v3/prod/logo-trademark.svg"
+          src="https://edx-cdn.org/v3/prod/logo.svg"
         />
       </a>
       <nav
@@ -518,7 +518,7 @@ exports[`<Header /> renders correctly for unauthenticated users on mobile 1`] = 
       <img
         alt="edX"
         className="d-block"
-        src="https://edx-cdn.org/v3/prod/logo-trademark.svg"
+        src="https://edx-cdn.org/v3/prod/logo.svg"
       />
     </a>
   </div>
