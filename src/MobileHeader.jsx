@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 
 // Local Components
+import { AvatarButton } from '@edx/paragon';
 import { Menu, MenuTrigger, MenuContent } from './Menu';
-import Avatar from './Avatar';
 import { LinkedLogo, Logo } from './Logo';
 
 // i18n
@@ -130,12 +130,13 @@ class MobileHeader extends React.Component {
           {userMenu.length > 0 || loggedOutItems.length > 0 ? (
             <Menu tag="nav" aria-label={intl.formatMessage(messages['header.label.secondary.nav'])} className="position-static">
               <MenuTrigger
-                tag="button"
-                className="icon-button"
+                tag={AvatarButton}
                 aria-label={intl.formatMessage(messages['header.label.account.menu'])}
                 title={intl.formatMessage(messages['header.label.account.menu'])}
+                src={avatar}
+                showLabel={false}
               >
-                <Avatar size="1.5rem" src={avatar} alt={username} />
+                {username}
               </MenuTrigger>
               <MenuContent tag="ul" className="nav flex-column pin-left pin-right border-top shadow py-2">
                 {loggedIn ? this.renderUserMenuItems() : this.renderLoggedOutItems()}

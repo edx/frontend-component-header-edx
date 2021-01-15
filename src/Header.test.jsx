@@ -117,9 +117,10 @@ describe('<Header />', () => {
     const flushPromises = () => new Promise(setImmediate);
     await act(async () => {
       await flushPromises();
+      wrapper.update();
+      wrapper.find('DropdownToggle').simulate('click');
     });
-    wrapper.update();
-    wrapper.find('.menu-trigger').simulate('click');
+
     expect(wrapper.find('a[children="Order History"]')).toHaveLength(1);
     expect(wrapper.find('a[children="Dashboard"]')).toHaveLength(1);
 
@@ -131,9 +132,9 @@ describe('<Header />', () => {
     wrapper = mount(component);
     await act(async () => {
       await flushPromises();
+      wrapper.update();
+      wrapper.find('DropdownToggle').simulate('click');
     });
-    wrapper.update();
-    wrapper.find('.menu-trigger').simulate('click');
     expect(wrapper.find('a[children="Order History"]')).toHaveLength(0);
     expect(wrapper.find('a[children="Dashboard"]')).toHaveLength(1);
   });
