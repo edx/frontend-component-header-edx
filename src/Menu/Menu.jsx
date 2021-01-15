@@ -9,7 +9,7 @@ function MenuTrigger({ tag, className, ...attributes }) {
   });
 }
 MenuTrigger.propTypes = {
-  tag: PropTypes.string,
+  tag: PropTypes.oneOfType([PropTypes.string, PropTypes.elementType]),
   className: PropTypes.string,
 };
 MenuTrigger.defaultProps = {

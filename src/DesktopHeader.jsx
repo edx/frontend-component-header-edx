@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 
 // Local Components
+import { AvatarButton, Dropdown } from '@edx/paragon';
 import { Menu, MenuTrigger, MenuContent } from './Menu';
-import Avatar from './Avatar';
 import { LinkedLogo, Logo } from './Logo';
 
 // i18n
@@ -62,22 +62,25 @@ class DesktopHeader extends React.Component {
     } = this.props;
 
     return (
-      <Menu transitionClassName="menu-dropdown" transitionTimeout={250}>
-        <MenuTrigger
-          data-hj-suppress
-          tag="button"
+      <Dropdown>
+        <Dropdown.Toggle
+          as={AvatarButton}
+          src={avatar}
+          alt=""
           aria-label={intl.formatMessage(messages['header.label.account.menu.for'], { username })}
-          className="btn btn-outline-primary d-inline-flex align-items-center pl-2 pr-3"
+          data-hj-suppress
         >
-          <Avatar size="1.5em" src={avatar} alt="" className="mr-2" />
-          {username} <CaretIcon role="img" aria-hidden focusable="false" />
-        </MenuTrigger>
-        <MenuContent className="mb-0 dropdown-menu show dropdown-menu-right pin-right shadow py-2">
+          {username}
+        </Dropdown.Toggle>
+
+        <Dropdown.Menu alignRight>
           {userMenu.map(({ type, href, content }) => (
-            <a className={`dropdown-${type}`} key={`${type}-${content}`} href={href}>{content}</a>
+            <Dropdown.Item key={`${type}-${content}`} href={href}>
+              {content}
+            </Dropdown.Item>
           ))}
-        </MenuContent>
-      </Menu>
+        </Dropdown.Menu>
+      </Dropdown>
     );
   }
 
