@@ -30,7 +30,7 @@ subscribe(APP_CONFIG_INITIALIZED, () => {
   mergeConfig({
     MINIMAL_HEADER: !!process.env.MINIMAL_HEADER,
     ENTERPRISE_LEARNER_PORTAL_HOSTNAME: process.env.ENTERPRISE_LEARNER_PORTAL_HOSTNAME,
-    AUTHN_MINIMAL_HEADER: !!process.env.AUTHN_MINIMAL_HEADER,
+    LOGISTRATION_MINIMAL_HEADER: !!process.env.LOGISTRATION_MINIMAL_HEADER,
   }, 'Header additional config');
 });
 
@@ -142,9 +142,9 @@ function Header({ intl }) {
     loggedIn: authenticatedUser !== null,
     username: authenticatedUser !== null ? authenticatedUser.username : null,
     avatar: authenticatedUser !== null ? authenticatedUser.avatar : null,
-    mainMenu: getConfig().MINIMAL_HEADER || getConfig().AUTHN_MINIMAL_HEADER ? [] : mainMenu,
-    userMenu: getConfig().AUTHN_MINIMAL_HEADER ? [] : userMenu,
-    loggedOutItems: getConfig().AUTHN_MINIMAL_HEADER ? [] : loggedOutItems,
+    mainMenu: getConfig().MINIMAL_HEADER || getConfig().LOGISTRATION_MINIMAL_HEADER ? [] : mainMenu,
+    userMenu: getConfig().LOGISTRATION_MINIMAL_HEADER ? [] : userMenu,
+    loggedOutItems: getConfig().LOGISTRATION_MINIMAL_HEADER ? [] : loggedOutItems,
   };
 
   if (enterpriseCustomerBrandingConfig) {
