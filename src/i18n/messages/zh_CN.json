@@ -16,5 +16,6 @@
   "header.label.main.nav": "Main",
   "header.label.main.menu": "Main Menu",
   "header.label.main.header": "Main",
-  "header.label.secondary.nav": "Secondary"
+  "header.label.secondary.nav": "Secondary",
+  "header.label.skip.nav": "Skip to main content"
 }

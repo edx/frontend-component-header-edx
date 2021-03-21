@@ -16,5 +16,6 @@
   "header.label.main.nav": "الرئيسية",
   "header.label.main.menu": "القائمة الرئيسية",
   "header.label.main.header": "الرئيسية",
-  "header.label.secondary.nav": "ثانوي"
+  "header.label.secondary.nav": "ثانوي",
+  "header.label.skip.nav": "Skip to main content"
 }
