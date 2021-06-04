@@ -60,7 +60,7 @@
     "@edx/frontend-enterprise": "4.6.3",
     "babel-polyfill": "6.26.0",
     "react-responsive": "8.2.0",
-    "react-transition-group": "4.3.0"
+    "react-transition-group": "4.4.2"
   },
   "peerDependencies": {
     "@edx/frontend-platform": "^1.8.0",
