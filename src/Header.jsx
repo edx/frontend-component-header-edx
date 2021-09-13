@@ -107,10 +107,11 @@ function Header({ intl }) {
   ];
 
   // Users should only see Order History if they do not have an available
-  // learner portal, because an available learner portal currently means
+  // learner portal and have a ORDER_HISTORY_URL define in the environment,
+  // because an available learner portal currently means
   // that they access content via Subscriptions, in which context an "order"
   // is not relevant.
-  if (!enterpriseLearnerPortalLink) {
+  if (!enterpriseLearnerPortalLink && config.ORDER_HISTORY_URL) {
     userMenu.splice(-1, 0, orderHistoryItem);
   }
 
