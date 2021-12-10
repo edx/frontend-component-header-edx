@@ -29,7 +29,7 @@ LinkedLogo.propTypes = {
 };
 
 function LearningHeader({
-  courseOrg, courseNumber, courseTitle, intl,
+  courseOrg, courseNumber, courseTitle, intl, showUserDropdown,
 }) {
   const { authenticatedUser } = useContext(AppContext);
 
@@ -61,19 +61,19 @@ function LearningHeader({
   return (
     <header className="learning-header">
       <a className="sr-only sr-only-focusable" href="#main-content">{intl.formatMessage(messages.skipNavLink)}</a>
-      <div className="container-fluid py-2 d-flex align-items-center">
+      <div className="container-xl py-2 d-flex align-items-center">
         {headerLogo}
         <div className="flex-grow-1 course-title-lockup" style={{ lineHeight: 1 }}>
           <span className="d-block small m-0">{courseOrg} {courseNumber}</span>
           <span className="d-block m-0 font-weight-bold course-title">{courseTitle}</span>
         </div>
-        {authenticatedUser && (
+        {showUserDropdown && authenticatedUser && (
           <AuthenticatedUserDropdown
             enterpriseLearnerPortalLink={enterpriseLearnerPortalLink}
             username={authenticatedUser.username}
           />
         )}
-        {!authenticatedUser && (
+        {showUserDropdown && !authenticatedUser && (
           <AnonymousUserMenu />
         )}
       </div>
@@ -86,12 +86,14 @@ LearningHeader.propTypes = {
   courseNumber: PropTypes.string,
   courseTitle: PropTypes.string,
   intl: intlShape.isRequired,
+  showUserDropdown: PropTypes.bool,
 };
 
 LearningHeader.defaultProps = {
   courseOrg: null,
   courseNumber: null,
   courseTitle: null,
+  showUserDropdown: true,
 };
 
 export default injectIntl(LearningHeader);

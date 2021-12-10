@@ -43,7 +43,7 @@ function AuthenticatedUserDropdown({ enterpriseLearnerPortalLink, intl, username
           <Dropdown.Item href={`${getConfig().LMS_BASE_URL}/account/settings`}>
             {intl.formatMessage(messages.account)}
           </Dropdown.Item>
-          {!enterpriseLearnerPortalLink && (
+          {!enterpriseLearnerPortalLink && getConfig().ORDER_HISTORY_URL && (
             // Users should only see Order History if they do not have an available
             // learner portal, because an available learner portal currently means
             // that they access content via Subscriptions, in which context an "order"
