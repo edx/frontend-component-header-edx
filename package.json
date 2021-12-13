@@ -34,7 +34,7 @@
   "homepage": "https://github.com/edx/frontend-component-header-edx#readme",
   "devDependencies": {
     "@edx/brand": "npm:@edx/brand-edx.org@2.0.3",
-    "@edx/frontend-build": "5.4.0",
+    "@edx/frontend-build": "5.6.1",
     "@edx/frontend-platform": "1.14.0",
     "@edx/paragon": "12.6.1",
     "codecov": "3.8.3",
