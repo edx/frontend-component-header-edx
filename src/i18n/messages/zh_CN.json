@@ -1,4 +1,6 @@
 {
+  "general.register.sentenceCase": "Register",
+  "general.signIn.sentenceCase": "Sign in",
   "header.links.courses": "Courses",
   "header.links.programs": "Programs",
   "header.links.content.search": "Discover New",
@@ -17,5 +19,12 @@
   "header.label.main.menu": "Main Menu",
   "header.label.main.header": "Main",
   "header.label.secondary.nav": "Secondary",
-  "header.label.skip.nav": "Skip to main content"
+  "header.label.skip.nav": "Skip to main content",
+  "header.menu.dashboard.label": "Dashboard",
+  "header.help.label": "Help",
+  "header.menu.profile.label": "Profile",
+  "header.menu.account.label": "Account",
+  "header.menu.orderHistory.label": "Order History",
+  "header.navigation.skipNavLink": "Skip to main content.",
+  "header.menu.signOut.label": "Sign Out"
 }

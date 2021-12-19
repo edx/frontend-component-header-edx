@@ -1,4 +1,6 @@
 {
+  "general.register.sentenceCase": "Register",
+  "general.signIn.sentenceCase": "Sign in",
   "header.links.courses": "المساقات",
   "header.links.programs": "برامج",
   "header.links.content.search": "استكشف الجديد",
@@ -17,5 +19,12 @@
   "header.label.main.menu": "القائمة الرئيسية",
   "header.label.main.header": "Main",
   "header.label.secondary.nav": "فرعي",
-  "header.label.skip.nav": "التخطي إلى المحتوى الرئيسي"
+  "header.label.skip.nav": "التخطي إلى المحتوى الرئيسي",
+  "header.menu.dashboard.label": "Dashboard",
+  "header.help.label": "Help",
+  "header.menu.profile.label": "Profile",
+  "header.menu.account.label": "Account",
+  "header.menu.orderHistory.label": "Order History",
+  "header.navigation.skipNavLink": "Skip to main content.",
+  "header.menu.signOut.label": "Sign Out"
 }
