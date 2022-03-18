@@ -34,9 +34,9 @@
   "homepage": "https://github.com/edx/frontend-component-header-edx#readme",
   "devDependencies": {
     "@edx/brand": "npm:@edx/brand-edx.org@2.0.3",
-    "@edx/frontend-build": "5.6.14",
-    "@edx/frontend-platform": "1.15.2",
-    "@edx/paragon": "12.6.1",
+    "@edx/frontend-build": "9.1.1",
+    "@edx/frontend-platform": "^1.15.2",
+    "@edx/paragon": "19.9.0",
     "codecov": "3.8.3",
     "enzyme": "3.11.0",
     "enzyme-adapter-react-16": "1.15.6",
@@ -68,8 +68,8 @@
     "@fortawesome/react-fontawesome": "^0.1.14"
   },
   "peerDependencies": {
-    "@edx/frontend-platform": "^1.8.0",
-    "@edx/paragon": "^12.4.0",
+    "@edx/frontend-platform": "^1.15.2",
+    "@edx/paragon": "^19.9.0",
     "prop-types": "^15.5.10",
     "react": "^16.9.0",
     "react-dom": "^16.9.0"
