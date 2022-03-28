@@ -31,7 +31,6 @@ exports[`<Header /> minimal renders correctly for authenticated users when minim
       >
         <div
           className="dropdown"
-          onKeyDown={[Function]}
         >
           <button
             alt=""
@@ -44,15 +43,11 @@ exports[`<Header /> minimal renders correctly for authenticated users when minim
             onClick={[Function]}
             type="button"
           >
-            <span
-              className="pgn__avatar-button-avatar-wrap"
-            >
-              <img
-                alt=""
-                className="pgn__avatar pgn__avatar-sm"
-                src="icon/mock/path"
-              />
-            </span>
+            <img
+              alt=""
+              className="pgn__avatar pgn__avatar-sm"
+              src="icon/mock/path"
+            />
             edX
           </button>
         </div>
@@ -164,7 +159,6 @@ exports[`<Header /> renders correctly for authenticated users on desktop 1`] = `
       >
         <div
           className="dropdown"
-          onKeyDown={[Function]}
         >
           <button
             alt=""
@@ -177,15 +171,11 @@ exports[`<Header /> renders correctly for authenticated users on desktop 1`] = `
             onClick={[Function]}
             type="button"
           >
-            <span
-              className="pgn__avatar-button-avatar-wrap"
-            >
-              <img
-                alt=""
-                className="pgn__avatar pgn__avatar-sm"
-                src="icon/mock/path"
-              />
-            </span>
+            <img
+              alt=""
+              className="pgn__avatar pgn__avatar-sm"
+              src="icon/mock/path"
+            />
             edX
           </button>
         </div>
@@ -298,15 +288,11 @@ exports[`<Header /> renders correctly for authenticated users on mobile 1`] = `
         title="Account Menu"
         type="button"
       >
-        <span
-          className="pgn__avatar-button-avatar-wrap"
-        >
-          <img
-            alt="edX"
-            className="pgn__avatar pgn__avatar-sm"
-            src="icon/mock/path"
-          />
-        </span>
+        <img
+          alt="edX"
+          className="pgn__avatar pgn__avatar-sm"
+          src="icon/mock/path"
+        />
       </button>
     </nav>
   </div>
@@ -487,15 +473,11 @@ exports[`<Header /> renders correctly for unauthenticated users on mobile 1`] = 
         title="Account Menu"
         type="button"
       >
-        <span
-          className="pgn__avatar-button-avatar-wrap"
-        >
-          <img
-            alt={null}
-            className="pgn__avatar pgn__avatar-sm"
-            src="icon/mock/path"
-          />
-        </span>
+        <img
+          alt={null}
+          className="pgn__avatar pgn__avatar-sm"
+          src="icon/mock/path"
+        />
       </button>
     </nav>
   </div>
