@@ -10,7 +10,7 @@ import {
   getConfig,
   subscribe,
 } from '@edx/frontend-platform';
-import { useEnterpriseConfig } from '@edx/frontend-enterprise';
+import { useEnterpriseConfig } from '@edx/frontend-enterprise-utils';
 
 import DesktopHeader from './DesktopHeader';
 import MobileHeader from './MobileHeader';

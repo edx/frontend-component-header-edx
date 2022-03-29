@@ -1,4 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
+import 'core-js/stable';
+import 'regenerator-runtime/runtime';
 
 import Enzyme from 'enzyme';
 import React from 'react';
@@ -6,7 +8,6 @@ import PropTypes from 'prop-types';
 import Adapter from 'enzyme-adapter-react-16';
 import '@testing-library/jest-dom';
 import '@testing-library/jest-dom/extend-expect';
-import 'babel-polyfill';
 import 'jest-chain';
 import { getConfig, mergeConfig } from '@edx/frontend-platform';
 import { configure as configureLogging } from '@edx/frontend-platform/logging';
