@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-constructed-context-values */
 import React from 'react';
 import { act } from 'react-dom/test-utils';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
