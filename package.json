@@ -35,7 +35,7 @@
   "devDependencies": {
     "@edx/brand": "npm:@edx/brand-edx.org@2.0.7",
     "@edx/frontend-build": "11.0.2",
-    "@edx/frontend-platform": "2.6.1",
+    "@edx/frontend-platform": "2.6.2",
     "@edx/paragon": "19.9.0",
     "@edx/reactifex": "1.1.0",
     "@testing-library/dom": "7.31.2",
