@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 import { act } from 'react-dom/test-utils';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
@@ -24,6 +25,20 @@ const APP_CONTEXT_CONFIG = {
   LOGO_URL: process.env.LOGO_URL,
 };
 
+function HeaderContext({ width, contextValue }) {
+  return (
+    <ResponsiveContext.Provider value={width}>
+      <IntlProvider locale="en" messages={{}}>
+        <AppContext.Provider
+          value={contextValue}
+        >
+          <Header />
+        </AppContext.Provider>
+      </IntlProvider>
+    </ResponsiveContext.Provider>
+  );
+}
+
 describe('<Header />', () => {
   beforeEach(() => {
     useEnterpriseConfig.mockReturnValue({});
@@ -45,20 +60,11 @@ describe('<Header />', () => {
   };
 
   it('renders correctly for unauthenticated users on desktop', () => {
-    const component = (
-      <ResponsiveContext.Provider value={{ width: 1280 }}>
-        <IntlProvider locale="en" messages={{}}>
-          <AppContext.Provider
-            value={{
-              authenticatedUser: null,
-              config: APP_CONTEXT_CONFIG,
-            }}
-          >
-            <Header />
-          </AppContext.Provider>
-        </IntlProvider>
-      </ResponsiveContext.Provider>
-    );
+    const contextValue = {
+      authenticatedUser: null,
+      config: APP_CONTEXT_CONFIG,
+    };
+    const component = <HeaderContext width={{ width: 1280 }} contextValue={contextValue} />;
 
     const wrapper = TestRenderer.create(component);
 
@@ -66,25 +72,16 @@ describe('<Header />', () => {
   });
 
   it('renders correctly for authenticated users on desktop', () => {
-    const component = (
-      <ResponsiveContext.Provider value={{ width: 1280 }}>
-        <IntlProvider locale="en" messages={{}}>
-          <AppContext.Provider
-            value={{
-              authenticatedUser: {
-                userId: 'abc123',
-                username: 'edX',
-                roles: [],
-                administrator: false,
-              },
-              config: APP_CONTEXT_CONFIG,
-            }}
-          >
-            <Header />
-          </AppContext.Provider>
-        </IntlProvider>
-      </ResponsiveContext.Provider>
-    );
+    const contextValue = {
+      authenticatedUser: {
+        userId: 'abc123',
+        username: 'edX',
+        roles: [],
+        administrator: false,
+      },
+      config: APP_CONTEXT_CONFIG,
+    };
+    const component = <HeaderContext width={{ width: 1280 }} contextValue={contextValue} />;
 
     const wrapper = TestRenderer.create(component);
 
@@ -92,25 +89,16 @@ describe('<Header />', () => {
   });
 
   it('renders correctly for authenticated users on desktop with or without learner portal links', async () => {
-    const component = (
-      <ResponsiveContext.Provider value={{ width: 1280 }}>
-        <IntlProvider locale="en" messages={{}}>
-          <AppContext.Provider
-            value={{
-              authenticatedUser: {
-                userId: 'abc123',
-                username: 'edX',
-                roles: [],
-                administrator: false,
-              },
-              config: APP_CONTEXT_CONFIG,
-            }}
-          >
-            <Header />
-          </AppContext.Provider>
-        </IntlProvider>
-      </ResponsiveContext.Provider>
-    );
+    const contextValue = {
+      authenticatedUser: {
+        userId: 'abc123',
+        username: 'edX',
+        roles: [],
+        administrator: false,
+      },
+      config: APP_CONTEXT_CONFIG,
+    };
+    const component = <HeaderContext width={{ width: 1280 }} contextValue={contextValue} />;
 
     // When learner portal links are not present, Order History should be a dropdown item
     let wrapper = mount(component);
@@ -140,20 +128,11 @@ describe('<Header />', () => {
   });
 
   it('renders correctly for unauthenticated users on mobile', () => {
-    const component = (
-      <ResponsiveContext.Provider value={{ width: 500 }}>
-        <IntlProvider locale="en" messages={{}}>
-          <AppContext.Provider
-            value={{
-              authenticatedUser: null,
-              config: APP_CONTEXT_CONFIG,
-            }}
-          >
-            <Header />
-          </AppContext.Provider>
-        </IntlProvider>
-      </ResponsiveContext.Provider>
-    );
+    const contextValue = {
+      authenticatedUser: null,
+      config: APP_CONTEXT_CONFIG,
+    };
+    const component = <HeaderContext width={{ width: 500 }} contextValue={contextValue} />;
 
     const wrapper = TestRenderer.create(component);
 
@@ -161,25 +140,16 @@ describe('<Header />', () => {
   });
 
   it('renders correctly for authenticated users on mobile', () => {
-    const component = (
-      <ResponsiveContext.Provider value={{ width: 500 }}>
-        <IntlProvider locale="en" messages={{}}>
-          <AppContext.Provider
-            value={{
-              authenticatedUser: {
-                userId: 'abc123',
-                username: 'edX',
-                roles: [],
-                administrator: false,
-              },
-              config: APP_CONTEXT_CONFIG,
-            }}
-          >
-            <Header />
-          </AppContext.Provider>
-        </IntlProvider>
-      </ResponsiveContext.Provider>
-    );
+    const contextValue = {
+      authenticatedUser: {
+        userId: 'abc123',
+        username: 'edX',
+        roles: [],
+        administrator: false,
+      },
+      config: APP_CONTEXT_CONFIG,
+    };
+    const component = <HeaderContext width={{ width: 500 }} contextValue={contextValue} />;
 
     const wrapper = TestRenderer.create(component);
 
@@ -200,20 +170,11 @@ describe('<Header />', () => {
     });
 
     it('renders correctly for unauthenticated users when minimal', () => {
-      const component = (
-        <ResponsiveContext.Provider value={{ width: 1280 }}>
-          <IntlProvider locale="en" messages={{}}>
-            <AppContext.Provider
-              value={{
-                authenticatedUser: null,
-                config: APP_CONTEXT_CONFIG,
-              }}
-            >
-              <Header />
-            </AppContext.Provider>
-          </IntlProvider>
-        </ResponsiveContext.Provider>
-      );
+      const contextValue = {
+        authenticatedUser: null,
+        config: APP_CONTEXT_CONFIG,
+      };
+      const component = <HeaderContext width={{ width: 1280 }} contextValue={contextValue} />;
 
       const wrapper = TestRenderer.create(component);
 
@@ -221,25 +182,16 @@ describe('<Header />', () => {
     });
 
     it('renders correctly for authenticated users when minimal', () => {
-      const component = (
-        <ResponsiveContext.Provider value={{ width: 1280 }}>
-          <IntlProvider locale="en" messages={{}}>
-            <AppContext.Provider
-              value={{
-                authenticatedUser: {
-                  userId: 'abc123',
-                  username: 'edX',
-                  roles: [],
-                  administrator: false,
-                },
-                config: APP_CONTEXT_CONFIG,
-              }}
-            >
-              <Header />
-            </AppContext.Provider>
-          </IntlProvider>
-        </ResponsiveContext.Provider>
-      );
+      const contextValue = {
+        authenticatedUser: {
+          userId: 'abc123',
+          username: 'edX',
+          roles: [],
+          administrator: false,
+        },
+        config: APP_CONTEXT_CONFIG,
+      };
+      const component = <HeaderContext width={{ width: 1280 }} contextValue={contextValue} />;
 
       const wrapper = TestRenderer.create(component);
 
