@@ -65,6 +65,7 @@ class DesktopHeader extends React.Component {
     return (
       <Dropdown>
         <Dropdown.Toggle
+          id="Menu dropdown"
           as={AvatarButton}
           src={avatar}
           alt=""
