@@ -29,7 +29,7 @@ function AuthenticatedUserDropdown({ enterpriseLearnerPortalLink, intl, username
     <>
       <a className="text-gray-700 mr-3" href={`${getConfig().SUPPORT_URL}`}>{intl.formatMessage(messages.help)}</a>
       <Dropdown className="user-dropdown">
-        <Dropdown.Toggle variant="outline-primary">
+        <Dropdown.Toggle variant="outline-primary" id="User dropdown">
           <FontAwesomeIcon icon={faUserCircle} className="d-md-none" size="lg" />
           <span data-hj-suppress className="d-none d-md-inline">
             {username}
