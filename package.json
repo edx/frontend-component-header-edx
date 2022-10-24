@@ -38,7 +38,7 @@
     "@edx/frontend-platform": "2.6.2",
     "@edx/paragon": "19.9.0",
     "@edx/reactifex": "1.1.0",
-    "@testing-library/dom": "7.31.2",
+    "@testing-library/dom": "8.19.0",
     "@testing-library/jest-dom": "5.16.5",
     "@testing-library/react": "10.4.9",
     "codecov": "3.8.3",
