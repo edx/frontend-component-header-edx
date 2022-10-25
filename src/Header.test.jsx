@@ -25,19 +25,17 @@ const APP_CONTEXT_CONFIG = {
   LOGO_URL: process.env.LOGO_URL,
 };
 
-function HeaderContext({ width, contextValue }) {
-  return (
-    <ResponsiveContext.Provider value={width}>
-      <IntlProvider locale="en" messages={{}}>
-        <AppContext.Provider
-          value={contextValue}
-        >
-          <Header />
-        </AppContext.Provider>
-      </IntlProvider>
-    </ResponsiveContext.Provider>
-  );
-}
+const HeaderContext = ({ width, contextValue }) => (
+  <ResponsiveContext.Provider value={width}>
+    <IntlProvider locale="en" messages={{}}>
+      <AppContext.Provider
+        value={contextValue}
+      >
+        <Header />
+      </AppContext.Provider>
+    </IntlProvider>
+  </ResponsiveContext.Provider>
+);
 
 describe('<Header />', () => {
   beforeEach(() => {
