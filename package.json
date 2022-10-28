@@ -36,7 +36,7 @@
     "@edx/brand": "npm:@edx/brand-edx.org@2.0.8",
     "@edx/frontend-build": "11.0.2",
     "@edx/frontend-platform": "2.6.2",
-    "@edx/paragon": "19.9.0",
+    "@edx/paragon": "20.18.0",
     "@edx/reactifex": "1.1.0",
     "@testing-library/dom": "8.19.0",
     "@testing-library/jest-dom": "5.16.5",
