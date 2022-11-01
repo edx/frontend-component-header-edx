@@ -31,6 +31,7 @@ exports[`<Header /> minimal renders correctly for authenticated users when minim
       >
         <div
           className="dropdown"
+          data-testid="dropdown"
         >
           <button
             alt=""
@@ -160,6 +161,7 @@ exports[`<Header /> renders correctly for authenticated users on desktop 1`] = `
       >
         <div
           className="dropdown"
+          data-testid="dropdown"
         >
           <button
             alt=""
