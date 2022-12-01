@@ -11,7 +11,7 @@ This is the standard edX header for use in React applications. It has two export
 Usage
 -----
 
-``import Header, { messages } from '@edx/frontend-component-header-edx';``
+``import Header, { messages } from '@edx/frontend-component-header-edx';`` 
 
 Development
 -----------
