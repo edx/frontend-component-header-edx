@@ -9,16 +9,18 @@ import AnonymousUserMenu from './AnonymousUserMenu';
 import AuthenticatedUserDropdown from './AuthenticatedUserDropdown';
 import messages from './messages';
 
-const LinkedLogo = ({
+function LinkedLogo({
   href,
   src,
   alt,
   ...attributes
-}) => (
-  <a href={href} {...attributes}>
-    <img className="d-block" src={src} alt={alt} />
-  </a>
-);
+}) {
+  return (
+    <a href={href} {...attributes}>
+      <img className="d-block" src={src} alt={alt} />
+    </a>
+  );
+}
 
 LinkedLogo.propTypes = {
   href: PropTypes.string.isRequired,
@@ -26,9 +28,9 @@ LinkedLogo.propTypes = {
   alt: PropTypes.string.isRequired,
 };
 
-const LearningHeader = ({
+function LearningHeader({
   courseOrg, courseNumber, courseTitle, intl, showUserDropdown,
-}) => {
+}) {
   const { authenticatedUser } = useContext(AppContext);
 
   const { enterpriseLearnerPortalLink, enterpriseCustomerBrandingConfig } = useEnterpriseConfig(
@@ -77,7 +79,7 @@ const LearningHeader = ({
       </div>
     </header>
   );
-};
+}
 
 LearningHeader.propTypes = {
   courseOrg: PropTypes.string,

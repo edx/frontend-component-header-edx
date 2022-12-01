@@ -10,7 +10,7 @@ import { Dropdown } from '@edx/paragon';
 
 import messages from './messages';
 
-const AuthenticatedUserDropdown = ({ enterpriseLearnerPortalLink, intl, username }) => {
+function AuthenticatedUserDropdown({ enterpriseLearnerPortalLink, intl, username }) {
   let dashboardMenuItem = (
     <Dropdown.Item href={`${getConfig().LMS_BASE_URL}/dashboard`}>
       {intl.formatMessage(messages.dashboard)}
@@ -59,7 +59,7 @@ const AuthenticatedUserDropdown = ({ enterpriseLearnerPortalLink, intl, username
       </Dropdown>
     </>
   );
-};
+}
 
 AuthenticatedUserDropdown.propTypes = {
   enterpriseLearnerPortalLink: PropTypes.string,
