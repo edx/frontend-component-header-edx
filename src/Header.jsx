@@ -34,7 +34,7 @@ subscribe(APP_CONFIG_INITIALIZED, () => {
   }, 'Header additional config');
 });
 
-function Header({ intl }) {
+const Header = ({ intl }) => {
   const { authenticatedUser, config } = useContext(AppContext);
   const {
     enterpriseLearnerPortalLink,
@@ -165,7 +165,7 @@ function Header({ intl }) {
       </Responsive>
     </>
   );
-}
+};
 
 Header.propTypes = {
   intl: intlShape.isRequired,
