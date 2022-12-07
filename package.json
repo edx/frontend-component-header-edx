@@ -37,7 +37,6 @@
     "@edx/browserslist-config": "^1.1.1",
     "@edx/frontend-build": "12.4.0",
     "@edx/frontend-platform": "^2.0.0 || ^3.0.0",
-    "@edx/paragon": "20.21.1",
     "@edx/reactifex": "2.1.1",
     "@testing-library/dom": "8.19.0",
     "@testing-library/jest-dom": "5.16.5",
@@ -60,6 +59,7 @@
   },
   "dependencies": {
     "@edx/frontend-enterprise-utils": "2.2.0",
+    "@edx/paragon": "20.21.1",
     "@fortawesome/fontawesome-svg-core": "1.2.36",
     "@fortawesome/free-brands-svg-icons": "5.15.4",
     "@fortawesome/free-regular-svg-icons": "5.15.4",
