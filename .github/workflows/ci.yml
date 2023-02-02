@@ -13,7 +13,7 @@ jobs:
       with:
         fetch-depth: 0
     - name: Setup Nodejs
-      uses: actions/setup-node@v2
+      uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node }}
     - run: npm install -g npm@${{ matrix.npm }}
