@@ -100,7 +100,7 @@ const Header = ({ intl }) => {
     },
     {
       type: 'item',
-      href: `${config.LMS_BASE_URL}/account/settings`,
+      href: config.ACCOUNT_SETTINGS_URL,
       content: intl.formatMessage(messages['header.user.menu.account.settings']),
     },
     logoutMenuItem,
