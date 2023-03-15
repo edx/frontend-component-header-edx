@@ -40,7 +40,7 @@ const AuthenticatedUserDropdown = ({ enterpriseLearnerPortalLink, intl, username
           <Dropdown.Item href={`${getConfig().LMS_BASE_URL}/u/${username}`}>
             {intl.formatMessage(messages.profile)}
           </Dropdown.Item>
-          <Dropdown.Item href={`${getConfig().LMS_BASE_URL}/account/settings`}>
+          <Dropdown.Item href={getConfig().ACCOUNT_SETTINGS_URL}>
             {intl.formatMessage(messages.account)}
           </Dropdown.Item>
           {!enterpriseLearnerPortalLink && getConfig().ORDER_HISTORY_URL && (
