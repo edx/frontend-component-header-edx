@@ -37,7 +37,7 @@ const AuthenticatedUserDropdown = ({ enterpriseLearnerPortalLink, intl, username
         </Dropdown.Toggle>
         <Dropdown.Menu className="dropdown-menu-right">
           {dashboardMenuItem}
-          <Dropdown.Item href={`${getConfig().LMS_BASE_URL}/u/${username}`}>
+          <Dropdown.Item href={`${getConfig().ACCOUNT_PROFILE_URL}/u/${username}`}>
             {intl.formatMessage(messages.profile)}
           </Dropdown.Item>
           <Dropdown.Item href={getConfig().ACCOUNT_SETTINGS_URL}>
