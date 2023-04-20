@@ -95,7 +95,7 @@ const Header = ({ intl }) => {
     ...baseUserMenuDashboardLinks,
     {
       type: 'item',
-      href: `${config.LMS_BASE_URL}/u/${authenticatedUser.username}`,
+      href: `${config.ACCOUNT_PROFILE_URL}/u/${authenticatedUser.username}`,
       content: intl.formatMessage(messages['header.user.menu.profile']),
     },
     {
