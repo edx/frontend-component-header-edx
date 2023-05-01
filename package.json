@@ -58,7 +58,7 @@
   },
   "dependencies": {
     "@edx/frontend-enterprise-utils": "2.2.1",
-    "@edx/paragon": "20.32.0",
+    "@edx/paragon": "20.32.3",
     "@fortawesome/fontawesome-svg-core": "6.4.0",
     "@fortawesome/free-brands-svg-icons": "6.4.0",
     "@fortawesome/free-regular-svg-icons": "6.4.0",
