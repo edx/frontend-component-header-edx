@@ -95,6 +95,17 @@ const Header = ({ intl }) => {
     ...baseUserMenuDashboardLinks,
     {
       type: 'item',
+      href: 'https://careers.edx.org/',
+      content: intl.formatMessage(messages['header.user.menu.career']),
+      onClick: () => {
+        sendTrackEvent(
+          'edx.bi.user.menu.career.clicked',
+          {category: 'header', label: 'header'},
+        );
+      }
+    },
+    {
+      type: 'item',
       href: `${config.ACCOUNT_PROFILE_URL}/u/${authenticatedUser.username}`,
       content: intl.formatMessage(messages['header.user.menu.profile']),
     },
