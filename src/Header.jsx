@@ -100,9 +100,9 @@ const Header = ({ intl }) => {
       onClick: () => {
         sendTrackEvent(
           'edx.bi.user.menu.career.clicked',
-          {category: 'header', label: 'header'},
+          { category: 'header', label: 'header' },
         );
-      }
+      },
     },
     {
       type: 'item',
