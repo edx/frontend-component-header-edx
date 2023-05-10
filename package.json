@@ -33,10 +33,10 @@
   },
   "homepage": "https://github.com/edx/frontend-component-header-edx#readme",
   "devDependencies": {
-    "@edx/brand": "npm:@edx/brand-edx.org@2.1.1",
+    "@edx/brand": "npm:@edx/brand-edx.org@2.1.2",
     "@edx/browserslist-config": "^1.1.1",
-    "@edx/frontend-build": "12.8.10",
-    "@edx/frontend-platform": "^2.0.0 || ^3.0.0",
+    "@edx/frontend-build": "12.8.27",
+    "@edx/frontend-platform": "4.2.0",
     "@edx/reactifex": "2.1.1",
     "@testing-library/dom": "9.2.0",
     "@testing-library/jest-dom": "5.16.5",
@@ -57,8 +57,8 @@
     "redux-saga": "1.2.3"
   },
   "dependencies": {
-    "@edx/frontend-enterprise-utils": "2.2.1",
-    "@edx/paragon": "20.32.0",
+    "@edx/frontend-enterprise-utils": "3.0.0",
+    "@edx/paragon": "20.32.3",
     "@fortawesome/fontawesome-svg-core": "6.4.0",
     "@fortawesome/free-brands-svg-icons": "6.4.0",
     "@fortawesome/free-regular-svg-icons": "6.4.0",
@@ -70,7 +70,7 @@
     "regenerator-runtime": "0.13.11"
   },
   "peerDependencies": {
-    "@edx/frontend-platform": "^2.0.0 || ^3.0.0",
+    "@edx/frontend-platform": "^4.0.0",
     "prop-types": "^15.5.10",
     "react": "^16.9.0 || ^17.0.0",
     "react-dom": "^16.9.0 || ^17.0.0"
