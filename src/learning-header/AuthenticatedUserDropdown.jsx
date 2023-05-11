@@ -37,6 +37,9 @@ const AuthenticatedUserDropdown = ({ enterpriseLearnerPortalLink, intl, username
         </Dropdown.Toggle>
         <Dropdown.Menu className="dropdown-menu-right">
           {dashboardMenuItem}
+          <Dropdown.Item href="https://careers.edx.org/">
+            {intl.formatMessage(messages.career)}
+          </Dropdown.Item>
           <Dropdown.Item href={`${getConfig().ACCOUNT_PROFILE_URL}/u/${username}`}>
             {intl.formatMessage(messages.profile)}
           </Dropdown.Item>
