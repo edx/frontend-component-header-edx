@@ -24,7 +24,7 @@ const messages = defineMessages({
   career: {
     id: 'header.menu.career.label',
     defaultMessage: 'Career',
-    description: 'Link to the Career Resource Center',
+    description: 'The text for the user menu Career navigation link',
   },
   newAlert: {
     id: 'header.menu.new.label',
