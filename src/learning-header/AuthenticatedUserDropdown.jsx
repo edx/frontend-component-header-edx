@@ -19,6 +19,7 @@ const AuthenticatedUserDropdown = ({ enterpriseLearnerPortalLink, intl, username
   let careersMenuItem = (
     <Dropdown.Item href="https://careers.edx.org/">
       {intl.formatMessage(messages.career)}
+      <span className="badge badge-warning">${intl.formatMessage(messages.newAlert)}</span>
     </Dropdown.Item>
   );
   if (enterpriseLearnerPortalLink && Object.keys(enterpriseLearnerPortalLink).length > 0) {

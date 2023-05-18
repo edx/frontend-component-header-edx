@@ -96,7 +96,7 @@ const Header = ({ intl }) => {
     {
       type: 'item',
       href: 'https://careers.edx.org/',
-      content: intl.formatMessage(messages['header.user.menu.career']),
+      content: intl.formatMessage(messages['header.user.menu.career']) + '<span className="badge badge-warning">${intl.formatMessage(messages["header.user.menu.newAlert"])}</span>',
       onClick: () => {
         sendTrackEvent(
           'edx.bi.user.menu.career.clicked',
