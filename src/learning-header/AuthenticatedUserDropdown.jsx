@@ -6,7 +6,7 @@ import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
 
 import { getConfig } from '@edx/frontend-platform';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
-import { Dropdown } from '@edx/paragon';
+import { Dropdown, Badge } from '@edx/paragon';
 
 import messages from './messages';
 
@@ -19,7 +19,9 @@ const AuthenticatedUserDropdown = ({ enterpriseLearnerPortalLink, intl, username
   let careersMenuItem = (
     <Dropdown.Item href="https://careers.edx.org/">
       {intl.formatMessage(messages.career)}
-      <span className="badge badge-warning">${intl.formatMessage(messages.newAlert)}</span>
+      <Badge className="px-2 mx-2" variant="warning">
+        {intl.formatMessage(messages.newAlert)}
+      </Badge>
     </Dropdown.Item>
   );
   if (enterpriseLearnerPortalLink && Object.keys(enterpriseLearnerPortalLink).length > 0) {
