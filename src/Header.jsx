@@ -91,7 +91,7 @@ const Header = ({ intl }) => {
     baseUserMenuDashboardLinks = [dashboardMenuItem];
   }
 
-  const careerItemContent = `${intl.formatMessage(messages['header.user.menu.career'])} <span className="badge badge-warning">${intl.formatMessage(messages['header.user.menu.newAlert'])}</span>`;
+  const careerItemContent = (${intl.formatMessage(messages['header.user.menu.career'])}<span className="badge badge-warning">${intl.formatMessage(messages['header.user.menu.newAlert'])}</span>);
   let userMenu = authenticatedUser === null ? [] : [
     ...baseUserMenuDashboardLinks,
     {
