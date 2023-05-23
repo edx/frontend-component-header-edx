@@ -92,7 +92,7 @@ const Header = ({ intl }) => {
     baseUserMenuDashboardLinks = [dashboardMenuItem];
   }
 
-  const careerItemContent = <>{intl.formatMessage(messages['header.user.menu.career'])}&nbsp;&nbsp;<Badge className="px-2 mx-2" variant="warning">{intl.formatMessage(messages['header.user.menu.newAlert'])}</Badge></>;
+  const careerItemContent = <>{intl.formatMessage(messages['header.user.menu.career'])}<Badge className="px-2 mx-2" variant="warning">{intl.formatMessage(messages['header.user.menu.newAlert'])}</Badge></>;
   let userMenu = authenticatedUser === null ? [] : [
     ...baseUserMenuDashboardLinks,
     {
