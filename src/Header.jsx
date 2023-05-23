@@ -3,6 +3,7 @@ import Responsive from 'react-responsive';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import { sendTrackEvent } from '@edx/frontend-platform/analytics';
 import { AppContext } from '@edx/frontend-platform/react';
+import { Badge } from '@edx/paragon';
 import {
   APP_CONFIG_INITIALIZED,
   ensureConfig,
@@ -91,7 +92,7 @@ const Header = ({ intl }) => {
     baseUserMenuDashboardLinks = [dashboardMenuItem];
   }
 
-  const careerItemContent = <>{intl.formatMessage(messages['header.user.menu.career'])} <span className="badge badge-warning">{intl.formatMessage(messages['header.user.menu.newAlert'])}</span></>;
+  const careerItemContent = <>{intl.formatMessage(messages['header.user.menu.career'])}&nbsp;&nbsp;<Badge className="px-2 mx-2" variant="warning">{intl.formatMessage(messages['header.user.menu.newAlert'])}</Badge></>;
   let userMenu = authenticatedUser === null ? [] : [
     ...baseUserMenuDashboardLinks,
     {
