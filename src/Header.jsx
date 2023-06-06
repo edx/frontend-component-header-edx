@@ -3,6 +3,7 @@ import Responsive from 'react-responsive';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import { sendTrackEvent } from '@edx/frontend-platform/analytics';
 import { AppContext } from '@edx/frontend-platform/react';
+import { Badge } from '@edx/paragon';
 import {
   APP_CONFIG_INITIALIZED,
   ensureConfig,
@@ -91,8 +92,20 @@ const Header = ({ intl }) => {
     baseUserMenuDashboardLinks = [dashboardMenuItem];
   }
 
+  const careerItemContent = <>{intl.formatMessage(messages['header.user.menu.career'])}<Badge className="px-2 mx-2" variant="warning">{intl.formatMessage(messages['header.user.menu.newAlert'])}</Badge></>;
   let userMenu = authenticatedUser === null ? [] : [
     ...baseUserMenuDashboardLinks,
+    {
+      type: 'item',
+      href: 'https://careers.edx.org/',
+      content: careerItemContent,
+      onClick: () => {
+        sendTrackEvent(
+          'edx.bi.user.menu.career.clicked',
+          { category: 'header', label: 'header' },
+        );
+      },
+    },
     {
       type: 'item',
       href: `${config.ACCOUNT_PROFILE_URL}/u/${authenticatedUser.username}`,

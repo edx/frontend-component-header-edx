@@ -6,7 +6,7 @@ import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
 
 import { getConfig } from '@edx/frontend-platform';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
-import { Dropdown } from '@edx/paragon';
+import { Dropdown, Badge } from '@edx/paragon';
 
 import messages from './messages';
 
@@ -14,6 +14,14 @@ const AuthenticatedUserDropdown = ({ enterpriseLearnerPortalLink, intl, username
   let dashboardMenuItem = (
     <Dropdown.Item href={`${getConfig().LMS_BASE_URL}/dashboard`}>
       {intl.formatMessage(messages.dashboard)}
+    </Dropdown.Item>
+  );
+  let careersMenuItem = (
+    <Dropdown.Item href="https://careers.edx.org/">
+      {intl.formatMessage(messages.career)}
+      <Badge className="px-2 mx-2" variant="warning">
+        {intl.formatMessage(messages.newAlert)}
+      </Badge>
     </Dropdown.Item>
   );
   if (enterpriseLearnerPortalLink && Object.keys(enterpriseLearnerPortalLink).length > 0) {
@@ -24,6 +32,7 @@ const AuthenticatedUserDropdown = ({ enterpriseLearnerPortalLink, intl, username
         {enterpriseLearnerPortalLink.content}
       </Dropdown.Item>
     );
+    careersMenuItem = '';
   }
   return (
     <>
@@ -37,6 +46,7 @@ const AuthenticatedUserDropdown = ({ enterpriseLearnerPortalLink, intl, username
         </Dropdown.Toggle>
         <Dropdown.Menu className="dropdown-menu-right">
           {dashboardMenuItem}
+          {careersMenuItem}
           <Dropdown.Item href={`${getConfig().ACCOUNT_PROFILE_URL}/u/${username}`}>
             {intl.formatMessage(messages.profile)}
           </Dropdown.Item>
