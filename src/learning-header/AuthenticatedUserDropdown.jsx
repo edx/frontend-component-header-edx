@@ -59,7 +59,9 @@ const AuthenticatedUserDropdown = ({ enterpriseLearnerPortalLink, intl, username
             // that they access content via Subscriptions, in which context an "order"
             // is not relevant.
             <Dropdown.Item href={getConfig().ORDER_HISTORY_URL}>
-              {intl.formatMessage(messages.orderHistory)}
+              {getConfig().SUBSCRIPTIONS_ORDERS_MENU_ITEM_ENABLED?.toLowerCase() === 'true'
+                ? intl.formatMessage(messages.ordersAndSubscriptions)
+                : intl.formatMessage(messages.orderHistory)}
             </Dropdown.Item>
           )}
           <Dropdown.Item href={getConfig().LOGOUT_URL}>

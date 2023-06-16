@@ -36,6 +36,11 @@ const messages = defineMessages({
     defaultMessage: 'Order History',
     description: 'The text for the user menu Order History navigation link.',
   },
+  ordersAndSubscriptions: {
+    id: 'header.menu.ordersAndSubscriptions.label',
+    defaultMessage: 'Orders & Subscriptions',
+    description: 'The text for the user menu Orders & Subscriptions navigation link.',
+  },
   skipNavLink: {
     id: 'header.navigation.skipNavLink',
     defaultMessage: 'Skip to main content.',
