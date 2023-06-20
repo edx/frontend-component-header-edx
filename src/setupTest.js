@@ -71,7 +71,6 @@ export function initializeMockApp() {
     CSRF_TOKEN_API_PATH: process.env.CSRF_TOKEN_API_PATH || null,
     LOGO_URL: process.env.LOGO_URL || null,
     SITE_NAME: process.env.SITE_NAME || null,
-    SUBSCRIPTIONS_ORDERS_MENU_ITEM_ENABLED: process.env.SUBSCRIPTIONS_ORDERS_MENU_ITEM_ENABLED || 'false',
     authenticatedUser: {
       userId: 'abc123',
       username: 'Mock User',

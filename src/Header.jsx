@@ -32,7 +32,6 @@ subscribe(APP_CONFIG_INITIALIZED, () => {
     MINIMAL_HEADER: !!process.env.MINIMAL_HEADER,
     ENTERPRISE_LEARNER_PORTAL_HOSTNAME: process.env.ENTERPRISE_LEARNER_PORTAL_HOSTNAME,
     AUTHN_MINIMAL_HEADER: !!process.env.AUTHN_MINIMAL_HEADER,
-    SUBSCRIPTIONS_ORDERS_MENU_ITEM_ENABLED: process.env.SUBSCRIPTIONS_ORDERS_MENU_ITEM_ENABLED,
   }, 'Header additional config');
 });
 
@@ -82,10 +81,7 @@ const Header = ({ intl }) => {
   const orderHistoryItem = {
     type: 'item',
     href: config.ORDER_HISTORY_URL,
-    content: config.SUBSCRIPTIONS_ORDERS_MENU_ITEM_ENABLED?.toLowerCase() === 'true'
-      ? intl.formatMessage(messages['header.user.menu.order.subscriptions'])
-      : intl.formatMessage(messages['header.user.menu.order.history']),
-
+    content: intl.formatMessage(messages['header.user.menu.order.subscriptions']),
   };
 
   // If there is an Enterprise LP link, use that instead of the B2C Dashboard
