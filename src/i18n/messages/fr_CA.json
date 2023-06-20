@@ -5,6 +5,8 @@
   "header.links.programs": "Programmes",
   "header.links.content.search": "Découvrir les nouveautés",
   "header.links.schools": "Écoles et Partenaires",
+  "header.user.menu.career": "Carrière",
+  "header.user.menu.newAlert": "Nouveau",
   "header.user.menu.dashboard": "Tableau de bord",
   "header.user.menu.profile": "Profil",
   "header.user.menu.account.settings": "Compte",
@@ -24,6 +26,8 @@
   "header.help.label": "Aide",
   "header.menu.profile.label": "Profil",
   "header.menu.account.label": "Compte",
+  "header.menu.career.label": "Carrière",
+  "header.menu.new.label": "Nouveau",
   "header.menu.orderHistory.label": "Historique des commandes",
   "header.navigation.skipNavLink": "Passer au contenu principal.",
   "header.menu.signOut.label": "Se déconnecter"

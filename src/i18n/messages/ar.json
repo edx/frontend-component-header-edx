@@ -5,6 +5,8 @@
   "header.links.programs": "البرامج",
   "header.links.content.search": "اكتشف الجديد",
   "header.links.schools": "المدارس و الشركاء",
+  "header.user.menu.career": "Career",
+  "header.user.menu.newAlert": "New",
   "header.user.menu.dashboard": "لوحة المعلومات",
   "header.user.menu.profile": "الملف الشخصي",
   "header.user.menu.account.settings": "الحساب",
@@ -24,6 +26,8 @@
   "header.help.label": "المساعدة",
   "header.menu.profile.label": "الملف الشخصي",
   "header.menu.account.label": "الحساب",
+  "header.menu.career.label": "Career",
+  "header.menu.new.label": "New",
   "header.menu.orderHistory.label": "سجل الطلبيات",
   "header.navigation.skipNavLink": "التخطي إلى المحتوى الرئيسي",
   "header.menu.signOut.label": "تسجيل الخروج"
