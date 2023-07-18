@@ -1,7 +1,9 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { useEnterpriseConfig } from '@edx/frontend-enterprise-utils';
-import { getConfig } from '@edx/frontend-platform';
+import {
+  APP_CONFIG_INITIALIZED, getConfig, ensureConfig, subscribe, mergeConfig,
+} from '@edx/frontend-platform';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import { AppContext, AppProvider } from '@edx/frontend-platform/react';
 
@@ -9,6 +11,16 @@ import AnonymousUserMenu from './AnonymousUserMenu';
 import AuthenticatedUserDropdown from './AuthenticatedUserDropdown';
 import messages from './messages';
 import store from '../store';
+
+ensureConfig([
+  'ACCOUNT_SETTINGS_URL',
+], 'Learning Header component');
+
+subscribe(APP_CONFIG_INITIALIZED, () => {
+  mergeConfig({
+    ACCOUNT_SETTINGS_URL: process.env.ACCOUNT_SETTINGS_URL || '',
+  }, 'Learning Header additional config');
+});
 
 const LinkedLogo = ({
   href,

@@ -4,9 +4,11 @@ import React, {
 } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useIntl } from '@edx/frontend-platform/i18n';
+import { getConfig } from '@edx/frontend-platform';
 import classNames from 'classnames';
 import {
   Badge, Icon, IconButton, OverlayTrigger, Popover,
+  Hyperlink,
 } from '@edx/paragon';
 import { NotificationsNone, Settings } from '@edx/paragon/icons';
 import { selectNotificationTabsCount } from './data/selectors';
@@ -44,6 +46,14 @@ const Notifications = () => {
     };
   }, []);
 
+  const viewPortHeight = window.innerHeight;
+  const headerHeight = document.getElementsByClassName('learning-header');
+  let notificationBarHeight = 0;
+
+  if (headerHeight.length > 0) {
+    notificationBarHeight = viewPortHeight - headerHeight[0].clientHeight;
+  }
+
   return (
     <OverlayTrigger
       trigger="click"
@@ -54,6 +64,7 @@ const Notifications = () => {
       overlay={(
         <Popover
           id="notificationTray"
+          style={{ height: `${notificationBarHeight}px` }}
           data-testid="notification-tray"
           className={classNames('overflow-auto rounded-0 border-0', {
             'w-100': !isOnMediumScreen && !isOnLargeScreen,
@@ -64,7 +75,19 @@ const Notifications = () => {
           <div ref={popoverRef}>
             <Popover.Title as="h2" className="d-flex justify-content-between p-0 m-4 border-0 text-primary-500 font-size-18 line-height-24">
               {intl.formatMessage(messages.notificationTitle)}
-              <Icon src={Settings} className="icon-size-20" data-testid="setting-icon" />
+              <Hyperlink
+                destination={`${getConfig().ACCOUNT_SETTINGS_URL}/notifications`}
+                target="_blank"
+                rel="noopener noreferrer"
+                showLaunchIcon={false}
+              >
+                <Icon
+                  src={Settings}
+                  className="icon-size-20 text-primary-500"
+                  data-testid="setting-icon"
+                  screenReaderText="preferences settings icon"
+                />
+              </Hyperlink>
             </Popover.Title>
             <Popover.Content className="notification-content p-0">
               <NotificationTabs />
