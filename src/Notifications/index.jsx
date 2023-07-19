@@ -112,7 +112,7 @@ const Notifications = () => {
           <Badge
             pill
             variant="danger"
-            className="font-weight-normal px-1 notification-badge"
+            className="px-1 notification-badge d-flex flex-row justify-content-center align-items-center zindex-1"
             data-testid="notification-count"
           >
             {notificationCounts.count}
