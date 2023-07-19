@@ -183,10 +183,13 @@ $white: #fff;
 
 .notification-badge {
   position: absolute;
-  margin-top: 18px;
-  margin-left: -21px;
+  margin-top: -49px;
+  margin-left: 43px;
   border: 2px solid #FFFFFF;
-  font-size: 9px !important;
+  font-size: 8px !important;
+  height: 16px;
+  min-width: 23px;
+  font-weight: 600 !important;
 }
 
 .popover {
