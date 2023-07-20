@@ -70,7 +70,7 @@ const NotificationSections = () => {
   };
 
   return (
-    <div className="mt-4 px-4" data-testid="notification-tray-section">
+    <div className="mt-4 px-4 pb-3.5" data-testid="notification-tray-section">
       {renderNotificationSection('today', today)}
       {renderNotificationSection('earlier', earlier)}
       {hasMorePages && notificationRequestStatus === RequestStatus.IN_PROGRESS ? (
