@@ -47,7 +47,7 @@ const Notifications = () => {
   }, []);
 
   const viewPortHeight = window.innerHeight;
-  const headerHeight = document.getElementsByClassName('learning-header');
+  const headerHeight = document.getElementsByClassName('container-xl');
   let notificationBarHeight = 0;
 
   if (headerHeight.length > 0) {
