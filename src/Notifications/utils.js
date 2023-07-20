@@ -18,7 +18,7 @@ export const splitNotificationsByTime = (notificationList) => {
     splittedData = notificationList.reduce(
       (result, notification) => {
         if (notification) {
-          const objectTime = new Date(notification.createdAt).getTime();
+          const objectTime = new Date(notification.created).getTime();
           if (objectTime >= twentyFourHoursAgo && objectTime <= currentTime) {
             result.today.push(notification);
           } else {
