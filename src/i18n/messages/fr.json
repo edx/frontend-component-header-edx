@@ -10,7 +10,7 @@
   "header.user.menu.dashboard": "Tableau de bord",
   "header.user.menu.profile": "Profil",
   "header.user.menu.account.settings": "Compte",
-  "header.user.menu.order.history": "Historique des commandes",
+  "header.user.menu.order.subscriptions": "Orders & Subscriptions",
   "header.user.menu.logout": "Déconnexion",
   "header.user.menu.login": "Connexion",
   "header.user.menu.register": "S'inscrire",
@@ -28,7 +28,7 @@
   "header.menu.account.label": "Compte",
   "header.menu.career.label": "Career",
   "header.menu.new.label": "New",
-  "header.menu.orderHistory.label": "Historique des commandes",
+  "header.menu.ordersAndSubscriptions.label": "Orders & Subscriptions",
   "header.navigation.skipNavLink": "Passer au contenu principal",
   "header.menu.signOut.label": "Se déconnecter"
 }

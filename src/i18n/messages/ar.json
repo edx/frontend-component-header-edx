@@ -10,7 +10,7 @@
   "header.user.menu.dashboard": "لوحة المعلومات",
   "header.user.menu.profile": "الملف الشخصي",
   "header.user.menu.account.settings": "الحساب",
-  "header.user.menu.order.history": "سجل الطلبيات",
+  "header.user.menu.order.subscriptions": "Orders & Subscriptions",
   "header.user.menu.logout": "تسجيل الخروج",
   "header.user.menu.login": "تسجيل الدخول",
   "header.user.menu.register": "التسجيل ",
@@ -28,7 +28,7 @@
   "header.menu.account.label": "الحساب",
   "header.menu.career.label": "Career",
   "header.menu.new.label": "New",
-  "header.menu.orderHistory.label": "سجل الطلبيات",
+  "header.menu.ordersAndSubscriptions.label": "Orders & Subscriptions",
   "header.navigation.skipNavLink": "التخطي إلى المحتوى الرئيسي",
   "header.menu.signOut.label": "تسجيل الخروج"
 }

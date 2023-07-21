@@ -10,7 +10,7 @@
   "header.user.menu.dashboard": "Dashboard",
   "header.user.menu.profile": "Profile",
   "header.user.menu.account.settings": "Account",
-  "header.user.menu.order.history": "Order History",
+  "header.user.menu.order.subscriptions": "Orders & Subscriptions",
   "header.user.menu.logout": "Logout",
   "header.user.menu.login": "Login",
   "header.user.menu.register": "Sign Up",
@@ -28,7 +28,7 @@
   "header.menu.account.label": "Account",
   "header.menu.career.label": "Career",
   "header.menu.new.label": "New",
-  "header.menu.orderHistory.label": "Order History",
+  "header.menu.ordersAndSubscriptions.label": "Orders & Subscriptions",
   "header.navigation.skipNavLink": "Skip to main content.",
   "header.menu.signOut.label": "Sign Out"
 }

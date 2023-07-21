@@ -78,10 +78,10 @@ const Header = ({ intl }) => {
     content: intl.formatMessage(messages['header.user.menu.logout']),
   };
 
-  const orderHistoryItem = {
+  const ordersAndSubscriptionsItem = {
     type: 'item',
     href: config.ORDER_HISTORY_URL,
-    content: intl.formatMessage(messages['header.user.menu.order.history']),
+    content: intl.formatMessage(messages['header.user.menu.order.subscriptions']),
   };
 
   // If there is an Enterprise LP link, use that instead of the B2C Dashboard
@@ -125,7 +125,7 @@ const Header = ({ intl }) => {
   // that they access content via Subscriptions, in which context an "order"
   // is not relevant.
   if (!enterpriseLearnerPortalLink && config.ORDER_HISTORY_URL) {
-    userMenu.splice(-1, 0, orderHistoryItem);
+    userMenu.splice(-1, 0, ordersAndSubscriptionsItem);
   }
 
   if (getConfig().MINIMAL_HEADER && authenticatedUser !== null) {
