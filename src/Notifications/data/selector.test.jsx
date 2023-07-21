@@ -46,14 +46,14 @@ describe('Notification Selectors', () => {
 
   it('Should return notification status.', async () => {
     const state = store.getState();
-    const status = selectNotificationStatus()(state);
+    const status = selectNotificationStatus(state);
 
     expect(status).toEqual('successful');
   });
 
   it('Should return notification tabs count.', async () => {
     const state = store.getState();
-    const tabsCount = selectNotificationTabsCount()(state);
+    const tabsCount = selectNotificationTabsCount(state);
 
     expect(tabsCount.count).toEqual(25);
     expect(tabsCount.reminders).toEqual(10);
@@ -64,7 +64,7 @@ describe('Notification Selectors', () => {
 
   it('Should return notification tabs.', async () => {
     const state = store.getState();
-    const tabs = selectNotificationTabs()(state);
+    const tabs = selectNotificationTabs(state);
 
     expect(tabs).toHaveLength(4);
   });
@@ -78,14 +78,14 @@ describe('Notification Selectors', () => {
 
   it('Should return show notification tray status.', async () => {
     const state = store.getState();
-    const showNotificationTrayStatus = selectShowNotificationTray()(state);
+    const showNotificationTrayStatus = selectShowNotificationTray(state);
 
     expect(showNotificationTrayStatus).toEqual(true);
   });
 
   it('Should return notifications.', async () => {
     const state = store.getState();
-    const notifications = selectNotifications()(state);
+    const notifications = selectNotifications(state);
 
     expect(Object.keys(notifications)).toHaveLength(10);
   });
@@ -99,14 +99,14 @@ describe('Notification Selectors', () => {
 
   it('Should return selected app name.', async () => {
     const state = store.getState();
-    const appName = selectSelectedAppName()(state);
+    const appName = selectSelectedAppName(state);
 
     expect(appName).toEqual('discussion');
   });
 
   it('Should return pagination data.', async () => {
     const state = store.getState();
-    const paginationData = selectPaginationData()(state);
+    const paginationData = selectPaginationData(state);
 
     expect(paginationData.currentPage).toEqual(1);
     expect(paginationData.numPages).toEqual(2);

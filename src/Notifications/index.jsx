@@ -23,11 +23,11 @@ const Notifications = () => {
   const popoverRef = useRef(null);
   const buttonRef = useRef(null);
   const [enableNotificationTray, setEnableNotificationTray] = useState(false);
-  const notificationCounts = useSelector(selectNotificationTabsCount());
+  const notificationCounts = useSelector(selectNotificationTabsCount);
   const isOnMediumScreen = useIsOnMediumScreen();
   const isOnLargeScreen = useIsOnLargeScreen();
 
-  const hideNotificationTray = useCallback(() => {
+  const toggleNotificationTray = useCallback(() => {
     setEnableNotificationTray(prevState => !prevState);
   }, []);
 
@@ -100,7 +100,7 @@ const Notifications = () => {
         <IconButton
           isActive={enableNotificationTray}
           alt="notification bell icon"
-          onClick={hideNotificationTray}
+          onClick={toggleNotificationTray}
           src={NotificationsNone}
           iconAs={Icon}
           variant="light"

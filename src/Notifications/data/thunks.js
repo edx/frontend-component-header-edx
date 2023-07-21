@@ -1,26 +1,14 @@
 import { camelCaseObject } from '@edx/frontend-platform';
 import {
+  notificationStatusRequest,
+  notificationStatusFailed,
+  notificationStatusDenied,
+  notificationStatusSuccess,
   fetchNotificationSuccess,
-  fetchNotificationRequest,
-  fetchNotificationFailure,
-  fetchNotificationDenied,
-  fetchNotificationsCountFailure,
-  fetchNotificationsCountRequest,
   fetchNotificationsCountSuccess,
-  fetchNotificationsCountDenied,
-  markNotificationsAsSeenRequest,
-  markNotificationsAsSeenSuccess,
-  markNotificationsAsSeenFailure,
-  markNotificationsAsSeenDenied,
-  markNotificationsAsReadDenied,
-  resetNotificationStateRequest,
-  markAllNotificationsAsReadRequest,
   markAllNotificationsAsReadSuccess,
-  markAllNotificationsAsReadFailure,
-  markAllNotificationsAsReadDenied,
-  markNotificationsAsReadRequest,
   markNotificationsAsReadSuccess,
-  markNotificationsAsReadFailure,
+  resetNotificationStateRequest,
 } from './slice';
 import {
   getNotificationsList, getNotificationCounts, markNotificationSeen, markAllNotificationRead, markNotificationRead,
@@ -48,19 +36,23 @@ const normalizeNotifications = (data) => {
   };
 };
 
-export const fetchNotificationList = ({ appName, page }) => (
+const responseError = (error, dispatch) => {
+  if (getHttpErrorStatus(error) === 403) {
+    dispatch(notificationStatusDenied());
+  } else {
+    dispatch(notificationStatusFailed());
+  }
+};
+
+export const fetchNotificationList = ({ appName, page = 1, pageSize = 10 }) => (
   async (dispatch) => {
     try {
-      dispatch(fetchNotificationRequest({ appName }));
-      const data = await getNotificationsList(appName, page);
-      const normalisedData = normalizeNotifications((camelCaseObject(data)));
-      dispatch(fetchNotificationSuccess({ ...normalisedData }));
+      dispatch(notificationStatusRequest());
+      const data = await getNotificationsList(appName, page, pageSize);
+      const normalizedData = normalizeNotifications((camelCaseObject(data)));
+      dispatch(fetchNotificationSuccess({ ...normalizedData }));
     } catch (error) {
-      if (getHttpErrorStatus(error) === 403) {
-        dispatch(fetchNotificationDenied(appName));
-      } else {
-        dispatch(fetchNotificationFailure(appName));
-      }
+      responseError(error, dispatch);
     }
   }
 );
@@ -68,16 +60,12 @@ export const fetchNotificationList = ({ appName, page }) => (
 export const fetchAppsNotificationCount = () => (
   async (dispatch) => {
     try {
-      dispatch(fetchNotificationsCountRequest());
+      dispatch(notificationStatusRequest());
       const data = await getNotificationCounts();
       const normalisedData = normalizeNotificationCounts((camelCaseObject(data)));
       dispatch(fetchNotificationsCountSuccess({ ...normalisedData }));
     } catch (error) {
-      if (getHttpErrorStatus(error) === 403) {
-        dispatch(fetchNotificationsCountDenied());
-      } else {
-        dispatch(fetchNotificationsCountFailure());
-      }
+      responseError(error, dispatch);
     }
   }
 );
@@ -85,15 +73,11 @@ export const fetchAppsNotificationCount = () => (
 export const markAllNotificationsAsRead = (appName) => (
   async (dispatch) => {
     try {
-      dispatch(markAllNotificationsAsReadRequest({ appName }));
+      dispatch(notificationStatusRequest());
       const data = await markAllNotificationRead(appName);
       dispatch(markAllNotificationsAsReadSuccess(camelCaseObject(data)));
     } catch (error) {
-      if (getHttpErrorStatus(error) === 403) {
-        dispatch(markAllNotificationsAsReadDenied());
-      } else {
-        dispatch(markAllNotificationsAsReadFailure());
-      }
+      responseError(error, dispatch);
     }
   }
 );
@@ -101,15 +85,11 @@ export const markAllNotificationsAsRead = (appName) => (
 export const markNotificationsAsRead = (notificationId) => (
   async (dispatch) => {
     try {
-      dispatch(markNotificationsAsReadRequest({ notificationId }));
+      dispatch(notificationStatusRequest());
       const data = await markNotificationRead(notificationId);
       dispatch(markNotificationsAsReadSuccess(camelCaseObject(data)));
     } catch (error) {
-      if (getHttpErrorStatus(error) === 403) {
-        dispatch(markNotificationsAsReadDenied());
-      } else {
-        dispatch(markNotificationsAsReadFailure());
-      }
+      responseError(error, dispatch);
     }
   }
 );
@@ -117,15 +97,11 @@ export const markNotificationsAsRead = (notificationId) => (
 export const markNotificationsAsSeen = (appName) => (
   async (dispatch) => {
     try {
-      dispatch(markNotificationsAsSeenRequest({ appName }));
-      const data = await markNotificationSeen(appName);
-      dispatch(markNotificationsAsSeenSuccess(camelCaseObject(data)));
+      dispatch(notificationStatusRequest());
+      await markNotificationSeen(appName);
+      dispatch(notificationStatusSuccess());
     } catch (error) {
-      if (getHttpErrorStatus(error) === 403) {
-        dispatch(markNotificationsAsSeenDenied());
-      } else {
-        dispatch(markNotificationsAsSeenFailure());
-      }
+      responseError(error, dispatch);
     }
   }
 );

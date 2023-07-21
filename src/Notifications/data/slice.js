@@ -23,14 +23,17 @@ const slice = createSlice({
   name: 'notifications',
   initialState,
   reducers: {
-    fetchNotificationDenied: (state) => {
-      state.notificationStatus = RequestStatus.DENIED;
+    notificationStatusRequest: (state) => {
+      state.notificationStatus = RequestStatus.IN_PROGRESS;
     },
-    fetchNotificationFailure: (state) => {
+    notificationStatusFailed: (state) => {
       state.notificationStatus = RequestStatus.FAILED;
     },
-    fetchNotificationRequest: (state) => {
-      state.notificationStatus = RequestStatus.IN_PROGRESS;
+    notificationStatusDenied: (state) => {
+      state.notificationStatus = RequestStatus.DENIED;
+    },
+    notificationStatusSuccess: (state) => {
+      state.notificationStatus = RequestStatus.SUCCESSFUL;
     },
     fetchNotificationSuccess: (state, { payload }) => {
       const {
@@ -44,15 +47,6 @@ const slice = createSlice({
       state.notificationStatus = RequestStatus.SUCCESSFUL;
       state.pagination = pagination;
     },
-    fetchNotificationsCountDenied: (state) => {
-      state.notificationStatus = RequestStatus.DENIED;
-    },
-    fetchNotificationsCountFailure: (state) => {
-      state.notificationStatus = RequestStatus.FAILED;
-    },
-    fetchNotificationsCountRequest: (state) => {
-      state.notificationStatus = RequestStatus.IN_PROGRESS;
-    },
     fetchNotificationsCountSuccess: (state, { payload }) => {
       const {
         countByAppName, appIds, apps, count, showNotificationsTray,
@@ -63,21 +57,6 @@ const slice = createSlice({
       state.showNotificationsTray = showNotificationsTray;
       state.notificationStatus = RequestStatus.SUCCESSFUL;
     },
-    markNotificationsAsSeenRequest: (state) => {
-      state.notificationStatus = RequestStatus.IN_PROGRESS;
-    },
-    markNotificationsAsSeenSuccess: (state) => {
-      state.notificationStatus = RequestStatus.SUCCESSFUL;
-    },
-    markNotificationsAsSeenDenied: (state) => {
-      state.notificationStatus = RequestStatus.DENIED;
-    },
-    markNotificationsAsSeenFailure: (state) => {
-      state.notificationStatus = RequestStatus.FAILED;
-    },
-    markAllNotificationsAsReadRequest: (state) => {
-      state.notificationStatus = RequestStatus.IN_PROGRESS;
-    },
     markAllNotificationsAsReadSuccess: (state) => {
       const updatedNotifications = Object.fromEntries(
         Object.entries(state.notifications).map(([key, notification]) => [
@@ -87,61 +66,34 @@ const slice = createSlice({
       state.notifications = updatedNotifications;
       state.notificationStatus = RequestStatus.SUCCESSFUL;
     },
-    markAllNotificationsAsReadDenied: (state) => {
-      state.notificationStatus = RequestStatus.DENIED;
-    },
-    markAllNotificationsAsReadFailure: (state) => {
-      state.notificationStatus = RequestStatus.FAILED;
-    },
-    markNotificationsAsReadRequest: (state) => {
-      state.notificationStatus = RequestStatus.IN_PROGRESS;
-    },
     markNotificationsAsReadSuccess: (state, { payload }) => {
       const date = new Date().toISOString();
       state.notifications[payload.id] = { ...state.notifications[payload.id], lastRead: date };
       state.notificationStatus = RequestStatus.SUCCESSFUL;
     },
-    markNotificationsAsReadDenied: (state) => {
-      state.notificationStatus = RequestStatus.DENIED;
+    markNotificationsAsSeenSuccess: (state) => {
+      state.notificationStatus = RequestStatus.SUCCESSFUL;
     },
-    markNotificationsAsReadFailure: (state) => {
-      state.notificationStatus = RequestStatus.FAILED;
-    },
-    resetNotificationStateRequest: () => initialState,
     updateAppNameRequest: (state, { payload }) => {
       state.appName = payload.appName;
       state.pagination.currentPage = 1;
     },
-    updatePaginationRequest: (state) => {
-      state.pagination.currentPage += 1;
-    },
+    resetNotificationStateRequest: () => initialState,
   },
 });
 
 export const {
-  fetchNotificationDenied,
-  fetchNotificationFailure,
-  fetchNotificationRequest,
+  notificationStatusRequest,
+  notificationStatusFailed,
+  notificationStatusDenied,
+  notificationStatusSuccess,
   fetchNotificationSuccess,
-  fetchNotificationsCountDenied,
-  fetchNotificationsCountFailure,
-  fetchNotificationsCountRequest,
   fetchNotificationsCountSuccess,
-  markNotificationsAsSeenRequest,
-  markNotificationsAsSeenSuccess,
-  markNotificationsAsSeenFailure,
-  markNotificationsAsSeenDenied,
-  markAllNotificationsAsReadDenied,
-  markAllNotificationsAsReadRequest,
   markAllNotificationsAsReadSuccess,
-  markAllNotificationsAsReadFailure,
-  markNotificationsAsReadDenied,
-  markNotificationsAsReadRequest,
   markNotificationsAsReadSuccess,
-  markNotificationsAsReadFailure,
-  resetNotificationStateRequest,
+  markNotificationsAsSeenSuccess,
   updateAppNameRequest,
-  updatePaginationRequest,
+  resetNotificationStateRequest,
 } = slice.actions;
 
 export const notificationsReducer = slice.reducer;

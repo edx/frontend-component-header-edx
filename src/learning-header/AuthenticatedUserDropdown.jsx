@@ -17,8 +17,8 @@ import { RequestStatus } from '../Notifications/data/slice';
 
 const AuthenticatedUserDropdown = ({ enterpriseLearnerPortalLink, intl, username }) => {
   const dispatch = useDispatch();
-  const showNotificationsTray = useSelector(selectShowNotificationTray());
-  const notificationStatus = useSelector(selectNotificationStatus());
+  const showNotificationsTray = useSelector(selectShowNotificationTray);
+  const notificationStatus = useSelector(selectNotificationStatus);
 
   useEffect(() => {
     if (notificationStatus === RequestStatus.IDLE) {
