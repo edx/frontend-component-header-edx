@@ -30,5 +30,11 @@
   "header.menu.new.label": "New",
   "header.menu.ordersAndSubscriptions.label": "Orders & Subscriptions",
   "header.navigation.skipNavLink": "Passer au contenu principal",
-  "header.menu.signOut.label": "Se déconnecter"
+  "header.menu.signOut.label": "Se déconnecter",
+  "notification.title": "Notifications",
+  "notification.today.heading": "Last 24 hours",
+  "notification.earlier.heading": "Earlier",
+  "notification.mark.as.read": "Mark all as read",
+  "notification.fullStop": "•",
+  "notification.load.more.notifications": "Load more notifications"
 }

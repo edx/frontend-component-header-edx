@@ -30,5 +30,11 @@
   "header.menu.new.label": "Nuevo",
   "header.menu.ordersAndSubscriptions.label": "Pedidos y Subscripciones",
   "header.navigation.skipNavLink": "Dirígete al contenido principal.",
-  "header.menu.signOut.label": "Cerrar sesión"
+  "header.menu.signOut.label": "Cerrar sesión",
+  "notification.title": "Notificaciones",
+  "notification.today.heading": "Últimas 24 horas",
+  "notification.earlier.heading": "Más temprano",
+  "notification.mark.as.read": "Marcar todo como leído",
+  "notification.fullStop": "•",
+  "notification.load.more.notifications": "Cargar más notificaciones"
 }
