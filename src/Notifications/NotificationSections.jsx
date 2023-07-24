@@ -57,7 +57,7 @@ const NotificationSections = () => {
           <NotificationRowItem
             key={notification.id}
             id={notification.id}
-            type={notification.type}
+            type={notification.notificationType}
             contentUrl={notification.contentUrl}
             content={notification.content}
             courseName={notification.contentContext?.courseName || ''}

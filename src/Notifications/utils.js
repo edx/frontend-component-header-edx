@@ -1,5 +1,5 @@
 import {
-  CheckCircle, HelpOutline, QuestionAnswerOutline, Verified, Report, EditOutline, ThumbUpOutline, PostOutline,
+  QuestionAnswerOutline, PostOutline,
 } from '@edx/paragon/icons';
 
 /**
@@ -36,17 +36,9 @@ export const splitNotificationsByTime = (notificationList) => {
 
 export const getIconByType = (type) => {
   const iconMap = {
-    post: { icon: PostOutline, class: 'text-primary-500' },
-    help: { icon: HelpOutline, class: 'text-primary-500' },
-    respond: { icon: QuestionAnswerOutline, class: 'text-primary-500' },
-    comment: { icon: QuestionAnswerOutline, class: 'text-primary-500' },
-    question: { icon: QuestionAnswerOutline, class: 'text-primary-500' },
-    answer: { icon: CheckCircle, class: 'text-success' },
-    endorsed: { icon: Verified, class: 'text-primary-500' },
-    reported: { icon: Report, class: 'text-danger-500' },
-    postLiked: { icon: ThumbUpOutline, class: 'text-primary-500' },
-    commentLiked: { icon: ThumbUpOutline, class: 'text-primary-500' },
-    edited: { icon: EditOutline, class: 'text-primary-500' },
+    new_response: { icon: QuestionAnswerOutline, class: 'text-primary-500' },
+    new_comment: { icon: QuestionAnswerOutline, class: 'text-primary-500' },
+    new_comment_on_response: { icon: QuestionAnswerOutline, class: 'text-primary-500' },
   };
   return iconMap[type] || { icon: PostOutline, class: 'text-primary-500' };
 };
