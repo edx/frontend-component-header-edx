@@ -5,20 +5,20 @@ import { useIntl } from '@edx/frontend-platform/i18n';
 import isEmpty from 'lodash/isEmpty';
 import messages from './messages';
 import NotificationRowItem from './NotificationRowItem';
-import { markAllNotificationsAsRead } from './data/thunks';
+import { markAllNotificationsAsRead, fetchNotificationList } from './data/thunks';
 import {
   selectNotificationsByIds, selectPaginationData, selectSelectedAppName, selectNotificationStatus,
 } from './data/selectors';
 import { splitNotificationsByTime } from './utils';
-import { updatePaginationRequest, RequestStatus } from './data/slice';
+import { RequestStatus } from './data/slice';
 
 const NotificationSections = () => {
   const intl = useIntl();
   const dispatch = useDispatch();
-  const selectedAppName = useSelector(selectSelectedAppName());
-  const notificationRequestStatus = useSelector(selectNotificationStatus());
+  const selectedAppName = useSelector(selectSelectedAppName);
+  const notificationRequestStatus = useSelector(selectNotificationStatus);
   const notifications = useSelector(selectNotificationsByIds(selectedAppName));
-  const { hasMorePages } = useSelector(selectPaginationData());
+  const { hasMorePages, currentPage } = useSelector(selectPaginationData);
   const { today = [], earlier = [] } = useMemo(
     () => splitNotificationsByTime(notifications),
     [notifications],
@@ -28,9 +28,9 @@ const NotificationSections = () => {
     dispatch(markAllNotificationsAsRead(selectedAppName));
   }, [dispatch, selectedAppName]);
 
-  const updatePagination = useCallback(() => {
-    dispatch(updatePaginationRequest());
-  }, [dispatch]);
+  const loadMoreNotifications = useCallback(() => {
+    dispatch(fetchNotificationList({ appName: selectedAppName, page: currentPage + 1 }));
+  }, [currentPage, dispatch, selectedAppName]);
 
   const renderNotificationSection = (section, items) => {
     if (isEmpty(items)) { return null; }
@@ -77,17 +77,16 @@ const NotificationSections = () => {
         <div className="d-flex justify-content-center p-4">
           <Spinner animation="border" variant="primary" size="lg" />
         </div>
-      ) : (hasMorePages && notificationRequestStatus === RequestStatus.SUCCESSFUL
-        && (
-          <Button
-            variant="primary"
-            className="w-100 bg-primary-500"
-            onClick={updatePagination}
-            data-testid="load-more-notifications"
-          >
-            {intl.formatMessage(messages.loadMoreNotifications)}
-          </Button>
-        )
+      ) : (hasMorePages && notificationRequestStatus === RequestStatus.SUCCESSFUL && (
+        <Button
+          variant="primary"
+          className="w-100 bg-primary-500"
+          onClick={loadMoreNotifications}
+          data-testid="load-more-notifications"
+        >
+          {intl.formatMessage(messages.loadMoreNotifications)}
+        </Button>
+      )
       )}
     </div>
   );

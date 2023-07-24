@@ -17,8 +17,8 @@ const NotificationRowItem = ({
   const dispatch = useDispatch();
 
   const handleMarkAsRead = useCallback(() => {
-    dispatch(markNotificationsAsRead(id));
-  }, [dispatch, id]);
+    if (!lastRead) { dispatch(markNotificationsAsRead(id)); }
+  }, [dispatch, id, lastRead]);
 
   const { icon: iconComponent, class: iconClass } = getIconByType(type);
 
