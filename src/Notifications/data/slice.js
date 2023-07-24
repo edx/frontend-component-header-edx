@@ -11,6 +11,7 @@ export const RequestStatus = {
 
 const initialState = {
   notificationStatus: RequestStatus.IDLE,
+  notificationListStatus: RequestStatus.IDLE,
   appName: 'discussion',
   appsId: [],
   apps: {},
@@ -35,6 +36,15 @@ const slice = createSlice({
     notificationStatusSuccess: (state) => {
       state.notificationStatus = RequestStatus.SUCCESSFUL;
     },
+    notificationListStatusRequest: (state) => {
+      state.notificationListStatus = RequestStatus.IN_PROGRESS;
+    },
+    notificationListStatusFailed: (state) => {
+      state.notificationListStatus = RequestStatus.FAILED;
+    },
+    notificationListStatusDenied: (state) => {
+      state.notificationListStatus = RequestStatus.DENIED;
+    },
     fetchNotificationSuccess: (state, { payload }) => {
       const {
         newNotificationIds, notificationsKeyValuePair, pagination,
@@ -44,7 +54,7 @@ const slice = createSlice({
       state.notifications = { ...state.notifications, ...notificationsKeyValuePair };
       state.tabsCount.count -= state.tabsCount[state.appName];
       state.tabsCount[state.appName] = 0;
-      state.notificationStatus = RequestStatus.SUCCESSFUL;
+      state.notificationListStatus = RequestStatus.SUCCESSFUL;
       state.pagination = pagination;
     },
     fetchNotificationsCountSuccess: (state, { payload }) => {
@@ -87,6 +97,9 @@ export const {
   notificationStatusFailed,
   notificationStatusDenied,
   notificationStatusSuccess,
+  notificationListStatusDenied,
+  notificationListStatusFailed,
+  notificationListStatusRequest,
   fetchNotificationSuccess,
   fetchNotificationsCountSuccess,
   markAllNotificationsAsReadSuccess,

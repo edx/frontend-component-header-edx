@@ -2,6 +2,8 @@ import { createSelector } from '@reduxjs/toolkit';
 
 export const selectNotificationStatus = state => state.notifications.notificationStatus;
 
+export const selectNotificationListStatus = state => state.notifications.notificationListStatus;
+
 export const selectNotificationTabsCount = state => state.notifications.tabsCount;
 
 export const selectNotificationTabs = state => state.notifications.appsId;

@@ -73,9 +73,9 @@ describe('Notification Redux', () => {
     axiosMock.onGet(notificationsListApiUrl).reply(statusCode);
     await executeThunk(fetchNotificationList({ page: 1 }), store.dispatch, store.getState);
 
-    const { notifications: { notificationStatus } } = store.getState();
+    const { notifications: { notificationListStatus } } = store.getState();
 
-    expect(notificationStatus).toEqual(status);
+    expect(notificationListStatus).toEqual(status);
   });
 
   it('Successfully loaded notification counts in the redux.', async () => {
