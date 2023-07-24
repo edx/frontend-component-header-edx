@@ -61,7 +61,7 @@ const NotificationSections = () => {
             contentUrl={notification.contentUrl}
             content={notification.content}
             courseName={notification.contentContext?.courseName || ''}
-            createdAt={notification.createdAt}
+            createdAt={notification.created}
             lastRead={notification.lastRead}
           />
         ))}
@@ -70,7 +70,7 @@ const NotificationSections = () => {
   };
 
   return (
-    <div className="mt-4 px-4" data-testid="notification-tray-section">
+    <div className="mt-4 px-4 pb-3.5" data-testid="notification-tray-section">
       {renderNotificationSection('today', today)}
       {renderNotificationSection('earlier', earlier)}
       {hasMorePages && notificationRequestStatus === RequestStatus.IN_PROGRESS ? (

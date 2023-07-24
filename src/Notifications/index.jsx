@@ -47,7 +47,7 @@ const Notifications = () => {
   }, []);
 
   const viewPortHeight = window.innerHeight;
-  const headerHeight = document.getElementsByClassName('learning-header');
+  const headerHeight = document.getElementsByClassName('learning-header-container');
   let notificationBarHeight = 0;
 
   if (headerHeight.length > 0) {
@@ -112,7 +112,7 @@ const Notifications = () => {
           <Badge
             pill
             variant="danger"
-            className="font-weight-normal px-1 notification-badge"
+            className="px-1 notification-badge zindex-1"
             data-testid="notification-count"
           >
             {notificationCounts.count}
