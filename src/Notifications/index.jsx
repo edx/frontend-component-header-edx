@@ -46,7 +46,7 @@ const Notifications = () => {
     };
   }, []);
 
-  const viewPortHeight = window.innerHeight;
+  const viewPortHeight = document.body.clientHeight;
   const headerHeight = document.getElementsByClassName('learning-header-container');
   const footer = document.getElementsByClassName('footer');
   let notificationBarHeight = 0;
@@ -54,9 +54,7 @@ const Notifications = () => {
   if (headerHeight.length > 0) {
     notificationBarHeight = viewPortHeight - headerHeight[0].clientHeight;
     if (footer.length > 0) {
-      const footerRect = footer[0].getBoundingClientRect();
-      const visibleFooterHeight = Math.max(0, viewPortHeight - footerRect.top);
-      notificationBarHeight -= visibleFooterHeight;
+      notificationBarHeight -= footer[0].clientHeight;
     }
   }
 
