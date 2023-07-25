@@ -111,7 +111,7 @@ const Notifications = () => {
           iconAs={Icon}
           variant="light"
           iconClassNames="text-primary-500"
-          className="ml-4 mr-1 my-3 notification-button"
+          className="ml-4 mr-1 notification-button"
           data-testid="notification-bell-icon"
         />
         {notificationCounts?.count > 0 && (
