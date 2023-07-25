@@ -9,6 +9,9 @@ import {
   markAllNotificationsAsReadSuccess,
   markNotificationsAsReadSuccess,
   resetNotificationStateRequest,
+  notificationListStatusRequest,
+  notificationListStatusDenied,
+  notificationListStatusFailed,
 } from './slice';
 import {
   getNotificationsList, getNotificationCounts, markNotificationSeen, markAllNotificationRead, markNotificationRead,
@@ -47,12 +50,16 @@ const responseError = (error, dispatch) => {
 export const fetchNotificationList = ({ appName, page = 1, pageSize = 10 }) => (
   async (dispatch) => {
     try {
-      dispatch(notificationStatusRequest());
+      dispatch(notificationListStatusRequest());
       const data = await getNotificationsList(appName, page, pageSize);
       const normalizedData = normalizeNotifications((camelCaseObject(data)));
       dispatch(fetchNotificationSuccess({ ...normalizedData }));
     } catch (error) {
-      responseError(error, dispatch);
+      if (getHttpErrorStatus(error) === 403) {
+        dispatch(notificationListStatusDenied());
+      } else {
+        dispatch(notificationListStatusFailed());
+      }
     }
   }
 );

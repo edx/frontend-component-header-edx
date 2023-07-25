@@ -19,6 +19,7 @@ import mockNotificationsResponse from './test-utils';
 import { markNotificationsAsSeen, fetchNotificationList } from './data/thunks';
 import executeThunk from '../test-utils';
 import './data/__factories__';
+import { RequestStatus, notificationListStatusRequest } from './data';
 
 const markedAllNotificationsAsReadApiUrl = markNotificationAsReadApiUrl();
 
@@ -55,6 +56,25 @@ describe('Notification sections test cases.', () => {
     store = initializeStore();
 
     ({ store, axiosMock } = await mockNotificationsResponse());
+  });
+
+  test.each([
+    { status: RequestStatus.IN_PROGRESS, text: 'visible' },
+    { status: RequestStatus.SUCCESSFUL, text: 'not visible' },
+  ])('Spinner is $text if status is $status', async ({ status }) => {
+    await renderComponent();
+    const bellIcon = screen.queryByTestId('notification-bell-icon');
+    await act(async () => { fireEvent.click(bellIcon); });
+    if (status === RequestStatus.IN_PROGRESS) {
+      await executeThunk(
+        async (dispatch) => { dispatch(notificationListStatusRequest()); },
+        store.dispatch,
+        store.getState,
+      );
+      expect(screen.queryByTestId('notifications-loading-spinner')).toBeVisible();
+    } else if (status === RequestStatus.SUCCESSFUL) {
+      expect(screen.queryByTestId('notifications-loading-spinner')).not.toBeInTheDocument();
+    }
   });
 
   it('Successfully viewed last 24 hours and earlier section along with mark all as read label.', async () => {

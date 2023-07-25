@@ -7,7 +7,7 @@ import messages from './messages';
 import NotificationRowItem from './NotificationRowItem';
 import { markAllNotificationsAsRead, fetchNotificationList } from './data/thunks';
 import {
-  selectNotificationsByIds, selectPaginationData, selectSelectedAppName, selectNotificationStatus,
+  selectNotificationsByIds, selectPaginationData, selectSelectedAppName, selectNotificationListStatus,
 } from './data/selectors';
 import { splitNotificationsByTime } from './utils';
 import { RequestStatus } from './data/slice';
@@ -16,7 +16,7 @@ const NotificationSections = () => {
   const intl = useIntl();
   const dispatch = useDispatch();
   const selectedAppName = useSelector(selectSelectedAppName);
-  const notificationRequestStatus = useSelector(selectNotificationStatus);
+  const notificationRequestStatus = useSelector(selectNotificationListStatus);
   const notifications = useSelector(selectNotificationsByIds(selectedAppName));
   const { hasMorePages, currentPage } = useSelector(selectPaginationData);
   const { today = [], earlier = [] } = useMemo(
@@ -73,9 +73,9 @@ const NotificationSections = () => {
     <div className="mt-4 px-4 pb-3.5" data-testid="notification-tray-section">
       {renderNotificationSection('today', today)}
       {renderNotificationSection('earlier', earlier)}
-      {hasMorePages && notificationRequestStatus === RequestStatus.IN_PROGRESS ? (
+      {(hasMorePages === undefined || hasMorePages) && notificationRequestStatus === RequestStatus.IN_PROGRESS ? (
         <div className="d-flex justify-content-center p-4">
-          <Spinner animation="border" variant="primary" size="lg" />
+          <Spinner animation="border" variant="primary" size="lg" data-testid="notifications-loading-spinner" />
         </div>
       ) : (hasMorePages && notificationRequestStatus === RequestStatus.SUCCESSFUL && (
         <Button
