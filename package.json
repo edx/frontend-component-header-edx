@@ -68,7 +68,7 @@
     "axios-mock-adapter": "1.21.5",
     "babel-polyfill": "6.26.0",
     "classnames": "2.3.2",
-    "core-js": "3.31.1",
+    "core-js": "3.32.0",
     "lodash": "4.17.21",
     "react-redux": "7.2.9",
     "react-responsive": "8.2.0",
