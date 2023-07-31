@@ -3,6 +3,7 @@ import React from 'react';
 import {
   act, fireEvent, render, screen, waitFor,
 } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
 import MockAdapter from 'axios-mock-adapter';
 import { Context as ResponsiveContext } from 'react-responsive';
 import { Factory } from 'rosie';
@@ -15,23 +16,25 @@ import { AppContext, AppProvider } from '@edx/frontend-platform/react';
 import AuthenticatedUserDropdown from '../learning-header/AuthenticatedUserDropdown';
 import { initializeStore } from '../store';
 import executeThunk from '../test-utils';
-import { getNotificationsCountApiUrl } from './data/api';
+import * as notificationApi from './data/api';
 import { fetchAppsNotificationCount } from './data/thunks';
 
 import './data/__factories__';
 
-const notificationCountsApiUrl = getNotificationsCountApiUrl();
+const notificationCountsApiUrl = notificationApi.getNotificationsCountApiUrl();
 
 let axiosMock;
 let store;
 
-function renderComponent() {
+function renderComponent(location = '/') {
   render(
     <ResponsiveContext.Provider>
       <IntlProvider locale="en" messages={{}}>
         <AppProvider store={store}>
           <AppContext.Provider>
-            <AuthenticatedUserDropdown />
+            <MemoryRouter initialEntries={[location]}>
+              <AuthenticatedUserDropdown />
+            </MemoryRouter>
           </AppContext.Provider>
         </AppProvider>
       </IntlProvider>
@@ -53,6 +56,10 @@ describe('Notification test cases.', () => {
     axiosMock = new MockAdapter(getAuthenticatedHttpClient());
     Factory.resetAll();
     store = initializeStore();
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
   });
 
   async function setupMockNotificationCountResponse(count = 45, showNotificationsTray = true) {
@@ -106,4 +113,14 @@ describe('Notification test cases.', () => {
     await act(async () => { fireEvent.click(bellIcon); });
     await waitFor(() => expect(screen.queryByTestId('notification-tray')).not.toBeInTheDocument());
   });
+
+  it.each(['/', '/notification', '/my-post'])(
+    'Successfully call getNotificationCounts on URL %s change',
+    async (url) => {
+      const getNotificationCountsSpy = jest.spyOn(notificationApi, 'getNotificationCounts').mockReturnValue(() => true);
+      renderComponent(url);
+
+      expect(getNotificationCountsSpy).toHaveBeenCalledTimes(1);
+    },
+  );
 });
