@@ -7,8 +7,7 @@ import { useIntl } from '@edx/frontend-platform/i18n';
 import { getConfig } from '@edx/frontend-platform';
 import classNames from 'classnames';
 import {
-  Badge, Icon, IconButton, OverlayTrigger, Popover,
-  Hyperlink,
+  Badge, Icon, IconButton, OverlayTrigger, Popover, Hyperlink,
 } from '@edx/paragon';
 import { NotificationsNone, Settings } from '@edx/paragon/icons';
 import { selectNotificationTabsCount } from './data/selectors';
@@ -116,10 +115,12 @@ const Notifications = () => {
           <Badge
             pill
             variant="danger"
-            className="px-1 notification-badge zindex-1"
+            className="zindex-1"
             data-testid="notification-count"
+            bsPrefix="notification-badge"
           >
-            {notificationCounts.count}
+            {notificationCounts.count >= 100 ? <div className="d-flex">99<p className="mb-0 plus-icon">+</p></div>
+              : notificationCounts.count}
           </Badge>
         )}
       </div>
