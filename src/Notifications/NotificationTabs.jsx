@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Tab, Tabs } from '@edx/paragon';
 import NotificationSections from './NotificationSections';
@@ -13,12 +13,14 @@ const NotificationTabs = () => {
   const selectedAppName = useSelector(selectSelectedAppName);
   const notificationUnseenCounts = useSelector(selectNotificationTabsCount);
   const notificationTabs = useSelector(selectNotificationTabs);
+  const [trayOpened, setTrayOpened] = useState(false);
 
   useEffect(() => {
-    dispatch(fetchNotificationList({ appName: selectedAppName }));
+    dispatch(fetchNotificationList({ appName: selectedAppName, trayOpened: !trayOpened }));
     if (notificationUnseenCounts[selectedAppName]) {
       dispatch(markNotificationsAsSeen(selectedAppName));
     }
+    setTrayOpened(true);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedAppName]);
 

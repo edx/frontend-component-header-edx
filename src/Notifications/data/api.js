@@ -6,8 +6,10 @@ export const getNotificationsListApiUrl = () => `${getConfig().LMS_BASE_URL}/api
 export const markNotificationsSeenApiUrl = (appName) => `${getConfig().LMS_BASE_URL}/api/notifications/mark-seen/${appName}/`;
 export const markNotificationAsReadApiUrl = () => `${getConfig().LMS_BASE_URL}/api/notifications/read/`;
 
-export async function getNotificationsList(appName, page, pageSize) {
-  const params = snakeCaseObject({ appName, page, pageSize });
+export async function getNotificationsList(appName, page, pageSize, trayOpened) {
+  const params = snakeCaseObject({
+    appName, page, pageSize, trayOpened,
+  });
   const { data } = await getAuthenticatedHttpClient().get(getNotificationsListApiUrl(), { params });
   return data;
 }
