@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
@@ -11,21 +12,18 @@ import { Dropdown, Badge } from '@edx/paragon';
 
 import messages from './messages';
 import Notifications from '../Notifications';
-import { selectShowNotificationTray, selectNotificationStatus } from '../Notifications/data/selectors';
+import { selectShowNotificationTray } from '../Notifications/data/selectors';
 import { fetchAppsNotificationCount } from '../Notifications/data/thunks';
-import { RequestStatus } from '../Notifications/data/slice';
 
 const AuthenticatedUserDropdown = ({ enterpriseLearnerPortalLink, intl, username }) => {
+  const location = useLocation();
   const dispatch = useDispatch();
   const showNotificationsTray = useSelector(selectShowNotificationTray);
-  const notificationStatus = useSelector(selectNotificationStatus);
 
   useEffect(() => {
-    if (notificationStatus === RequestStatus.IDLE) {
-      dispatch(fetchAppsNotificationCount());
-    }
+    dispatch(fetchAppsNotificationCount());
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [location.pathname]);
 
   let dashboardMenuItem = (
     <Dropdown.Item href={`${getConfig().LMS_BASE_URL}/dashboard`}>
