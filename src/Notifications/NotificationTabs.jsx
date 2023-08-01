@@ -1,31 +1,31 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Tab, Tabs } from '@edx/paragon';
 import NotificationSections from './NotificationSections';
 import { fetchNotificationList, markNotificationsAsSeen } from './data/thunks';
 import {
-  selectNotificationTabs, selectNotificationTabsCount, selectSelectedAppName,
+  selectNotificationTabs, selectNotificationTabsCount, selectSelectedAppName, selectTrayOpened,
 } from './data/selectors';
-import { updateAppNameRequest } from './data/slice';
+import { updateAppNameRequest, toggleTrayEvent } from './data/slice';
 
 const NotificationTabs = () => {
   const dispatch = useDispatch();
   const selectedAppName = useSelector(selectSelectedAppName);
   const notificationUnseenCounts = useSelector(selectNotificationTabsCount);
   const notificationTabs = useSelector(selectNotificationTabs);
-  const [trayOpened, setTrayOpened] = useState(false);
+  const trayOpened = useSelector(selectTrayOpened);
 
   useEffect(() => {
-    dispatch(fetchNotificationList({ appName: selectedAppName, trayOpened: !trayOpened }));
+    dispatch(fetchNotificationList({ appName: selectedAppName, trayOpened }));
     if (notificationUnseenCounts[selectedAppName]) {
       dispatch(markNotificationsAsSeen(selectedAppName));
     }
-    setTrayOpened(true);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedAppName]);
 
   const handleActiveTab = useCallback((appName) => {
     dispatch(updateAppNameRequest({ appName }));
+    dispatch(toggleTrayEvent(false));
   }, [dispatch]);
 
   return (

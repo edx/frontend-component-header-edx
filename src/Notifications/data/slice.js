@@ -19,6 +19,7 @@ const initialState = {
   tabsCount: {},
   showNotificationsTray: false,
   pagination: {},
+  trayOpened: false,
 };
 const slice = createSlice({
   name: 'notifications',
@@ -89,6 +90,9 @@ const slice = createSlice({
       state.pagination.currentPage = 1;
     },
     resetNotificationStateRequest: () => initialState,
+    toggleTrayEvent: (state, { payload }) => {
+      state.trayOpened = payload;
+    },
   },
 });
 
@@ -107,6 +111,7 @@ export const {
   markNotificationsAsSeenSuccess,
   updateAppNameRequest,
   resetNotificationStateRequest,
+  toggleTrayEvent,
 } = slice.actions;
 
 export const notificationsReducer = slice.reducer;

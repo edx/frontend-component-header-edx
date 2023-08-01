@@ -12,6 +12,7 @@ import {
 import { NotificationsNone, Settings } from '@edx/paragon/icons';
 import { selectNotificationTabsCount } from './data/selectors';
 import { resetNotificationState } from './data/thunks';
+import { toggleTrayEvent } from './data/slice';
 import { useIsOnLargeScreen, useIsOnMediumScreen } from './data/hook';
 import NotificationTabs from './NotificationTabs';
 import messages from './messages';
@@ -28,11 +29,13 @@ const Notifications = () => {
 
   const toggleNotificationTray = useCallback(() => {
     setEnableNotificationTray(prevState => !prevState);
-  }, []);
+    dispatch(toggleTrayEvent(!enableNotificationTray));
+  }, [enableNotificationTray]);
 
   const handleClickOutsideNotificationTray = useCallback((event) => {
     if (!popoverRef.current?.contains(event.target) && !buttonRef.current?.contains(event.target)) {
       setEnableNotificationTray(false);
+      dispatch(toggleTrayEvent(false));
     }
   }, []);
 
