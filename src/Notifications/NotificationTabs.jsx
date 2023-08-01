@@ -4,18 +4,19 @@ import { Tab, Tabs } from '@edx/paragon';
 import NotificationSections from './NotificationSections';
 import { fetchNotificationList, markNotificationsAsSeen } from './data/thunks';
 import {
-  selectNotificationTabs, selectNotificationTabsCount, selectSelectedAppName,
+  selectNotificationTabs, selectNotificationTabsCount, selectSelectedAppName, selectTrayOpened,
 } from './data/selectors';
-import { updateAppNameRequest } from './data/slice';
+import { updateAppNameRequest, toggleTrayEvent } from './data/slice';
 
 const NotificationTabs = () => {
   const dispatch = useDispatch();
   const selectedAppName = useSelector(selectSelectedAppName);
   const notificationUnseenCounts = useSelector(selectNotificationTabsCount);
   const notificationTabs = useSelector(selectNotificationTabs);
+  const trayOpened = useSelector(selectTrayOpened);
 
   useEffect(() => {
-    dispatch(fetchNotificationList({ appName: selectedAppName }));
+    dispatch(fetchNotificationList({ appName: selectedAppName, trayOpened }));
     if (notificationUnseenCounts[selectedAppName]) {
       dispatch(markNotificationsAsSeen(selectedAppName));
     }
@@ -24,6 +25,7 @@ const NotificationTabs = () => {
 
   const handleActiveTab = useCallback((appName) => {
     dispatch(updateAppNameRequest({ appName }));
+    dispatch(toggleTrayEvent(false));
   }, [dispatch]);
 
   return (

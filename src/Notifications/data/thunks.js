@@ -47,11 +47,13 @@ const responseError = (error, dispatch) => {
   }
 };
 
-export const fetchNotificationList = ({ appName, page = 1, pageSize = 10 }) => (
+export const fetchNotificationList = ({
+  appName, page = 1, pageSize = 10, trayOpened,
+}) => (
   async (dispatch) => {
     try {
       dispatch(notificationListStatusRequest());
-      const data = await getNotificationsList(appName, page, pageSize);
+      const data = await getNotificationsList(appName, page, pageSize, trayOpened);
       const normalizedData = normalizeNotifications((camelCaseObject(data)));
       dispatch(fetchNotificationSuccess({ ...normalizedData }));
     } catch (error) {
