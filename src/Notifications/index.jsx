@@ -16,6 +16,7 @@ import { toggleTrayEvent } from './data/slice';
 import { useIsOnLargeScreen, useIsOnMediumScreen } from './data/hook';
 import NotificationTabs from './NotificationTabs';
 import messages from './messages';
+import NotificationTour from './tours/NotificationTour';
 
 const Notifications = () => {
   const intl = useIntl();
@@ -61,60 +62,62 @@ const Notifications = () => {
   }
 
   return (
-    <OverlayTrigger
-      trigger="click"
-      key="bottom"
-      placement="bottom"
-      id="notificationTray"
-      show={enableNotificationTray}
-      overlay={(
-        <Popover
-          id="notificationTray"
-          style={{ height: `${notificationBarHeight}px` }}
-          data-testid="notification-tray"
-          className={classNames('overflow-auto rounded-0 border-0', {
-            'w-100': !isOnMediumScreen && !isOnLargeScreen,
-            'medium-screen': isOnMediumScreen,
-            'large-screen': isOnLargeScreen,
-          })}
-        >
-          <div ref={popoverRef}>
-            <Popover.Title as="h2" className="d-flex justify-content-between p-0 m-4 border-0 text-primary-500 font-size-18 line-height-24">
-              {intl.formatMessage(messages.notificationTitle)}
-              <Hyperlink
-                destination={`${getConfig().ACCOUNT_SETTINGS_URL}/notifications`}
-                target="_blank"
-                rel="noopener noreferrer"
-                showLaunchIcon={false}
-              >
-                <Icon
-                  src={Settings}
-                  className="icon-size-20 text-primary-500"
-                  data-testid="setting-icon"
-                  screenReaderText="preferences settings icon"
-                />
-              </Hyperlink>
-            </Popover.Title>
-            <Popover.Content className="notification-content p-0">
-              <NotificationTabs />
-            </Popover.Content>
-          </div>
-        </Popover>
+    <>
+      <OverlayTrigger
+        trigger="click"
+        key="bottom"
+        placement="bottom"
+        id="notificationTray"
+        show={enableNotificationTray}
+        overlay={(
+          <Popover
+            id="notificationTray"
+            style={{ height: `${notificationBarHeight}px` }}
+            data-testid="notification-tray"
+            className={classNames('overflow-auto rounded-0 border-0', {
+              'w-100': !isOnMediumScreen && !isOnLargeScreen,
+              'medium-screen': isOnMediumScreen,
+              'large-screen': isOnLargeScreen,
+            })}
+          >
+            <div ref={popoverRef}>
+              <Popover.Title as="h2" className="d-flex justify-content-between p-0 m-4 border-0 text-primary-500 font-size-18 line-height-24">
+                {intl.formatMessage(messages.notificationTitle)}
+                <Hyperlink
+                  destination={`${getConfig().ACCOUNT_SETTINGS_URL}/notifications`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  showLaunchIcon={false}
+                >
+                  <Icon
+                    src={Settings}
+                    className="icon-size-20 text-primary-500"
+                    data-testid="setting-icon"
+                    screenReaderText="preferences settings icon"
+                  />
+                </Hyperlink>
+              </Popover.Title>
+              <Popover.Content className="notification-content p-0">
+                <NotificationTabs />
+              </Popover.Content>
+            </div>
+          </Popover>
       )}
-    >
-      <div ref={buttonRef}>
-        <IconButton
-          isActive={enableNotificationTray}
-          alt="notification bell icon"
-          onClick={toggleNotificationTray}
-          src={NotificationsNone}
-          iconAs={Icon}
-          variant="light"
-          iconClassNames="text-primary-500"
-          className="ml-4 mr-1 notification-button"
-          data-testid="notification-bell-icon"
-        />
-        {notificationCounts?.count > 0 && (
+      >
+        <div ref={buttonRef}>
+          <IconButton
+            isActive={enableNotificationTray}
+            alt="notification bell icon"
+            onClick={toggleNotificationTray}
+            src={NotificationsNone}
+            iconAs={Icon}
+            variant="light"
+            id="bell-icon"
+            iconClassNames="text-primary-500"
+            className="ml-4 mr-1 notification-button"
+            data-testid="notification-bell-icon"
+          />
+          {notificationCounts?.count > 0 && (
           <Badge
             pill
             variant="danger"
@@ -125,9 +128,11 @@ const Notifications = () => {
             {notificationCounts.count >= 100 ? <div className="d-flex">99<p className="mb-0 plus-icon">+</p></div>
               : notificationCounts.count}
           </Badge>
-        )}
-      </div>
-    </OverlayTrigger>
+          )}
+        </div>
+      </OverlayTrigger>
+      <NotificationTour />
+    </>
   );
 };
 
