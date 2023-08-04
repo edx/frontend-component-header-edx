@@ -20,7 +20,6 @@ const initialState = {
   showNotificationsTray: false,
   pagination: {},
   trayOpened: false,
-  tourStatus: true,
 };
 const slice = createSlice({
   name: 'notifications',
@@ -94,9 +93,6 @@ const slice = createSlice({
     toggleTrayEvent: (state, { payload }) => {
       state.trayOpened = payload;
     },
-    disableTourStatus: (state) => {
-      state.tourStatus = false;
-    },
   },
 });
 
@@ -116,7 +112,6 @@ export const {
   updateAppNameRequest,
   resetNotificationStateRequest,
   toggleTrayEvent,
-  disableTourStatus,
 } = slice.actions;
 
 export const notificationsReducer = slice.reducer;

@@ -1,30 +1,36 @@
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useIntl } from '@edx/frontend-platform/i18n';
 import { useDispatch, useSelector } from 'react-redux';
 import messages from '../messages';
 import tourCheckpoints from '../constants';
-import { disableTourStatus } from '../../data/slice';
-import { selectTourStatus } from '../../data/selectors';
+import { selectTours } from './selectors';
+import { updateTourShowStatus } from './thunks';
 
-const useTourConfiguration = () => {
+export function camelToConstant(string) {
+  return string.replace(/[A-Z]/g, (match) => `_${match}`).toUpperCase();
+}
+
+export const useTourConfiguration = () => {
   const intl = useIntl();
   const dispatch = useDispatch();
-  const tourStatus = useSelector(selectTourStatus);
+  const tours = useSelector(selectTours);
 
-  const disableTour = useCallback(() => {
-    dispatch(disableTourStatus());
+  const handleOnOkay = useCallback((id) => {
+    dispatch(updateTourShowStatus(id));
   }, [dispatch]);
 
-  const tours = [{
-    tourId: intl.formatMessage(messages.notificationTourId),
-    dismissButtonText: intl.formatMessage(messages.dismissButtonText),
-    endButtonText: intl.formatMessage(messages.endButtonText),
-    enabled: tourStatus && true,
-    onEnd: disableTour,
-    checkpoints: tourCheckpoints(intl).Notification,
-  }];
+  const toursConfig = useMemo(() => (
+    tours?.map((tour) => tour.tourName === intl.formatMessage(messages.notificationTourId) && (
+      {
+        tourId: tour.tourName,
+        dismissButtonText: intl.formatMessage(messages.dismissButtonText),
+        endButtonText: intl.formatMessage(messages.endButtonText),
+        enabled: tour && Boolean(tour.enabled && tour.showTour),
+        onEnd: () => handleOnOkay(tour.id),
+        checkpoints: tourCheckpoints(intl)[camelToConstant(tour.tourName)],
+      }
+    ))
+  ), [handleOnOkay, intl, tours]);
 
-  return tours;
+  return toursConfig;
 };
-
-export default useTourConfiguration;

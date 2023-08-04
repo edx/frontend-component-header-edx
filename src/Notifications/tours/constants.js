@@ -7,7 +7,7 @@ import messages from './messages';
 
 export default function tourCheckpoints(intl) {
   return {
-    Notification: [
+    NOTIFICATION_TOUR: [
       {
         body: (
           <>

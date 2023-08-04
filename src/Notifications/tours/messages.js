@@ -3,7 +3,7 @@ import { defineMessages } from '@edx/frontend-platform/i18n';
 const messages = defineMessages({
   notificationTourId: {
     id: 'notification.tour.id',
-    defaultMessage: 'Notification',
+    defaultMessage: 'notification_tour',
     description: 'Notification Tour Id',
   },
   dismissButtonText: {
