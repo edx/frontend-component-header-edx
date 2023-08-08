@@ -60,7 +60,7 @@ const AuthenticatedUserDropdown = ({ enterpriseLearnerPortalLink, intl, username
             {username}
           </span>
         </Dropdown.Toggle>
-        <Dropdown.Menu className="dropdown-menu-right">
+        <Dropdown.Menu className="dropdown-menu-right zIndex-2">
           {dashboardMenuItem}
           {careersMenuItem}
           <Dropdown.Item href={`${getConfig().ACCOUNT_PROFILE_URL}/u/${username}`}>
