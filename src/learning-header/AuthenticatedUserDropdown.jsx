@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
-import { useLocation } from 'react-router-dom';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
@@ -16,14 +15,13 @@ import { selectShowNotificationTray } from '../Notifications/data/selectors';
 import { fetchAppsNotificationCount } from '../Notifications/data/thunks';
 
 const AuthenticatedUserDropdown = ({ enterpriseLearnerPortalLink, intl, username }) => {
-  const location = useLocation();
   const dispatch = useDispatch();
   const showNotificationsTray = useSelector(selectShowNotificationTray);
 
   useEffect(() => {
     dispatch(fetchAppsNotificationCount());
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location.pathname]);
+  }, [window.location.href]);
 
   let dashboardMenuItem = (
     <Dropdown.Item href={`${getConfig().LMS_BASE_URL}/dashboard`}>
