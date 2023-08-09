@@ -34,6 +34,7 @@
   "homepage": "https://github.com/edx/frontend-component-header-edx#readme",
   "devDependencies": {
     "@edx/brand": "npm:@edx/brand-edx.org@2.1.2",
+    "@edx/paragon": "21.0.0-alpha.38",
     "@edx/browserslist-config": "1.1.1",
     "@edx/frontend-build": "12.9.4",
     "@edx/frontend-platform": "5.0.0",
@@ -58,7 +59,6 @@
   },
   "dependencies": {
     "@edx/frontend-enterprise-utils": "4.0.0",
-    "@edx/paragon": "21.0.0-alpha.38",
     "@fortawesome/fontawesome-svg-core": "6.4.2",
     "@fortawesome/free-brands-svg-icons": "6.4.2",
     "@fortawesome/free-regular-svg-icons": "6.4.2",
@@ -78,6 +78,7 @@
     "timeago.js": "4.0.2"
   },
   "peerDependencies": {
+    "@edx/paragon": "21.0.0-alpha.38",
     "@edx/frontend-platform": "^4.0.0 || ^5.0.0",
     "prop-types": "^15.5.10",
     "react": "^16.9.0 || ^17.0.0",
