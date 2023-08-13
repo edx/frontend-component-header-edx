@@ -36,5 +36,10 @@
   "notification.earlier.heading": "Earlier",
   "notification.mark.as.read": "Mark all as read",
   "notification.fullStop": "•",
-  "notification.load.more.notifications": "Load more notifications"
+  "notification.load.more.notifications": "Load more notifications",
+  "notification.tour.id": "notification_tour",
+  "tour.action.dismiss": "Dismiss",
+  "tour.action.end": "Okay",
+  "notification.tour.body": "Click the bell icon to see Discussion notifications and customize your preferences by clicking on the gear icon",
+  "notification.tour.title": "Stay informed!"
 }
