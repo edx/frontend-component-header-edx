@@ -30,7 +30,7 @@ function renderComponent(location = '/') {
   render(
     <ResponsiveContext.Provider>
       <IntlProvider locale="en" messages={{}}>
-        <AppProvider store={store}>
+        <AppProvider store={store} wrapWithRouter={false}>
           <AppContext.Provider>
             <MemoryRouter initialEntries={[location]}>
               <AuthenticatedUserDropdown />
