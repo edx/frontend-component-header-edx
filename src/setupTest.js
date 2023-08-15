@@ -5,7 +5,7 @@ import 'regenerator-runtime/runtime';
 import Enzyme from 'enzyme';
 import React from 'react';
 import PropTypes from 'prop-types';
-import Adapter from 'enzyme-adapter-react-16';
+import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import '@testing-library/jest-dom';
 import '@testing-library/jest-dom/extend-expect';
 import 'jest-chain';
@@ -24,6 +24,8 @@ Enzyme.configure({ adapter: new Adapter() });
 // Jest does not use webpack so we need to set these so for testing
 process.env.ACCESS_TOKEN_COOKIE_NAME = 'edx-jwt-cookie-header-payload';
 process.env.BASE_URL = 'localhost:1995';
+process.env.ACCOUNT_PROFILE_URL = 'http://localhost:1995';
+process.env.ACCOUNT_SETTINGS_URL = 'http://localhost:1997';
 process.env.CREDENTIALS_BASE_URL = 'http://localhost:18150';
 process.env.CSRF_TOKEN_API_PATH = '/csrf/api/v1/token';
 process.env.ECOMMERCE_BASE_URL = 'http://localhost:18130';

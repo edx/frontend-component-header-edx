@@ -3,6 +3,7 @@ import Responsive from 'react-responsive';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import { sendTrackEvent } from '@edx/frontend-platform/analytics';
 import { AppContext } from '@edx/frontend-platform/react';
+import { Badge } from '@edx/paragon';
 import {
   APP_CONFIG_INITIALIZED,
   ensureConfig,
@@ -77,10 +78,10 @@ const Header = ({ intl }) => {
     content: intl.formatMessage(messages['header.user.menu.logout']),
   };
 
-  const orderHistoryItem = {
+  const ordersAndSubscriptionsItem = {
     type: 'item',
     href: config.ORDER_HISTORY_URL,
-    content: intl.formatMessage(messages['header.user.menu.order.history']),
+    content: intl.formatMessage(messages['header.user.menu.order.subscriptions']),
   };
 
   // If there is an Enterprise LP link, use that instead of the B2C Dashboard
@@ -91,11 +92,23 @@ const Header = ({ intl }) => {
     baseUserMenuDashboardLinks = [dashboardMenuItem];
   }
 
+  const careerItemContent = <>{intl.formatMessage(messages['header.user.menu.career'])}<Badge className="px-2 mx-2" variant="warning">{intl.formatMessage(messages['header.user.menu.newAlert'])}</Badge></>;
   let userMenu = authenticatedUser === null ? [] : [
     ...baseUserMenuDashboardLinks,
     {
       type: 'item',
-      href: `${config.LMS_BASE_URL}/u/${authenticatedUser.username}`,
+      href: 'https://careers.edx.org/',
+      content: careerItemContent,
+      onClick: () => {
+        sendTrackEvent(
+          'edx.bi.user.menu.career.clicked',
+          { category: 'header', label: 'header' },
+        );
+      },
+    },
+    {
+      type: 'item',
+      href: `${config.ACCOUNT_PROFILE_URL}/u/${authenticatedUser.username}`,
       content: intl.formatMessage(messages['header.user.menu.profile']),
     },
     {
@@ -112,7 +125,7 @@ const Header = ({ intl }) => {
   // that they access content via Subscriptions, in which context an "order"
   // is not relevant.
   if (!enterpriseLearnerPortalLink && config.ORDER_HISTORY_URL) {
-    userMenu.splice(-1, 0, orderHistoryItem);
+    userMenu.splice(-1, 0, ordersAndSubscriptionsItem);
   }
 
   if (getConfig().MINIMAL_HEADER && authenticatedUser !== null) {
