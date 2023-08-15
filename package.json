@@ -71,7 +71,7 @@
     "core-js": "3.32.0",
     "lodash": "4.17.21",
     "react-redux": "7.2.9",
-    "react-responsive": "8.2.0",
+    "react-responsive": "9.0.2",
     "react-transition-group": "4.4.5",
     "regenerator-runtime": "0.13.11",
     "rosie": "2.1.0",
