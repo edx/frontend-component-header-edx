@@ -11,7 +11,7 @@ describe('Header', () => {
   });
 
   it('displays user button', () => {
-    render(<Header />, { wrapWithRouter: false });
+    render(<Header />);
     expect(screen.getByText(authenticatedUser.username)).toBeInTheDocument();
   });
 
@@ -21,7 +21,7 @@ describe('Header', () => {
       courseNumber: 'course-number',
       courseTitle: 'course-title',
     };
-    render(<Header {...courseData} />, { wrapWithRouter: false });
+    render(<Header {...courseData} />);
 
     expect(screen.getByText(`${courseData.courseOrg} ${courseData.courseNumber}`)).toBeInTheDocument();
     expect(screen.getByText(courseData.courseTitle)).toBeInTheDocument();
