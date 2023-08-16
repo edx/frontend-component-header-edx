@@ -69,7 +69,7 @@ const LearningHeader = ({
   }
 
   return (
-    <AppProvider store={store}>
+    <AppProvider store={store} wrapWithRouter={false}>
       <header className="learning-header">
         <a className="sr-only sr-only-focusable" href="#main-content">{intl.formatMessage(messages.skipNavLink)}</a>
         <div className="px-4 py-2.5 d-flex align-items-center learning-header-container">
