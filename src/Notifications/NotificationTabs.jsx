@@ -33,7 +33,7 @@ const NotificationTabs = () => {
       variant="tabs"
       defaultActiveKey={selectedAppName}
       onSelect={handleActiveTab}
-      className="px-2.5 text-primary-500"
+      className="px-2.5 text-primary-500 tabs position-sticky zIndex-2 bg-white"
     >
       {notificationTabs?.map((appName) => (
         <Tab

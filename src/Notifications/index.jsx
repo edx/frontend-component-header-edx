@@ -81,7 +81,11 @@ const Notifications = () => {
             })}
           >
             <div ref={popoverRef}>
-              <Popover.Title as="h2" className="d-flex justify-content-between p-0 m-4 border-0 text-primary-500 font-size-18 line-height-24">
+              <Popover.Title
+                as="h2"
+                className={`sticky-container d-flex justify-content-between p-4 m-0 border-0 text-primary-500 zIndex-2
+                  font-size-18 line-height-24 bg-white position-sticky`}
+              >
                 {intl.formatMessage(messages.notificationTitle)}
                 <Hyperlink
                   destination={`${getConfig().ACCOUNT_SETTINGS_URL}/notifications`}
