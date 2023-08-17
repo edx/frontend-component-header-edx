@@ -13,11 +13,13 @@ import store from '../store';
 
 ensureConfig([
   'ACCOUNT_SETTINGS_URL',
+  'NOTIFICATION_FEEDBACK_URL',
 ], 'Learning Header component');
 
 subscribe(APP_CONFIG_INITIALIZED, () => {
   mergeConfig({
     ACCOUNT_SETTINGS_URL: process.env.ACCOUNT_SETTINGS_URL || '',
+    NOTIFICATION_FEEDBACK_URL: process.env.NOTIFICATION_FEEDBACK_URL || '',
   }, 'Learning Header additional config');
 });
 

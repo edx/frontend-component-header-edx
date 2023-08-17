@@ -67,7 +67,7 @@ const NotificationRowItem = ({
 };
 
 NotificationRowItem.propTypes = {
-  id: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
   type: PropTypes.string.isRequired,
   contentUrl: PropTypes.string.isRequired,
   content: PropTypes.node.isRequired,
