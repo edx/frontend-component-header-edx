@@ -190,6 +190,7 @@ $white: #fff;
 .notification-icon {
   height: 23.33px !important;
   width: 23.33px !important;
+  z-index: 1;
 }
 
 .notification-badge {
@@ -214,6 +215,14 @@ $white: #fff;
 .popover {
   filter: none;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15), 0px 2px 8px rgba(0, 0, 0, 0.15);
+
+  .popover-header{
+    top: 0px;
+  }
+
+  .tabs{
+    top: 72px;
+  }
 
   &.medium-screen {
     min-width: 24.313rem;
