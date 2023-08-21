@@ -7,8 +7,10 @@ import {
   selectNotificationTabs, selectNotificationTabsCount, selectSelectedAppName, selectTrayOpened,
 } from './data/selectors';
 import { updateAppNameRequest, toggleTrayEvent } from './data/slice';
+import { useFeedbackWrapper } from './utils';
 
 const NotificationTabs = () => {
+  useFeedbackWrapper();
   const dispatch = useDispatch();
   const selectedAppName = useSelector(selectSelectedAppName);
   const notificationUnseenCounts = useSelector(selectNotificationTabsCount);

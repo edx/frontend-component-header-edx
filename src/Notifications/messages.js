@@ -31,6 +31,11 @@ const messages = defineMessages({
     defaultMessage: 'Load more notifications',
     description: 'Load more button to load more notifications',
   },
+  feedback: {
+    id: 'notification.feedback',
+    defaultMessage: 'Feedback',
+    description: 'Feedback icon tooltip',
+  },
 });
 
 export default messages;
