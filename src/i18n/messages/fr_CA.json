@@ -37,9 +37,10 @@
   "notification.mark.as.read": "Tout marquer comme lu",
   "notification.fullStop": "•",
   "notification.load.more.notifications": "Charger plus de notifications",
+  "notification.feedback": "Commentaire",
   "notification.tour.id": "notification_tour",
   "tour.action.dismiss": "Rejeter",
   "tour.action.end": "D'accord",
-  "notification.tour.body": "Cliquez sur l&#39;icône de cloche pour voir les notifications de discussion et personnalisez vos préférences en cliquant sur l&#39;icône d&#39;engrenage",
+  "notification.tour.body": "Cliquez sur l'icône de cloche pour voir les notifications de discussion et personnalisez vos préférences en cliquant sur l'icône d'engrenage",
   "notification.tour.title": "Rester informé!"
 }
