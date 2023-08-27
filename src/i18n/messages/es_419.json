@@ -37,6 +37,7 @@
   "notification.mark.as.read": "Marcar todo como leído",
   "notification.fullStop": "•",
   "notification.load.more.notifications": "Cargar más notificaciones",
+  "notification.feedback": "Feedback",
   "notification.tour.id": "notification_tour",
   "tour.action.dismiss": "Descartar",
   "tour.action.end": "De acuerdo",
