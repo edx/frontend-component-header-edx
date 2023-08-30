@@ -45,7 +45,7 @@ const NotificationSections = () => {
           {notifications?.length > 0 && (section === 'earlier' ? today.length === 0 : true) && (
             <Button
               variant="link"
-              className="text-info-500 font-size-14 line-height-10 text-decoration-none p-0 border-0"
+              className="font-size-14 line-height-10 text-decoration-none p-0 border-0 text-info-500"
               onClick={handleMarkAllAsRead}
               data-testid="mark-all-read"
             >

@@ -55,9 +55,18 @@ const Notifications = () => {
   let notificationBarHeight = 0;
 
   if (headerHeight.length > 0) {
-    notificationBarHeight = viewPortHeight - headerHeight[0].clientHeight;
+    const availableViewportHeight = viewPortHeight - headerHeight[0].clientHeight;
+
     if (footer.length > 0) {
-      notificationBarHeight -= footer[0].clientHeight;
+      const footerRect = footer[0].getBoundingClientRect();
+      const visibleFooterHeight = Math.min(footerRect.bottom, window.innerHeight) - Math.max(footerRect.top, 0);
+      const footerHeight = footer[0].clientHeight;
+
+      const adjustedBarHeight = availableViewportHeight - footerHeight + Math.min(visibleFooterHeight, 0);
+
+      notificationBarHeight = adjustedBarHeight;
+    } else {
+      notificationBarHeight = availableViewportHeight;
     }
   }
 
@@ -78,7 +87,7 @@ const Notifications = () => {
             id="notificationTray"
             style={{ height: `${notificationBarHeight}px` }}
             data-testid="notification-tray"
-            className={classNames('overflow-auto rounded-0 border-0', {
+            className={classNames('overflow-auto rounded-0 border-0 position-fixed', {
               'w-100': !isOnMediumScreen && !isOnLargeScreen,
               'medium-screen': isOnMediumScreen,
               'large-screen': isOnLargeScreen,
@@ -87,8 +96,8 @@ const Notifications = () => {
             <div ref={popoverRef}>
               <Popover.Title
                 as="h2"
-                className={`sticky-container d-flex justify-content-between p-4 m-0 border-0 text-primary-500 zIndex-2
-                  font-size-18 line-height-24 bg-white position-sticky`}
+                className={`d-flex justify-content-between p-4 m-0 border-0 text-primary-500 zIndex-2 font-size-18
+                  line-height-24 bg-white position-sticky`}
               >
                 {intl.formatMessage(messages.notificationTitle)}
                 {getConfig().NOTIFICATION_FEEDBACK_URL && (
