@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {
-  useCallback, useEffect, useRef, useState,
+  useCallback, useEffect, useRef, useState, useMemo,
 } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useIntl } from '@edx/frontend-platform/i18n';
@@ -52,14 +52,24 @@ const Notifications = () => {
   const viewPortHeight = document.body.clientHeight;
   const headerHeight = document.getElementsByClassName('learning-header-container');
   const footer = document.getElementsByClassName('footer');
-  let notificationBarHeight = 0;
 
-  if (headerHeight.length > 0) {
-    notificationBarHeight = viewPortHeight - headerHeight[0].clientHeight;
-    if (footer.length > 0) {
-      notificationBarHeight -= footer[0].clientHeight;
+  const notificationBarHeight = useMemo(() => {
+    if (headerHeight.length > 0) {
+      const availableViewportHeight = viewPortHeight - headerHeight[0].clientHeight;
+
+      if (footer.length > 0) {
+        const footerRect = footer[0].getBoundingClientRect();
+        const visibleFooterHeight = Math.min(footerRect.bottom, window.innerHeight) - Math.max(footerRect.top, 0);
+        const footerHeight = footer[0].clientHeight;
+
+        const adjustedBarHeight = availableViewportHeight - footerHeight + Math.min(visibleFooterHeight, 0);
+
+        return adjustedBarHeight;
+      }
+      return availableViewportHeight;
     }
-  }
+    return 0;
+  }, [viewPortHeight, headerHeight, footer]);
 
   const enableFeedback = useCallback(() => {
     window.usabilla_live('click');
@@ -78,7 +88,7 @@ const Notifications = () => {
             id="notificationTray"
             style={{ height: `${notificationBarHeight}px` }}
             data-testid="notification-tray"
-            className={classNames('overflow-auto rounded-0 border-0', {
+            className={classNames('overflow-auto rounded-0 border-0 position-fixed', {
               'w-100': !isOnMediumScreen && !isOnLargeScreen,
               'medium-screen': isOnMediumScreen,
               'large-screen': isOnLargeScreen,
@@ -87,8 +97,8 @@ const Notifications = () => {
             <div ref={popoverRef}>
               <Popover.Title
                 as="h2"
-                className={`sticky-container d-flex justify-content-between p-4 m-0 border-0 text-primary-500 zIndex-2
-                  font-size-18 line-height-24 bg-white position-sticky`}
+                className={`d-flex justify-content-between p-4 m-0 border-0 text-primary-500 zIndex-2 font-size-18
+                  line-height-24 bg-white position-sticky`}
               >
                 {intl.formatMessage(messages.notificationTitle)}
                 {getConfig().NOTIFICATION_FEEDBACK_URL && (
