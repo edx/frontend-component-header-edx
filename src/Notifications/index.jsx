@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {
-  useCallback, useEffect, useRef, useState,
+  useCallback, useEffect, useRef, useState, useMemo,
 } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useIntl } from '@edx/frontend-platform/i18n';
@@ -52,23 +52,24 @@ const Notifications = () => {
   const viewPortHeight = document.body.clientHeight;
   const headerHeight = document.getElementsByClassName('learning-header-container');
   const footer = document.getElementsByClassName('footer');
-  let notificationBarHeight = 0;
 
-  if (headerHeight.length > 0) {
-    const availableViewportHeight = viewPortHeight - headerHeight[0].clientHeight;
+  const notificationBarHeight = useMemo(() => {
+    if (headerHeight.length > 0) {
+      const availableViewportHeight = viewPortHeight - headerHeight[0].clientHeight;
 
-    if (footer.length > 0) {
-      const footerRect = footer[0].getBoundingClientRect();
-      const visibleFooterHeight = Math.min(footerRect.bottom, window.innerHeight) - Math.max(footerRect.top, 0);
-      const footerHeight = footer[0].clientHeight;
+      if (footer.length > 0) {
+        const footerRect = footer[0].getBoundingClientRect();
+        const visibleFooterHeight = Math.min(footerRect.bottom, window.innerHeight) - Math.max(footerRect.top, 0);
+        const footerHeight = footer[0].clientHeight;
 
-      const adjustedBarHeight = availableViewportHeight - footerHeight + Math.min(visibleFooterHeight, 0);
+        const adjustedBarHeight = availableViewportHeight - footerHeight + Math.min(visibleFooterHeight, 0);
 
-      notificationBarHeight = adjustedBarHeight;
-    } else {
-      notificationBarHeight = availableViewportHeight;
+        return adjustedBarHeight;
+      }
+      return availableViewportHeight;
     }
-  }
+    return 0;
+  }, [viewPortHeight, headerHeight, footer]);
 
   const enableFeedback = useCallback(() => {
     window.usabilla_live('click');
