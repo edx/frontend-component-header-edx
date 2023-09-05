@@ -6,7 +6,6 @@ export const RequestStatus = {
   IN_PROGRESS: 'in-progress',
   SUCCESSFUL: 'successful',
   FAILED: 'failed',
-  DENIED: 'denied',
 };
 
 const initialState = {
@@ -31,9 +30,6 @@ const slice = createSlice({
     notificationStatusFailed: (state) => {
       state.notificationStatus = RequestStatus.FAILED;
     },
-    notificationStatusDenied: (state) => {
-      state.notificationStatus = RequestStatus.DENIED;
-    },
     notificationStatusSuccess: (state) => {
       state.notificationStatus = RequestStatus.SUCCESSFUL;
     },
@@ -42,9 +38,6 @@ const slice = createSlice({
     },
     notificationListStatusFailed: (state) => {
       state.notificationListStatus = RequestStatus.FAILED;
-    },
-    notificationListStatusDenied: (state) => {
-      state.notificationListStatus = RequestStatus.DENIED;
     },
     fetchNotificationSuccess: (state, { payload }) => {
       const {
@@ -99,9 +92,7 @@ const slice = createSlice({
 export const {
   notificationStatusRequest,
   notificationStatusFailed,
-  notificationStatusDenied,
   notificationStatusSuccess,
-  notificationListStatusDenied,
   notificationListStatusFailed,
   notificationListStatusRequest,
   fetchNotificationSuccess,
