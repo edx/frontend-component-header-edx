@@ -4,13 +4,6 @@ import { getConfig } from '@edx/frontend-platform';
 import { logError } from '@edx/frontend-platform/logging';
 import { QuestionAnswerOutline, PostOutline } from '@edx/paragon/icons';
 
-/**
- * Get HTTP Error status from generic error.
- * @param error Generic caught error.
- * @returns {number|null}
- */
-export const getHttpErrorStatus = error => error?.customAttributes?.httpErrorStatus ?? error?.response?.status;
-
 export const splitNotificationsByTime = (notificationList) => {
   let splittedData = [];
   if (notificationList.length > 0) {

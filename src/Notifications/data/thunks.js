@@ -2,7 +2,6 @@ import { camelCaseObject } from '@edx/frontend-platform';
 import {
   notificationStatusRequest,
   notificationStatusFailed,
-  notificationStatusDenied,
   notificationStatusSuccess,
   fetchNotificationSuccess,
   fetchNotificationsCountSuccess,
@@ -10,13 +9,11 @@ import {
   markNotificationsAsReadSuccess,
   resetNotificationStateRequest,
   notificationListStatusRequest,
-  notificationListStatusDenied,
   notificationListStatusFailed,
 } from './slice';
 import {
   getNotificationsList, getNotificationCounts, markNotificationSeen, markAllNotificationRead, markNotificationRead,
 } from './api';
-import { getHttpErrorStatus } from '../utils';
 
 const normalizeNotificationCounts = ({ countByAppName, count, showNotificationsTray }) => {
   const appIds = Object.keys(countByAppName);
@@ -39,14 +36,6 @@ const normalizeNotifications = (data) => {
   };
 };
 
-const responseError = (error, dispatch) => {
-  if (getHttpErrorStatus(error) === 403) {
-    dispatch(notificationStatusDenied());
-  } else {
-    dispatch(notificationStatusFailed());
-  }
-};
-
 export const fetchNotificationList = ({
   appName, page = 1, pageSize = 10, trayOpened,
 }) => (
@@ -57,11 +46,7 @@ export const fetchNotificationList = ({
       const normalizedData = normalizeNotifications((camelCaseObject(data)));
       dispatch(fetchNotificationSuccess({ ...normalizedData }));
     } catch (error) {
-      if (getHttpErrorStatus(error) === 403) {
-        dispatch(notificationListStatusDenied());
-      } else {
-        dispatch(notificationListStatusFailed());
-      }
+      dispatch(notificationListStatusFailed());
     }
   }
 );
@@ -74,7 +59,7 @@ export const fetchAppsNotificationCount = () => (
       const normalisedData = normalizeNotificationCounts((camelCaseObject(data)));
       dispatch(fetchNotificationsCountSuccess({ ...normalisedData }));
     } catch (error) {
-      responseError(error, dispatch);
+      dispatch(notificationStatusFailed());
     }
   }
 );
@@ -86,7 +71,7 @@ export const markAllNotificationsAsRead = (appName) => (
       const data = await markAllNotificationRead(appName);
       dispatch(markAllNotificationsAsReadSuccess(camelCaseObject(data)));
     } catch (error) {
-      responseError(error, dispatch);
+      dispatch(notificationStatusFailed());
     }
   }
 );
@@ -98,7 +83,7 @@ export const markNotificationsAsRead = (notificationId) => (
       const data = await markNotificationRead(notificationId);
       dispatch(markNotificationsAsReadSuccess(camelCaseObject(data)));
     } catch (error) {
-      responseError(error, dispatch);
+      dispatch(notificationStatusFailed());
     }
   }
 );
@@ -110,7 +95,7 @@ export const markNotificationsAsSeen = (appName) => (
       await markNotificationSeen(appName);
       dispatch(notificationStatusSuccess());
     } catch (error) {
-      responseError(error, dispatch);
+      dispatch(notificationStatusFailed());
     }
   }
 );
