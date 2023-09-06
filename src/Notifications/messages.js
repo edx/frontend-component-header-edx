@@ -34,7 +34,7 @@ const messages = defineMessages({
   feedback: {
     id: 'notification.feedback',
     defaultMessage: 'Feedback',
-    description: 'Feedback icon tooltip',
+    description: 'text for feedback widget',
   },
 });
 

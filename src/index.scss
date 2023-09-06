@@ -281,4 +281,11 @@ $white: #fff;
       width: 10px;
     }
   }
+
+  .notification-feedback-widget {
+    right: -37px !important;
+    position: fixed !important;
+    transform: rotate(270deg) !important;
+    top: 50% !important;
+  }
 }
