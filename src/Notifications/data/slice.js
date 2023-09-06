@@ -60,13 +60,14 @@ const slice = createSlice({
     },
     fetchNotificationsCountSuccess: (state, { payload }) => {
       const {
-        countByAppName, appIds, apps, count, showNotificationsTray,
+        countByAppName, appIds, apps, count, showNotificationsTray, notificationExpiryDays,
       } = payload;
       state.tabsCount = { count, ...countByAppName };
       state.appsId = appIds;
       state.apps = apps;
       state.showNotificationsTray = showNotificationsTray;
       state.notificationStatus = RequestStatus.SUCCESSFUL;
+      state.notificationExpiryDays = notificationExpiryDays;
     },
     markAllNotificationsAsReadSuccess: (state) => {
       const updatedNotifications = Object.fromEntries(

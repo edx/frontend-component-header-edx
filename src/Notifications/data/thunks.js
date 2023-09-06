@@ -18,11 +18,13 @@ import {
 } from './api';
 import { getHttpErrorStatus } from '../utils';
 
-const normalizeNotificationCounts = ({ countByAppName, count, showNotificationsTray }) => {
+const normalizeNotificationCounts = ({
+  countByAppName, count, showNotificationsTray, notificationExpiryDays,
+}) => {
   const appIds = Object.keys(countByAppName);
   const apps = appIds.reduce((acc, appId) => { acc[appId] = []; return acc; }, {});
   return {
-    countByAppName, appIds, apps, count, showNotificationsTray,
+    countByAppName, appIds, apps, count, showNotificationsTray, notificationExpiryDays,
   };
 };
 

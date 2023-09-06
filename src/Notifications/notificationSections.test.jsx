@@ -72,6 +72,7 @@ describe('Notification sections test cases.', () => {
         store.getState,
       );
       expect(screen.queryByTestId('notifications-loading-spinner')).toBeVisible();
+      expect(screen.queryByTestId('notifications-list-complete')).not.toBeInTheDocument();
     } else if (status === RequestStatus.SUCCESSFUL) {
       expect(screen.queryByTestId('notifications-loading-spinner')).not.toBeInTheDocument();
     }
@@ -112,6 +113,7 @@ describe('Notification sections test cases.', () => {
     await act(async () => { fireEvent.click(bellIcon); });
 
     expect(screen.queryAllByTestId('notification-contents')).toHaveLength(10);
+    expect(screen.queryByTestId('notifications-list-complete')).not.toBeInTheDocument();
     const loadMoreButton = screen.queryByTestId('load-more-notifications');
 
     axiosMock.onGet(getNotificationsListApiUrl()).reply(
@@ -122,5 +124,6 @@ describe('Notification sections test cases.', () => {
 
     await act(async () => { fireEvent.click(loadMoreButton); });
     expect(screen.queryAllByTestId('notification-contents')).toHaveLength(12);
+    expect(screen.queryByTestId('notifications-list-complete')).toBeInTheDocument();
   });
 });

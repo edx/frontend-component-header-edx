@@ -36,6 +36,16 @@ const messages = defineMessages({
     defaultMessage: 'Feedback',
     description: 'Feedback icon tooltip',
   },
+  allRecentNotificationsMessage: {
+    id: 'notification.recent.all.message',
+    defaultMessage: 'That’s all of your recent notifications!',
+    description: 'Message visible when all notifications are loaded',
+  },
+  expiredNotificationsDeleteMessage: {
+    id: 'notification.expired.delete.message',
+    defaultMessage: 'Notifications are automatically cleared after {days} days',
+    description: 'Message showing that expired notifications will be deleted',
+  },
 });
 
 export default messages;
