@@ -14,6 +14,7 @@ import {
   fetchAppsNotificationCount, fetchNotificationList, markNotificationsAsRead, markAllNotificationsAsRead,
   resetNotificationState, markNotificationsAsSeen,
 } from './thunks';
+import { RequestStatus } from './slice';
 
 import './__factories__';
 
@@ -72,7 +73,7 @@ describe('Notification Redux', () => {
 
     const { notifications: { notificationListStatus } } = store.getState();
 
-    expect(notificationListStatus).toEqual('failed');
+    expect(notificationListStatus).toEqual(RequestStatus.FAILED);
   });
 
   it('Successfully loaded notification counts in the redux.', async () => {
@@ -91,7 +92,7 @@ describe('Notification Redux', () => {
 
     const { notifications: { notificationStatus } } = store.getState();
 
-    expect(notificationStatus).toEqual('failed');
+    expect(notificationStatus).toEqual(RequestStatus.FAILED);
   });
 
   it('Successfully marked all notifications as seen for selected app.', async () => {
@@ -107,7 +108,7 @@ describe('Notification Redux', () => {
 
     const { notifications: { notificationStatus } } = store.getState();
 
-    expect(notificationStatus).toEqual('failed');
+    expect(notificationStatus).toEqual(RequestStatus.FAILED);
   });
 
   it('Successfully marked all notifications as read for selected app in the redux.', async () => {
@@ -138,6 +139,6 @@ describe('Notification Redux', () => {
 
     const { notifications: { notificationStatus } } = store.getState();
 
-    expect(notificationStatus).toEqual('failed');
+    expect(notificationStatus).toEqual(RequestStatus.FAILED);
   });
 });
