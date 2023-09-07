@@ -1,5 +1,6 @@
 import React, { useCallback, useMemo } from 'react';
-import { Button, Spinner } from '@edx/paragon';
+import { Button, Icon, Spinner } from '@edx/paragon';
+import { AutoAwesome, CheckCircleOutline } from '@edx/paragon/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { useIntl } from '@edx/frontend-platform/i18n';
 import isEmpty from 'lodash/isEmpty';
@@ -7,7 +8,8 @@ import messages from './messages';
 import NotificationRowItem from './NotificationRowItem';
 import { markAllNotificationsAsRead, fetchNotificationList } from './data/thunks';
 import {
-  selectNotificationsByIds, selectPaginationData, selectSelectedAppName, selectNotificationListStatus,
+  selectExpiryDays, selectNotificationsByIds, selectPaginationData,
+  selectSelectedAppName, selectNotificationListStatus,
 } from './data/selectors';
 import { splitNotificationsByTime } from './utils';
 import { RequestStatus } from './data/slice';
@@ -19,6 +21,7 @@ const NotificationSections = () => {
   const notificationRequestStatus = useSelector(selectNotificationListStatus);
   const notifications = useSelector(selectNotificationsByIds(selectedAppName));
   const { hasMorePages, currentPage } = useSelector(selectPaginationData);
+  const expiryDays = useSelector(selectExpiryDays);
   const { today = [], earlier = [] } = useMemo(
     () => splitNotificationsByTime(notifications),
     [notifications],
@@ -88,6 +91,25 @@ const NotificationSections = () => {
         </Button>
       )
       )}
+      {
+        !hasMorePages && notificationRequestStatus === RequestStatus.SUCCESSFUL && (
+          <div
+            className="d-flex flex-column my-5"
+            data-testid="notifications-list-complete"
+          >
+            <Icon className="mx-auto icon-size-56" src={CheckCircleOutline} />
+            <div className="mx-auto my-3 font-size-22 font-weight-bolder line-height-24">
+              {intl.formatMessage(messages.allRecentNotificationsMessage)}
+            </div>
+            <div className="d-flex flex-row mx-auto">
+              <Icon src={AutoAwesome} />
+              <span className="font-size-14">
+                {intl.formatMessage(messages.expiredNotificationsDeleteMessage, { days: expiryDays })}
+              </span>
+            </div>
+          </div>
+        )
+      }
     </div>
   );
 };

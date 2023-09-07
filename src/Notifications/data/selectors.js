@@ -25,3 +25,5 @@ export const selectSelectedAppName = state => state.notifications.appName;
 export const selectPaginationData = state => state.notifications.pagination;
 
 export const selectTrayOpened = state => state.notifications.trayOpened;
+
+export const selectExpiryDays = state => state.notifications.notificationExpiryDays;
