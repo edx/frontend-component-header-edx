@@ -38,9 +38,13 @@
   "notification.fullStop": "•",
   "notification.load.more.notifications": "Load more notifications",
   "notification.feedback": "Feedback",
+  "notification.recent.all.message": "That’s all of your recent notifications!",
+  "notification.expired.delete.message": "Notifications are automatically cleared after {days} days",
   "notification.tour.id": "notification_tour",
   "tour.action.dismiss": "Dismiss",
   "tour.action.end": "Okay",
-  "notification.tour.body": "Click the bell icon to see Discussion notifications and customize your preferences by clicking on the gear icon",
+  "notification.tour.preference.body": "Click the bell icon to see Discussion notifications and customize your preferences by clicking on the gear icon.",
+  "notification.tour.guide.body": "Certain notifications are enabled by default, as further detailed in the ",
+  "notification.tour.guide.link": "edX Learner's Guide.",
   "notification.tour.title": "Stay informed!"
 }

@@ -38,9 +38,13 @@
   "notification.fullStop": "•",
   "notification.load.more.notifications": "Charger plus de notifications",
   "notification.feedback": "Commentaire",
+  "notification.recent.all.message": "Ce sont toutes vos notifications récentes!",
+  "notification.expired.delete.message": "Les notifications sont automatiquement effacées après {days} jours",
   "notification.tour.id": "notification_tour",
   "tour.action.dismiss": "Rejeter",
   "tour.action.end": "D'accord",
-  "notification.tour.body": "Cliquez sur l'icône de cloche pour voir les notifications de discussion et personnalisez vos préférences en cliquant sur l'icône d'engrenage",
+  "notification.tour.preference.body": "Cliquez sur l'icône en forme de cloche pour voir les notifications de discussion et personnalisez vos préférences en cliquant sur l'icône en forme d'engrenage.",
+  "notification.tour.guide.body": "Certaines notifications sont activées par défaut, comme détaillé dans le",
+  "notification.tour.guide.link": "Guide de l'apprenant edX.",
   "notification.tour.title": "Rester informé!"
 }
