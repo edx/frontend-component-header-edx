@@ -46,10 +46,10 @@ const messages = defineMessages({
     defaultMessage: 'Account',
     description: 'Link to account settings',
   },
-  'header.user.menu.order.subscriptions': {
-    id: 'header.user.menu.order.subscriptions',
-    defaultMessage: 'Orders & Subscriptions',
-    description: 'Link to orders and subscriptions',
+  'header.user.menu.order.history': {
+    id: 'header.user.menu.order.history',
+    defaultMessage: 'Order History',
+    description: 'Link to order history',
   },
   'header.user.menu.logout': {
     id: 'header.user.menu.logout',
