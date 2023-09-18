@@ -31,10 +31,10 @@ const messages = defineMessages({
     defaultMessage: 'New',
     description: 'The text announcing that an item in the user menu is New',
   },
-  orderHistory: {
-    id: 'header.menu.orderHistory.label',
-    defaultMessage: 'Order History',
-    description: 'The text for the user menu Order History navigation link.',
+  ordersAndSubscriptions: {
+    id: 'header.menu.ordersAndSubscriptions.label',
+    defaultMessage: 'Orders & Subscriptions',
+    description: 'The text for the user menu Orders & Subscriptions navigation link.',
   },
   skipNavLink: {
     id: 'header.navigation.skipNavLink',
