@@ -290,7 +290,7 @@ const Notifications = () => {
             variant="danger"
             className="zindex-1"
             data-testid="notification-count"
-            bsPrefix="notification-badge"
+            bsPrefix={`notification-badge ${notificationCounts.count < 10 && 'notification-badge-rounded'}`}
           >
             {notificationCounts.count >= 100 ? <div className="d-flex">99<p className="mb-0 plus-icon">+</p></div>
               : notificationCounts.count}
