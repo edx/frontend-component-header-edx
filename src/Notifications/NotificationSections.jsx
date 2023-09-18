@@ -9,7 +9,7 @@ import NotificationRowItem from './NotificationRowItem';
 import { markAllNotificationsAsRead, fetchNotificationList } from './data/thunks';
 import {
   selectExpiryDays, selectNotificationsByIds, selectPaginationData,
-  selectSelectedAppName, selectNotificationListStatus,
+  selectSelectedAppName, selectNotificationListStatus, selectNotificationTabs,
 } from './data/selectors';
 import { splitNotificationsByTime } from './utils';
 import { RequestStatus } from './data/slice';
@@ -21,6 +21,7 @@ const NotificationSections = () => {
   const notificationRequestStatus = useSelector(selectNotificationListStatus);
   const notifications = useSelector(selectNotificationsByIds(selectedAppName));
   const { hasMorePages, currentPage } = useSelector(selectPaginationData);
+  const notificationTabs = useSelector(selectNotificationTabs);
   const expiryDays = useSelector(selectExpiryDays);
   const { today = [], earlier = [] } = useMemo(
     () => splitNotificationsByTime(notifications),
@@ -73,7 +74,7 @@ const NotificationSections = () => {
   };
 
   return (
-    <div className="mt-4 px-4 pb-3.5" data-testid="notification-tray-section">
+    <div className={`${notificationTabs.length > 1 && 'mt-4'} px-4 pb-3.5`} data-testid="notification-tray-section">
       {renderNotificationSection('today', today)}
       {renderNotificationSection('earlier', earlier)}
       {(hasMorePages === undefined || hasMorePages) && notificationRequestStatus === RequestStatus.IN_PROGRESS ? (

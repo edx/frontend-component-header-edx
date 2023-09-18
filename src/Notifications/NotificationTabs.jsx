@@ -31,25 +31,29 @@ const NotificationTabs = () => {
   }, [dispatch]);
 
   return (
-    <Tabs
-      variant="tabs"
-      defaultActiveKey={selectedAppName}
-      onSelect={handleActiveTab}
-      className="px-2.5 text-primary-500 tabs position-sticky zIndex-2 bg-white"
-    >
-      {notificationTabs?.map((appName) => (
-        <Tab
-          key={appName}
-          eventKey={appName}
-          title={appName}
-          notification={notificationUnseenCounts[appName]}
-          tabClassName="pt-0 pb-10px px-2.5 d-flex border-top-0 mb-0 align-items-center line-height-24 text-capitalize"
-          data-testid={`notification-tab-${appName}`}
+    notificationTabs.length > 1
+      ? (
+        <Tabs
+          variant="tabs"
+          defaultActiveKey={selectedAppName}
+          onSelect={handleActiveTab}
+          className="px-2.5 text-primary-500 tabs position-sticky zIndex-2 bg-white"
         >
-          {selectedAppName === appName && <NotificationSections />}
-        </Tab>
-      ))}
-    </Tabs>
+          {notificationTabs?.map((appName) => (
+            <Tab
+              key={appName}
+              eventKey={appName}
+              title={appName}
+              notification={notificationUnseenCounts[appName]}
+              tabClassName="pt-0 pb-10px px-2.5 d-flex border-top-0 mb-0 align-items-center line-height-24 text-capitalize"
+              data-testid={`notification-tab-${appName}`}
+            >
+              {selectedAppName === appName && <NotificationSections />}
+            </Tab>
+          ))}
+        </Tabs>
+      )
+      : <NotificationSections />
   );
 };
 
