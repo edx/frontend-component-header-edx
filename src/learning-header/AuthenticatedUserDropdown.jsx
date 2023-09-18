@@ -70,10 +70,10 @@ const AuthenticatedUserDropdown = ({ enterpriseLearnerPortalLink, intl, username
           {!enterpriseLearnerPortalLink && getConfig().ORDER_HISTORY_URL && (
             // Users should only see Order History if they do not have an available
             // learner portal, because an available learner portal currently means
-            // that they access content via B2B Subscriptions, in which context an "order"
+            // that they access content via Subscriptions, in which context an "order"
             // is not relevant.
             <Dropdown.Item href={getConfig().ORDER_HISTORY_URL}>
-              {intl.formatMessage(messages.orderHistory)}
+              {intl.formatMessage(messages.ordersAndSubscriptions)}
             </Dropdown.Item>
           )}
           <Dropdown.Item href={getConfig().LOGOUT_URL}>
