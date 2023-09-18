@@ -107,7 +107,7 @@ describe('<Header />', () => {
       wrapper.find('DropdownToggle').simulate('click');
     });
 
-    expect(wrapper.find('a[children="Orders & Subscriptions"]')).toHaveLength(1);
+    expect(wrapper.find('a[children="Order History"]')).toHaveLength(1);
     expect(wrapper.find('a[children="Dashboard"]')).toHaveLength(1);
 
     // When learner portal links are present, Order History should not be a dropdown item
@@ -121,7 +121,7 @@ describe('<Header />', () => {
       wrapper.update();
       wrapper.find('DropdownToggle').simulate('click');
     });
-    expect(wrapper.find('a[children="Orders & Subscriptions"]')).toHaveLength(0);
+    expect(wrapper.find('a[children="Order History"]')).toHaveLength(0);
     expect(wrapper.find('a[children="Dashboard"]')).toHaveLength(1);
   });
 
