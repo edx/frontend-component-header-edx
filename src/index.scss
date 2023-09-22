@@ -217,29 +217,33 @@ $white: #fff;
 
 .notification-badge {
   position: absolute;
-  margin-top: 6px;
-  margin-left: -21px;
   border: 2px solid #FFFFFF;
   font-size: 11px !important;
-  min-width: 23px;
   font-weight: 500 !important;
-  line-height: 9px !important;
-  padding: 2px 4px !important;
-  color: #FFFFFF;
-  background-color: #C32D3A;
-  border-radius: 10rem;
-  display: inline-block;
-  text-align: center;
-  white-space: nowrap;
-  vertical-align: baseline;
   font-variant-numeric: lining-nums tabular-nums;
+  background: var(--text-on-light-brand-500, #D23228) !important;
+  line-height: 20px !important;
+  padding: 4px !important;
+  padding-left: 5px !important;
+  margin-left: -21px;
 }
 
-.notification-badge-rounded{
+.notification-badge-unrounded {
+  margin-top: 6px !important;
+  min-width: 23px !important;
+  width: 23px !important;
+  height: 16px;
+  min-height: 16px !important;
+  border-radius: 54px !important;
+}
+
+.notification-badge-rounded {
   border-radius: 50%;
-  padding: 3px 4px 4px !important;
-  min-width: 21px;
-  margin-top: 4px;
+  margin-top: 3px;
+  height: 20px;
+  min-height: 20px !important;
+  width: 20px !important;
+  min-width: 20px !important;
 }
 
 .popover {
