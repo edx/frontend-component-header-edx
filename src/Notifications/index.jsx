@@ -7,7 +7,7 @@ import { useIntl } from '@edx/frontend-platform/i18n';
 import { getConfig } from '@edx/frontend-platform';
 import classNames from 'classnames';
 import {
-  Badge, Icon, IconButton, OverlayTrigger, Popover, Hyperlink, Button, Bubble,
+  Icon, IconButton, OverlayTrigger, Popover, Hyperlink, Button, Bubble,
 } from '@edx/paragon';
 import { NotificationsNone, Settings } from '@edx/paragon/icons';
 import { selectNotificationTabsCount } from './data/selectors';
