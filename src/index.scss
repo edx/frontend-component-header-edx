@@ -203,6 +203,10 @@ $white: #fff;
   &:focus, &:active, &:hover {
     background-color: #F2F0EF !important;
   }
+
+  span:first-child {
+    margin: 0px !important;
+  }
 }
 
 .notification-button.btn-icon-light-active {
@@ -231,7 +235,6 @@ $white: #fff;
 .notification-badge-unrounded {
   margin-top: 6px !important;
   min-width: 23px !important;
-  width: 23px !important;
   height: 16px;
   min-height: 16px !important;
   border-radius: 54px !important;
