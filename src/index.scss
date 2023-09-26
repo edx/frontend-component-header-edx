@@ -228,12 +228,12 @@ $white: #fff;
   background: var(--text-on-light-brand-500, #D23228) !important;
   line-height: 20px !important;
   padding: 4px !important;
-  padding-left: 5px !important;
+  padding-left: 3px !important;
   margin-left: -21px;
 }
 
 .notification-badge-unrounded {
-  margin-top: 6px !important;
+  margin-top: 4px !important;
   min-width: 23px !important;
   height: 16px;
   min-height: 16px !important;
@@ -242,7 +242,7 @@ $white: #fff;
 
 .notification-badge-rounded {
   border-radius: 50%;
-  margin-top: 3px;
+  margin-top: 1px;
   height: 20px;
   min-height: 20px !important;
   width: 20px !important;
