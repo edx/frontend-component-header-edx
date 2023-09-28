@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo } from 'react';
 import { Button, Icon, Spinner } from '@edx/paragon';
-import { AutoAwesome, CheckCircleOutline } from '@edx/paragon/icons';
+import { AutoAwesome, CheckCircleLightOutline } from '@edx/paragon/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { useIntl } from '@edx/frontend-platform/i18n';
 import isEmpty from 'lodash/isEmpty';
@@ -98,13 +98,13 @@ const NotificationSections = () => {
             className="d-flex flex-column my-5"
             data-testid="notifications-list-complete"
           >
-            <Icon className="mx-auto icon-size-56" src={CheckCircleOutline} />
-            <div className="mx-auto my-3 font-size-22 font-weight-bolder line-height-24">
+            <Icon className="mx-auto icon-size-56" src={CheckCircleLightOutline} />
+            <div className="mx-auto mb-3 font-size-22 notification-end-title line-height-24">
               {intl.formatMessage(messages.allRecentNotificationsMessage)}
             </div>
-            <div className="d-flex flex-row mx-auto">
+            <div className="d-flex flex-row mx-auto text-gray-500">
               <Icon src={AutoAwesome} />
-              <span className="font-size-14">
+              <span className="font-size-14 line-height-normal">
                 {intl.formatMessage(messages.expiredNotificationsDeleteMessage, { days: expiryDays })}
               </span>
             </div>
