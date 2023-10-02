@@ -7,6 +7,7 @@ $white: #fff;
 @import "@edx/paragon/scss/core/core.scss";
 @import "@edx/brand/paragon/overrides.scss";
 @import './Menu/menu.scss';
+@import './studio-header/header.scss';
 
 .dropdown-item a {
   text-decoration: none;
