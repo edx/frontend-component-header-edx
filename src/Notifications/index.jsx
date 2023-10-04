@@ -24,9 +24,13 @@ const Notifications = () => {
   const popoverRef = useRef(null);
   const buttonRef = useRef(null);
   const [enableNotificationTray, setEnableNotificationTray] = useState(false);
+  const [isHeaderVisible, setIsHeaderVisible] = useState(true);
   const notificationCounts = useSelector(selectNotificationTabsCount);
   const isOnMediumScreen = useIsOnMediumScreen();
   const isOnLargeScreen = useIsOnLargeScreen();
+  const viewPortHeight = document.body.clientHeight;
+  const headerRef = document.getElementsByClassName('learning-header-container');
+  const footer = document.getElementsByClassName('footer');
 
   const toggleNotificationTray = useCallback(() => {
     setEnableNotificationTray(prevState => !prevState);
@@ -41,10 +45,18 @@ const Notifications = () => {
   }, []);
 
   useEffect(() => {
+    const handleScroll = () => {
+      if (headerRef && headerRef.length > 0) {
+        setIsHeaderVisible(window.scrollY < headerRef[0].clientHeight);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
     document.addEventListener('mousedown', handleClickOutsideNotificationTray);
 
     return () => {
       document.removeEventListener('mousedown', handleClickOutsideNotificationTray);
+      window.removeEventListener('scroll', handleScroll);
       dispatch(resetNotificationState());
     };
   }, []);
@@ -187,28 +199,19 @@ const Notifications = () => {
       document.body.removeChild(script);
     };
   }, []);
-
-  const viewPortHeight = document.body.clientHeight;
-  const headerHeight = document.getElementsByClassName('learning-header-container');
-  const footer = document.getElementsByClassName('footer');
-
   const notificationBarHeight = useMemo(() => {
-    if (headerHeight.length > 0) {
-      const availableViewportHeight = viewPortHeight - headerHeight[0].clientHeight;
+    const headerHeight = isHeaderVisible && headerRef[0] ? headerRef[0].clientHeight : 0;
+    const availableViewportHeight = window.innerHeight;
 
-      if (footer.length > 0) {
-        const footerRect = footer[0].getBoundingClientRect();
-        const visibleFooterHeight = Math.min(footerRect.bottom, window.innerHeight) - Math.max(footerRect.top, 0);
-        const footerHeight = footer[0].clientHeight;
+    if (footer.length > 0) {
+      const footerRect = footer[0].getBoundingClientRect();
+      let visibleFooterHeight = Math.min(footerRect.bottom, window.innerHeight) - Math.max(footerRect.top, 0);
+      visibleFooterHeight = visibleFooterHeight > 0 ? visibleFooterHeight : 0;
 
-        const adjustedBarHeight = availableViewportHeight - footerHeight + Math.min(visibleFooterHeight, 0);
-
-        return adjustedBarHeight;
-      }
-      return availableViewportHeight;
+      return availableViewportHeight - headerHeight - visibleFooterHeight;
     }
-    return 0;
-  }, [viewPortHeight, headerHeight, footer]);
+    return availableViewportHeight - headerHeight;
+  }, [viewPortHeight, isHeaderVisible, headerRef, footer]);
 
   const enableFeedback = useCallback(() => {
     window.usabilla_live('click');
@@ -231,6 +234,7 @@ const Notifications = () => {
               'w-100': !isOnMediumScreen && !isOnLargeScreen,
               'medium-screen': isOnMediumScreen,
               'large-screen': isOnLargeScreen,
+              'popover-margin-top': !isHeaderVisible,
             })}
           >
             <div ref={popoverRef}>
