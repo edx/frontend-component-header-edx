@@ -59,13 +59,6 @@ noted.
 
 Please see `LICENSE <LICENSE>`_ for details.
 
-The Open edX Code of Conduct
-============================
-
-All community members are expected to follow the `Open edX Code of Conduct`_.
-
-.. _Open edX Code of Conduct: https://openedx.org/code-of-conduct/
-
 Reporting Security Issues
 =========================
 
