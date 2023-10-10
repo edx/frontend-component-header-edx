@@ -1,9 +1,14 @@
+/* eslint-disable react/forbid-prop-types */
 import React, { useCallback, useMemo } from 'react';
-import { Button, Icon, Spinner } from '@edx/paragon';
-import { AutoAwesome, CheckCircleLightOutline } from '@edx/paragon/icons';
+import {
+  Button, Icon, Spinner, IconButton,
+} from '@edx/paragon';
+import { AutoAwesome, CheckCircleLightOutline, NotificationsNone } from '@edx/paragon/icons';
 import { useDispatch, useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
 import { useIntl } from '@edx/frontend-platform/i18n';
 import isEmpty from 'lodash/isEmpty';
+import classNames from 'classnames';
 import messages from './messages';
 import NotificationRowItem from './NotificationRowItem';
 import { markAllNotificationsAsRead, fetchNotificationList } from './data/thunks';
@@ -14,7 +19,7 @@ import {
 import { splitNotificationsByTime } from './utils';
 import { RequestStatus } from './data/slice';
 
-const NotificationSections = () => {
+const NotificationSections = ({ popoverHeaderRef }) => {
   const intl = useIntl();
   const dispatch = useDispatch();
   const selectedAppName = useSelector(selectSelectedAppName);
@@ -27,6 +32,7 @@ const NotificationSections = () => {
     () => splitNotificationsByTime(notifications),
     [notifications],
   );
+  const trayRef = document.getElementById('notificationTray');
 
   const handleMarkAllAsRead = useCallback(() => {
     dispatch(markAllNotificationsAsRead(selectedAppName));
@@ -74,7 +80,13 @@ const NotificationSections = () => {
   };
 
   return (
-    <div className={`${notificationTabs.length > 1 && 'mt-4'} px-4 pb-3.5`} data-testid="notification-tray-section">
+    <div
+      className={classNames('px-4', {
+        'mt-4': notificationTabs.length > 1,
+        'pb-3.5': notifications.length > 0,
+      })}
+      data-testid="notification-tray-section"
+    >
       {renderNotificationSection('today', today)}
       {renderNotificationSection('earlier', earlier)}
       {(hasMorePages === undefined || hasMorePages) && notificationRequestStatus === RequestStatus.IN_PROGRESS ? (
@@ -93,7 +105,7 @@ const NotificationSections = () => {
       )
       )}
       {
-        !hasMorePages && notificationRequestStatus === RequestStatus.SUCCESSFUL && (
+        notifications.length > 0 && !hasMorePages && notificationRequestStatus === RequestStatus.SUCCESSFUL && (
           <div
             className="d-flex flex-column my-5"
             data-testid="notifications-list-complete"
@@ -111,8 +123,45 @@ const NotificationSections = () => {
           </div>
         )
       }
+
+      {notifications.length === 0 && notificationRequestStatus === RequestStatus.SUCCESSFUL
+       && trayRef && popoverHeaderRef.current && (
+       <div
+         className="d-flex flex-column justify-content-center align-items-center"
+         data-testid="notifications-list-complete"
+         style={{ height: `${trayRef.clientHeight - popoverHeaderRef.current.clientHeight}px` }}
+       >
+         <IconButton
+           isActive
+           alt="notification bell icon"
+           src={NotificationsNone}
+           iconAs={Icon}
+           variant="light"
+           id="bell-icon"
+           iconClassNames="text-primary-500"
+           className="ml-4 mr-1 notification-button notification-lg-bell-icon"
+           data-testid="notification-bell-icon"
+         />
+         <div className="mx-auto mt-3.5 mb-3 font-size-22 notification-end-title line-height-24">
+           {intl.formatMessage(messages.noNotificationsYetMessage)}
+         </div>
+         <div className="d-flex flex-row mx-auto text-gray-500">
+           <span className="font-size-14 line-height-normal">
+             {intl.formatMessage(messages.noNotificationHelpMessage)}
+           </span>
+         </div>
+       </div>
+      )}
     </div>
   );
+};
+
+NotificationSections.propTypes = {
+  popoverHeaderRef: PropTypes.object,
+};
+
+NotificationSections.defaultProps = {
+  popoverHeaderRef: null,
 };
 
 export default React.memo(NotificationSections);
