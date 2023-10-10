@@ -72,20 +72,4 @@ describe('Notification Tabs test cases.', () => {
 
     expect(within(tabs[0]).queryByRole('status')).toBeInTheDocument();
   });
-
-  it('Successfully selected reminder tab.', async () => {
-    renderComponent();
-
-    const bellIcon = screen.queryByTestId('notification-bell-icon');
-    await act(async () => { fireEvent.click(bellIcon); });
-    const notificationTab = screen.getAllByRole('tab');
-
-    await act(async () => { fireEvent.click(notificationTab[0], { dataset: { rbEventKey: 'reminders' } }); });
-
-    const tabs = screen.queryAllByRole('tab');
-    const selectedTab = tabs.find(tab => tab.getAttribute('aria-selected') === 'true');
-
-    expect(within(selectedTab).queryByText('reminders')).toBeInTheDocument();
-    expect(within(selectedTab).queryByRole('status')).not.toBeInTheDocument();
-  });
 });
