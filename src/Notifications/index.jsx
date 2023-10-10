@@ -22,6 +22,7 @@ const Notifications = () => {
   const intl = useIntl();
   const dispatch = useDispatch();
   const popoverRef = useRef(null);
+  const headerRef = useRef(null);
   const buttonRef = useRef(null);
   const [enableNotificationTray, setEnableNotificationTray] = useState(false);
   const notificationCounts = useSelector(selectNotificationTabsCount);
@@ -234,28 +235,30 @@ const Notifications = () => {
             })}
           >
             <div ref={popoverRef}>
-              <Popover.Title
-                as="h2"
-                className={`d-flex justify-content-between p-4 m-0 border-0 text-primary-500 zIndex-2 font-size-18
+              <div ref={headerRef}>
+                <Popover.Title
+                  as="h2"
+                  className={`d-flex justify-content-between p-4 m-0 border-0 text-primary-500 zIndex-2 font-size-18
                   line-height-24 bg-white position-sticky`}
-              >
-                {intl.formatMessage(messages.notificationTitle)}
-                <Hyperlink
-                  destination={`${getConfig().ACCOUNT_SETTINGS_URL}/notifications`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  showLaunchIcon={false}
                 >
-                  <Icon
-                    src={Settings}
-                    className="icon-size-20 text-primary-500"
-                    data-testid="setting-icon"
-                    screenReaderText="preferences settings icon"
-                  />
-                </Hyperlink>
-              </Popover.Title>
+                  {intl.formatMessage(messages.notificationTitle)}
+                  <Hyperlink
+                    destination={`${getConfig().ACCOUNT_SETTINGS_URL}/notifications`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    showLaunchIcon={false}
+                  >
+                    <Icon
+                      src={Settings}
+                      className="icon-size-20 text-primary-500"
+                      data-testid="setting-icon"
+                      screenReaderText="preferences settings icon"
+                    />
+                  </Hyperlink>
+                </Popover.Title>
+              </div>
               <Popover.Content className="notification-content p-0">
-                <NotificationTabs />
+                <NotificationTabs popoverHeaderRef={headerRef} />
               </Popover.Content>
               {getConfig().NOTIFICATION_FEEDBACK_URL && (
                 <Button
