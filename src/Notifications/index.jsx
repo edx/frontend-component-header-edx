@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {
-  useCallback, useEffect, useRef, useState, useMemo,
+  useCallback, useEffect, useRef, useState,
 } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useIntl } from '@edx/frontend-platform/i18n';
@@ -28,9 +28,6 @@ const Notifications = () => {
   const notificationCounts = useSelector(selectNotificationTabsCount);
   const isOnMediumScreen = useIsOnMediumScreen();
   const isOnLargeScreen = useIsOnLargeScreen();
-  const viewPortHeight = document.body.clientHeight;
-  const headerRef = document.getElementsByClassName('learning-header-container');
-  const footer = document.getElementsByClassName('footer');
 
   const toggleNotificationTray = useCallback(() => {
     setEnableNotificationTray(prevState => !prevState);
@@ -46,9 +43,7 @@ const Notifications = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (headerRef && headerRef.length > 0) {
-        setIsHeaderVisible(window.scrollY < headerRef[0].clientHeight);
-      }
+      setIsHeaderVisible(window.scrollY < 100);
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -199,19 +194,6 @@ const Notifications = () => {
       document.body.removeChild(script);
     };
   }, []);
-  const notificationBarHeight = useMemo(() => {
-    const headerHeight = isHeaderVisible && headerRef[0] ? headerRef[0].clientHeight : 0;
-    const availableViewportHeight = window.innerHeight;
-
-    if (footer.length > 0) {
-      const footerRect = footer[0].getBoundingClientRect();
-      let visibleFooterHeight = Math.min(footerRect.bottom, window.innerHeight) - Math.max(footerRect.top, 0);
-      visibleFooterHeight = visibleFooterHeight > 0 ? visibleFooterHeight : 0;
-
-      return availableViewportHeight - headerHeight - visibleFooterHeight;
-    }
-    return availableViewportHeight - headerHeight;
-  }, [viewPortHeight, isHeaderVisible, headerRef, footer]);
 
   const enableFeedback = useCallback(() => {
     window.usabilla_live('click');
@@ -228,7 +210,7 @@ const Notifications = () => {
         overlay={(
           <Popover
             id="notificationTray"
-            style={{ height: `${notificationBarHeight}px` }}
+            style={{ height: isHeaderVisible ? '91vh' : '100vh' }}
             data-testid="notification-tray"
             className={classNames('overflow-auto rounded-0 border-0 position-fixed', {
               'w-100': !isOnMediumScreen && !isOnLargeScreen,
