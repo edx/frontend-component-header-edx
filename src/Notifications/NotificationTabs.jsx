@@ -1,4 +1,3 @@
-/* eslint-disable react/forbid-prop-types */
 import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Tab, Tabs } from '@edx/paragon';
@@ -60,7 +59,10 @@ const NotificationTabs = ({ popoverHeaderRef }) => {
 };
 
 NotificationTabs.propTypes = {
-  popoverHeaderRef: PropTypes.object,
+  popoverHeaderRef: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.shape({ current: PropTypes.instanceOf(PropTypes.element) }),
+  ]),
 };
 
 NotificationTabs.defaultProps = {

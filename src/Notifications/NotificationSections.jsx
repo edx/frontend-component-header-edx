@@ -1,4 +1,3 @@
-/* eslint-disable react/forbid-prop-types */
 import React, { useCallback, useMemo } from 'react';
 import {
   Button, Icon, Spinner, IconButton,
@@ -125,7 +124,7 @@ const NotificationSections = ({ popoverHeaderRef }) => {
       }
 
       {notifications.length === 0 && notificationRequestStatus === RequestStatus.SUCCESSFUL
-       && trayRef && popoverHeaderRef.current && (
+       && trayRef && popoverHeaderRef && popoverHeaderRef.current && (
        <div
          className="d-flex flex-column justify-content-center align-items-center"
          data-testid="notifications-list-complete"
@@ -157,7 +156,10 @@ const NotificationSections = ({ popoverHeaderRef }) => {
 };
 
 NotificationSections.propTypes = {
-  popoverHeaderRef: PropTypes.object,
+  popoverHeaderRef: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.shape({ current: PropTypes.instanceOf(PropTypes.element) }),
+  ]),
 };
 
 NotificationSections.defaultProps = {
