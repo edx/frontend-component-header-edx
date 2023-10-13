@@ -10,7 +10,7 @@ import {
 import { updateAppNameRequest, toggleTrayEvent } from './data/slice';
 import { useFeedbackWrapper } from './utils';
 
-const NotificationTabs = ({ popoverHeaderRef }) => {
+const NotificationTabs = ({ popoverHeaderRef, notificationRef }) => {
   useFeedbackWrapper();
   const dispatch = useDispatch();
   const selectedAppName = useSelector(selectSelectedAppName);
@@ -54,7 +54,7 @@ const NotificationTabs = ({ popoverHeaderRef }) => {
           ))}
         </Tabs>
       )
-      : <NotificationSections popoverHeaderRef={popoverHeaderRef} />
+      : <NotificationSections popoverHeaderRef={popoverHeaderRef} notificationRef={notificationRef} />
   );
 };
 
@@ -63,10 +63,15 @@ NotificationTabs.propTypes = {
     PropTypes.func,
     PropTypes.shape({ current: PropTypes.instanceOf(PropTypes.element) }),
   ]),
+  notificationRef: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.shape({ current: PropTypes.instanceOf(PropTypes.element) }),
+  ]),
 };
 
 NotificationTabs.defaultProps = {
   popoverHeaderRef: null,
+  notificationRef: null,
 };
 
 export default React.memo(NotificationTabs);

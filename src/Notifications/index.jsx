@@ -220,7 +220,7 @@ const Notifications = () => {
               'popover-margin-top': !isHeaderVisible,
             })}
           >
-            <div ref={popoverRef}>
+            <div ref={popoverRef} className="height-inherit">
               <div ref={headerRef}>
                 <Popover.Title
                   as="h2"
@@ -244,7 +244,7 @@ const Notifications = () => {
                 </Popover.Title>
               </div>
               <Popover.Content className="notification-content p-0">
-                <NotificationTabs popoverHeaderRef={headerRef} />
+                <NotificationTabs popoverHeaderRef={headerRef} notificationRef={popoverRef} />
               </Popover.Content>
               {getConfig().NOTIFICATION_FEEDBACK_URL && (
                 <Button

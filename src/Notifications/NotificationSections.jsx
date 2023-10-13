@@ -1,8 +1,6 @@
 import React, { useCallback, useMemo } from 'react';
-import {
-  Button, Icon, Spinner, IconButton,
-} from '@edx/paragon';
-import { AutoAwesome, CheckCircleLightOutline, NotificationsNone } from '@edx/paragon/icons';
+import { Button, Icon, Spinner } from '@edx/paragon';
+import { AutoAwesome, CheckCircleLightOutline } from '@edx/paragon/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { useIntl } from '@edx/frontend-platform/i18n';
@@ -10,6 +8,7 @@ import isEmpty from 'lodash/isEmpty';
 import classNames from 'classnames';
 import messages from './messages';
 import NotificationRowItem from './NotificationRowItem';
+import NotificationEmptySection from './NotificationEmptySection';
 import { markAllNotificationsAsRead, fetchNotificationList } from './data/thunks';
 import {
   selectExpiryDays, selectNotificationsByIds, selectPaginationData,
@@ -18,7 +17,7 @@ import {
 import { splitNotificationsByTime } from './utils';
 import { RequestStatus } from './data/slice';
 
-const NotificationSections = ({ popoverHeaderRef }) => {
+const NotificationSections = ({ popoverHeaderRef, notificationRef }) => {
   const intl = useIntl();
   const dispatch = useDispatch();
   const selectedAppName = useSelector(selectSelectedAppName);
@@ -31,7 +30,6 @@ const NotificationSections = ({ popoverHeaderRef }) => {
     () => splitNotificationsByTime(notifications),
     [notifications],
   );
-  const trayRef = document.getElementById('notificationTray');
 
   const handleMarkAllAsRead = useCallback(() => {
     dispatch(markAllNotificationsAsRead(selectedAppName));
@@ -78,6 +76,11 @@ const NotificationSections = ({ popoverHeaderRef }) => {
     );
   };
 
+  const shouldRenderEmptyNotifications = notifications.length === 0
+    && notificationRequestStatus === RequestStatus.SUCCESSFUL
+    && notificationRef?.current
+    && popoverHeaderRef?.current;
+
   return (
     <div
       className={classNames('px-4', {
@@ -123,34 +126,8 @@ const NotificationSections = ({ popoverHeaderRef }) => {
         )
       }
 
-      {notifications.length === 0 && notificationRequestStatus === RequestStatus.SUCCESSFUL
-       && trayRef && popoverHeaderRef && popoverHeaderRef.current && (
-       <div
-         className="d-flex flex-column justify-content-center align-items-center"
-         data-testid="notifications-list-complete"
-         style={{ height: `${trayRef.clientHeight - popoverHeaderRef.current.clientHeight}px` }}
-       >
-         <IconButton
-           isActive
-           alt="notification bell icon"
-           src={NotificationsNone}
-           iconAs={Icon}
-           variant="light"
-           id="bell-icon"
-           iconClassNames="text-primary-500"
-           className="ml-4 mr-1 notification-button notification-lg-bell-icon"
-           data-testid="notification-bell-icon"
-         />
-         <div className="mx-auto mt-3.5 mb-3 font-size-22 notification-end-title line-height-24">
-           {intl.formatMessage(messages.noNotificationsYetMessage)}
-         </div>
-         <div className="d-flex flex-row mx-auto text-gray-500">
-           <span className="font-size-14 line-height-normal">
-             {intl.formatMessage(messages.noNotificationHelpMessage)}
-           </span>
-         </div>
-       </div>
-      )}
+      {shouldRenderEmptyNotifications
+       && <NotificationEmptySection notificationRef={notificationRef} popoverHeaderRef={popoverHeaderRef} />}
     </div>
   );
 };
@@ -160,10 +137,15 @@ NotificationSections.propTypes = {
     PropTypes.func,
     PropTypes.shape({ current: PropTypes.instanceOf(PropTypes.element) }),
   ]),
+  notificationRef: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.shape({ current: PropTypes.instanceOf(PropTypes.element) }),
+  ]),
 };
 
 NotificationSections.defaultProps = {
   popoverHeaderRef: null,
+  notificationRef: null,
 };
 
 export default React.memo(NotificationSections);
