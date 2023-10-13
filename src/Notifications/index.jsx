@@ -211,13 +211,13 @@ const Notifications = () => {
         overlay={(
           <Popover
             id="notificationTray"
-            style={{ height: isHeaderVisible ? '91vh' : '100vh' }}
             data-testid="notification-tray"
             className={classNames('overflow-auto rounded-0 border-0 position-fixed', {
               'w-100': !isOnMediumScreen && !isOnLargeScreen,
               'medium-screen': isOnMediumScreen,
               'large-screen': isOnLargeScreen,
-              'popover-margin-top': !isHeaderVisible,
+              'popover-margin-top height-100vh': !isHeaderVisible,
+              'height-91vh ': isHeaderVisible,
             })}
           >
             <div ref={popoverRef} className="height-inherit">
