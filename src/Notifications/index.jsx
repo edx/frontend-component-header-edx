@@ -1,7 +1,6 @@
-/* eslint-disable react/jsx-no-constructed-context-values */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {
-  useCallback, useEffect, useRef, useState,
+  useCallback, useEffect, useRef, useState, useMemo,
 } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useIntl } from '@edx/frontend-platform/i18n';
@@ -202,6 +201,11 @@ const Notifications = () => {
     window.usabilla_live('click');
   }, []);
 
+  const notificationRefs = useMemo(
+    () => ({ popoverHeaderRef: headerRef, notificationRef: popoverRef }),
+    [headerRef, popoverRef],
+  );
+
   return (
     <>
       <OverlayTrigger
@@ -246,7 +250,7 @@ const Notifications = () => {
                 </Popover.Title>
               </div>
               <Popover.Content className="notification-content p-0">
-                <NotificationContext.Provider value={{ popoverHeaderRef: headerRef, notificationRef: popoverRef }}>
+                <NotificationContext.Provider value={notificationRefs}>
                   <NotificationTabs />
                 </NotificationContext.Provider>
               </Popover.Content>
