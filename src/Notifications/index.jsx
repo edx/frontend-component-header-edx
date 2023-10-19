@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-constructed-context-values */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {
   useCallback, useEffect, useRef, useState,
@@ -17,6 +18,7 @@ import { useIsOnLargeScreen, useIsOnMediumScreen } from './data/hook';
 import NotificationTabs from './NotificationTabs';
 import messages from './messages';
 import NotificationTour from './tours/NotificationTour';
+import NotificationContext from './context';
 
 const Notifications = () => {
   const intl = useIntl();
@@ -244,7 +246,9 @@ const Notifications = () => {
                 </Popover.Title>
               </div>
               <Popover.Content className="notification-content p-0">
-                <NotificationTabs popoverHeaderRef={headerRef} notificationRef={popoverRef} />
+                <NotificationContext.Provider value={{ popoverHeaderRef: headerRef, notificationRef: popoverRef }}>
+                  <NotificationTabs />
+                </NotificationContext.Provider>
               </Popover.Content>
               {getConfig().NOTIFICATION_FEEDBACK_URL && (
                 <Button
@@ -263,7 +267,7 @@ const Notifications = () => {
         <div ref={buttonRef}>
           <IconButton
             isActive={enableNotificationTray}
-            alt="notification bell icon"
+            alt={intl.formatMessage(messages.notificationBellIconAltMessage)}
             onClick={toggleNotificationTray}
             src={NotificationsNone}
             iconAs={Icon}

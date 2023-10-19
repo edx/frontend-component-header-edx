@@ -1,8 +1,7 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo, useContext } from 'react';
 import { Button, Icon, Spinner } from '@edx/paragon';
 import { AutoAwesome, CheckCircleLightOutline } from '@edx/paragon/icons';
 import { useDispatch, useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
 import { useIntl } from '@edx/frontend-platform/i18n';
 import isEmpty from 'lodash/isEmpty';
 import classNames from 'classnames';
@@ -16,8 +15,9 @@ import {
 } from './data/selectors';
 import { splitNotificationsByTime } from './utils';
 import { RequestStatus } from './data/slice';
+import NotificationContext from './context';
 
-const NotificationSections = ({ popoverHeaderRef, notificationRef }) => {
+const NotificationSections = () => {
   const intl = useIntl();
   const dispatch = useDispatch();
   const selectedAppName = useSelector(selectSelectedAppName);
@@ -26,6 +26,7 @@ const NotificationSections = ({ popoverHeaderRef, notificationRef }) => {
   const { hasMorePages, currentPage } = useSelector(selectPaginationData);
   const notificationTabs = useSelector(selectNotificationTabs);
   const expiryDays = useSelector(selectExpiryDays);
+  const { popoverHeaderRef, notificationRef } = useContext(NotificationContext);
   const { today = [], earlier = [] } = useMemo(
     () => splitNotificationsByTime(notifications),
     [notifications],
@@ -126,26 +127,9 @@ const NotificationSections = ({ popoverHeaderRef, notificationRef }) => {
         )
       }
 
-      {shouldRenderEmptyNotifications
-       && <NotificationEmptySection notificationRef={notificationRef} popoverHeaderRef={popoverHeaderRef} />}
+      {shouldRenderEmptyNotifications && <NotificationEmptySection />}
     </div>
   );
-};
-
-NotificationSections.propTypes = {
-  popoverHeaderRef: PropTypes.oneOfType([
-    PropTypes.func,
-    PropTypes.shape({ current: PropTypes.instanceOf(PropTypes.element) }),
-  ]),
-  notificationRef: PropTypes.oneOfType([
-    PropTypes.func,
-    PropTypes.shape({ current: PropTypes.instanceOf(PropTypes.element) }),
-  ]),
-};
-
-NotificationSections.defaultProps = {
-  popoverHeaderRef: null,
-  notificationRef: null,
 };
 
 export default React.memo(NotificationSections);

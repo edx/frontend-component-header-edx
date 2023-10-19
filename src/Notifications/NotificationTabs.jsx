@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Tab, Tabs } from '@edx/paragon';
-import PropTypes from 'prop-types';
 import NotificationSections from './NotificationSections';
 import { fetchNotificationList, markNotificationsAsSeen } from './data/thunks';
 import {
@@ -10,7 +9,7 @@ import {
 import { updateAppNameRequest, toggleTrayEvent } from './data/slice';
 import { useFeedbackWrapper } from './utils';
 
-const NotificationTabs = ({ popoverHeaderRef, notificationRef }) => {
+const NotificationTabs = () => {
   useFeedbackWrapper();
   const dispatch = useDispatch();
   const selectedAppName = useSelector(selectSelectedAppName);
@@ -54,24 +53,8 @@ const NotificationTabs = ({ popoverHeaderRef, notificationRef }) => {
           ))}
         </Tabs>
       )
-      : <NotificationSections popoverHeaderRef={popoverHeaderRef} notificationRef={notificationRef} />
+      : <NotificationSections />
   );
-};
-
-NotificationTabs.propTypes = {
-  popoverHeaderRef: PropTypes.oneOfType([
-    PropTypes.func,
-    PropTypes.shape({ current: PropTypes.instanceOf(PropTypes.element) }),
-  ]),
-  notificationRef: PropTypes.oneOfType([
-    PropTypes.func,
-    PropTypes.shape({ current: PropTypes.instanceOf(PropTypes.element) }),
-  ]),
-};
-
-NotificationTabs.defaultProps = {
-  popoverHeaderRef: null,
-  notificationRef: null,
 };
 
 export default React.memo(NotificationTabs);

@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useIntl } from '@edx/frontend-platform/i18n';
-import PropTypes from 'prop-types';
 import { Icon, IconButton } from '@edx/paragon';
 import { NotificationsNone } from '@edx/paragon/icons';
+import NotificationContext from './context';
 import messages from './messages';
 
-const EmptyNotifications = ({ notificationRef, popoverHeaderRef }) => {
+const EmptyNotifications = () => {
   const intl = useIntl();
+  const { popoverHeaderRef, notificationRef } = useContext(NotificationContext);
 
   return (
     <div
@@ -16,7 +17,7 @@ const EmptyNotifications = ({ notificationRef, popoverHeaderRef }) => {
     >
       <IconButton
         isActive
-        alt="notification bell icon"
+        alt={intl.formatMessage(messages.notificationBellIconAltMessage)}
         src={NotificationsNone}
         iconAs={Icon}
         variant="light"
@@ -35,10 +36,6 @@ const EmptyNotifications = ({ notificationRef, popoverHeaderRef }) => {
       </div>
     </div>
   );
-};
-EmptyNotifications.propTypes = {
-  notificationRef: PropTypes.number.isRequired,
-  popoverHeaderRef: PropTypes.string.isRequired,
 };
 
 export default React.memo(EmptyNotifications);

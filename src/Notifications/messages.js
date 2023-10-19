@@ -56,6 +56,11 @@ const messages = defineMessages({
     defaultMessage: 'When you receive notifications they’ll show up here',
     description: 'Message showing that when you receive notifications they’ll show up here',
   },
+  notificationBellIconAltMessage: {
+    id: 'notification.bell.icon.alt.message',
+    defaultMessage: 'Notification bell icon',
+    description: 'Alt message for notification bell icon',
+  },
 });
 
 export default messages;
