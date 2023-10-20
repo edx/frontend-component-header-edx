@@ -1,21 +1,25 @@
-import React, { useCallback, useMemo, useContext } from 'react';
+import React, { useCallback, useContext, useMemo } from 'react';
+
+import classNames from 'classnames';
+import isEmpty from 'lodash/isEmpty';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { useIntl } from '@edx/frontend-platform/i18n';
 import { Button, Icon, Spinner } from '@edx/paragon';
 import { AutoAwesome, CheckCircleLightOutline } from '@edx/paragon/icons';
-import { useDispatch, useSelector } from 'react-redux';
-import { useIntl } from '@edx/frontend-platform/i18n';
-import isEmpty from 'lodash/isEmpty';
-import classNames from 'classnames';
-import messages from './messages';
-import NotificationRowItem from './NotificationRowItem';
-import NotificationEmptySection from './NotificationEmptySection';
-import { markAllNotificationsAsRead, fetchNotificationList } from './data/thunks';
+
 import {
-  selectExpiryDays, selectNotificationsByIds, selectPaginationData,
-  selectSelectedAppName, selectNotificationListStatus, selectNotificationTabs,
+  selectExpiryDays, selectNotificationListStatus, selectNotificationsByIds, selectNotificationTabs,
+  selectPaginationData,
+  selectSelectedAppName,
 } from './data/selectors';
-import { splitNotificationsByTime } from './utils';
 import { RequestStatus } from './data/slice';
+import { fetchNotificationList, markAllNotificationsAsRead } from './data/thunks';
 import NotificationContext from './context';
+import messages from './messages';
+import NotificationEmptySection from './NotificationEmptySection';
+import NotificationRowItem from './NotificationRowItem';
+import { splitNotificationsByTime } from './utils';
 
 const NotificationSections = () => {
   const intl = useIntl();
