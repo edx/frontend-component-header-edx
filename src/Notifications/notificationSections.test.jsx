@@ -1,7 +1,7 @@
 import React from 'react';
 
 import {
-  act, fireEvent, render, screen, within,
+  act, fireEvent, render, screen, waitFor, within,
 } from '@testing-library/react';
 import MockAdapter from 'axios-mock-adapter';
 import { Context as ResponsiveContext } from 'react-responsive';
@@ -14,14 +14,18 @@ import { AppContext, AppProvider } from '@edx/frontend-platform/react';
 
 import AuthenticatedUserDropdown from '../learning-header/AuthenticatedUserDropdown';
 import { initializeStore } from '../store';
-import { markNotificationAsReadApiUrl, markNotificationsSeenApiUrl, getNotificationsListApiUrl } from './data/api';
+import {
+  markNotificationAsReadApiUrl, markNotificationsSeenApiUrl, getNotificationsListApiUrl, getNotificationsCountApiUrl,
+} from './data/api';
 import mockNotificationsResponse from './test-utils';
-import { markNotificationsAsSeen, fetchNotificationList } from './data/thunks';
+import { markNotificationsAsSeen, fetchNotificationList, fetchAppsNotificationCount } from './data/thunks';
 import executeThunk from '../test-utils';
 import './data/__factories__';
 import { RequestStatus, notificationListStatusRequest } from './data';
 
 const markedAllNotificationsAsReadApiUrl = markNotificationAsReadApiUrl();
+const notificationCountsApiUrl = getNotificationsCountApiUrl();
+const notificationsApiUrl = getNotificationsListApiUrl();
 
 let axiosMock;
 let store;
@@ -125,5 +129,32 @@ describe('Notification sections test cases.', () => {
     await act(async () => { fireEvent.click(loadMoreButton); });
     expect(screen.queryAllByTestId('notification-contents')).toHaveLength(12);
     expect(screen.queryByTestId('notifications-list-complete')).toBeInTheDocument();
+  });
+
+  it('Successfully showed No notification yet message when the notification tray is empty.', async () => {
+    const notificationCountsMock = {
+      show_notifications_tray: true,
+      count: 0,
+      count_by_app_name: {
+        discussion: 0,
+      },
+    };
+
+    axiosMock.onGet(notificationCountsApiUrl).reply(200, notificationCountsMock);
+    axiosMock.onGet(notificationsApiUrl).reply(200, { results: [] });
+
+    await executeThunk(fetchAppsNotificationCount(), store.dispatch, store.getState);
+    await executeThunk(fetchNotificationList({ appName: 'discussion', page: 1 }), store.dispatch, store.getState);
+
+    renderComponent();
+
+    const bellIcon = screen.queryByTestId('notification-bell-icon');
+    await act(async () => { fireEvent.click(bellIcon); });
+
+    await waitFor(() => {
+      const noNotiifcationMsg = screen.queryByText('No notifications yet');
+
+      expect(noNotiifcationMsg).toBeInTheDocument();
+    });
   });
 });

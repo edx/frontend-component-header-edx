@@ -210,6 +210,16 @@ $white: #fff;
   }
 }
 
+.notification-lg-bell-icon {
+  width: 56px !important;
+  height: 56px !important;
+
+  span:first-child {
+    width: 32px !important;
+    height: 32px !important;
+  }
+}
+
 .notification-button.btn-icon-light-active {
     background-color: #F2F0EF !important;
 }
@@ -343,4 +353,16 @@ $white: #fff;
 
 .popover-margin-top {
   margin-top: -68px !important;
+}
+
+.height-inherit {
+  height: inherit;
+}
+
+.height-100vh {
+  height: 100vh
+}
+
+.height-91vh {
+  height: 91vh
 }

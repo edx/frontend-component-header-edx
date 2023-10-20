@@ -1,0 +1,41 @@
+import React, { useContext } from 'react';
+import { useIntl } from '@edx/frontend-platform/i18n';
+import { Icon, IconButton } from '@edx/paragon';
+import { NotificationsNone } from '@edx/paragon/icons';
+import NotificationContext from './context';
+import messages from './messages';
+
+const EmptyNotifications = () => {
+  const intl = useIntl();
+  const { popoverHeaderRef, notificationRef } = useContext(NotificationContext);
+
+  return (
+    <div
+      className="d-flex flex-column justify-content-center align-items-center"
+      data-testid="notifications-list-complete"
+      style={{ height: `${notificationRef.current.clientHeight - popoverHeaderRef.current.clientHeight}px` }}
+    >
+      <IconButton
+        isActive
+        alt={intl.formatMessage(messages.notificationBellIconAltMessage)}
+        src={NotificationsNone}
+        iconAs={Icon}
+        variant="light"
+        id="bell-icon"
+        iconClassNames="text-primary-500"
+        className="ml-4 mr-1 notification-button notification-lg-bell-icon"
+        data-testid="notification-bell-icon"
+      />
+      <div className="mx-auto mt-3.5 mb-3 font-size-22 notification-end-title line-height-24">
+        {intl.formatMessage(messages.noNotificationsYetMessage)}
+      </div>
+      <div className="d-flex flex-row mx-auto text-gray-500">
+        <span className="font-size-14 line-height-normal">
+          {intl.formatMessage(messages.noNotificationHelpMessage)}
+        </span>
+      </div>
+    </div>
+  );
+};
+
+export default React.memo(EmptyNotifications);
