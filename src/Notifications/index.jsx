@@ -63,15 +63,6 @@ const Notifications = () => {
     };
   }, []);
 
-  useEffect(() => {
-    const script = getFeedbackScript();
-    document.body.appendChild(script);
-
-    return () => {
-      document.body.removeChild(script);
-    };
-  }, []);
-
   const enableFeedback = useCallback(() => {
     window.usabilla_live('click');
   }, []);

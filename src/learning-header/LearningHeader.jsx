@@ -10,6 +10,7 @@ import classNames from 'classnames';
 import AnonymousUserMenu from './AnonymousUserMenu';
 import AuthenticatedUserDropdown from './AuthenticatedUserDropdown';
 import messages from './messages';
+import lightning from '../lightning';
 import store from '../store';
 
 ensureConfig([
@@ -18,6 +19,7 @@ ensureConfig([
 ], 'Learning Header component');
 
 subscribe(APP_CONFIG_INITIALIZED, () => {
+  lightning();
   mergeConfig({
     ACCOUNT_SETTINGS_URL: process.env.ACCOUNT_SETTINGS_URL || '',
     NOTIFICATION_FEEDBACK_URL: process.env.NOTIFICATION_FEEDBACK_URL || '',
