@@ -1,13 +1,16 @@
 import React, { useCallback } from 'react';
-import { useDispatch } from 'react-redux';
-import { useIntl } from '@edx/frontend-platform/i18n';
 import PropTypes from 'prop-types';
-import { Icon } from '@edx/paragon';
+
+import { useDispatch } from 'react-redux';
 import * as timeago from 'timeago.js';
-import { getIconByType } from './utils';
+
+import { useIntl } from '@edx/frontend-platform/i18n';
+import { Icon } from '@edx/paragon';
+
 import { markNotificationsAsRead } from './data/thunks';
 import messages from './messages';
 import timeLocale from '../common/time-locale';
+import { getIconByType } from './utils';
 
 const NotificationRowItem = ({
   id, type, contentUrl, content, courseName, createdAt, lastRead,

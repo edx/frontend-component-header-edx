@@ -1,12 +1,15 @@
 import React, { useCallback, useEffect } from 'react';
+
 import { useDispatch, useSelector } from 'react-redux';
+
 import { Tab, Tabs } from '@edx/paragon';
-import NotificationSections from './NotificationSections';
-import { fetchNotificationList, markNotificationsAsSeen } from './data/thunks';
+
 import {
   selectNotificationTabs, selectNotificationTabsCount, selectSelectedAppName, selectTrayOpened,
 } from './data/selectors';
-import { updateAppNameRequest, toggleTrayEvent } from './data/slice';
+import { toggleTrayEvent, updateAppNameRequest } from './data/slice';
+import { fetchNotificationList, markNotificationsAsSeen } from './data/thunks';
+import NotificationSections from './NotificationSections';
 import { useFeedbackWrapper } from './utils';
 
 const NotificationTabs = () => {

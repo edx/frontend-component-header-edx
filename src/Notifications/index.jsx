@@ -1,23 +1,28 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {
-  useCallback, useEffect, useRef, useState, useMemo,
+  useCallback, useEffect, useMemo,
+  useRef, useState,
 } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useIntl } from '@edx/frontend-platform/i18n';
-import { getConfig } from '@edx/frontend-platform';
+
 import classNames from 'classnames';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { getConfig } from '@edx/frontend-platform';
+import { useIntl } from '@edx/frontend-platform/i18n';
 import {
-  Icon, IconButton, OverlayTrigger, Popover, Hyperlink, Button, Bubble,
+  Bubble,
+  Button, Hyperlink, Icon, IconButton, OverlayTrigger, Popover,
 } from '@edx/paragon';
 import { NotificationsNone, Settings } from '@edx/paragon/icons';
-import { selectNotificationTabsCount } from './data/selectors';
-import { resetNotificationState } from './data/thunks';
-import { toggleTrayEvent } from './data/slice';
+
 import { useIsOnLargeScreen, useIsOnMediumScreen } from './data/hook';
-import NotificationTabs from './NotificationTabs';
-import messages from './messages';
+import { selectNotificationTabsCount } from './data/selectors';
+import { toggleTrayEvent } from './data/slice';
+import { resetNotificationState } from './data/thunks';
 import NotificationTour from './tours/NotificationTour';
 import NotificationContext from './context';
+import messages from './messages';
+import NotificationTabs from './NotificationTabs';
 
 const Notifications = () => {
   const intl = useIntl();
@@ -285,10 +290,11 @@ const Notifications = () => {
           <Bubble
             variant="error"
             data-testid="notification-count"
-            className={classNames('notification-badge zindex-1', {
+            className={classNames('notification-badge zindex-1 cursor-pointer', {
               'notification-badge-unrounded': notificationCounts.count >= 10,
               'notification-badge-rounded': notificationCounts.count < 10,
             })}
+            onClick={toggleNotificationTray}
           >
             {notificationCounts.count >= 100 ? <div className="d-flex">99<p className="mb-0 plus-icon">+</p></div>
               : notificationCounts.count}
