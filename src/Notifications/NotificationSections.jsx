@@ -1,18 +1,25 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useContext, useMemo } from 'react';
+
+import classNames from 'classnames';
+import isEmpty from 'lodash/isEmpty';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { useIntl } from '@edx/frontend-platform/i18n';
 import { Button, Icon, Spinner } from '@edx/paragon';
 import { AutoAwesome, CheckCircleLightOutline } from '@edx/paragon/icons';
-import { useDispatch, useSelector } from 'react-redux';
-import { useIntl } from '@edx/frontend-platform/i18n';
-import isEmpty from 'lodash/isEmpty';
-import messages from './messages';
-import NotificationRowItem from './NotificationRowItem';
-import { markAllNotificationsAsRead, fetchNotificationList } from './data/thunks';
+
 import {
-  selectExpiryDays, selectNotificationsByIds, selectPaginationData,
-  selectSelectedAppName, selectNotificationListStatus, selectNotificationTabs,
+  selectExpiryDays, selectNotificationListStatus, selectNotificationsByIds, selectNotificationTabs,
+  selectPaginationData,
+  selectSelectedAppName,
 } from './data/selectors';
-import { splitNotificationsByTime } from './utils';
 import { RequestStatus } from './data/slice';
+import { fetchNotificationList, markAllNotificationsAsRead } from './data/thunks';
+import NotificationContext from './context';
+import messages from './messages';
+import NotificationEmptySection from './NotificationEmptySection';
+import NotificationRowItem from './NotificationRowItem';
+import { splitNotificationsByTime } from './utils';
 
 const NotificationSections = () => {
   const intl = useIntl();
@@ -23,6 +30,7 @@ const NotificationSections = () => {
   const { hasMorePages, currentPage } = useSelector(selectPaginationData);
   const notificationTabs = useSelector(selectNotificationTabs);
   const expiryDays = useSelector(selectExpiryDays);
+  const { popoverHeaderRef, notificationRef } = useContext(NotificationContext);
   const { today = [], earlier = [] } = useMemo(
     () => splitNotificationsByTime(notifications),
     [notifications],
@@ -73,8 +81,19 @@ const NotificationSections = () => {
     );
   };
 
+  const shouldRenderEmptyNotifications = notifications.length === 0
+    && notificationRequestStatus === RequestStatus.SUCCESSFUL
+    && notificationRef?.current
+    && popoverHeaderRef?.current;
+
   return (
-    <div className={`${notificationTabs.length > 1 && 'mt-4'} px-4 pb-3.5`} data-testid="notification-tray-section">
+    <div
+      className={classNames('px-4', {
+        'mt-4': notificationTabs.length > 1,
+        'pb-3.5': notifications.length > 0,
+      })}
+      data-testid="notification-tray-section"
+    >
       {renderNotificationSection('today', today)}
       {renderNotificationSection('earlier', earlier)}
       {(hasMorePages === undefined || hasMorePages) && notificationRequestStatus === RequestStatus.IN_PROGRESS ? (
@@ -93,7 +112,7 @@ const NotificationSections = () => {
       )
       )}
       {
-        !hasMorePages && notificationRequestStatus === RequestStatus.SUCCESSFUL && (
+        notifications.length > 0 && !hasMorePages && notificationRequestStatus === RequestStatus.SUCCESSFUL && (
           <div
             className="d-flex flex-column my-5"
             data-testid="notifications-list-complete"
@@ -111,6 +130,8 @@ const NotificationSections = () => {
           </div>
         )
       }
+
+      {shouldRenderEmptyNotifications && <NotificationEmptySection />}
     </div>
   );
 };

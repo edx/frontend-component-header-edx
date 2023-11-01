@@ -14,14 +14,11 @@ const NotificationTour = () => {
   }, [dispatch]);
 
   return (
-    // eslint-disable-next-line react/jsx-no-useless-fragment
-    <>
-      {!isEmpty(config) && (
-        <ProductTour
-          tours={config}
-        />
-      )}
-    </>
+    !isEmpty(config) && (
+      <ProductTour
+        tours={config}
+      />
+    )
   );
 };
 

@@ -2,3 +2,4 @@ coverage
 dist
 example
 node_modules
+src/lightning.js

@@ -79,13 +79,13 @@ describe('Notification Tabs test cases.', () => {
     const bellIcon = screen.queryByTestId('notification-bell-icon');
     await act(async () => { fireEvent.click(bellIcon); });
     const notificationTab = screen.getAllByRole('tab');
+    let selectedTab = screen.queryByTestId('notification-tab-reminders');
+
+    expect(selectedTab).not.toHaveClass('active');
 
     await act(async () => { fireEvent.click(notificationTab[0], { dataset: { rbEventKey: 'reminders' } }); });
+    selectedTab = screen.queryByTestId('notification-tab-reminders');
 
-    const tabs = screen.queryAllByRole('tab');
-    const selectedTab = tabs.find(tab => tab.getAttribute('aria-selected') === 'true');
-
-    expect(within(selectedTab).queryByText('reminders')).toBeInTheDocument();
-    expect(within(selectedTab).queryByRole('status')).not.toBeInTheDocument();
+    expect(selectedTab).toHaveClass('active');
   });
 });
