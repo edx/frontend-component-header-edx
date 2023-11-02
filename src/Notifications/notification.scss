@@ -114,8 +114,14 @@
   background: var(--text-on-light-brand-500, #D23228) !important;
   line-height: 20px !important;
   padding: 4px !important;
-  padding-left: 3px !important;
+  padding-left: 4px !important;
   margin-left: -21px;
+}
+
+@supports (-webkit-backdrop-filter: blur(1px)) {
+  .notification-badge {
+    margin-left: -17px;
+  }
 }
 
 .notification-end-title {
