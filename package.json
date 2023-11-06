@@ -35,7 +35,7 @@
   "devDependencies": {
     "@edx/brand": "npm:@edx/brand-edx.org@2.1.2",
     "@edx/browserslist-config": "1.2.0",
-    "@edx/frontend-build": "13.0.3",
+    "@edx/frontend-build": "13.0.4",
     "@edx/frontend-platform": "5.6.1",
     "@edx/reactifex": "2.2.0",
     "@testing-library/dom": "9.3.3",
@@ -68,7 +68,7 @@
     "axios-mock-adapter": "1.22.0",
     "babel-polyfill": "6.26.0",
     "classnames": "2.3.2",
-    "core-js": "3.33.1",
+    "core-js": "3.33.2",
     "lodash": "4.17.21",
     "react-redux": "7.2.9",
     "react-responsive": "9.0.2",
