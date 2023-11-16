@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
-import { OverlayTrigger, Tooltip } from '@edx/paragon';
-import classNames from 'classnames';
+import {
+  OverlayTrigger,
+  Tooltip,
+} from '@edx/paragon';
 import messages from './messages';
 
 const CourseLockUp = ({
@@ -22,9 +24,7 @@ const CourseLockUp = ({
     )}
   >
     <a
-      className={classNames('w-25 mr-2', {
-        'course-title-lockup': outlineLink,
-      })}
+      className="course-title-lockup mr-2"
       href={outlineLink}
       aria-label={intl.formatMessage(messages['header.label.courseOutline'])}
       data-testid="course-lock-up-block"
