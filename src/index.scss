@@ -2,13 +2,8 @@ $spacer: 1rem;
 $blue: #007db8;
 $white: #fff;
 
-@import "@edx/brand/paragon/fonts.scss";
-@import "@edx/brand/paragon/variables.scss";
-@import "@edx/paragon/scss/core/core.scss";
-@import "@edx/brand/paragon/overrides.scss";
 @import './Menu/menu.scss';
-@import './studio-header/header.scss';
-@import './Notifications/notification.scss';
+@import './studio-header/StudioHeader.scss';
 
 .dropdown-item a {
   text-decoration: none;
@@ -48,9 +43,9 @@ $white: #fff;
   .user-dropdown {
     .btn {
       height: 3rem;
-      @media (max-width: -1 + map-get($grid-breakpoints, "sm")) {
-        padding: 0 0.5rem;
-      }
+      // @media (max-width: -1 + map-get($grid-breakpoints, "sm")) {
+      //   padding: 0 0.5rem;
+      // }
     }
   }
 }
@@ -63,6 +58,7 @@ $white: #fff;
 
 .site-header-mobile {
   height: 3rem;
+
   .nav-link {
     text-decoration: none;
     cursor: pointer;
