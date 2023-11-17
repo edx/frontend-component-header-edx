@@ -3,6 +3,7 @@ $blue: #007db8;
 $white: #fff;
 
 @import './Menu/menu.scss';
+@import './studio-header/StudioHeader.scss';
 
 .dropdown-item a {
   text-decoration: none;
@@ -42,9 +43,9 @@ $white: #fff;
   .user-dropdown {
     .btn {
       height: 3rem;
-      @media (max-width: -1 + map-get($grid-breakpoints, "sm")) {
-        padding: 0 0.5rem;
-      }
+      // @media (max-width: -1 + map-get($grid-breakpoints, "sm")) {
+      //   padding: 0 0.5rem;
+      // }
     }
   }
 }
@@ -57,6 +58,7 @@ $white: #fff;
 
 .site-header-mobile {
   height: 3rem;
+
   .nav-link {
     text-decoration: none;
     cursor: pointer;

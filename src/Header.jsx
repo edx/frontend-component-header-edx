@@ -3,6 +3,7 @@ import Responsive from 'react-responsive';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import { sendTrackEvent } from '@edx/frontend-platform/analytics';
 import { AppContext } from '@edx/frontend-platform/react';
+import { Badge } from '@edx/paragon';
 import {
   APP_CONFIG_INITIALIZED,
   ensureConfig,
@@ -34,7 +35,7 @@ subscribe(APP_CONFIG_INITIALIZED, () => {
   }, 'Header additional config');
 });
 
-function Header({ intl }) {
+const Header = ({ intl }) => {
   const { authenticatedUser, config } = useContext(AppContext);
   const {
     enterpriseLearnerPortalLink,
@@ -91,16 +92,28 @@ function Header({ intl }) {
     baseUserMenuDashboardLinks = [dashboardMenuItem];
   }
 
+  const careerItemContent = <>{intl.formatMessage(messages['header.user.menu.career'])}<Badge className="px-2 mx-2" variant="warning">{intl.formatMessage(messages['header.user.menu.newAlert'])}</Badge></>;
   let userMenu = authenticatedUser === null ? [] : [
     ...baseUserMenuDashboardLinks,
     {
       type: 'item',
-      href: `${config.LMS_BASE_URL}/u/${authenticatedUser.username}`,
+      href: 'https://careers.edx.org/',
+      content: careerItemContent,
+      onClick: () => {
+        sendTrackEvent(
+          'edx.bi.user.menu.career.clicked',
+          { category: 'header', label: 'header' },
+        );
+      },
+    },
+    {
+      type: 'item',
+      href: `${config.ACCOUNT_PROFILE_URL}/u/${authenticatedUser.username}`,
       content: intl.formatMessage(messages['header.user.menu.profile']),
     },
     {
       type: 'item',
-      href: `${config.LMS_BASE_URL}/account/settings`,
+      href: config.ACCOUNT_SETTINGS_URL,
       content: intl.formatMessage(messages['header.user.menu.account.settings']),
     },
     logoutMenuItem,
@@ -109,7 +122,7 @@ function Header({ intl }) {
   // Users should only see Order History if they do not have an available
   // learner portal and have a ORDER_HISTORY_URL define in the environment,
   // because an available learner portal currently means
-  // that they access content via Subscriptions, in which context an "order"
+  // that they access content via B2B Subscriptions, in which context an "order"
   // is not relevant.
   if (!enterpriseLearnerPortalLink && config.ORDER_HISTORY_URL) {
     userMenu.splice(-1, 0, orderHistoryItem);
@@ -165,7 +178,7 @@ function Header({ intl }) {
       </Responsive>
     </>
   );
-}
+};
 
 Header.propTypes = {
   intl: intlShape.isRequired,

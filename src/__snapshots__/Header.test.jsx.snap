@@ -30,7 +30,8 @@ exports[`<Header /> minimal renders correctly for authenticated users when minim
         className="nav secondary-menu-container align-items-center ml-auto"
       >
         <div
-          className="dropdown"
+          className="pgn__dropdown pgn__dropdown-light dropdown"
+          data-testid="dropdown"
         >
           <button
             alt=""
@@ -40,6 +41,7 @@ exports[`<Header /> minimal renders correctly for authenticated users when minim
             className="btn-avatar pgn__avatar-button-avatar pgn__avatar-button-avatar-md dropdown-toggle btn btn-tertiary btn-md"
             data-hj-suppress={true}
             disabled={false}
+            id="menu-dropdown"
             onClick={[Function]}
             type="button"
           >
@@ -158,7 +160,8 @@ exports[`<Header /> renders correctly for authenticated users on desktop 1`] = `
         className="nav secondary-menu-container align-items-center ml-auto"
       >
         <div
-          className="dropdown"
+          className="pgn__dropdown pgn__dropdown-light dropdown"
+          data-testid="dropdown"
         >
           <button
             alt=""
@@ -168,6 +171,7 @@ exports[`<Header /> renders correctly for authenticated users on desktop 1`] = `
             className="btn-avatar pgn__avatar-button-avatar pgn__avatar-button-avatar-md dropdown-toggle btn btn-tertiary btn-md"
             data-hj-suppress={true}
             disabled={false}
+            id="menu-dropdown"
             onClick={[Function]}
             type="button"
           >

@@ -1,19 +1,39 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
 
 import { getConfig } from '@edx/frontend-platform';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
-import { Dropdown } from '@edx/paragon';
+import { Dropdown, Badge } from '@edx/paragon';
 
 import messages from './messages';
+import Notifications from '../Notifications';
+import { selectShowNotificationTray } from '../Notifications/data/selectors';
+import { fetchAppsNotificationCount } from '../Notifications/data/thunks';
 
-function AuthenticatedUserDropdown({ enterpriseLearnerPortalLink, intl, username }) {
+const AuthenticatedUserDropdown = ({ enterpriseLearnerPortalLink, intl, username }) => {
+  const dispatch = useDispatch();
+  const showNotificationsTray = useSelector(selectShowNotificationTray);
+
+  useEffect(() => {
+    dispatch(fetchAppsNotificationCount());
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [window.location.href]);
+
   let dashboardMenuItem = (
     <Dropdown.Item href={`${getConfig().LMS_BASE_URL}/dashboard`}>
       {intl.formatMessage(messages.dashboard)}
+    </Dropdown.Item>
+  );
+  let careersMenuItem = (
+    <Dropdown.Item href="https://careers.edx.org/">
+      {intl.formatMessage(messages.career)}
+      <Badge className="px-2 mx-2" variant="warning">
+        {intl.formatMessage(messages.newAlert)}
+      </Badge>
     </Dropdown.Item>
   );
   if (enterpriseLearnerPortalLink && Object.keys(enterpriseLearnerPortalLink).length > 0) {
@@ -24,29 +44,33 @@ function AuthenticatedUserDropdown({ enterpriseLearnerPortalLink, intl, username
         {enterpriseLearnerPortalLink.content}
       </Dropdown.Item>
     );
+    careersMenuItem = '';
   }
+
   return (
     <>
-      <a className="text-gray-700 mr-3" href={`${getConfig().SUPPORT_URL}`}>{intl.formatMessage(messages.help)}</a>
-      <Dropdown className="user-dropdown">
-        <Dropdown.Toggle variant="outline-primary">
+      <a className="text-gray-700" href={`${getConfig().SUPPORT_URL}`}>{intl.formatMessage(messages.help)}</a>
+      {showNotificationsTray && <Notifications />}
+      <Dropdown className="user-dropdown ml-3">
+        <Dropdown.Toggle variant="outline-primary" id="user-dropdown">
           <FontAwesomeIcon icon={faUserCircle} className="d-md-none" size="lg" />
           <span data-hj-suppress className="d-none d-md-inline">
             {username}
           </span>
         </Dropdown.Toggle>
-        <Dropdown.Menu className="dropdown-menu-right">
+        <Dropdown.Menu className="dropdown-menu-right zIndex-2">
           {dashboardMenuItem}
-          <Dropdown.Item href={`${getConfig().LMS_BASE_URL}/u/${username}`}>
+          {careersMenuItem}
+          <Dropdown.Item href={`${getConfig().ACCOUNT_PROFILE_URL}/u/${username}`}>
             {intl.formatMessage(messages.profile)}
           </Dropdown.Item>
-          <Dropdown.Item href={`${getConfig().LMS_BASE_URL}/account/settings`}>
+          <Dropdown.Item href={getConfig().ACCOUNT_SETTINGS_URL}>
             {intl.formatMessage(messages.account)}
           </Dropdown.Item>
           {!enterpriseLearnerPortalLink && getConfig().ORDER_HISTORY_URL && (
             // Users should only see Order History if they do not have an available
             // learner portal, because an available learner portal currently means
-            // that they access content via Subscriptions, in which context an "order"
+            // that they access content via B2B Subscriptions, in which context an "order"
             // is not relevant.
             <Dropdown.Item href={getConfig().ORDER_HISTORY_URL}>
               {intl.formatMessage(messages.orderHistory)}
@@ -59,7 +83,7 @@ function AuthenticatedUserDropdown({ enterpriseLearnerPortalLink, intl, username
       </Dropdown>
     </>
   );
-}
+};
 
 AuthenticatedUserDropdown.propTypes = {
   enterpriseLearnerPortalLink: PropTypes.string,

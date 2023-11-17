@@ -2,12 +2,10 @@ import React from 'react';
 import { CSSTransition } from 'react-transition-group';
 import PropTypes from 'prop-types';
 
-function MenuTrigger({ tag, className, ...attributes }) {
-  return React.createElement(tag, {
-    className: `menu-trigger ${className}`,
-    ...attributes,
-  });
-}
+const MenuTrigger = ({ tag, className, ...attributes }) => React.createElement(tag, {
+  className: `menu-trigger ${className}`,
+  ...attributes,
+});
 MenuTrigger.propTypes = {
   tag: PropTypes.oneOfType([PropTypes.string, PropTypes.elementType]),
   className: PropTypes.string,
@@ -16,14 +14,13 @@ MenuTrigger.defaultProps = {
   tag: 'div',
   className: null,
 };
-const MenuTriggerType = <MenuTrigger />.type;
+const MenuTriggerComp = <MenuTrigger />;
+const MenuTriggerType = MenuTriggerComp.type;
 
-function MenuContent({ tag, className, ...attributes }) {
-  return React.createElement(tag, {
-    className: ['menu-content', className].join(' '),
-    ...attributes,
-  });
-}
+const MenuContent = ({ tag, className, ...attributes }) => React.createElement(tag, {
+  className: ['menu-content', className].join(' '),
+  ...attributes,
+});
 MenuContent.propTypes = {
   tag: PropTypes.string,
   className: PropTypes.string,
