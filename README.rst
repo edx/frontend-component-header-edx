@@ -47,7 +47,7 @@ Development
 ===========
 
 - Install requirements `npm install`
-- Install peer dependencies `npm install @edx/frontend-analytics @edx/frontend-base @edx/frontend-i18n prop-types react`
+- Install peer dependencies `npm install @edx/frontend-analytics @edx/frontend-platform @edx/frontend-i18n prop-types react`
 - Start the example server `npm start`
 - Visit http://localhost:1234
 
