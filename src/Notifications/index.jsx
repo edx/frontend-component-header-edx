@@ -15,6 +15,7 @@ import {
 } from '@edx/paragon';
 import { NotificationsNone, Settings } from '@edx/paragon/icons';
 
+import './notification.scss';
 import { useIsOnLargeScreen, useIsOnMediumScreen } from './data/hook';
 import { selectNotificationTabsCount } from './data/selectors';
 import { toggleTrayEvent } from './data/slice';
@@ -134,7 +135,7 @@ const Notifications = () => {
           </Popover>
         )}
       >
-        <div ref={buttonRef}>
+        <div ref={buttonRef} id="notificationIcon">
           <IconButton
             isActive={enableNotificationTray}
             alt={intl.formatMessage(messages.notificationBellIconAltMessage)}
