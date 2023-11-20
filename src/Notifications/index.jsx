@@ -15,7 +15,6 @@ import {
 } from '@edx/paragon';
 import { NotificationsNone, Settings } from '@edx/paragon/icons';
 
-import './notification.scss';
 import { useIsOnLargeScreen, useIsOnMediumScreen } from './data/hook';
 import { selectNotificationTabsCount } from './data/selectors';
 import { toggleTrayEvent } from './data/slice';
@@ -24,6 +23,8 @@ import NotificationTour from './tours/NotificationTour';
 import NotificationContext from './context';
 import messages from './messages';
 import NotificationTabs from './NotificationTabs';
+
+import './notification.scss';
 
 const Notifications = () => {
   const intl = useIntl();
@@ -79,7 +80,6 @@ const Notifications = () => {
         trigger="click"
         key="bottom"
         placement="bottom"
-        id="notificationTray"
         show={enableNotificationTray}
         overlay={(
           <Popover
