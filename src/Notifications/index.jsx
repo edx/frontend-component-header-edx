@@ -24,6 +24,8 @@ import NotificationContext from './context';
 import messages from './messages';
 import NotificationTabs from './NotificationTabs';
 
+import './notification.scss';
+
 const Notifications = () => {
   const intl = useIntl();
   const dispatch = useDispatch();
@@ -78,7 +80,6 @@ const Notifications = () => {
         trigger="click"
         key="bottom"
         placement="bottom"
-        id="notificationTray"
         show={enableNotificationTray}
         overlay={(
           <Popover
@@ -134,7 +135,7 @@ const Notifications = () => {
           </Popover>
         )}
       >
-        <div ref={buttonRef}>
+        <div ref={buttonRef} id="notificationIcon">
           <IconButton
             isActive={enableNotificationTray}
             alt={intl.formatMessage(messages.notificationBellIconAltMessage)}

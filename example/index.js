@@ -5,7 +5,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { AppContext, AppProvider } from '@edx/frontend-platform/react';
 import { initialize, getConfig, subscribe, APP_READY } from '@edx/frontend-platform';
-import Header from '@edx/frontend-component-header';
+import Header, { StudioHeader } from '@edx/frontend-component-header';
 
 import './index.scss';
 
