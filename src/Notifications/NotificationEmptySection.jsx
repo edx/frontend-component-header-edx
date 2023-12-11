@@ -25,7 +25,7 @@ const EmptyNotifications = () => {
         variant="light"
         id="bell-icon"
         iconClassNames="text-primary-500"
-        className="ml-4 mr-1 notification-button notification-lg-bell-icon"
+        className="ml-4 mr-1 notification-button notification-lg-bell-icon pl-2"
         data-testid="notification-bell-icon"
       />
       <div className="mx-auto mt-3.5 mb-3 font-size-22 notification-end-title line-height-24">
