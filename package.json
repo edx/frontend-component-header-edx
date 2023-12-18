@@ -73,7 +73,7 @@
     "react-redux": "7.2.9",
     "react-responsive": "9.0.2",
     "react-transition-group": "4.4.5",
-    "regenerator-runtime": "0.14.0",
+    "regenerator-runtime": "0.14.1",
     "rosie": "2.1.1",
     "timeago.js": "4.0.2"
   },
