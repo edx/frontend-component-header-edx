@@ -3,12 +3,12 @@ import React from 'react';
 import { act } from 'react-dom/test-utils';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
 import TestRenderer from 'react-test-renderer';
-import { mount } from 'enzyme';
 import { useEnterpriseConfig } from '@edx/frontend-enterprise-utils';
 import { AppContext } from '@edx/frontend-platform/react';
 import { getConfig } from '@edx/frontend-platform';
 import { Context as ResponsiveContext } from 'react-responsive';
 
+import { fireEvent, render, screen } from '@testing-library/react';
 import Header from './index';
 
 jest.mock('@edx/frontend-platform');
@@ -99,30 +99,30 @@ describe('<Header />', () => {
     const component = <HeaderContext width={{ width: 1280 }} contextValue={contextValue} />;
 
     // When learner portal links are not present, Order History should be a dropdown item
-    let wrapper = mount(component);
+    let wrapper = render(component);
     const flushPromises = () => new Promise(setImmediate);
     await act(async () => {
       await flushPromises();
-      wrapper.update();
-      wrapper.find('DropdownToggle').simulate('click');
+      fireEvent.click(wrapper.container.querySelector('#menu-dropdown'));
     });
 
-    expect(wrapper.find('a[children="Order History"]')).toHaveLength(1);
-    expect(wrapper.find('a[children="Dashboard"]')).toHaveLength(1);
+    expect(screen.getByText('Order History')).toBeInTheDocument();
+    expect(screen.getByText('Dashboard')).toBeInTheDocument();
+
+    wrapper.unmount();
 
     // When learner portal links are present, Order History should not be a dropdown item
     // We do this in the same test to avoid weird things about jest wanting you to use
     // the "correct" act() function (even though it gives the same warning regardless
     // of where you import it from, be it react-dom/test-utils or react-test-renderer).
     mockUseEnterpriseConfig();
-    wrapper = mount(component);
+    wrapper = render(component);
     await act(async () => {
       await flushPromises();
-      wrapper.update();
-      wrapper.find('DropdownToggle').simulate('click');
+      fireEvent.click(wrapper.container.querySelector('#menu-dropdown'));
     });
-    expect(wrapper.find('a[children="Order History"]')).toHaveLength(0);
-    expect(wrapper.find('a[children="Dashboard"]')).toHaveLength(1);
+    expect(screen.queryByText('Order History')).not.toBeInTheDocument();
+    expect(screen.getByText('Dashboard')).toBeInTheDocument();
   });
 
   it('renders correctly for unauthenticated users on mobile', () => {
