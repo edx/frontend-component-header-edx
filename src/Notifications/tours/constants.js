@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-filename-extension */
 import React from 'react';
-import { Icon, Hyperlink } from '@edx/paragon';
-import { Settings } from '@edx/paragon/icons';
+import { Icon, Hyperlink } from '@openedx/paragon';
+import { Settings } from '@openedx/paragon/icons';
 import { getConfig } from '@edx/frontend-platform';
 import messages from './messages';
 

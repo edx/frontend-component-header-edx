@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import isEmpty from 'lodash/isEmpty';
-import { ProductTour } from '@edx/paragon';
+import { ProductTour } from '@openedx/paragon';
 import { useTourConfiguration } from './data/hooks';
 import { fetchNotificationTours } from './data/thunks';
 

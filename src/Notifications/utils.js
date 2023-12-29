@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 
 import { getConfig } from '@edx/frontend-platform';
 import { logError } from '@edx/frontend-platform/logging';
-import { QuestionAnswerOutline, PostOutline } from '@edx/paragon/icons';
+import { QuestionAnswerOutline, PostOutline } from '@openedx/paragon/icons';
 
 export const splitNotificationsByTime = (notificationList) => {
   let splittedData = [];

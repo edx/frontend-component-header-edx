@@ -12,8 +12,8 @@ import { useIntl } from '@edx/frontend-platform/i18n';
 import {
   Bubble,
   Button, Hyperlink, Icon, IconButton, OverlayTrigger, Popover,
-} from '@edx/paragon';
-import { NotificationsNone, Settings } from '@edx/paragon/icons';
+} from '@openedx/paragon';
+import { NotificationsNone, Settings } from '@openedx/paragon/icons';
 
 import { useIsOnLargeScreen, useIsOnMediumScreen } from './data/hook';
 import { selectNotificationTabsCount } from './data/selectors';

@@ -5,8 +5,8 @@ import isEmpty from 'lodash/isEmpty';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { useIntl } from '@edx/frontend-platform/i18n';
-import { Button, Icon, Spinner } from '@edx/paragon';
-import { AutoAwesome, CheckCircleLightOutline } from '@edx/paragon/icons';
+import { Button, Icon, Spinner } from '@openedx/paragon';
+import { AutoAwesome, CheckCircleLightOutline } from '@openedx/paragon/icons';
 
 import {
   selectExpiryDays, selectNotificationListStatus, selectNotificationsByIds, selectNotificationTabs,

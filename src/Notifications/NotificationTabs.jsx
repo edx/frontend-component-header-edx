@@ -2,7 +2,7 @@ import React, { useCallback, useEffect } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Tab, Tabs } from '@edx/paragon';
+import { Tab, Tabs } from '@openedx/paragon';
 
 import {
   selectNotificationTabs, selectNotificationTabsCount, selectSelectedAppName, selectTrayOpened,
