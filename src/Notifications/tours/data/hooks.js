@@ -20,7 +20,7 @@ export const useTourConfiguration = () => {
   }, [dispatch]);
 
   const toursConfig = useMemo(() => (
-    tours?.map((tour) => tour.tourName === intl.formatMessage(messages.notificationTourId) && (
+    tours?.map((tour) => Object.keys(tourCheckpoints(intl)).includes(tour.tourName) && (
       {
         tourId: tour.tourName,
         dismissButtonText: intl.formatMessage(messages.dismissButtonText),
