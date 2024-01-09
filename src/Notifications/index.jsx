@@ -143,7 +143,6 @@ const Notifications = () => {
             src={NotificationsNone}
             iconAs={Icon}
             variant="light"
-            id="bell-icon"
             iconClassNames="text-primary-500"
             className="ml-4 mr-1 notification-button"
             data-testid="notification-bell-icon"
