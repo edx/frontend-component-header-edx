@@ -46,11 +46,8 @@
   "header.user.menu.studio": "Inicio Studio",
   "header.user.menu.maintenance": "Mantenimiento",
   "header.label.courseOutline": "Volver al esquema del curso en Studio",
-  "notification.tour.id": "notification_tour",
   "tour.action.dismiss": "Descartar",
   "tour.action.end": "De acuerdo",
-  "notification.tour.preference.body": "Hacer clic en el ícono de campana para ver las notificaciones de debate y personalice sus preferencias haciendo clic en el ícono de ajustes.",
-  "notification.tour.guide.body": "Ciertas notificaciones están habilitadas de forma predeterminada, como se detalla más en la",
-  "notification.tour.guide.link": "Guía del alumno de edX.",
-  "notification.tour.title": "¡Manténgase informado!"
+  "tour.example.title": "Example Tour",
+  "tour.example.body": "This is an example tour"
 }

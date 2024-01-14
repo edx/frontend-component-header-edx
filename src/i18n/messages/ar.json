@@ -46,11 +46,8 @@
   "header.user.menu.studio": "Studio Home",
   "header.user.menu.maintenance": "Maintenance",
   "header.label.courseOutline": "Back to course outline in Studio",
-  "notification.tour.id": "notification_tour",
   "tour.action.dismiss": "Dismiss",
   "tour.action.end": "Okay",
-  "notification.tour.preference.body": "Click the bell icon to see Discussion notifications and customize your preferences by clicking on the gear icon.",
-  "notification.tour.guide.body": "Certain notifications are enabled by default, as further detailed in the",
-  "notification.tour.guide.link": "edX Learner's Guide.",
-  "notification.tour.title": "Stay informed!"
+  "tour.example.title": "Example Tour",
+  "tour.example.body": "This is an example tour"
 }
