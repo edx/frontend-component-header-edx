@@ -1,5 +1,5 @@
 name: Default CI
-on: [push, pull_request]
+on: [pull_request]
 jobs:
   tests:
     runs-on: ubuntu-latest
