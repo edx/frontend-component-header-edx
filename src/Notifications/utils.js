@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 
 import { getConfig } from '@edx/frontend-platform';
 import { logError } from '@edx/frontend-platform/logging';
-import { QuestionAnswerOutline, PostOutline } from '@edx/paragon/icons';
+import { QuestionAnswerOutline, PostOutline, Report, Verified } from '@edx/paragon/icons';
 
 export const splitNotificationsByTime = (notificationList) => {
   let splittedData = [];
@@ -34,6 +34,9 @@ export const getIconByType = (type) => {
     new_response: { icon: QuestionAnswerOutline, class: 'text-primary-500' },
     new_comment: { icon: QuestionAnswerOutline, class: 'text-primary-500' },
     new_comment_on_response: { icon: QuestionAnswerOutline, class: 'text-primary-500' },
+    content_reported: { icon: Report, class: 'text-danger' },
+    response_endorsed: { icon: Verified, class: 'text-primary-500' },
+    response_endorsed_on_thread: { icon: Verified, class: 'text-primary-500' },
   };
   return iconMap[type] || { icon: PostOutline, class: 'text-primary-500' };
 };
