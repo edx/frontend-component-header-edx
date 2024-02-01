@@ -23,7 +23,6 @@ const EmptyNotifications = () => {
         src={NotificationsNone}
         iconAs={Icon}
         variant="light"
-        id="bell-icon"
         iconClassNames="text-primary-500"
         className="ml-4 mr-1 notification-button notification-lg-bell-icon pl-2"
         data-testid="notification-bell-icon"
