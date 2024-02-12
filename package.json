@@ -12,7 +12,7 @@
     "lint": "fedx-scripts eslint --ext .js --ext .jsx .",
     "snapshot": "fedx-scripts jest --updateSnapshot",
     "start": "fedx-scripts webpack-dev-server --progress",
-    "test": "fedx-scripts jest"
+    "test": "fedx-scripts jest --coverage"
   },
   "files": [
     "/dist"
@@ -61,7 +61,7 @@
     "@fortawesome/free-regular-svg-icons": "6.5.1",
     "@fortawesome/free-solid-svg-icons": "6.5.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
-    "@openedx/paragon": "21.13.1",
+    "@openedx/paragon": "21.11.4",
     "@reduxjs/toolkit": "1.9.7",
     "axios-mock-adapter": "1.22.0",
     "babel-polyfill": "6.26.0",
@@ -77,7 +77,7 @@
   },
   "peerDependencies": {
     "@edx/frontend-platform": "^7.0.1",
-    "@openedx/paragon": "^21.0.1",
+    "@openedx/paragon": "^21.11.0",
     "prop-types": "^15.5.10",
     "react": "^16.9.0 || ^17.0.0",
     "react-dom": "^16.9.0 || ^17.0.0"
