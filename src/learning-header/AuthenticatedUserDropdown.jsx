@@ -7,7 +7,7 @@ import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
 
 import { getConfig } from '@edx/frontend-platform';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
-import { Dropdown, Badge } from '@edx/paragon';
+import { Dropdown, Badge } from '@openedx/paragon';
 
 import messages from './messages';
 import Notifications from '../Notifications';

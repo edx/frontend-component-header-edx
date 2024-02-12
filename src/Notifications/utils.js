@@ -7,7 +7,7 @@ import {
   PostOutline,
   Report,
   Verified,
-} from '@edx/paragon/icons';
+} from '@openedx/paragon/icons';
 
 export const splitNotificationsByTime = (notificationList) => {
   let splittedData = [];

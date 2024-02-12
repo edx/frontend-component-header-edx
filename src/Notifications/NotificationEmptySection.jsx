@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
 
 import { useIntl } from '@edx/frontend-platform/i18n';
-import { Icon, IconButton } from '@edx/paragon';
-import { NotificationsNone } from '@edx/paragon/icons';
+import { Icon, IconButton } from '@openedx/paragon';
+import { NotificationsNone } from '@openedx/paragon/icons';
 
 import NotificationContext from './context';
 import messages from './messages';

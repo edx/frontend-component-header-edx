@@ -3,7 +3,7 @@ import Responsive from 'react-responsive';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import { sendTrackEvent } from '@edx/frontend-platform/analytics';
 import { AppContext } from '@edx/frontend-platform/react';
-import { Badge } from '@edx/paragon';
+import { Badge } from '@openedx/paragon';
 import {
   APP_CONFIG_INITIALIZED,
   ensureConfig,
