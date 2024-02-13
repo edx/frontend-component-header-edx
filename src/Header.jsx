@@ -32,6 +32,9 @@ subscribe(APP_CONFIG_INITIALIZED, () => {
     MINIMAL_HEADER: !!process.env.MINIMAL_HEADER,
     ENTERPRISE_LEARNER_PORTAL_HOSTNAME: process.env.ENTERPRISE_LEARNER_PORTAL_HOSTNAME,
     AUTHN_MINIMAL_HEADER: !!process.env.AUTHN_MINIMAL_HEADER,
+    // this flag is introduced to unblock for new release.
+    // the flag would be removed in follow up PR
+    HIDE_USERNAME_FROM_HEADER: !!process.env.HIDE_USERNAME_FROM_HEADER,
   }, 'Header additional config');
 });
 
@@ -155,6 +158,7 @@ const Header = ({ intl }) => {
     logoDestination: getConfig().MINIMAL_HEADER ? null : `${config.LMS_BASE_URL}/dashboard`,
     loggedIn: authenticatedUser !== null,
     username: authenticatedUser !== null ? authenticatedUser.username : null,
+    name: authenticatedUser !== null ? authenticatedUser.name : null,
     avatar: authenticatedUser !== null ? authenticatedUser.avatar : null,
     mainMenu: getConfig().MINIMAL_HEADER || getConfig().AUTHN_MINIMAL_HEADER ? [] : mainMenu,
     userMenu: getConfig().AUTHN_MINIMAL_HEADER ? [] : userMenu,

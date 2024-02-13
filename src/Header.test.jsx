@@ -74,6 +74,7 @@ describe('<Header />', () => {
       authenticatedUser: {
         userId: 'abc123',
         username: 'edX',
+        name: 'edX',
         roles: [],
         administrator: false,
       },

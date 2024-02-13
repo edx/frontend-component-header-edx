@@ -59,8 +59,11 @@ class DesktopHeader extends React.Component {
       userMenu,
       avatar,
       username,
+      name,
       intl,
     } = this.props;
+    const hideUsername = getConfig().HIDE_USERNAME_FROM_HEADER;
+    const usernameOrName = hideUsername ? name : username;
 
     return (
       <Dropdown>
@@ -69,10 +72,10 @@ class DesktopHeader extends React.Component {
           as={AvatarButton}
           src={avatar}
           alt=""
-          aria-label={intl.formatMessage(messages['header.label.account.menu.for'], { username })}
+          aria-label={intl.formatMessage(messages['header.label.account.menu.for'], { username: usernameOrName })}
           data-hj-suppress
         >
-          {username}
+          {!hideUsername && username}
         </Dropdown.Toggle>
 
         <Dropdown.Menu alignRight>
@@ -156,6 +159,7 @@ DesktopHeader.propTypes = {
   logoDestination: PropTypes.string,
   avatar: PropTypes.string,
   username: PropTypes.string,
+  name: PropTypes.string,
   loggedIn: PropTypes.bool,
 
   // i18n
@@ -171,6 +175,7 @@ DesktopHeader.defaultProps = {
   logoDestination: null,
   avatar: null,
   username: null,
+  name: '',
   loggedIn: false,
 };
 
