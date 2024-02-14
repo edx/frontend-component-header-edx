@@ -7,6 +7,7 @@ import {
   PostOutline,
   Report,
   Verified,
+  Newspaper,
 } from '@openedx/paragon/icons';
 
 export const splitNotificationsByTime = (notificationList) => {
@@ -42,6 +43,7 @@ export const getIconByType = (type) => {
     content_reported: { icon: Report, class: 'text-danger' },
     response_endorsed: { icon: Verified, class: 'text-primary-500' },
     response_endorsed_on_thread: { icon: Verified, class: 'text-primary-500' },
+    course_update: { icon: Newspaper, class: 'text-primary-500' },
   };
   return iconMap[type] || { icon: PostOutline, class: 'text-primary-500' };
 };
