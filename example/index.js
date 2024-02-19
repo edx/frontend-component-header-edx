@@ -26,6 +26,7 @@ subscribe(APP_READY, () => {
         authenticatedUser: {
           userId: '123abc',
           username: 'testuser',
+          name: 'test user',
           roles: [],
           administrator: false,
         },
@@ -37,6 +38,7 @@ subscribe(APP_READY, () => {
       <AppContext.Provider value={{
         authenticatedUser: {
           userId: '123abc',
+          name: 'test name',
           username: 'testuser',
           roles: [],
           administrator: false,

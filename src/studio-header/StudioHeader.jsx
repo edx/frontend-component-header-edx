@@ -26,6 +26,7 @@ const StudioHeader = ({
     org,
     title,
     username: authenticatedUser?.username,
+    name: authenticatedUser?.name,
     isAdmin: authenticatedUser?.administrator,
     authenticatedUserAvatar: authenticatedUser?.avatar,
     studioBaseUrl: config.STUDIO_BASE_URL,

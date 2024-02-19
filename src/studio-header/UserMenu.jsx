@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
+import { getConfig } from '@edx/frontend-platform';
 import {
   Avatar,
 } from '@openedx/paragon';
@@ -8,6 +9,7 @@ import NavDropdownMenu from './NavDropdownMenu';
 import getUserMenuItems from './utils';
 
 const UserMenu = ({
+  name,
   username,
   studioBaseUrl,
   logoutUrl,
@@ -17,22 +19,25 @@ const UserMenu = ({
   // injected
   intl,
 }) => {
+  const hideUsername = getConfig().HIDE_USERNAME_FROM_HEADER;
+  const avatarAlt = hideUsername ? name : username;
   const avatar = authenticatedUserAvatar ? (
     <img
       className="d-block w-100 h-100"
       src={authenticatedUserAvatar}
-      alt={username}
+      alt={avatarAlt}
       data-testid="avatar-image"
     />
   ) : (
     <Avatar
       size="sm"
       className="mr-2"
-      alt={username}
+      alt={avatarAlt}
       data-testid="avatar-icon"
     />
   );
-  const title = isMobile ? avatar : <>{avatar}{username}</>;
+
+  const title = (isMobile || hideUsername) ? avatar : <>{avatar}{username}</>;
 
   return (
     <NavDropdownMenu
@@ -50,6 +55,7 @@ const UserMenu = ({
 
 UserMenu.propTypes = {
   username: PropTypes.string,
+  name: PropTypes.string,
   studioBaseUrl: PropTypes.string.isRequired,
   logoutUrl: PropTypes.string.isRequired,
   authenticatedUserAvatar: PropTypes.string,
@@ -64,6 +70,7 @@ UserMenu.defaultProps = {
   isAdmin: false,
   authenticatedUserAvatar: null,
   username: null,
+  name: '',
 };
 
 export default injectIntl(UserMenu);
