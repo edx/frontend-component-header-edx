@@ -2,9 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import { getConfig } from '@edx/frontend-platform';
+import { AvatarButton, Dropdown } from '@openedx/paragon';
 
 // Local Components
-import { AvatarButton, Dropdown } from '@openedx/paragon';
+import UserMenuItem from './common/UserMenuItem';
 import { Menu, MenuTrigger, MenuContent } from './Menu';
 import { LinkedLogo, Logo } from './Logo';
 
@@ -58,12 +59,10 @@ class DesktopHeader extends React.Component {
     const {
       userMenu,
       avatar,
-      username,
       name,
+      email,
       intl,
     } = this.props;
-    const hideUsername = getConfig().HIDE_USERNAME_FROM_HEADER;
-    const usernameOrName = hideUsername ? name : username;
 
     return (
       <Dropdown>
@@ -72,13 +71,16 @@ class DesktopHeader extends React.Component {
           as={AvatarButton}
           src={avatar}
           alt=""
-          aria-label={intl.formatMessage(messages['header.label.account.menu.for'], { username: usernameOrName })}
+          aria-label={intl.formatMessage(messages['header.label.account.menu.for'], { name })}
           data-hj-suppress
-        >
-          {!hideUsername && username}
-        </Dropdown.Toggle>
-
+        />
         <Dropdown.Menu alignRight>
+          <Dropdown.Item key="user-info">
+            <UserMenuItem
+              name={name}
+              email={email}
+            />
+          </Dropdown.Item>
           {userMenu.map(({ type, href, content }) => (
             <Dropdown.Item key={`${type}-${content}`} href={href}>
               {content}
@@ -158,8 +160,8 @@ DesktopHeader.propTypes = {
   logoAltText: PropTypes.string,
   logoDestination: PropTypes.string,
   avatar: PropTypes.string,
-  username: PropTypes.string,
   name: PropTypes.string,
+  email: PropTypes.string,
   loggedIn: PropTypes.bool,
 
   // i18n
@@ -174,8 +176,8 @@ DesktopHeader.defaultProps = {
   logoAltText: null,
   logoDestination: null,
   avatar: null,
-  username: null,
   name: '',
+  email: '',
   loggedIn: false,
 };
 

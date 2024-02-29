@@ -23,7 +23,6 @@ subscribe(APP_CONFIG_INITIALIZED, () => {
   mergeConfig({
     ACCOUNT_SETTINGS_URL: process.env.ACCOUNT_SETTINGS_URL || '',
     NOTIFICATION_FEEDBACK_URL: process.env.NOTIFICATION_FEEDBACK_URL || '',
-    HIDE_USERNAME_FROM_HEADER: !!process.env.HIDE_USERNAME_FROM_HEADER,
   }, 'Learning Header additional config');
 });
 
@@ -94,6 +93,7 @@ const LearningHeader = ({
             enterpriseLearnerPortalLink={enterpriseLearnerPortalLink}
             username={authenticatedUser.username}
             name={authenticatedUser.name}
+            email={authenticatedUser.email}
           />
           )}
           {showUserDropdown && !authenticatedUser && (

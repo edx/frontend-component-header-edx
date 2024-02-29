@@ -1,6 +1,5 @@
 /* eslint-disable react/prop-types */
 import React, { useMemo } from 'react';
-import { getConfig, mergeConfig } from '@edx/frontend-platform';
 import {
   render,
   fireEvent,
@@ -18,6 +17,7 @@ const authenticatedUser = {
   userId: 3,
   username: 'abc123',
   name: 'test',
+  email: 'test@example.com',
   administrator: true,
   roles: [],
   avatar: '/imges/test.png',
@@ -131,11 +131,6 @@ describe('Header', () => {
     });
 
     it('user menu should not contain username', async () => {
-      const config = getConfig();
-      mergeConfig({
-        ...config,
-        HIDE_USERNAME_FROM_HEADER: true,
-      });
       const { container } = render(<RootWrapper {...props} />);
       const userMenu = container.querySelector('#user-dropdown-menu');
       expect(userMenu.textContent).toContain('');
@@ -150,6 +145,14 @@ describe('Header', () => {
       expect(mobileMenuButton).toBeNull();
 
       expect(desktopMenu).toBeNull();
+    });
+
+    it('displays user menu in dropdown', () => {
+      const wrapper = render(<RootWrapper {...props} />);
+      fireEvent.click(wrapper.container.querySelector('#user-dropdown-menu'));
+
+      expect(wrapper.container.querySelector('.h5')).toBeInTheDocument();
+      expect(wrapper.container.querySelector('.small')).toBeInTheDocument();
     });
   });
 
