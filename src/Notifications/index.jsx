@@ -97,7 +97,7 @@ const Notifications = () => {
               <div ref={headerRef}>
                 <Popover.Title
                   as="h2"
-                  className={`d-flex justify-content-between p-4 m-0 border-0 text-primary-500 zIndex-2 font-size-18
+                  className={`d-flex justify-content-between px-4 pt-4 pb-14px m-0 border-0 text-primary-500 zIndex-2 font-size-18
                   line-height-24 bg-white position-sticky`}
                 >
                   {intl.formatMessage(messages.notificationTitle)}
