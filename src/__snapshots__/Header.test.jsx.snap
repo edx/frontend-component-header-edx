@@ -37,7 +37,7 @@ exports[`<Header /> minimal renders correctly for authenticated users when minim
             alt=""
             aria-expanded={false}
             aria-haspopup={true}
-            aria-label="Account menu for edX"
+            aria-label="Account menu for edX Test"
             className="btn-avatar pgn__avatar-button-avatar pgn__avatar-button-avatar-md dropdown-toggle btn btn-tertiary btn-md"
             data-hj-suppress={true}
             disabled={false}
@@ -50,7 +50,6 @@ exports[`<Header /> minimal renders correctly for authenticated users when minim
               className="pgn__avatar pgn__avatar-sm"
               src="icon/mock/path"
             />
-            edX
           </button>
         </div>
       </nav>
@@ -180,7 +179,6 @@ exports[`<Header /> renders correctly for authenticated users on desktop 1`] = `
               className="pgn__avatar pgn__avatar-sm"
               src="icon/mock/path"
             />
-            edX
           </button>
         </div>
       </nav>
@@ -293,7 +291,7 @@ exports[`<Header /> renders correctly for authenticated users on mobile 1`] = `
         type="button"
       >
         <img
-          alt="edX"
+          alt="edX Test"
           className="pgn__avatar pgn__avatar-sm"
           src="icon/mock/path"
         />
@@ -478,7 +476,7 @@ exports[`<Header /> renders correctly for unauthenticated users on mobile 1`] = 
         type="button"
       >
         <img
-          alt={null}
+          alt=""
           className="pgn__avatar pgn__avatar-sm"
           src="icon/mock/path"
         />

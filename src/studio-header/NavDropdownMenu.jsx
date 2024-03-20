@@ -5,9 +5,13 @@ import {
   DropdownButton,
 } from '@openedx/paragon';
 
+import UserMenuItem from '../common/UserMenuItem';
+
 const NavDropdownMenu = ({
   id,
   buttonTitle,
+  name,
+  email,
   items,
 }) => (
   <DropdownButton
@@ -16,6 +20,15 @@ const NavDropdownMenu = ({
     variant="outline-primary"
     className="mr-2"
   >
+    <Dropdown.Item
+      key="user-info"
+      className="small"
+    >
+      <UserMenuItem
+        name={name}
+        email={email}
+      />
+    </Dropdown.Item>
     {items.map(item => (
       <Dropdown.Item
         key={`${item.title}-dropdown-item`}
@@ -30,11 +43,18 @@ const NavDropdownMenu = ({
 
 NavDropdownMenu.propTypes = {
   id: PropTypes.string.isRequired,
+  email: PropTypes.string,
+  name: PropTypes.string,
   buttonTitle: PropTypes.string.isRequired,
   items: PropTypes.arrayOf(PropTypes.shape({
     href: PropTypes.string,
     title: PropTypes.string,
   })).isRequired,
+};
+
+NavDropdownMenu.defaultProps = {
+  name: '',
+  email: '',
 };
 
 export default NavDropdownMenu;

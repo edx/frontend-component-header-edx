@@ -87,6 +87,27 @@ describe('<Header />', () => {
     expect(wrapper.toJSON()).toMatchSnapshot();
   });
 
+  it('displays user menu in dropdown', () => {
+    const authenticatedUser = {
+      userId: 'abc123',
+      username: 'edX',
+      name: 'edX',
+      email: 'test@example.com',
+      roles: [],
+      administrator: false,
+    };
+    const contextValue = {
+      authenticatedUser,
+      config: APP_CONTEXT_CONFIG,
+    };
+    const component = <HeaderContext width={{ width: 1280 }} contextValue={contextValue} />;
+    const wrapper = render(component);
+    fireEvent.click(wrapper.container.querySelector('#menu-dropdown'));
+
+    expect(screen.getByText(authenticatedUser.name)).toBeInTheDocument();
+    expect(screen.getByText(authenticatedUser.email)).toBeInTheDocument();
+  });
+
   it('renders correctly for authenticated users on desktop with or without learner portal links', async () => {
     const contextValue = {
       authenticatedUser: {
@@ -143,6 +164,7 @@ describe('<Header />', () => {
       authenticatedUser: {
         userId: 'abc123',
         username: 'edX',
+        name: 'edX Test',
         roles: [],
         administrator: false,
       },
@@ -185,6 +207,7 @@ describe('<Header />', () => {
         authenticatedUser: {
           userId: 'abc123',
           username: 'edX',
+          name: 'edX Test',
           roles: [],
           administrator: false,
         },

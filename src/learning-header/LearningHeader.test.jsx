@@ -1,7 +1,6 @@
 import React from 'react';
-import { getConfig, mergeConfig } from '@edx/frontend-platform';
 import {
-  authenticatedUser, initializeMockApp, render, screen,
+  fireEvent, initializeMockApp, render, screen,
 } from '../setupTest';
 import { LearningHeader as Header } from '../index';
 
@@ -13,18 +12,15 @@ describe('Header', () => {
 
   it('displays user button', () => {
     render(<Header />);
-    expect(screen.getByText(authenticatedUser.username)).toBeInTheDocument();
+    expect(screen.getByRole('button', { className: 'dropdown-toggle' })).toBeInTheDocument();
   });
 
-  it('displays user button without username', () => {
-    const config = getConfig();
-    mergeConfig({
-      ...config,
-      HIDE_USERNAME_FROM_HEADER: true,
-    });
-    const { queryByTestId } = render(<Header />);
-    const username = queryByTestId('username');
-    expect(username).not.toBeInTheDocument();
+  it('displays user menu in dropdown', () => {
+    render(<Header />);
+    const button = screen.getByRole('button', { className: 'dropdown-toggle' });
+    fireEvent.click(button);
+    const userMenuItem = screen.queryByTestId('user-item');
+    expect(userMenuItem).toBeInTheDocument();
   });
 
   it('displays course data', () => {

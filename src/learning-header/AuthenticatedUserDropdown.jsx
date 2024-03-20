@@ -7,10 +7,11 @@ import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
 
 import { getConfig } from '@edx/frontend-platform';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
-import { Avatar, Dropdown, Badge } from '@openedx/paragon';
+import { Dropdown, Badge } from '@openedx/paragon';
 
 import messages from './messages';
 import Notifications from '../Notifications';
+import UserMenuItem from '../common/UserMenuItem';
 import { selectShowNotificationTray } from '../Notifications/data/selectors';
 import { fetchAppsNotificationCount } from '../Notifications/data/thunks';
 
@@ -20,6 +21,7 @@ const AuthenticatedUserDropdown = (props) => {
     enterpriseLearnerPortalLink,
     username,
     name,
+    email,
   } = props;
   const dispatch = useDispatch();
   const showNotificationsTray = useSelector(selectShowNotificationTray);
@@ -42,6 +44,11 @@ const AuthenticatedUserDropdown = (props) => {
       </Badge>
     </Dropdown.Item>
   );
+  const userMenuItem = (
+    <Dropdown.Item data-testid="user-item">
+      <UserMenuItem name={name} email={email} />
+    </Dropdown.Item>
+  );
   if (enterpriseLearnerPortalLink && Object.keys(enterpriseLearnerPortalLink).length > 0) {
     dashboardMenuItem = (
       <Dropdown.Item
@@ -53,26 +60,16 @@ const AuthenticatedUserDropdown = (props) => {
     careersMenuItem = '';
   }
 
-  const dropdownToggle = (
-    <Dropdown.Toggle variant="outline-primary" id="user-dropdown">
-      <FontAwesomeIcon icon={faUserCircle} className="d-md-none" size="lg" />
-      {getConfig().HIDE_USERNAME_FROM_HEADER ? (
-        <Avatar size="sm" alt={name} className="mr-2" />
-      ) : (
-        <span data-hj-suppress className="d-none d-md-inline" data-testid="username">
-          {username}
-        </span>
-      )}
-    </Dropdown.Toggle>
-  );
-
   return (
     <>
       <a className="text-gray-700" href={`${getConfig().SUPPORT_URL}`}>{intl.formatMessage(messages.help)}</a>
       {showNotificationsTray && <Notifications />}
       <Dropdown className="user-dropdown ml-3">
-        {dropdownToggle}
+        <Dropdown.Toggle variant="outline-primary" id="user-dropdown">
+          <FontAwesomeIcon icon={faUserCircle} size="lg" />
+        </Dropdown.Toggle>
         <Dropdown.Menu className="dropdown-menu-right zIndex-2">
+          {userMenuItem}
           {dashboardMenuItem}
           {careersMenuItem}
           <Dropdown.Item href={`${getConfig().ACCOUNT_PROFILE_URL}/u/${username}`}>
@@ -104,11 +101,13 @@ AuthenticatedUserDropdown.propTypes = {
   intl: intlShape.isRequired,
   username: PropTypes.string.isRequired,
   name: PropTypes.string,
+  email: PropTypes.string,
 };
 
 AuthenticatedUserDropdown.defaultProps = {
   enterpriseLearnerPortalLink: '',
   name: '',
+  email: '',
 };
 
 export default injectIntl(AuthenticatedUserDropdown);
