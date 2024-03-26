@@ -20,25 +20,31 @@ class DesktopHeader extends React.Component {
     super(props);
   }
 
-  renderMainMenu() {
-    const { mainMenu } = this.props;
-
+  renderMenu(menu) {
     // Nodes are accepted as a prop
-    if (!Array.isArray(mainMenu)) {
-      return mainMenu;
+    if (!Array.isArray(menu)) {
+      return menu;
     }
 
-    return mainMenu.map((menuItem) => {
+    return menu.map((menuItem) => {
       const {
         type,
         href,
         content,
         submenuContent,
+        disabled,
+        isActive,
       } = menuItem;
 
       if (type === 'item') {
         return (
-          <a key={`${type}-${content}`} className="nav-link" href={href}>{content}</a>
+          <a
+            key={`${type}-${content}`}
+            className={`nav-link${disabled ? ' disabled' : ''}${isActive ? ' active' : ''}`}
+            href={href}
+          >
+            {content}
+          </a>
         );
       }
 
@@ -53,6 +59,16 @@ class DesktopHeader extends React.Component {
         </Menu>
       );
     });
+  }
+
+  renderMainMenu() {
+    const { mainMenu } = this.props;
+    return this.renderMenu(mainMenu);
+  }
+
+  renderSecondaryMenu() {
+    const { secondaryMenu } = this.props;
+    return this.renderMenu(secondaryMenu);
   }
 
   renderUserMenu() {
@@ -86,10 +102,23 @@ class DesktopHeader extends React.Component {
               />
             </Dropdown.Item>
           )}
-          {userMenu.map(({ type, href, content }) => (
-            <Dropdown.Item key={`${type}-${content}`} href={href}>
-              {content}
-            </Dropdown.Item>
+          {userMenu.map((group, index) => (
+            // eslint-disable-next-line react/jsx-no-comment-textnodes,react/no-array-index-key
+            <React.Fragment key={index}>
+              {group.heading && <Dropdown.Header>{group.heading}</Dropdown.Header>}
+              {group.items.map(({
+                type, content, href, disabled, isActive,
+              }) => (
+                <Dropdown.Item
+                  key={`${type}-${content}`}
+                  href={href}
+                  className={`${isActive ? ' active' : ''}${disabled ? ' disabled' : ''}`}
+                >
+                  {content}
+                </Dropdown.Item>
+              ))}
+              {index < userMenu.length - 1 && <Dropdown.Divider />}
+            </React.Fragment>
           ))}
         </Dropdown.Menu>
       </Dropdown>
@@ -137,7 +166,13 @@ class DesktopHeader extends React.Component {
               aria-label={intl.formatMessage(messages['header.label.secondary.nav'])}
               className="nav secondary-menu-container align-items-center ml-auto"
             >
-              {loggedIn ? this.renderUserMenu() : this.renderLoggedOutItems()}
+              {loggedIn
+                ? (
+                  <>
+                    {this.renderSecondaryMenu()}
+                    {this.renderUserMenu()}
+                  </>
+                ) : this.renderLoggedOutItems()}
             </nav>
           </div>
         </div>
@@ -151,10 +186,19 @@ DesktopHeader.propTypes = {
     PropTypes.node,
     PropTypes.array,
   ]),
+  secondaryMenu: PropTypes.oneOfType([
+    PropTypes.node,
+    PropTypes.array,
+  ]),
   userMenu: PropTypes.arrayOf(PropTypes.shape({
-    type: PropTypes.oneOf(['item', 'menu']),
-    href: PropTypes.string,
-    content: PropTypes.string,
+    heading: PropTypes.string,
+    items: PropTypes.arrayOf(PropTypes.shape({
+      type: PropTypes.oneOf(['item', 'menu']),
+      href: PropTypes.string,
+      content: PropTypes.string,
+      disabled: PropTypes.bool,
+      isActive: PropTypes.bool,
+    })),
   })),
   loggedOutItems: PropTypes.arrayOf(PropTypes.shape({
     type: PropTypes.oneOf(['item', 'menu']),
@@ -175,6 +219,7 @@ DesktopHeader.propTypes = {
 
 DesktopHeader.defaultProps = {
   mainMenu: [],
+  secondaryMenu: [],
   userMenu: [],
   loggedOutItems: [],
   logo: null,
