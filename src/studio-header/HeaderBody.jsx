@@ -6,8 +6,8 @@ import {
   Container,
   Nav,
   Row,
-} from '@edx/paragon';
-import { Close, MenuIcon } from '@edx/paragon/icons';
+} from '@openedx/paragon';
+import { Close, MenuIcon } from '@openedx/paragon/icons';
 
 import CourseLockUp from './CourseLockUp';
 import UserMenu from './UserMenu';
@@ -20,7 +20,8 @@ const HeaderBody = ({
   number,
   org,
   title,
-  username,
+  name,
+  email,
   isAdmin,
   studioBaseUrl,
   logoutUrl,
@@ -99,7 +100,8 @@ const HeaderBody = ({
         <Nav>
           <UserMenu
             {...{
-              username,
+              name,
+              email,
               studioBaseUrl,
               logoutUrl,
               authenticatedUserAvatar,
@@ -124,7 +126,8 @@ HeaderBody.propTypes = {
   logo: PropTypes.string,
   logoAltText: PropTypes.string,
   authenticatedUserAvatar: PropTypes.string,
-  username: PropTypes.string,
+  name: PropTypes.string,
+  email: PropTypes.string,
   isAdmin: PropTypes.bool,
   isMobile: PropTypes.bool,
   isHiddenMainMenu: PropTypes.bool,
@@ -149,7 +152,8 @@ HeaderBody.defaultProps = {
   org: '',
   title: '',
   authenticatedUserAvatar: null,
-  username: null,
+  name: '',
+  email: '',
   isAdmin: false,
   isMobile: false,
   isHiddenMainMenu: false,

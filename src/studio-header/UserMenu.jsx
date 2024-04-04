@@ -3,16 +3,16 @@ import PropTypes from 'prop-types';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import {
   Avatar,
-} from '@edx/paragon';
+} from '@openedx/paragon';
 import NavDropdownMenu from './NavDropdownMenu';
 import getUserMenuItems from './utils';
 
 const UserMenu = ({
-  username,
+  name,
+  email,
   studioBaseUrl,
   logoutUrl,
   authenticatedUserAvatar,
-  isMobile,
   isAdmin,
   // injected
   intl,
@@ -21,23 +21,24 @@ const UserMenu = ({
     <img
       className="d-block w-100 h-100"
       src={authenticatedUserAvatar}
-      alt={username}
+      alt={name}
       data-testid="avatar-image"
     />
   ) : (
     <Avatar
       size="sm"
       className="mr-2"
-      alt={username}
+      alt={name}
       data-testid="avatar-icon"
     />
   );
-  const title = isMobile ? avatar : <>{avatar}{username}</>;
 
   return (
     <NavDropdownMenu
-      buttonTitle={title}
+      buttonTitle={avatar}
       id="user-dropdown-menu"
+      name={name}
+      email={email}
       items={getUserMenuItems({
         studioBaseUrl,
         logoutUrl,
@@ -49,21 +50,21 @@ const UserMenu = ({
 };
 
 UserMenu.propTypes = {
-  username: PropTypes.string,
+  name: PropTypes.string,
+  email: PropTypes.string,
   studioBaseUrl: PropTypes.string.isRequired,
   logoutUrl: PropTypes.string.isRequired,
   authenticatedUserAvatar: PropTypes.string,
-  isMobile: PropTypes.bool,
   isAdmin: PropTypes.bool,
   // injected
   intl: intlShape.isRequired,
 };
 
 UserMenu.defaultProps = {
-  isMobile: false,
   isAdmin: false,
   authenticatedUserAvatar: null,
-  username: null,
+  name: '',
+  email: '',
 };
 
 export default injectIntl(UserMenu);

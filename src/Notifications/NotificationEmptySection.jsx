@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
 
 import { useIntl } from '@edx/frontend-platform/i18n';
-import { Icon, IconButton } from '@edx/paragon';
-import { NotificationsNone } from '@edx/paragon/icons';
+import { Icon, IconButton } from '@openedx/paragon';
+import { NotificationsNone } from '@openedx/paragon/icons';
 
 import NotificationContext from './context';
 import messages from './messages';
@@ -23,7 +23,6 @@ const EmptyNotifications = () => {
         src={NotificationsNone}
         iconAs={Icon}
         variant="light"
-        id="bell-icon"
         iconClassNames="text-primary-500"
         className="ml-4 mr-1 notification-button notification-lg-bell-icon pl-2"
         data-testid="notification-bell-icon"

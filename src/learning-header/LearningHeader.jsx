@@ -92,6 +92,8 @@ const LearningHeader = ({
           <AuthenticatedUserDropdown
             enterpriseLearnerPortalLink={enterpriseLearnerPortalLink}
             username={authenticatedUser.username}
+            name={authenticatedUser.name}
+            email={authenticatedUser.email}
           />
           )}
           {showUserDropdown && !authenticatedUser && (

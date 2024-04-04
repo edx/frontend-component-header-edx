@@ -4,9 +4,10 @@ import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import { getConfig } from '@edx/frontend-platform';
 
 // Local Components
-import { AvatarButton } from '@edx/paragon';
+import { AvatarButton } from '@openedx/paragon';
 import { Menu, MenuTrigger, MenuContent } from './Menu';
 import { LinkedLogo, Logo } from './Logo';
+import UserMenuItem from './common/UserMenuItem';
 
 // i18n
 import messages from './Header.messages';
@@ -57,13 +58,18 @@ class MobileHeader extends React.Component {
   }
 
   renderUserMenuItems() {
-    const { userMenu } = this.props;
-
-    return userMenu.map(({ type, href, content }) => (
+    const { userMenu, name, email } = this.props;
+    const userInfoItem = (
+      <li className="nav-item" key="user-info">
+        <UserMenuItem name={name} email={email} />
+      </li>
+    );
+    const userMenuItems = userMenu.map(({ type, href, content }) => (
       <li className="nav-item" key={`${type}-${content}`}>
         <a className="nav-link" href={href}>{content}</a>
       </li>
     ));
+    return [userInfoItem, ...userMenuItems];
   }
 
   renderLoggedOutItems() {
@@ -88,7 +94,7 @@ class MobileHeader extends React.Component {
       logoDestination,
       loggedIn,
       avatar,
-      username,
+      name,
       stickyOnMobile,
       intl,
       mainMenu,
@@ -139,7 +145,7 @@ class MobileHeader extends React.Component {
                 src={avatar}
                 showLabel={false}
               >
-                {username}
+                {name}
               </MenuTrigger>
               <MenuContent tag="ul" className="nav flex-column pin-left pin-right border-top shadow py-2">
                 {loggedIn ? this.renderUserMenuItems() : this.renderLoggedOutItems()}
@@ -172,7 +178,8 @@ MobileHeader.propTypes = {
   logoAltText: PropTypes.string,
   logoDestination: PropTypes.string,
   avatar: PropTypes.string,
-  username: PropTypes.string,
+  name: PropTypes.string,
+  email: PropTypes.string,
   loggedIn: PropTypes.bool,
   stickyOnMobile: PropTypes.bool,
 
@@ -188,7 +195,8 @@ MobileHeader.defaultProps = {
   logoAltText: null,
   logoDestination: null,
   avatar: null,
-  username: null,
+  name: '',
+  email: '',
   loggedIn: false,
   stickyOnMobile: true,
 

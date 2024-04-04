@@ -3,7 +3,7 @@ import Responsive from 'react-responsive';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import { sendTrackEvent } from '@edx/frontend-platform/analytics';
 import { AppContext } from '@edx/frontend-platform/react';
-import { Badge } from '@edx/paragon';
+import { Badge } from '@openedx/paragon';
 import {
   APP_CONFIG_INITIALIZED,
   ensureConfig,
@@ -154,7 +154,8 @@ const Header = ({ intl }) => {
     siteName: 'edX',
     logoDestination: getConfig().MINIMAL_HEADER ? null : `${config.LMS_BASE_URL}/dashboard`,
     loggedIn: authenticatedUser !== null,
-    username: authenticatedUser !== null ? authenticatedUser.username : null,
+    name: authenticatedUser !== null ? authenticatedUser.name : '',
+    email: authenticatedUser !== null ? authenticatedUser.email : '',
     avatar: authenticatedUser !== null ? authenticatedUser.avatar : null,
     mainMenu: getConfig().MINIMAL_HEADER || getConfig().AUTHN_MINIMAL_HEADER ? [] : mainMenu,
     userMenu: getConfig().AUTHN_MINIMAL_HEADER ? [] : userMenu,

@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  authenticatedUser, initializeMockApp, render, screen,
+  fireEvent, initializeMockApp, render, screen,
 } from '../setupTest';
 import { LearningHeader as Header } from '../index';
 
@@ -12,7 +12,15 @@ describe('Header', () => {
 
   it('displays user button', () => {
     render(<Header />);
-    expect(screen.getByText(authenticatedUser.username)).toBeInTheDocument();
+    expect(screen.getByRole('button', { className: 'dropdown-toggle' })).toBeInTheDocument();
+  });
+
+  it('displays user menu in dropdown', () => {
+    render(<Header />);
+    const button = screen.getByRole('button', { className: 'dropdown-toggle' });
+    fireEvent.click(button);
+    const userMenuItem = screen.queryByTestId('user-item');
+    expect(userMenuItem).toBeInTheDocument();
   });
 
   it('displays course data', () => {

@@ -16,6 +16,8 @@ import messages from './messages';
 const authenticatedUser = {
   userId: 3,
   username: 'abc123',
+  name: 'test',
+  email: 'test@example.com',
   administrator: true,
   roles: [],
   avatar: '/imges/test.png',
@@ -128,6 +130,12 @@ describe('Header', () => {
       expect(avatarIcon).toBeVisible();
     });
 
+    it('user menu should not contain username', async () => {
+      const { container } = render(<RootWrapper {...props} />);
+      const userMenu = container.querySelector('#user-dropdown-menu');
+      expect(userMenu.textContent).toContain('');
+    });
+
     it('should hide nav items if prop isHiddenMainMenu true', async () => {
       const initialProps = { ...props, isHiddenMainMenu: true };
       const { queryByTestId } = render(<RootWrapper {...initialProps} />);
@@ -137,6 +145,14 @@ describe('Header', () => {
       expect(mobileMenuButton).toBeNull();
 
       expect(desktopMenu).toBeNull();
+    });
+
+    it('displays user menu in dropdown', () => {
+      const wrapper = render(<RootWrapper {...props} />);
+      fireEvent.click(wrapper.container.querySelector('#user-dropdown-menu'));
+
+      expect(wrapper.container.querySelector('.h5')).toBeInTheDocument();
+      expect(wrapper.container.querySelector('.small')).toBeInTheDocument();
     });
   });
 

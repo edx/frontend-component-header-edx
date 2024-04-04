@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import * as timeago from 'timeago.js';
 
 import { useIntl } from '@edx/frontend-platform/i18n';
-import { Icon } from '@edx/paragon';
+import { Icon } from '@openedx/paragon';
 
 import { markNotificationsAsRead } from './data/thunks';
 import messages from './messages';

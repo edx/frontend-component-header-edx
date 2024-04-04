@@ -2,7 +2,7 @@ import React, { useCallback, useEffect } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Tab, Tabs } from '@edx/paragon';
+import { Tab, Tabs } from '@openedx/paragon';
 
 import {
   selectNotificationTabs, selectNotificationTabsCount, selectSelectedAppName, selectTrayOpened,
@@ -48,7 +48,7 @@ const NotificationTabs = () => {
               eventKey={appName}
               title={appName}
               notification={notificationUnseenCounts[appName]}
-              tabClassName="pt-0 pb-10px px-2.5 d-flex border-top-0 mb-0 align-items-center line-height-24 text-capitalize"
+              tabClassName="pt-0 py-10px px-2.5 d-flex border-top-0 mb-0 align-items-center line-height-24 text-capitalize"
               data-testid={`notification-tab-${appName}`}
             >
               {selectedAppName === appName && <NotificationSections />}
