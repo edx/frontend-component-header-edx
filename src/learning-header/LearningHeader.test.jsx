@@ -1,4 +1,5 @@
 import React from 'react';
+import { AppContext } from '@edx/frontend-platform/react';
 import {
   fireEvent, initializeMockApp, render, screen,
 } from '../setupTest';
@@ -16,7 +17,28 @@ describe('Header', () => {
   });
 
   it('displays user menu in dropdown', () => {
-    render(<Header />);
+    const authenticatedUser = {
+      userId: 'abc123',
+      username: 'edX',
+      name: 'edX',
+      email: 'test@example.com',
+      roles: [],
+      administrator: false,
+    };
+    const contextValue = {
+      authenticatedUser,
+      config: {},
+    };
+    const component = (
+      <AppContext.Provider
+        value={contextValue}
+      >
+        <Header />
+      </AppContext.Provider>
+    );
+
+    render(component);
+
     const button = screen.getByRole('button', { className: 'dropdown-toggle' });
     fireEvent.click(button);
     const userMenuItem = screen.queryByTestId('user-item');
