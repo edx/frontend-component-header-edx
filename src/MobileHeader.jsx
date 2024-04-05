@@ -59,17 +59,19 @@ class MobileHeader extends React.Component {
 
   renderUserMenuItems() {
     const { userMenu, name, email } = this.props;
-    const userInfoItem = (
-      <li className="nav-item" key="user-info">
+    const userInfoItem = (name || email) ? (
+      <li className="nav-item user-info__menu-item" key="user-info">
         <UserMenuItem name={name} email={email} />
       </li>
-    );
+    ) : null;
+
     const userMenuItems = userMenu.map(({ type, href, content }) => (
       <li className="nav-item" key={`${type}-${content}`}>
         <a className="nav-link" href={href}>{content}</a>
       </li>
     ));
-    return [userInfoItem, ...userMenuItems];
+
+    return userInfoItem ? [userInfoItem, ...userMenuItems] : userMenuItems;
   }
 
   renderLoggedOutItems() {

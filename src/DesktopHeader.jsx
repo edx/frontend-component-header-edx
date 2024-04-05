@@ -75,12 +75,17 @@ class DesktopHeader extends React.Component {
           data-hj-suppress
         />
         <Dropdown.Menu alignRight>
-          <Dropdown.Item key="user-info">
-            <UserMenuItem
-              name={name}
-              email={email}
-            />
-          </Dropdown.Item>
+          {(name || email) && (
+            <Dropdown.Item
+              key="user-info"
+              className="user-info__menu-item"
+            >
+              <UserMenuItem
+                name={name}
+                email={email}
+              />
+            </Dropdown.Item>
+          )}
           {userMenu.map(({ type, href, content }) => (
             <Dropdown.Item key={`${type}-${content}`} href={href}>
               {content}

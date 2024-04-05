@@ -36,6 +36,7 @@ const AuthenticatedUserDropdown = (props) => {
       {intl.formatMessage(messages.dashboard)}
     </Dropdown.Item>
   );
+
   let careersMenuItem = (
     <Dropdown.Item href="https://careers.edx.org/">
       {intl.formatMessage(messages.career)}
@@ -44,11 +45,20 @@ const AuthenticatedUserDropdown = (props) => {
       </Badge>
     </Dropdown.Item>
   );
-  const userMenuItem = (
-    <Dropdown.Item data-testid="user-item">
-      <UserMenuItem name={name} email={email} />
+
+  const userMenuItem = (name || email) ? (
+    <Dropdown.Item
+      key="user-info"
+      data-testid="user-item"
+      className="user-info__menu-item"
+    >
+      <UserMenuItem
+        name={name}
+        email={email}
+      />
     </Dropdown.Item>
-  );
+  ) : null;
+
   if (enterpriseLearnerPortalLink && Object.keys(enterpriseLearnerPortalLink).length > 0) {
     dashboardMenuItem = (
       <Dropdown.Item
