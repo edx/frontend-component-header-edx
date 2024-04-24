@@ -20,25 +20,29 @@ class MobileHeader extends React.Component {
     super(props);
   }
 
-  renderMainMenu() {
-    const { mainMenu } = this.props;
-
+  renderMenu(menu) {
     // Nodes are accepted as a prop
-    if (!Array.isArray(mainMenu)) {
-      return mainMenu;
+    if (!Array.isArray(menu)) {
+      return menu;
     }
 
-    return mainMenu.map((menuItem) => {
+    return menu.map((menuItem) => {
       const {
         type,
         href,
         content,
         submenuContent,
+        disabled,
+        isActive,
       } = menuItem;
 
       if (type === 'item') {
         return (
-          <a key={`${type}-${content}`} className="nav-link" href={href}>
+          <a
+            key={`${type}-${content}`}
+            className={`nav-link${disabled ? ' disabled' : ''}${isActive ? ' active' : ''}`}
+            href={href}
+          >
             {content}
           </a>
         );
@@ -57,19 +61,40 @@ class MobileHeader extends React.Component {
     });
   }
 
+  renderMainMenu() {
+    const { mainMenu } = this.props;
+    return this.renderMenu(mainMenu);
+  }
+
+  renderSecondaryMenu() {
+    const { secondaryMenu } = this.props;
+    return this.renderMenu(secondaryMenu);
+  }
+
   renderUserMenuItems() {
     const { userMenu, name, email } = this.props;
-    const userInfoItem = (
-      <li className="nav-item" key="user-info">
+    const userInfoItem = (name || email) ? (
+      <li className="nav-item user-info__menu-item" key="user-info">
         <UserMenuItem name={name} email={email} />
       </li>
-    );
-    const userMenuItems = userMenu.map(({ type, href, content }) => (
-      <li className="nav-item" key={`${type}-${content}`}>
-        <a className="nav-link" href={href}>{content}</a>
-      </li>
+    ) : null;
+
+    const userMenuItems = userMenu.map((group) => (
+      group.items.map(({
+        type, content, href, disabled, isActive,
+      }) => (
+        <li className="nav-item" key={`${type}-${content}`}>
+          <a
+            className={`nav-link${isActive ? ' active' : ''}${disabled ? ' disabled' : ''}`}
+            href={href}
+          >
+            {content}
+          </a>
+        </li>
+      ))
     ));
-    return [userInfoItem, ...userMenuItems];
+
+    return userInfoItem ? [userInfoItem, ...userMenuItems] : userMenuItems;
   }
 
   renderLoggedOutItems() {
@@ -128,6 +153,7 @@ class MobileHeader extends React.Component {
                 className="nav flex-column pin-left pin-right border-top shadow py-2"
               >
                 {this.renderMainMenu()}
+                {this.renderSecondaryMenu()}
               </MenuContent>
             </Menu>
           </div>
@@ -163,11 +189,19 @@ MobileHeader.propTypes = {
     PropTypes.node,
     PropTypes.array,
   ]),
-
+  secondaryMenu: PropTypes.oneOfType([
+    PropTypes.node,
+    PropTypes.array,
+  ]),
   userMenu: PropTypes.arrayOf(PropTypes.shape({
-    type: PropTypes.oneOf(['item', 'menu']),
-    href: PropTypes.string,
-    content: PropTypes.string,
+    heading: PropTypes.string,
+    items: PropTypes.arrayOf(PropTypes.shape({
+      type: PropTypes.oneOf(['item', 'menu']),
+      href: PropTypes.string,
+      content: PropTypes.string,
+      disabled: PropTypes.bool,
+      isActive: PropTypes.bool,
+    })),
   })),
   loggedOutItems: PropTypes.arrayOf(PropTypes.shape({
     type: PropTypes.oneOf(['item', 'menu']),
@@ -189,6 +223,7 @@ MobileHeader.propTypes = {
 
 MobileHeader.defaultProps = {
   mainMenu: [],
+  secondaryMenu: [],
   userMenu: [],
   loggedOutItems: [],
   logo: null,

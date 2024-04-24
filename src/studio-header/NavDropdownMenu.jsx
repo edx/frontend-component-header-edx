@@ -20,15 +20,17 @@ const NavDropdownMenu = ({
     variant="outline-primary"
     className="mr-2"
   >
+    {(name || email) && (
     <Dropdown.Item
       key="user-info"
-      className="small"
+      className="small user-info__menu-item"
     >
       <UserMenuItem
         name={name}
         email={email}
       />
     </Dropdown.Item>
+    )}
     {items.map(item => (
       <Dropdown.Item
         key={`${item.title}-dropdown-item`}
