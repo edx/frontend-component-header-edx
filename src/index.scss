@@ -88,15 +88,6 @@ $white: #fff;
       height: 100%;
     }
   }
-  .secondary-menu-container {
-    .nav-link:hover,
-    .nav-link:focus,
-    .nav-link.active,
-    .expanded .nav-link {
-      background: $component-active-bg;
-      color: $component-active-color;
-    }
-  }
   .main-nav {
     .nav-link {
       padding: 1.125rem 1rem;
@@ -127,9 +118,4 @@ $white: #fff;
   .search-input {
     border-radius: $rounded-pill;
   }
-}
-
-// bottom boarder of first child of user dropdown menu
-.dropdown-menu a:first-child {
-  border-bottom: 1px solid #70828E !important;
 }
