@@ -34,6 +34,7 @@ class MobileHeader extends React.Component {
         submenuContent,
         disabled,
         isActive,
+        onClick,
       } = menuItem;
 
       if (type === 'item') {
@@ -42,6 +43,7 @@ class MobileHeader extends React.Component {
             key={`${type}-${content}`}
             className={`nav-link${disabled ? ' disabled' : ''}${isActive ? ' active' : ''}`}
             href={href}
+            onClick={onClick || null}
           >
             {content}
           </a>
@@ -50,7 +52,7 @@ class MobileHeader extends React.Component {
 
       return (
         <Menu key={`${type}-${content}`} tag="div" className="nav-item">
-          <MenuTrigger tag="a" role="button" tabIndex="0" className="nav-link">
+          <MenuTrigger onClick={onClick || null} tag="a" role="button" tabIndex="0" className="nav-link">
             {content}
           </MenuTrigger>
           <MenuContent className="position-static pin-left pin-right py-2">
@@ -81,12 +83,13 @@ class MobileHeader extends React.Component {
 
     const userMenuItems = userMenu.map((group) => (
       group.items.map(({
-        type, content, href, disabled, isActive,
+        type, content, href, disabled, isActive, onClick,
       }) => (
         <li className="nav-item" key={`${type}-${content}`}>
           <a
             className={`nav-link${isActive ? ' active' : ''}${disabled ? ' disabled' : ''}`}
             href={href}
+            onClick={onClick || null}
           >
             {content}
           </a>
@@ -201,6 +204,7 @@ MobileHeader.propTypes = {
       content: PropTypes.string,
       disabled: PropTypes.bool,
       isActive: PropTypes.bool,
+      onClick: PropTypes.func,
     })),
   })),
   loggedOutItems: PropTypes.arrayOf(PropTypes.shape({
