@@ -221,7 +221,7 @@ exports[`<Header /> renders correctly for authenticated users on mobile 1`] = `
           height="24px"
           role="img"
           style={
-            Object {
+            {
               "height": "1.5rem",
               "width": "1.5rem",
             }
@@ -406,7 +406,7 @@ exports[`<Header /> renders correctly for unauthenticated users on mobile 1`] = 
           height="24px"
           role="img"
           style={
-            Object {
+            {
               "height": "1.5rem",
               "width": "1.5rem",
             }
