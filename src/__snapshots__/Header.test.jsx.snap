@@ -138,18 +138,21 @@ exports[`<Header /> renders correctly for authenticated users on desktop 1`] = `
         <a
           className="nav-link"
           href="http://localhost:18000/dashboard"
+          onClick={null}
         >
           Courses
         </a>
         <a
           className="nav-link"
           href="http://localhost:18000/dashboard/programs"
+          onClick={null}
         >
           Programs
         </a>
         <a
           className="nav-link"
           href="http://localhost:18000/course"
+          onClick={[Function]}
         >
           Discover New
         </a>
@@ -334,18 +337,21 @@ exports[`<Header /> renders correctly for unauthenticated users on desktop 1`] =
         <a
           className="nav-link"
           href="http://localhost:18000/dashboard"
+          onClick={null}
         >
           Courses
         </a>
         <a
           className="nav-link"
           href="http://localhost:18000/dashboard/programs"
+          onClick={null}
         >
           Programs
         </a>
         <a
           className="nav-link"
           href="http://localhost:18000/course"
+          onClick={[Function]}
         >
           Discover New
         </a>

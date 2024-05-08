@@ -34,6 +34,7 @@ class DesktopHeader extends React.Component {
         submenuContent,
         disabled,
         isActive,
+        onClick,
       } = menuItem;
 
       if (type === 'item') {
@@ -42,6 +43,7 @@ class DesktopHeader extends React.Component {
             key={`${type}-${content}`}
             className={`nav-link${disabled ? ' disabled' : ''}${isActive ? ' active' : ''}`}
             href={href}
+            onClick={onClick || null}
           >
             {content}
           </a>
@@ -50,7 +52,7 @@ class DesktopHeader extends React.Component {
 
       return (
         <Menu key={`${type}-${content}`} tag="div" className="nav-item" respondToPointerEvents>
-          <MenuTrigger tag="a" className="nav-link d-inline-flex align-items-center" href={href}>
+          <MenuTrigger onClick={onClick || null} tag="a" className="nav-link d-inline-flex align-items-center" href={href}>
             {content} <CaretIcon role="img" aria-hidden focusable="false" />
           </MenuTrigger>
           <MenuContent className="pin-left pin-right shadow py-2">
@@ -107,11 +109,12 @@ class DesktopHeader extends React.Component {
             <React.Fragment key={index}>
               {group.heading && <Dropdown.Header>{group.heading}</Dropdown.Header>}
               {group.items.map(({
-                type, content, href, disabled, isActive,
+                type, content, href, disabled, isActive, onClick,
               }) => (
                 <Dropdown.Item
                   key={`${type}-${content}`}
                   href={href}
+                  onClick={onClick || null}
                   className={`${isActive ? ' active' : ''}${disabled ? ' disabled' : ''}`}
                 >
                   {content}
@@ -198,6 +201,7 @@ DesktopHeader.propTypes = {
       content: PropTypes.string,
       disabled: PropTypes.bool,
       isActive: PropTypes.bool,
+      onClick: PropTypes.func,
     })),
   })),
   loggedOutItems: PropTypes.arrayOf(PropTypes.shape({
