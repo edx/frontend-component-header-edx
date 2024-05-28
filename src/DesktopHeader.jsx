@@ -5,6 +5,8 @@ import { getConfig } from '@edx/frontend-platform';
 import { AvatarButton, Dropdown } from '@openedx/paragon';
 
 // Local Components
+import UserMenuGroupItemSlot from './plugin-slots/UserMenuGroupItemSlot';
+import UserMenuGroupSlot from './plugin-slots/UserMenuGroupSlot';
 import UserMenuItem from './common/UserMenuItem';
 import { Menu, MenuTrigger, MenuContent } from './Menu';
 import { LinkedLogo, Logo } from './Logo';
@@ -104,10 +106,12 @@ class DesktopHeader extends React.Component {
               />
             </Dropdown.Item>
           )}
+          <UserMenuGroupSlot />
           {userMenu.map((group, index) => (
             // eslint-disable-next-line react/jsx-no-comment-textnodes,react/no-array-index-key
             <React.Fragment key={index}>
               {group.heading && <Dropdown.Header>{group.heading}</Dropdown.Header>}
+              {index === 0 && (<UserMenuGroupItemSlot />)}
               {group.items.map(({
                 type, content, href, disabled, isActive, onClick,
               }) => (
