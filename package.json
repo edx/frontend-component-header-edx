@@ -33,7 +33,7 @@
   },
   "homepage": "https://github.com/edx/frontend-component-header-edx#readme",
   "devDependencies": {
-    "@edx/brand": "npm:@edx/brand-edx.org@2.1.2",
+    "@edx/brand": "npm:@edx/brand-edx.org@2.1.3",
     "@edx/browserslist-config": "1.2.0",
     "@edx/frontend-platform": "8.0.4",
     "@edx/reactifex": "2.2.0",
