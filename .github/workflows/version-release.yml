@@ -8,9 +8,9 @@ jobs:
   version:
     name: Versioning
     runs-on: ubuntu-latest
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+    # steps:
+    # - name: Checkout code
+    #   uses: actions/checkout@v3
 
     # - name: Get PR commits
     #   id: get_commits
