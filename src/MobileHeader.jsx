@@ -5,6 +5,8 @@ import { getConfig } from '@edx/frontend-platform';
 
 // Local Components
 import { AvatarButton } from '@openedx/paragon';
+import UserDashboardMenuGroup from './common/UserDashboardMenuGroup';
+import UserCareerMenuItem from './common/UserCareerMenuItem';
 import { Menu, MenuTrigger, MenuContent } from './Menu';
 import { LinkedLogo, Logo } from './Logo';
 import UserMenuItem from './common/UserMenuItem';
@@ -97,7 +99,16 @@ class MobileHeader extends React.Component {
       ))
     ));
 
-    return userInfoItem ? [userInfoItem, ...userMenuItems] : userMenuItems;
+    const userDashboardMenuGroup = (
+      getConfig().ENABLE_EDX_PERSONAL_DASHBOARD ? <UserDashboardMenuGroup /> : null
+    );
+    const userCareerMenuItem = (
+      getConfig().CAREER_LINK_URL ? <UserCareerMenuItem /> : null
+    );
+
+    return userInfoItem
+      ? [userInfoItem, userDashboardMenuGroup, userCareerMenuItem, ...userMenuItems]
+      : [userDashboardMenuGroup, userCareerMenuItem, ...userMenuItems];
   }
 
   renderLoggedOutItems() {
