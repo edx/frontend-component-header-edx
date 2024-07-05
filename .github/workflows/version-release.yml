@@ -12,46 +12,46 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Get PR commits
-      id: get_commits
-      run: |
-        LATEST_COMMIT=$(curl -s -H "Accept: application/vnd.github.v3+json" \
-                        -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-                        "https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/commits" \
-                        | jq -r '.[-1].commit.message')
-        echo "LATEST_COMMIT=$LATEST_COMMIT" >> $GITHUB_ENV
+    # - name: Get PR commits
+    #   id: get_commits
+    #   run: |
+    #     LATEST_COMMIT=$(curl -s -H "Accept: application/vnd.github.v3+json" \
+    #                     -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+    #                     "https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/commits" \
+    #                     | jq -r '.[-1].commit.message')
+    #     echo "LATEST_COMMIT=$LATEST_COMMIT" >> $GITHUB_ENV
 
-    - name: Set release type based on latest commit message
-      id: set_release_type
-      run: |
-        if echo "${{ env.LATEST_COMMIT }}" | grep -q "feat"; then
-          echo "RELEASE_TYPE=major" >> $GITHUB_ENV
-        elif echo "${{ env.LATEST_COMMIT }}" | grep -q "fix"; then
-          echo "RELEASE_TYPE=minor" >> $GITHUB_ENV
-        else
-          echo "RELEASE_TYPE=patch" >> $GITHUB_ENV
+    # - name: Set release type based on latest commit message
+    #   id: set_release_type
+    #   run: |
+    #     if echo "${{ env.LATEST_COMMIT }}" | grep -q "feat"; then
+    #       echo "RELEASE_TYPE=major" >> $GITHUB_ENV
+    #     elif echo "${{ env.LATEST_COMMIT }}" | grep -q "fix"; then
+    #       echo "RELEASE_TYPE=minor" >> $GITHUB_ENV
+    #     else
+    #       echo "RELEASE_TYPE=patch" >> $GITHUB_ENV
 
-    - name: Display release type
-      run: |
-        echo "The determined release type is ${{ env.RELEASE_TYPE }}"
-    # steps:
-    #   - name: Checkout
-    #     uses: actions/checkout@v2
-    #     with:
-    #       ref: ${{ env.GITHUB_SHA }}
-    #   - name: Output commit message 
-    #     id: get-commit-messages
-    #     run: echo "HEAD_COMMIT_MESSAGE=$(git show -s --format=%s)" >> "$GITHUB_OUTPUT"
-    #   - name: Get latest tag
-    #     uses: actions-ecosystem/action-get-latest-tag@v1
-    #     id: get-latest-tag
-    #   - name: Script to comment on PR
-    #     uses: actions/github-script@v6
-    #     with:
-    #       script: |
-    #         github.rest.issues.createComment({
-    #           issue_number: context.issue.number,
-    #           owner: context.repo.owner,
-    #           repo: context.repo.repo,
-    #           body: '👋 Thanks for reporting! ${{ steps.get-latest-tag.outputs.tag }} ${{ github.event.workflow_run.head_commit.message }}'
-    #         })
+    # - name: Display release type
+    #   run: |
+    #     echo "The determined release type is ${{ env.RELEASE_TYPE }}"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ env.GITHUB_SHA }}
+      - name: Output commit message 
+        id: get-commit-messages
+        run: echo "HEAD_COMMIT_MESSAGE=$(git show -s --format=%s)" >> "$GITHUB_OUTPUT"
+      - name: Get latest tag
+        uses: actions-ecosystem/action-get-latest-tag@v1
+        id: get-latest-tag
+      - name: Script to comment on PR
+        uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: 'Current version => ${{ steps.get-latest-tag.outputs.tag }}'
+            })
