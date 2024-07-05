@@ -10,6 +10,7 @@ module.exports = createConfig('webpack-dev', {
   resolve: {
     alias: {
       '@edx/frontend-component-header': path.resolve(__dirname, 'src'),
+      hooks: path.resolve(__dirname, 'src/common/hooks'), // Adjust to the actual hooks path
     },
   },
 });

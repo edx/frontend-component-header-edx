@@ -5,6 +5,8 @@ import { getConfig } from '@edx/frontend-platform';
 import { AvatarButton, Dropdown } from '@openedx/paragon';
 
 // Local Components
+import UserDashboardMenuGroup from './common/UserDashboardMenuGroup';
+import UserCareerMenuItem from './common/UserCareerMenuItem';
 import UserMenuItem from './common/UserMenuItem';
 import { Menu, MenuTrigger, MenuContent } from './Menu';
 import { LinkedLogo, Logo } from './Logo';
@@ -104,10 +106,12 @@ class DesktopHeader extends React.Component {
               />
             </Dropdown.Item>
           )}
+          {getConfig().ENABLE_EDX_PERSONAL_DASHBOARD && <UserDashboardMenuGroup />}
           {userMenu.map((group, index) => (
             // eslint-disable-next-line react/jsx-no-comment-textnodes,react/no-array-index-key
             <React.Fragment key={index}>
               {group.heading && <Dropdown.Header>{group.heading}</Dropdown.Header>}
+              {getConfig().CAREER_LINK_URL && index === 0 && (<UserCareerMenuItem />)}
               {group.items.map(({
                 type, content, href, disabled, isActive, onClick,
               }) => (
