@@ -42,6 +42,10 @@ jobs:
     if: needs.release-type.outputs.release_level != 'none'
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ env.GITHUB_SHA }}
       - name: Get latest tag
         uses: actions-ecosystem/action-get-latest-tag@v1
         id: get-latest-tag
