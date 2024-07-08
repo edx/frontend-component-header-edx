@@ -8,6 +8,9 @@ jobs:
   release-type:
     name: Check Release Type
     runs-on: ubuntu-latest
+    outputs:
+      create_comment: ${{ steps.release_type.outputs.CREATE_COMMENT }}
+      release_type: ${{ steps.release_type.outputs.RELEASE_TYPE }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -28,13 +31,15 @@ jobs:
       - name: Get Release Type
         id: release_type
         run: |
-          echo "CREATE_COMMENT=true" >> $GITHUB_OUTPUT
           if echo "${{ steps.get_commits.outputs.COMBINED_MESSAGES }}" | grep -q "BREAKING CHANGE"; then
             echo "RELEASE_TYPE=major" >> $GITHUB_OUTPUT
+            echo "CREATE_COMMENT=true" >> $GITHUB_OUTPUT
           elif echo "${{ steps.get_commits.outputs.COMBINED_MESSAGES }}" | grep -q "feat"; then
             echo "RELEASE_TYPE=minor" >> $GITHUB_OUTPUT
+            echo "CREATE_COMMENT=true" >> $GITHUB_OUTPUT
           elif echo "${{ steps.get_commits.outputs.COMBINED_MESSAGES }}" | grep -q "fix"; then
             echo "RELEASE_TYPE=patch" >> $GITHUB_OUTPUT
+            echo "CREATE_COMMENT=true" >> $GITHUB_OUTPUT
           else
             echo "RELEASE_TYPE=none" >> $GITHUB_OUTPUT
             echo "CREATE_COMMENT=false" >> $GITHUB_OUTPUT
@@ -42,7 +47,7 @@ jobs:
   determine-next-version:
     name: Determine Next Version
     needs: [release-type]
-    if: needs.release-type.outputs.CREATE_COMMENT == 'true'
+    if: needs.release-type.outputs.CREATE_COMMENT == true
     runs-on: ubuntu-latest
     steps:
       - name: Determine Next Version
