@@ -9,8 +9,7 @@ jobs:
     name: Check Release Type
     runs-on: ubuntu-latest
     outputs:
-      create_comment: ${{ steps.release_type.outputs.CREATE_COMMENT }}
-      release_type: ${{ steps.release_type.outputs.RELEASE_TYPE }}
+      release_level: ${{ steps.release_type.outputs.RELEASE_TYPE }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -47,7 +46,7 @@ jobs:
   determine-next-version:
     name: Determine Next Version
     needs: [release-type]
-    if: needs.release-type.outputs.CREATE_COMMENT == true
+    if: needs.release-type.outputs.release_level == major || needs.release-type.outputs.release_level == minor || needs.release-type.outputs.release_level == patch
     runs-on: ubuntu-latest
     steps:
       - name: Determine Next Version
