@@ -1,3 +1,21 @@
+name: Dry Run
+on:
+  pull_request:
+    branches:
+      - "master"
+
+jobs:
+  release-type:
+    name: Try dry run
+    runs-on: ubuntu-latest
+    steps:      
+      - name: Release to npm/Github
+        run: npx semantic-release@19.0.3 --dry-run
+        # env:
+        #   GITHUB_TOKEN: ${{ secrets.SEMANTIC_RELEASE_GITHUB_TOKEN }}
+        #   NPM_TOKEN: ${{ secrets.SEMANTIC_RELEASE_NPM_TOKEN }}
+
+name: Dry Run
 on:
   pull_request:
       branches:
@@ -18,11 +36,11 @@ jobs:
       - name: Semantic Release dry run
         id: semantic      
         run: |
-          OUTPUT=$(unset GITHUB_ACTIONS && npx semantic-release --dry-run --no-ci --branches "${{ github.head_ref }}")
+          OUTPUT=$(unset GITHUB_ACTIONS && run: npx semantic-release@19.0.3 --dry-run --no-ci --branches "${{ github.head_ref }}")
           VERSION=$(echo "$OUTPUT" | grep -o "The next release version is [0-9]*\.[0-9]*\.[0-9]*" | awk '{print $6}')
           echo "::set-output name=version::$VERSION"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
       - name: Use the version
-        run: echo "The version is ${{ steps.semantic.outputs.version }}"
+        run: echo "The version is ${{ steps.semantic.outputs.version }}"        
