@@ -80,5 +80,5 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: ' 🎉 This PR is included in version ${{ steps.next_version.outputs.NEXT_TAG }} 🎉 '
+              body: '🎉 This PR is included in version ${{ steps.next_version.outputs.NEXT_TAG }} 🎉 '
             })
