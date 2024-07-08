@@ -41,7 +41,7 @@ jobs:
       - name: Determine next version
         id: next_version
         run: |
-          IFS='.' read -r -a VERSION_PARTS <<< "${{ env.LATEST_TAG }}"
+          IFS='.' read -r -a VERSION_PARTS <<< "${{ steps.get-latest-tag.outputs.tag }}"
           MAJOR=${VERSION_PARTS[0]}
           MINOR=${VERSION_PARTS[1]}
           PATCH=${VERSION_PARTS[2]}
