@@ -19,7 +19,7 @@ jobs:
       - name: Semantic Release dry run
         id: semantic      
         run: |
-          OUTPUT=$(unset GITHUB_ACTIONS && run: npx semantic-release@19.0.3 --dry-run --no-ci --branches "${{ github.head_ref }}")
+          OUTPUT=$(unset GITHUB_ACTIONS && npx semantic-release@19.0.3 --dry-run --no-ci --branches "${{ github.head_ref }}")
           VERSION=$(echo "$OUTPUT" | grep -o "The next release version is [0-9]*\.[0-9]*\.[0-9]*" | awk '{print $6}')
           echo "::set-output name=version::$VERSION"
         env:
