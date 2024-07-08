@@ -63,6 +63,7 @@
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@openedx/paragon": "^21.11.0",
     "@reduxjs/toolkit": "1.9.7",
+    "@semantic-release/exec": "^6.0.3",
     "axios-mock-adapter": "1.22.0",
     "babel-polyfill": "6.26.0",
     "classnames": "2.5.1",
