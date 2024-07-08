@@ -8,32 +8,6 @@ jobs:
   version:
     name: Versioning
     runs-on: ubuntu-latest
-    # steps:
-    # - name: Checkout code
-    #   uses: actions/checkout@v3
-
-    # - name: Get PR commits
-    #   id: get_commits
-    #   run: |
-    #     LATEST_COMMIT=$(curl -s -H "Accept: application/vnd.github.v3+json" \
-    #                     -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-    #                     "https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/commits" \
-    #                     | jq -r '.[-1].commit.message')
-    #     echo "LATEST_COMMIT=$LATEST_COMMIT" >> $GITHUB_ENV
-
-    # - name: Set release type based on latest commit message
-    #   id: set_release_type
-    #   run: |
-    #     if echo "${{ env.LATEST_COMMIT }}" | grep -q "feat"; then
-    #       echo "RELEASE_TYPE=major" >> $GITHUB_ENV
-    #     elif echo "${{ env.LATEST_COMMIT }}" | grep -q "fix"; then
-    #       echo "RELEASE_TYPE=minor" >> $GITHUB_ENV
-    #     else
-    #       echo "RELEASE_TYPE=patch" >> $GITHUB_ENV
-
-    # - name: Display release type
-    #   run: |
-    #     echo "The determined release type is ${{ env.RELEASE_TYPE }}"
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -54,19 +28,40 @@ jobs:
                           "https://api.github.com/repos/${{ github.repository }}/pulls/$PR_NUMBER/commits")
           COMBINED_MESSAGES=$(echo "$COMMITS" | jq -r '.[].commit.message' | paste -sd ' ')
           echo "COMBINED_MESSAGES=$COMBINED_MESSAGES" >> $GITHUB_OUTPUT
-      - name: First Condition
-        id: first_condition
+      - name: Check release type
+        id: release_type
         run: |
           if echo "${{ steps.get_commits.outputs.COMBINED_MESSAGES }}" | grep -q "feat"; then
-            echo "RELEASE_TYPE=major" >> $GITHUB_ENV
-          elif echo "${{ env.LATEST_COMMIT }}" | grep -q "fix"; then
-            echo "RELEASE_TYPE=minor" >> $GITHUB_ENV
+            echo "RELEASE_TYPE=major" >> $GITHUB_OUTPUT
+          elif echo "${{ steps.get_commits.outputs.COMBINED_MESSAGES }}" | grep -q "fix"; then
+            echo "RELEASE_TYPE=minor" >> $GITHUB_OUTPUT
           else
-            echo "RELEASE_TYPE=patch" >> $GITHUB_ENV
+            echo "RELEASE_TYPE=patch" >> $GITHUB_OUTPUT
           fi
-      - name: Print Release type
-        id: print_release_type
-        run: echo ${{ steps.first_condition.outputs.RELEASE_TYPE }}
+      - name: Determine next version
+        id: next_version
+        run: |
+          IFS='.' read -r -a VERSION_PARTS <<< "${{ env.LATEST_TAG }}"
+          MAJOR=${VERSION_PARTS[0]}
+          MINOR=${VERSION_PARTS[1]}
+          PATCH=${VERSION_PARTS[2]}
+
+          if [ "${{ steps.release_type.outputs.RELEASE_TYPE }}" = "major" ]; then
+            MAJOR=$((MAJOR + 1))
+            MINOR=0
+            PATCH=0
+          elif [ "${{ steps.release_type.outputs.RELEASE_TYPE }}" = "minor" ]; then
+            MINOR=$((MINOR + 1))
+            PATCH=0
+          else
+            PATCH=$((PATCH + 1))
+          fi
+
+          NEXT_TAG="$MAJOR.$MINOR.$PATCH"
+          echo "NEXT_TAG=$NEXT_TAG" >> $GITHUB_OUTPUT
+      - name: Print next version
+        id: print_next_version
+        run: echo ${{ steps.next_version.outputs.NEXT_TAG }}
       - name: Script to comment on PR
         uses: actions/github-script@v6
         with:
@@ -75,5 +70,5 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: 'Current version => ${{ steps.get-latest-tag.outputs.tag }}'
+              body: 'Current version => ${{ steps.next_version.outputs.NEXT_TAG }}'
             })
