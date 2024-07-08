@@ -63,6 +63,7 @@ jobs:
             echo "RELEASE_TYPE=minor" >> $GITHUB_ENV
           else
             echo "RELEASE_TYPE=patch" >> $GITHUB_ENV
+          fi
       - name: Print Release type
         id: print_release_type
         run: echo ${{ steps.first_condition.outputs.RELEASE_TYPE }}
