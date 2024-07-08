@@ -45,6 +45,18 @@ jobs:
       - name: Get latest tag
         uses: actions-ecosystem/action-get-latest-tag@v1
         id: get-latest-tag
+      - name: Get commits comment
+        id: get_commits
+        run: |
+          PR_NUMBER=${{ github.event.pull_request.number }}
+          COMMITS=$(curl -s -H "Accept: application/vnd.github.v3+json" \
+                          -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+                          "https://api.github.com/repos/${{ github.repository }}/pulls/$PR_NUMBER/commits")
+          COMBINED_MESSAGES=$(echo "$COMMITS" | jq -r '.[].commit.message' | paste -sd ' ')
+          echo "COMBINED_MESSAGES=$COMBINED_MESSAGES" >> $GITHUB_OUTPUT
+      - name: Print combined commit messages
+        id: print_commit
+        run: echo ${{ steps.get_commits.outputs.COMBINED_MESSAGES }}
       - name: Script to comment on PR
         uses: actions/github-script@v6
         with:
