@@ -42,7 +42,8 @@ jobs:
         id: next_version
         run: |
           echo ${{ steps.get-latest-tag.outputs.tag }}
-          IFS='.' read -r -a VERSION_PARTS <<< "${{ steps.get-latest-tag.outputs.tag }}"
+          IFS='v' read -r -a VERSION <<< "${{ steps.get-latest-tag.outputs.tag }}"
+          IFS='.' read -r -a VERSION_PARTS <<< "${VERSION[1]}"
           MAJOR=${VERSION_PARTS[0]}
           MINOR=${VERSION_PARTS[1]}
           PATCH=${VERSION_PARTS[2]}
