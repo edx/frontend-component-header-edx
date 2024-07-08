@@ -1,8 +1,8 @@
 name: Dry Run
 on:
-  pull_request:
+  push:
     branches:
-      - "master"
+      - "*"
 
 jobs:
   release-type:
