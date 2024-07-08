@@ -49,11 +49,11 @@ jobs:
 
           if [ "${{ steps.release_type.outputs.RELEASE_TYPE }}" = "major" ]; then
             MAJOR=$((MAJOR + 1))
-            MINOR=0
-            PATCH=0
+            MINOR=$MINOR
+            PATCH=$PATCH
           elif [ "${{ steps.release_type.outputs.RELEASE_TYPE }}" = "minor" ]; then
             MINOR=$((MINOR + 1))
-            PATCH=0
+            PATCH=$PATCH
           else
             PATCH=$((PATCH + 1))
           fi
