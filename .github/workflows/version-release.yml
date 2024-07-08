@@ -48,7 +48,7 @@ jobs:
           PATCH=${VERSION_PARTS[2]}
 
           if [ "${{ steps.release_type.outputs.RELEASE_TYPE }}" = "major" ]; then
-            MAJOR=$((MAJOR + 1))
+            MAJOR=$MAJOR + 1
             MINOR=$MINOR
             PATCH=$PATCH
           elif [ "${{ steps.release_type.outputs.RELEASE_TYPE }}" = "minor" ]; then
