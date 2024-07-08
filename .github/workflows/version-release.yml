@@ -54,9 +54,12 @@ jobs:
                           "https://api.github.com/repos/${{ github.repository }}/pulls/$PR_NUMBER/commits")
           COMBINED_MESSAGES=$(echo "$COMMITS" | jq -r '.[].commit.message' | paste -sd ' ')
           echo "COMBINED_MESSAGES=$COMBINED_MESSAGES" >> $GITHUB_OUTPUT
+      - name: First Condition
+        id: first_condition
+        run: if echo "${{ steps.get_commits.outputs.COMBINED_MESSAGES }}" | grep -q "feat"; then echo "RELEASE_TYPE=major" >> $GITHUB_OUTPUT
       - name: Print combined commit messages
-        id: print_commit
-        run: echo ${{ steps.get_commits.outputs.COMBINED_MESSAGES }}
+        id: print_release_type
+        run: echo ${{ steps.first_condition.outputs.RELEASE_TYPE }}
       - name: Script to comment on PR
         uses: actions/github-script@v6
         with:
