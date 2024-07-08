@@ -2,7 +2,7 @@ name: Dry Run
 on:
   push:
     branches:
-      - "*"
+      - "**"
 
 jobs:
   release-type:
