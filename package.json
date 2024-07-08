@@ -73,6 +73,7 @@
     "react-transition-group": "4.4.5",
     "regenerator-runtime": "0.14.1",
     "rosie": "2.1.1",
+    "semantic-release": "^19.0.3",
     "timeago.js": "4.0.2"
   },
   "peerDependencies": {
