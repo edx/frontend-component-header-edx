@@ -46,7 +46,7 @@ jobs:
   determine-next-version:
     name: Determine Next Version
     needs: [release-type]
-    if: needs.release-type.outputs.release_level == major || needs.release-type.outputs.release_level == minor || needs.release-type.outputs.release_level == patch
+    if: needs.release-type.outputs.release_level == 'major' || needs.release-type.outputs.release_level == 'minor' || needs.release-type.outputs.release_level == 'patch'
     runs-on: ubuntu-latest
     steps:
       - name: Determine Next Version
