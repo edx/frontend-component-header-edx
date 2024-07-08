@@ -59,14 +59,14 @@ jobs:
           MINOR=${VERSION_PARTS[1]}
           PATCH=${VERSION_PARTS[2]}
 
-          if [ "${{ steps.release_type.outputs.RELEASE_TYPE }}" = "major" ]; then
+          if [ "${{ needs.release-type.outputs.release_level }}" = "major" ]; then
             MAJOR=$((MAJOR + 1))
             MINOR=$MINOR
             PATCH=$PATCH
-          elif [ "${{ steps.release_type.outputs.RELEASE_TYPE }}" = "minor" ]; then
+          elif [ "${{ needs.release-type.outputs.release_level }}" = "minor" ]; then
             MINOR=$((MINOR + 1))
             PATCH=$PATCH
-          elif [ "${{ steps.release_type.outputs.RELEASE_TYPE }}" = "patch" ]; then
+          elif [ "${{ needs.release-type.outputs.release_level }}" = "patch" ]; then
             PATCH=$((PATCH + 1))
           fi
 
