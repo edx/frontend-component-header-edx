@@ -12,12 +12,7 @@
   ],
   "analyzeCommits": "@semantic-release/commit-analyzer",
   "generateNotes": "@semantic-release/release-notes-generator",
-  "prepare": [
-    "@semantic-release/npm",
-    {
-    "path": "@semantic-release/exec",
-    "cmd": "./build.sh --release -v ${nextRelease.version}"
-    }],
+  "prepare": "@semantic-release/npm",
   "publish": [
     "@semantic-release/npm",
     {
