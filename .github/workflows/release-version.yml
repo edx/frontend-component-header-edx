@@ -5,7 +5,7 @@ name: Comment Expected Release Version
 on:
   pull_request:
     branches:
-    - master
+    - "master"
 
 jobs:
   comment-version:
