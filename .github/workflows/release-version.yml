@@ -1,102 +1,12 @@
-name: Next Release Version
+# comment the expected version on PR
+
+name: Comment Expected Release Version
+
 on:
   pull_request:
     branches:
-      - "master"
+    - master
 
 jobs:
-  release-type:
-    name: Check Release Type
-    runs-on: ubuntu-latest
-    outputs:
-      release_level: ${{ steps.release_type.outputs.RELEASE_TYPE }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          ref: ${{ env.GITHUB_SHA }}
-      - name: Get Commit Messages
-        id: get_commit_messages
-        run: |
-          PR_NUMBER=${{ github.event.pull_request.number }}
-          COMMITS=$(curl -s -H "Accept: application/vnd.github.v3+json" \
-                          -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-                          "https://api.github.com/repos/${{ github.repository }}/pulls/$PR_NUMBER/commits")
-          COMBINED_MESSAGES=$(echo "$COMMITS" | jq -r '.[].commit.message' | paste -sd ' ')
-          echo "COMBINED_MESSAGES=$COMBINED_MESSAGES" >> $GITHUB_OUTPUT
-      - name: Get Release Type
-        id: release_type
-        run: |
-          if echo "${{ steps.get_commit_messages.outputs.COMBINED_MESSAGES }}" | grep -q "BREAKING CHANGE"; then
-            echo "RELEASE_TYPE=major" >> $GITHUB_OUTPUT
-          elif echo "${{ steps.get_commit_messages.outputs.COMBINED_MESSAGES }}" | grep -q "feat"; then
-            echo "RELEASE_TYPE=minor" >> $GITHUB_OUTPUT
-          elif echo "${{ steps.get_commit_messages.outputs.COMBINED_MESSAGES }}" | grep -q "fix"; then
-            echo "RELEASE_TYPE=patch" >> $GITHUB_OUTPUT
-          else
-            echo "RELEASE_TYPE=none" >> $GITHUB_OUTPUT
-          fi
-  determine-next-version:
-    name: Determine Next Version
-    needs: [release-type]
-    if: needs.release-type.outputs.release_level != 'none'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          ref: ${{ env.GITHUB_SHA }}
-      - name: Get latest tag
-        uses: actions-ecosystem/action-get-latest-tag@v1
-        id: get-latest-tag
-      - name: Determine Next Version
-        id: next_version
-        run: |
-          echo ${{ steps.get-latest-tag.outputs.tag }}
-          IFS='v' read -r -a VERSION <<< "${{ steps.get-latest-tag.outputs.tag }}"
-          IFS='.' read -r -a VERSION_PARTS <<< "${VERSION[1]}"
-          MAJOR=${VERSION_PARTS[0]}
-          MINOR=${VERSION_PARTS[1]}
-          PATCH=${VERSION_PARTS[2]}
-
-          if [ "${{ needs.release-type.outputs.release_level }}" = "major" ]; then
-            MAJOR=$((MAJOR + 1))
-            MINOR=$MINOR
-            PATCH=$PATCH
-          elif [ "${{ needs.release-type.outputs.release_level }}" = "minor" ]; then
-            MINOR=$((MINOR + 1))
-            PATCH=$PATCH
-          elif [ "${{ needs.release-type.outputs.release_level }}" = "patch" ]; then
-            PATCH=$((PATCH + 1))
-          fi
-
-          NEXT_TAG="v$MAJOR.$MINOR.$PATCH"
-          echo "NEXT_TAG=$NEXT_TAG" >> $GITHUB_OUTPUT
-      - name: List PR comments
-        id: list-comments
-        run: |
-          PR_NUMBER=${{ github.event.pull_request.number }}
-          COMMENTS=$(curl -s -H "Accept: application/vnd.github.v3+json" \
-                        -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-                        "https://api.github.com/repos/${{ github.repository }}/issues/$PR_NUMBER/comments")
-          echo "$COMMENTS" > comments.json
-
-      - name: Identify and delete previous comment
-        run: |
-          COMMENT_IDS=$(jq -r '.[] | select(.user.login=="github-actions[bot]") | .id' comments.json)
-          for COMMENT_ID in $COMMENT_IDS; do
-            echo "Deleting comment ID $COMMENT_ID"
-            curl -s -X DELETE -H "Accept: application/vnd.github.v3+json" \
-                -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-                "https://api.github.com/repos/${{ github.repository }}/issues/comments/$COMMENT_ID"
-          done
-      - name: Script to comment on PR
-        uses: actions/github-script@v6
-        with:
-          script: |
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: '🎉 This PR is included in version ${{ steps.next_version.outputs.NEXT_TAG }} 🎉 '
-            })
+  comment-version:
+    uses: edx/.github/.github/workflows/expected-release-version.yml@huniafatima/release-expected-version-workflow
