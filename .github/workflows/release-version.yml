@@ -81,7 +81,7 @@ jobs:
                       "https://api.github.com/repos/${{ github.repository }}/issues/$PR_NUMBER/comments")
         echo "$COMMENTS" > comments.json
 
-    - name: Identify and delete previous comment
+      - name: Identify and delete previous comment
       run: |
         COMMENT_IDS=$(jq -r '.[] | select(.user.login=="github-actions[bot]") | .id' comments.json)
         for COMMENT_ID in $COMMENT_IDS; do
