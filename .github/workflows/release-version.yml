@@ -9,4 +9,4 @@ on:
 
 jobs:
   comment-version:
-    uses: openedx/.github/.github/workflows/expected-release-version.yml@huniafatima/release-expected-version-workflow
+    uses: openedx/.github/.github/workflows/expected-release-version.yml@huniafatima-arbi:huniafatima/release-expected-version-workflow
