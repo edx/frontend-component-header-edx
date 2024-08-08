@@ -8,5 +8,11 @@ on:
     - "master"
 
 jobs:
-  comment-version:
-    uses: edx/.github/.github/workflows/expected-release-version.yml@huniafatima/release-expected-version-workflow
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Preview semantic-release version
+      env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.SEMANTIC_RELEASE_NPM_TOKEN }}
+      run: npx semantic-release --dry-run --no-ci
