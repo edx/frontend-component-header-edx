@@ -36,8 +36,12 @@ jobs:
       uses: codecov/codecov-action@v3
     - name: Build
       run: npm run build
+    - name: Extract branch name
+      shell: bash
+      run: echo "branch=$(echo ${GITHUB_REF#refs/heads/})" >> $GITHUB_OUTPUT
+      id: extract_branch
     - name: Release
       env:
         GITHUB_TOKEN: ${{ secrets.SEMANTIC_RELEASE_GITHUB_TOKEN }}
         NPM_TOKEN: ${{ secrets.SEMANTIC_RELEASE_NPM_TOKEN }}
-      run: npx semantic-release@17 --dry-run --no-ci
+      run: npx semantic-release@17 --dry-run --no-ci --branches=${{ steps.extract_branch.outputs.branch }}
