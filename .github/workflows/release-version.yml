@@ -33,3 +33,8 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.SEMANTIC_RELEASE_GITHUB_TOKEN }}
         NPM_TOKEN: ${{ secrets.SEMANTIC_RELEASE_NPM_TOKEN }}
       run: npx semantic-release@17 --dry-run --no-ci --branches=huniafatima/preview-next-version-on-pr,master
+      id: version_release
+    - name: Comment version on PR
+      run: echo ${{ steps.version_release.outputs.stdout }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
