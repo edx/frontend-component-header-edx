@@ -43,6 +43,12 @@ Usage
 
 ``import Header, { messages } from '@edx/frontend-component-header-edx';`` 
 
+Plugins
+=======
+This component can be customized using `Frontend Plugin Framework <https://github.com/openedx/frontend-plugin-framework>`_.
+
+The parts of this component that can be customized in that manner are documented `here </src/plugin-slots>`_.
+
 Development
 ===========
 

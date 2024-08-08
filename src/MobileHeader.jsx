@@ -5,6 +5,8 @@ import { getConfig } from '@edx/frontend-platform';
 
 // Local Components
 import { AvatarButton } from '@openedx/paragon';
+import UserMenuGroupSlot from './plugin-slots/UserMenuGroupSlot';
+import UserMenuGroupItemSlot from './plugin-slots/UserMenuGroupItemSlot';
 import { Menu, MenuTrigger, MenuContent } from './Menu';
 import { LinkedLogo, Logo } from './Logo';
 import UserMenuItem from './common/UserMenuItem';
@@ -97,7 +99,12 @@ class MobileHeader extends React.Component {
       ))
     ));
 
-    return userInfoItem ? [userInfoItem, ...userMenuItems] : userMenuItems;
+    const userMenuGroupSlot = <UserMenuGroupSlot />;
+    const userMenuGroupItemSlot = <UserMenuGroupItemSlot />;
+
+    return userInfoItem
+      ? [userInfoItem, userMenuGroupSlot, userMenuGroupItemSlot, ...userMenuItems]
+      : [userMenuGroupSlot, userMenuGroupItemSlot, ...userMenuItems];
   }
 
   renderLoggedOutItems() {
