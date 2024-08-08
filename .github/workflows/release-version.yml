@@ -28,18 +28,8 @@ jobs:
       shell: bash
       run: echo "branch=$(echo ${GITHUB_REF#refs/heads/})" >> $GITHUB_OUTPUT
       id: extract_branch
-    - name: Run semantic-release in dry-run mode
-      run: npx semantic-release@17 --dry-run > output.log
-
-    - name: Extract next version
-      id: extract_version
-      run: |
-        VERSION=$(grep -oP '(?<=next release version: )\S+' output.log)
-        echo "VERSION=$VERSION" >> $GITHUB_ENV
-
-    - name: Comment version on PR
-      uses: peter-evans/create-or-update-comment@v3
-      with:
-        issue-number: ${{ github.event.pull_request.number }}
-        body: |
-          Next release version: ${{ env.VERSION }}
+    - name: Release
+      env:
+        GITHUB_TOKEN: ${{ secrets.SEMANTIC_RELEASE_GITHUB_TOKEN }}
+        NPM_TOKEN: ${{ secrets.SEMANTIC_RELEASE_NPM_TOKEN }}
+      run: npx semantic-release@17 --dry-run --no-ci --branches=huniafatima/preview-next-version-on-pr,master
