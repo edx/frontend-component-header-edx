@@ -35,6 +35,13 @@ jobs:
       run: npx semantic-release@17 --dry-run --no-ci --branches=huniafatima/preview-next-version-on-pr,master
       id: version_release
     - name: Comment version on PR
-      run: echo ${{ steps.version_release.outputs.stdout }}
+      run: echo ${{ steps.version_release.outputs.stdout }} | tee comment.txt
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Post PR comment
+      uses: peter-evans/create-or-update-comment@v3
+      with:
+        issue-number: ${{ github.event.pull_request.number }}
+        body: |
+          Next release version: $(grep -oP '(?<=next release version )\S+' <<< ${{ steps.semantic.outputs.stdout }})
