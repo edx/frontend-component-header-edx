@@ -8,6 +8,34 @@ on:
     - "master"
 
 jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+    - name: Setup Nodejs Env
+      run: echo "NODE_VER=`cat .nvmrc`" >> $GITHUB_ENV
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VER }}
+    - name: Install dependencies
+      run: npm ci
+    - name: Validate package-lock.json changes
+      run: make validate-no-uncommitted-package-lock-changes
+    - name: Lint
+      run: npm run lint
+    - name: Test
+      run: npm run test
+    - name: i18n_extract
+      run: npm run i18n_extract
+    - name: Coverage
+      uses: codecov/codecov-action@v3
+    - name: Build
+      run: npm run build
   test:
     runs-on: ubuntu-latest
     steps:
