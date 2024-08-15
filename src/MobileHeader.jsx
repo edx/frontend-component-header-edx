@@ -1,16 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import { getConfig } from '@edx/frontend-platform';
+import { AvatarButton } from '@openedx/paragon';
 
 // Local Components
-import { AvatarButton } from '@openedx/paragon';
 import UserMenuGroupSlot from './plugin-slots/UserMenuGroupSlot';
 import UserMenuGroupItemSlot from './plugin-slots/UserMenuGroupItemSlot';
 import { Menu, MenuTrigger, MenuContent } from './Menu';
 import { LinkedLogo, Logo } from './Logo';
 import UserMenuItem from './common/UserMenuItem';
-
+import Notifications from './Notifications';
+import { selectShowNotificationTray } from './Notifications/data/selectors';
+import { fetchAppsNotificationCount } from './Notifications/data/thunks';
 // i18n
 import messages from './Header.messages';
 
@@ -20,6 +24,20 @@ import { MenuIcon } from './Icons';
 class MobileHeader extends React.Component {
   constructor(props) { // eslint-disable-line no-useless-constructor
     super(props);
+    this.state = {
+      locationHref: window.location.href,
+    };
+  }
+
+  componentDidMount() {
+    this.props.fetchAppsNotificationCount();
+  }
+
+  componentDidUpdate() {
+    if (window.location.href !== this.state.locationHref) {
+      this.setState({ locationHref: window.location.href });
+      this.props.fetchAppsNotificationCount();
+    }
   }
 
   renderMenu(menu) {
@@ -135,6 +153,7 @@ class MobileHeader extends React.Component {
       mainMenu,
       userMenu,
       loggedOutItems,
+      showNotificationsTray,
     } = this.props;
     const logoProps = { src: logo, alt: logoAltText, href: logoDestination };
     const stickyClassName = stickyOnMobile ? 'sticky-top' : '';
@@ -173,6 +192,7 @@ class MobileHeader extends React.Component {
         </div>
         {userMenu.length > 0 || loggedOutItems.length > 0 ? (
           <div className="w-100 d-flex justify-content-end align-items-center">
+            {showNotificationsTray && loggedIn && <Notifications />}
             <Menu tag="nav" aria-label={intl.formatMessage(messages['header.label.secondary.nav'])} className="position-static">
               <MenuTrigger
                 tag={AvatarButton}
@@ -227,7 +247,8 @@ MobileHeader.propTypes = {
   email: PropTypes.string,
   loggedIn: PropTypes.bool,
   stickyOnMobile: PropTypes.bool,
-
+  showNotificationsTray: PropTypes.bool,
+  fetchAppsNotificationCount: PropTypes.func.isRequired,
   // i18n
   intl: intlShape.isRequired,
 };
@@ -245,7 +266,15 @@ MobileHeader.defaultProps = {
   email: '',
   loggedIn: false,
   stickyOnMobile: true,
-
+  showNotificationsTray: false,
 };
 
-export default injectIntl(MobileHeader);
+const mapDispatchToProps = (dispatch) => ({
+  fetchAppsNotificationCount: () => dispatch(fetchAppsNotificationCount()),
+});
+
+const mapStateToProps = (state) => ({
+  showNotificationsTray: selectShowNotificationTray(state),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(injectIntl(MobileHeader));
