@@ -197,7 +197,7 @@ class DesktopHeader extends React.Component {
                 ? (
                   <>
                     {this.renderSecondaryMenu()}
-                    {showNotificationsTray && <Notifications showLeftMargin={false} />}
+                    {showNotificationsTray && <Notifications />}
                     {this.renderUserMenu()}
                   </>
                 ) : this.renderLoggedOutItems()}
