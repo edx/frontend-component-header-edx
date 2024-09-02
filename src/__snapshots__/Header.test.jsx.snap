@@ -1,328 +1,285 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<Header /> minimal renders correctly for authenticated users when minimal 1`] = `
-<header
-  className="site-header-desktop"
+<div
+  data-testid="redux-provider"
 >
-  <a
-    className="nav-skip sr-only sr-only-focusable"
-    href="#main"
+  <header
+    className="site-header-desktop"
   >
-    Skip to main content
-  </a>
-  <div
-    className="container-fluid null"
-  >
-    <div
-      className="nav-container position-relative d-flex align-items-center"
+    <a
+      className="nav-skip sr-only sr-only-focusable"
+      href="#main"
     >
-      <img
-        alt="edX"
-        className="logo"
-        src="https://edx-cdn.org/v3/prod/logo.svg"
-      />
-      <nav
-        aria-label="Main"
-        className="nav main-nav"
-      />
-      <nav
-        aria-label="Secondary"
-        className="nav secondary-menu-container align-items-center ml-auto"
+      Skip to main content
+    </a>
+    <div
+      className="container-fluid null"
+    >
+      <div
+        className="nav-container position-relative d-flex align-items-center"
       >
-        <div
-          className="pgn__dropdown pgn__dropdown-light dropdown"
-          data-testid="dropdown"
+        <img
+          alt="edX"
+          className="logo"
+          src="https://edx-cdn.org/v3/prod/logo.svg"
+        />
+        <nav
+          aria-label="Main"
+          className="nav main-nav"
+        />
+        <nav
+          aria-label="Secondary"
+          className="nav secondary-menu-container align-items-center ml-auto"
         >
-          <button
-            alt=""
-            aria-expanded={false}
-            aria-haspopup={true}
-            aria-label="Account menu for edX Test"
-            className="btn-avatar pgn__avatar-button-avatar pgn__avatar-button-avatar-md dropdown-toggle btn btn-tertiary btn-md"
-            data-hj-suppress={true}
-            disabled={false}
-            id="menu-dropdown"
-            onClick={[Function]}
-            type="button"
+          <div
+            className="pgn__dropdown pgn__dropdown-light dropdown"
+            data-testid="dropdown"
           >
-            <img
+            <button
               alt=""
-              className="pgn__avatar pgn__avatar-sm"
-              src="icon/mock/path"
-            />
-          </button>
-        </div>
-      </nav>
+              aria-expanded={false}
+              aria-haspopup={true}
+              aria-label="Account menu for edX Test"
+              className="btn-avatar pgn__avatar-button-avatar pgn__avatar-button-avatar-md dropdown-toggle btn btn-tertiary btn-md"
+              data-hj-suppress={true}
+              disabled={false}
+              id="menu-dropdown"
+              onClick={[Function]}
+              type="button"
+            >
+              <img
+                alt=""
+                className="pgn__avatar pgn__avatar-sm"
+                src="icon/mock/path"
+              />
+            </button>
+          </div>
+        </nav>
+      </div>
     </div>
-  </div>
-</header>
+  </header>
+</div>
 `;
 
 exports[`<Header /> minimal renders correctly for unauthenticated users when minimal 1`] = `
-<header
-  className="site-header-desktop"
+<div
+  data-testid="redux-provider"
 >
-  <a
-    className="nav-skip sr-only sr-only-focusable"
-    href="#main"
+  <header
+    className="site-header-desktop"
   >
-    Skip to main content
-  </a>
-  <div
-    className="container-fluid null"
-  >
-    <div
-      className="nav-container position-relative d-flex align-items-center"
+    <a
+      className="nav-skip sr-only sr-only-focusable"
+      href="#main"
     >
-      <img
-        alt="edX"
-        className="logo"
-        src="https://edx-cdn.org/v3/prod/logo.svg"
-      />
-      <nav
-        aria-label="Main"
-        className="nav main-nav"
-      />
-      <nav
-        aria-label="Secondary"
-        className="nav secondary-menu-container align-items-center ml-auto"
+      Skip to main content
+    </a>
+    <div
+      className="container-fluid null"
+    >
+      <div
+        className="nav-container position-relative d-flex align-items-center"
       >
-        <a
-          className="btn mr-2 btn-link"
-          href="http://localhost:18000/login"
+        <img
+          alt="edX"
+          className="logo"
+          src="https://edx-cdn.org/v3/prod/logo.svg"
+        />
+        <nav
+          aria-label="Main"
+          className="nav main-nav"
+        />
+        <nav
+          aria-label="Secondary"
+          className="nav secondary-menu-container align-items-center ml-auto"
         >
-          Login
-        </a>
-        <a
-          className="btn mr-2 btn-outline-primary"
-          href="http://localhost:18000/register"
-        >
-          Sign Up
-        </a>
-      </nav>
+          <a
+            className="btn mr-2 btn-link"
+            href="http://localhost:18000/login"
+          >
+            Login
+          </a>
+          <a
+            className="btn mr-2 btn-outline-primary"
+            href="http://localhost:18000/register"
+          >
+            Sign Up
+          </a>
+        </nav>
+      </div>
     </div>
-  </div>
-</header>
+  </header>
+</div>
 `;
 
 exports[`<Header /> renders correctly for authenticated users on desktop 1`] = `
-<header
-  className="site-header-desktop"
+<div
+  data-testid="redux-provider"
 >
-  <a
-    className="nav-skip sr-only sr-only-focusable"
-    href="#main"
+  <header
+    className="site-header-desktop"
   >
-    Skip to main content
-  </a>
-  <div
-    className="container-fluid null"
-  >
-    <div
-      className="nav-container position-relative d-flex align-items-center"
+    <a
+      className="nav-skip sr-only sr-only-focusable"
+      href="#main"
     >
-      <a
-        className="logo"
-        href="http://localhost:18000/dashboard"
-      >
-        <img
-          alt="edX"
-          className="d-block"
-          src="https://edx-cdn.org/v3/prod/logo.svg"
-        />
-      </a>
-      <nav
-        aria-label="Main"
-        className="nav main-nav"
+      Skip to main content
+    </a>
+    <div
+      className="container-fluid null"
+    >
+      <div
+        className="nav-container position-relative d-flex align-items-center"
       >
         <a
-          className="nav-link"
+          className="logo"
           href="http://localhost:18000/dashboard"
-          onClick={null}
         >
-          Courses
+          <img
+            alt="edX"
+            className="d-block"
+            src="https://edx-cdn.org/v3/prod/logo.svg"
+          />
         </a>
-        <a
-          className="nav-link"
-          href="http://localhost:18000/dashboard/programs"
-          onClick={null}
+        <nav
+          aria-label="Main"
+          className="nav main-nav"
         >
-          Programs
-        </a>
-        <a
-          className="nav-link"
-          href="http://localhost:18000/course"
-          onClick={[Function]}
-        >
-          Discover New
-        </a>
-      </nav>
-      <nav
-        aria-label="Secondary"
-        className="nav secondary-menu-container align-items-center ml-auto"
-      >
-        <div
-          className="pgn__dropdown pgn__dropdown-light dropdown"
-          data-testid="dropdown"
-        >
-          <button
-            alt=""
-            aria-expanded={false}
-            aria-haspopup={true}
-            aria-label="Account menu for edX"
-            className="btn-avatar pgn__avatar-button-avatar pgn__avatar-button-avatar-md dropdown-toggle btn btn-tertiary btn-md"
-            data-hj-suppress={true}
-            disabled={false}
-            id="menu-dropdown"
-            onClick={[Function]}
-            type="button"
+          <a
+            className="nav-link"
+            href="http://localhost:18000/dashboard"
+            onClick={null}
           >
-            <img
+            Courses
+          </a>
+          <a
+            className="nav-link"
+            href="http://localhost:18000/dashboard/programs"
+            onClick={null}
+          >
+            Programs
+          </a>
+          <a
+            className="nav-link"
+            href="http://localhost:18000/course"
+            onClick={[Function]}
+          >
+            Discover New
+          </a>
+        </nav>
+        <nav
+          aria-label="Secondary"
+          className="nav secondary-menu-container align-items-center ml-auto"
+        >
+          <div
+            className="pgn__dropdown pgn__dropdown-light dropdown"
+            data-testid="dropdown"
+          >
+            <button
               alt=""
-              className="pgn__avatar pgn__avatar-sm"
-              src="icon/mock/path"
-            />
-          </button>
-        </div>
-      </nav>
+              aria-expanded={false}
+              aria-haspopup={true}
+              aria-label="Account menu for edX"
+              className="btn-avatar pgn__avatar-button-avatar pgn__avatar-button-avatar-md dropdown-toggle btn btn-tertiary btn-md"
+              data-hj-suppress={true}
+              disabled={false}
+              id="menu-dropdown"
+              onClick={[Function]}
+              type="button"
+            >
+              <img
+                alt=""
+                className="pgn__avatar pgn__avatar-sm"
+                src="icon/mock/path"
+              />
+            </button>
+          </div>
+        </nav>
+      </div>
     </div>
-  </div>
-</header>
+  </header>
+</div>
 `;
 
 exports[`<Header /> renders correctly for authenticated users on mobile 1`] = `
-<header
-  aria-label="Main"
-  className="site-header-mobile d-flex justify-content-between align-items-center shadow sticky-top"
+<div
+  data-testid="redux-provider"
 >
-  <a
-    className="nav-skip sr-only sr-only-focusable"
-    href="#main"
-  >
-    Skip to main content
-  </a>
-  <div
-    className="w-100 d-flex justify-content-start"
-  >
-    <div
-      className="menu position-static"
-      onKeyDown={[Function]}
-      onMouseEnter={[Function]}
-      onMouseLeave={[Function]}
-    >
-      <button
-        aria-expanded={false}
-        aria-haspopup="menu"
-        aria-label="Main Menu"
-        className="menu-trigger icon-button"
-        onClick={[Function]}
-        title="Main Menu"
-      >
-        <svg
-          aria-hidden={true}
-          focusable="false"
-          height="24px"
-          role="img"
-          style={
-            {
-              "height": "1.5rem",
-              "width": "1.5rem",
-            }
-          }
-          version="1.1"
-          viewBox="0 0 24 24"
-          width="24px"
-        >
-          <rect
-            fill="currentColor"
-            height="2"
-            width="20"
-            x="2"
-            y="5"
-          />
-          <rect
-            fill="currentColor"
-            height="2"
-            width="20"
-            x="2"
-            y="11"
-          />
-          <rect
-            fill="currentColor"
-            height="2"
-            width="20"
-            x="2"
-            y="17"
-          />
-        </svg>
-      </button>
-    </div>
-  </div>
-  <div
-    className="w-100 d-flex justify-content-center"
+  <header
+    aria-label="Main"
+    className="site-header-mobile d-flex justify-content-between align-items-center shadow sticky-top"
   >
     <a
-      className="logo"
-      href="http://localhost:18000/dashboard"
-      itemType="http://schema.org/Organization"
+      className="nav-skip sr-only sr-only-focusable"
+      href="#main"
     >
-      <img
-        alt="edX"
-        className="d-block"
-        src="https://edx-cdn.org/v3/prod/logo.svg"
-      />
+      Skip to main content
     </a>
-  </div>
-  <div
-    className="w-100 d-flex justify-content-end align-items-center"
-  >
-    <nav
-      aria-label="Secondary"
-      className="menu position-static"
-      onKeyDown={[Function]}
-      onMouseEnter={[Function]}
-      onMouseLeave={[Function]}
-    >
-      <button
-        aria-expanded={false}
-        aria-haspopup="menu"
-        aria-label="Account Menu"
-        className="btn-avatar pgn__avatar-button-avatar pgn__avatar-button-avatar-md menu-trigger null pgn__avatar-button-hide-label btn btn-tertiary btn-md"
-        disabled={false}
-        onClick={[Function]}
-        title="Account Menu"
-        type="button"
-      >
-        <img
-          alt="edX Test"
-          className="pgn__avatar pgn__avatar-sm"
-          src="icon/mock/path"
-        />
-      </button>
-    </nav>
-  </div>
-</header>
-`;
-
-exports[`<Header /> renders correctly for unauthenticated users on desktop 1`] = `
-<header
-  className="site-header-desktop"
->
-  <a
-    className="nav-skip sr-only sr-only-focusable"
-    href="#main"
-  >
-    Skip to main content
-  </a>
-  <div
-    className="container-fluid null"
-  >
     <div
-      className="nav-container position-relative d-flex align-items-center"
+      className="w-100 d-flex justify-content-start"
+    >
+      <div
+        className="menu position-static"
+        onKeyDown={[Function]}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+      >
+        <button
+          aria-expanded={false}
+          aria-haspopup="menu"
+          aria-label="Main Menu"
+          className="menu-trigger icon-button"
+          onClick={[Function]}
+          title="Main Menu"
+        >
+          <svg
+            aria-hidden={true}
+            focusable="false"
+            height="24px"
+            role="img"
+            style={
+              {
+                "height": "1.5rem",
+                "width": "1.5rem",
+              }
+            }
+            version="1.1"
+            viewBox="0 0 24 24"
+            width="24px"
+          >
+            <rect
+              fill="currentColor"
+              height="2"
+              width="20"
+              x="2"
+              y="5"
+            />
+            <rect
+              fill="currentColor"
+              height="2"
+              width="20"
+              x="2"
+              y="11"
+            />
+            <rect
+              fill="currentColor"
+              height="2"
+              width="20"
+              x="2"
+              y="17"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
+    <div
+      className="w-100 d-flex justify-content-center"
     >
       <a
         className="logo"
         href="http://localhost:18000/dashboard"
+        itemType="http://schema.org/Organization"
       >
         <img
           alt="edX"
@@ -330,164 +287,231 @@ exports[`<Header /> renders correctly for unauthenticated users on desktop 1`] =
           src="https://edx-cdn.org/v3/prod/logo.svg"
         />
       </a>
-      <nav
-        aria-label="Main"
-        className="nav main-nav"
-      >
-        <a
-          className="nav-link"
-          href="http://localhost:18000/dashboard"
-          onClick={null}
-        >
-          Courses
-        </a>
-        <a
-          className="nav-link"
-          href="http://localhost:18000/dashboard/programs"
-          onClick={null}
-        >
-          Programs
-        </a>
-        <a
-          className="nav-link"
-          href="http://localhost:18000/course"
-          onClick={[Function]}
-        >
-          Discover New
-        </a>
-      </nav>
+    </div>
+    <div
+      className="w-100 d-flex justify-content-end align-items-center"
+    >
       <nav
         aria-label="Secondary"
-        className="nav secondary-menu-container align-items-center ml-auto"
+        className="menu position-static"
+        onKeyDown={[Function]}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
       >
-        <a
-          className="btn mr-2 btn-link"
-          href="http://localhost:18000/login"
+        <button
+          aria-expanded={false}
+          aria-haspopup="menu"
+          aria-label="Account Menu"
+          className="btn-avatar pgn__avatar-button-avatar pgn__avatar-button-avatar-md menu-trigger null pgn__avatar-button-hide-label btn btn-tertiary btn-md"
+          disabled={false}
+          onClick={[Function]}
+          title="Account Menu"
+          type="button"
         >
-          Login
-        </a>
-        <a
-          className="btn mr-2 btn-outline-primary"
-          href="http://localhost:18000/register"
-        >
-          Sign Up
-        </a>
+          <img
+            alt="edX Test"
+            className="pgn__avatar pgn__avatar-sm"
+            src="icon/mock/path"
+          />
+        </button>
       </nav>
     </div>
-  </div>
-</header>
+  </header>
+</div>
+`;
+
+exports[`<Header /> renders correctly for unauthenticated users on desktop 1`] = `
+<div
+  data-testid="redux-provider"
+>
+  <header
+    className="site-header-desktop"
+  >
+    <a
+      className="nav-skip sr-only sr-only-focusable"
+      href="#main"
+    >
+      Skip to main content
+    </a>
+    <div
+      className="container-fluid null"
+    >
+      <div
+        className="nav-container position-relative d-flex align-items-center"
+      >
+        <a
+          className="logo"
+          href="http://localhost:18000/dashboard"
+        >
+          <img
+            alt="edX"
+            className="d-block"
+            src="https://edx-cdn.org/v3/prod/logo.svg"
+          />
+        </a>
+        <nav
+          aria-label="Main"
+          className="nav main-nav"
+        >
+          <a
+            className="nav-link"
+            href="http://localhost:18000/dashboard"
+            onClick={null}
+          >
+            Courses
+          </a>
+          <a
+            className="nav-link"
+            href="http://localhost:18000/dashboard/programs"
+            onClick={null}
+          >
+            Programs
+          </a>
+          <a
+            className="nav-link"
+            href="http://localhost:18000/course"
+            onClick={[Function]}
+          >
+            Discover New
+          </a>
+        </nav>
+        <nav
+          aria-label="Secondary"
+          className="nav secondary-menu-container align-items-center ml-auto"
+        >
+          <a
+            className="btn mr-2 btn-link"
+            href="http://localhost:18000/login"
+          >
+            Login
+          </a>
+          <a
+            className="btn mr-2 btn-outline-primary"
+            href="http://localhost:18000/register"
+          >
+            Sign Up
+          </a>
+        </nav>
+      </div>
+    </div>
+  </header>
+</div>
 `;
 
 exports[`<Header /> renders correctly for unauthenticated users on mobile 1`] = `
-<header
-  aria-label="Main"
-  className="site-header-mobile d-flex justify-content-between align-items-center shadow sticky-top"
+<div
+  data-testid="redux-provider"
 >
-  <a
-    className="nav-skip sr-only sr-only-focusable"
-    href="#main"
-  >
-    Skip to main content
-  </a>
-  <div
-    className="w-100 d-flex justify-content-start"
-  >
-    <div
-      className="menu position-static"
-      onKeyDown={[Function]}
-      onMouseEnter={[Function]}
-      onMouseLeave={[Function]}
-    >
-      <button
-        aria-expanded={false}
-        aria-haspopup="menu"
-        aria-label="Main Menu"
-        className="menu-trigger icon-button"
-        onClick={[Function]}
-        title="Main Menu"
-      >
-        <svg
-          aria-hidden={true}
-          focusable="false"
-          height="24px"
-          role="img"
-          style={
-            {
-              "height": "1.5rem",
-              "width": "1.5rem",
-            }
-          }
-          version="1.1"
-          viewBox="0 0 24 24"
-          width="24px"
-        >
-          <rect
-            fill="currentColor"
-            height="2"
-            width="20"
-            x="2"
-            y="5"
-          />
-          <rect
-            fill="currentColor"
-            height="2"
-            width="20"
-            x="2"
-            y="11"
-          />
-          <rect
-            fill="currentColor"
-            height="2"
-            width="20"
-            x="2"
-            y="17"
-          />
-        </svg>
-      </button>
-    </div>
-  </div>
-  <div
-    className="w-100 d-flex justify-content-center"
+  <header
+    aria-label="Main"
+    className="site-header-mobile d-flex justify-content-between align-items-center shadow sticky-top"
   >
     <a
-      className="logo"
-      href="http://localhost:18000/dashboard"
-      itemType="http://schema.org/Organization"
+      className="nav-skip sr-only sr-only-focusable"
+      href="#main"
     >
-      <img
-        alt="edX"
-        className="d-block"
-        src="https://edx-cdn.org/v3/prod/logo.svg"
-      />
+      Skip to main content
     </a>
-  </div>
-  <div
-    className="w-100 d-flex justify-content-end align-items-center"
-  >
-    <nav
-      aria-label="Secondary"
-      className="menu position-static"
-      onKeyDown={[Function]}
-      onMouseEnter={[Function]}
-      onMouseLeave={[Function]}
+    <div
+      className="w-100 d-flex justify-content-start"
     >
-      <button
-        aria-expanded={false}
-        aria-haspopup="menu"
-        aria-label="Account Menu"
-        className="btn-avatar pgn__avatar-button-avatar pgn__avatar-button-avatar-md menu-trigger null pgn__avatar-button-hide-label btn btn-tertiary btn-md"
-        disabled={false}
-        onClick={[Function]}
-        title="Account Menu"
-        type="button"
+      <div
+        className="menu position-static"
+        onKeyDown={[Function]}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+      >
+        <button
+          aria-expanded={false}
+          aria-haspopup="menu"
+          aria-label="Main Menu"
+          className="menu-trigger icon-button"
+          onClick={[Function]}
+          title="Main Menu"
+        >
+          <svg
+            aria-hidden={true}
+            focusable="false"
+            height="24px"
+            role="img"
+            style={
+              {
+                "height": "1.5rem",
+                "width": "1.5rem",
+              }
+            }
+            version="1.1"
+            viewBox="0 0 24 24"
+            width="24px"
+          >
+            <rect
+              fill="currentColor"
+              height="2"
+              width="20"
+              x="2"
+              y="5"
+            />
+            <rect
+              fill="currentColor"
+              height="2"
+              width="20"
+              x="2"
+              y="11"
+            />
+            <rect
+              fill="currentColor"
+              height="2"
+              width="20"
+              x="2"
+              y="17"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
+    <div
+      className="w-100 d-flex justify-content-center"
+    >
+      <a
+        className="logo"
+        href="http://localhost:18000/dashboard"
+        itemType="http://schema.org/Organization"
       >
         <img
-          alt=""
-          className="pgn__avatar pgn__avatar-sm"
-          src="icon/mock/path"
+          alt="edX"
+          className="d-block"
+          src="https://edx-cdn.org/v3/prod/logo.svg"
         />
-      </button>
-    </nav>
-  </div>
-</header>
+      </a>
+    </div>
+    <div
+      className="w-100 d-flex justify-content-end align-items-center"
+    >
+      <nav
+        aria-label="Secondary"
+        className="menu position-static"
+        onKeyDown={[Function]}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+      >
+        <button
+          aria-expanded={false}
+          aria-haspopup="menu"
+          aria-label="Account Menu"
+          className="btn-avatar pgn__avatar-button-avatar pgn__avatar-button-avatar-md menu-trigger null pgn__avatar-button-hide-label btn btn-tertiary btn-md"
+          disabled={false}
+          onClick={[Function]}
+          title="Account Menu"
+          type="button"
+        >
+          <img
+            alt=""
+            className="pgn__avatar pgn__avatar-sm"
+            src="icon/mock/path"
+          />
+        </button>
+      </nav>
+    </div>
+  </header>
+</div>
 `;
