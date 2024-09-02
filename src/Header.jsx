@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import Responsive from 'react-responsive';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import { sendTrackEvent } from '@edx/frontend-platform/analytics';
-import { AppContext } from '@edx/frontend-platform/react';
+import { AppContext, AppProvider } from '@edx/frontend-platform/react';
 import { Badge } from '@openedx/paragon';
 import {
   APP_CONFIG_INITIALIZED,
@@ -16,6 +16,7 @@ import { useEnterpriseConfig } from '@edx/frontend-enterprise-utils';
 import PropTypes from 'prop-types';
 import DesktopHeader from './DesktopHeader';
 import MobileHeader from './MobileHeader';
+import store from './store';
 
 import messages from './Header.messages';
 
@@ -26,6 +27,8 @@ ensureConfig([
   'MARKETING_SITE_BASE_URL',
   'ORDER_HISTORY_URL',
   'LOGO_URL',
+  'ACCOUNT_SETTINGS_URL',
+  'NOTIFICATION_FEEDBACK_URL',
 ], 'Header component');
 
 subscribe(APP_CONFIG_INITIALIZED, () => {
@@ -33,6 +36,8 @@ subscribe(APP_CONFIG_INITIALIZED, () => {
     MINIMAL_HEADER: !!process.env.MINIMAL_HEADER,
     ENTERPRISE_LEARNER_PORTAL_HOSTNAME: process.env.ENTERPRISE_LEARNER_PORTAL_HOSTNAME,
     AUTHN_MINIMAL_HEADER: !!process.env.AUTHN_MINIMAL_HEADER,
+    ACCOUNT_SETTINGS_URL: process.env.ACCOUNT_SETTINGS_URL || '',
+    NOTIFICATION_FEEDBACK_URL: process.env.NOTIFICATION_FEEDBACK_URL || '',
   }, 'Header additional config');
 });
 
@@ -194,14 +199,14 @@ const Header = ({
   }
 
   return (
-    <>
+    <AppProvider store={store} wrapWithRouter={false}>
       <Responsive maxWidth={769}>
         <MobileHeader {...props} />
       </Responsive>
       <Responsive minWidth={769}>
         <DesktopHeader {...props} />
       </Responsive>
-    </>
+    </AppProvider>
   );
 };
 
