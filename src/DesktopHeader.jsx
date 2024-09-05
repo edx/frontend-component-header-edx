@@ -1,7 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import { getConfig } from '@edx/frontend-platform';
 import { AvatarButton, Dropdown } from '@openedx/paragon';
@@ -12,8 +10,6 @@ import UserMenuGroupSlot from './plugin-slots/UserMenuGroupSlot';
 import UserMenuItem from './common/UserMenuItem';
 import { Menu, MenuTrigger, MenuContent } from './Menu';
 import { LinkedLogo, Logo } from './Logo';
-import Notifications from './Notifications';
-import { mapDispatchToProps, mapStateToProps } from './data/selectors';
 
 // i18n
 import messages from './Header.messages';
@@ -24,20 +20,6 @@ import { CaretIcon } from './Icons';
 class DesktopHeader extends React.Component {
   constructor(props) { // eslint-disable-line no-useless-constructor
     super(props);
-    this.state = {
-      locationHref: window.location.href,
-    };
-  }
-
-  componentDidMount() {
-    this.props.fetchAppsNotificationCount();
-  }
-
-  componentDidUpdate() {
-    if (window.location.href !== this.state.locationHref) {
-      this.setState({ locationHref: window.location.href });
-      this.props.fetchAppsNotificationCount();
-    }
   }
 
   renderMenu(menu) {
@@ -170,7 +152,6 @@ class DesktopHeader extends React.Component {
       logoAltText,
       logoDestination,
       loggedIn,
-      showNotificationsTray,
       intl,
     } = this.props;
     const logoProps = { src: logo, alt: logoAltText, href: logoDestination };
@@ -196,7 +177,6 @@ class DesktopHeader extends React.Component {
                 ? (
                   <>
                     {this.renderSecondaryMenu()}
-                    {showNotificationsTray && <Notifications showLeftMargin={false} />}
                     {this.renderUserMenu()}
                   </>
                 ) : this.renderLoggedOutItems()}
@@ -240,8 +220,7 @@ DesktopHeader.propTypes = {
   name: PropTypes.string,
   email: PropTypes.string,
   loggedIn: PropTypes.bool,
-  showNotificationsTray: PropTypes.bool,
-  fetchAppsNotificationCount: PropTypes.func.isRequired,
+
   // i18n
   intl: intlShape.isRequired,
 };
@@ -258,7 +237,6 @@ DesktopHeader.defaultProps = {
   name: '',
   email: '',
   loggedIn: false,
-  showNotificationsTray: false,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(injectIntl(DesktopHeader));
+export default injectIntl(DesktopHeader);
