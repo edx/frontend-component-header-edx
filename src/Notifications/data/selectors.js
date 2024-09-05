@@ -1,7 +1,5 @@
 import { createSelector } from '@reduxjs/toolkit';
 
-import { fetchAppsNotificationCount } from './thunks';
-
 export const selectNotificationStatus = state => state.notifications.notificationStatus;
 
 export const selectNotificationListStatus = state => state.notifications.notificationListStatus;
