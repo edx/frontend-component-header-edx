@@ -13,8 +13,7 @@ import { Menu, MenuTrigger, MenuContent } from './Menu';
 import { LinkedLogo, Logo } from './Logo';
 import UserMenuItem from './common/UserMenuItem';
 import Notifications from './Notifications';
-import { selectShowNotificationTray } from './Notifications/data/selectors';
-import { fetchAppsNotificationCount } from './Notifications/data/thunks';
+import { mapDispatchToProps, mapStateToProps } from './Notifications/data/selectors';
 // i18n
 import messages from './Header.messages';
 
@@ -268,13 +267,5 @@ MobileHeader.defaultProps = {
   stickyOnMobile: true,
   showNotificationsTray: false,
 };
-
-const mapDispatchToProps = (dispatch) => ({
-  fetchAppsNotificationCount: () => dispatch(fetchAppsNotificationCount()),
-});
-
-const mapStateToProps = (state) => ({
-  showNotificationsTray: selectShowNotificationTray(state),
-});
 
 export default connect(mapStateToProps, mapDispatchToProps)(injectIntl(MobileHeader));

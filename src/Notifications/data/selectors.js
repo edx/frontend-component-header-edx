@@ -1,5 +1,7 @@
 import { createSelector } from '@reduxjs/toolkit';
 
+import { fetchAppsNotificationCount } from './thunks';
+
 export const selectNotificationStatus = state => state.notifications.notificationStatus;
 
 export const selectNotificationListStatus = state => state.notifications.notificationListStatus;
@@ -27,3 +29,11 @@ export const selectPaginationData = state => state.notifications.pagination;
 export const selectTrayOpened = state => state.notifications.trayOpened;
 
 export const selectExpiryDays = state => state.notifications.notificationExpiryDays;
+
+export const mapDispatchToProps = (dispatch) => ({
+  fetchAppsNotificationCount: () => dispatch(fetchAppsNotificationCount()),
+});
+
+export const mapStateToProps = (state) => ({
+  showNotificationsTray: selectShowNotificationTray(state),
+});
