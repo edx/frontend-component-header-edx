@@ -29,11 +29,3 @@ export const selectPaginationData = state => state.notifications.pagination;
 export const selectTrayOpened = state => state.notifications.trayOpened;
 
 export const selectExpiryDays = state => state.notifications.notificationExpiryDays;
-
-export const mapDispatchToProps = (dispatch) => ({
-  fetchAppsNotificationCount: () => dispatch(fetchAppsNotificationCount()),
-});
-
-export const mapStateToProps = (state) => ({
-  showNotificationsTray: selectShowNotificationTray(state),
-});

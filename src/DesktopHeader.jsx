@@ -13,7 +13,7 @@ import UserMenuItem from './common/UserMenuItem';
 import { Menu, MenuTrigger, MenuContent } from './Menu';
 import { LinkedLogo, Logo } from './Logo';
 import Notifications from './Notifications';
-import { mapDispatchToProps, mapStateToProps } from './Notifications/data/selectors';
+import { mapDispatchToProps, mapStateToProps } from './data/selectors';
 
 // i18n
 import messages from './Header.messages';
