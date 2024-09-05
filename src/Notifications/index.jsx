@@ -6,7 +6,6 @@ import React, {
 
 import classNames from 'classnames';
 import { useDispatch, useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
 
 import { getConfig } from '@edx/frontend-platform';
 import { useIntl } from '@edx/frontend-platform/i18n';
@@ -27,7 +26,7 @@ import NotificationTabs from './NotificationTabs';
 
 import './notification.scss';
 
-const Notifications = ({ showLeftMargin }) => {
+const Notifications = () => {
   const intl = useIntl();
   const dispatch = useDispatch();
   const popoverRef = useRef(null);
@@ -145,9 +144,7 @@ const Notifications = ({ showLeftMargin }) => {
             iconAs={Icon}
             variant="light"
             iconClassNames="text-primary-500"
-            className={classNames('mr-1 notification-button', {
-              'ml-4': showLeftMargin,
-            })}
+            className="ml-4 mr-1 notification-button"
             data-testid="notification-bell-icon"
           />
           {notificationCounts?.count > 0 && (
@@ -169,14 +166,6 @@ const Notifications = ({ showLeftMargin }) => {
       <NotificationTour />
     </>
   );
-};
-
-Notifications.propTypes = {
-  showLeftMargin: PropTypes.bool,
-};
-
-Notifications.defaultProps = {
-  showLeftMargin: true,
 };
 
 export default Notifications;

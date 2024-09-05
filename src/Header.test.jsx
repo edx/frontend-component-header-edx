@@ -7,9 +7,8 @@ import { useEnterpriseConfig } from '@edx/frontend-enterprise-utils';
 import { AppContext } from '@edx/frontend-platform/react';
 import { getConfig } from '@edx/frontend-platform';
 import { Context as ResponsiveContext } from 'react-responsive';
-import { fireEvent, render, screen } from '@testing-library/react';
 
-import { initializeMockApp } from './setupTest';
+import { fireEvent, render, screen } from '@testing-library/react';
 import Header from './index';
 
 jest.mock('@edx/frontend-platform');
@@ -41,10 +40,6 @@ const HeaderContext = ({ width, contextValue }) => (
 describe('<Header />', () => {
   beforeEach(() => {
     useEnterpriseConfig.mockReturnValue({});
-  });
-  beforeAll(async () => {
-    // We need to mock AuthService to implicitly use `getAuthenticatedUser` within `AppContext.Provider`.
-    await initializeMockApp();
   });
 
   const mockUseEnterpriseConfig = () => {
