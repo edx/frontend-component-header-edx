@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
-import { useSelector, useDispatch } from 'react-redux';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
@@ -10,10 +9,9 @@ import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import { Dropdown, Badge } from '@openedx/paragon';
 
 import messages from './messages';
-import Notifications from '../Notifications';
+import Notifications from '../new-notifications';
 import UserMenuItem from '../common/UserMenuItem';
-import { selectShowNotificationTray, selectIsNewNotificationViewEnabled } from '../Notifications/data/selectors';
-import { fetchAppsNotificationCount } from '../Notifications/data/thunks';
+import { useNotification } from '../new-notifications/data/hook';
 
 const AuthenticatedUserDropdown = (props) => {
   const {
@@ -23,13 +21,24 @@ const AuthenticatedUserDropdown = (props) => {
     name,
     email,
   } = props;
-  const dispatch = useDispatch();
-  const showNotificationsTray = useSelector(selectShowNotificationTray);
-  const isNewNotificationViewEnabled = useSelector(selectIsNewNotificationViewEnabled);
+  const [showTray, setShowTray] = useState();
+  const [isNewNotificationView, setIsNewNotificationView] = useState(false);
+  const [notificationAppData, setNotificationAppData] = useState();
+  const { fetchAppsNotificationCount } = useNotification();
+
+  const fetchNotifications = useCallback(async () => {
+    const data = await fetchAppsNotificationCount();
+    const { showNotificationsTray, isNewNotificationViewEnabled } = data;
+
+    setShowTray(showNotificationsTray);
+    setIsNewNotificationView(isNewNotificationViewEnabled);
+    setNotificationAppData(data);
+  }, [fetchAppsNotificationCount]);
 
   useEffect(() => {
-    dispatch(fetchAppsNotificationCount());
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    fetchNotifications();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [window.location.href]);
 
   let dashboardMenuItem = (
@@ -71,14 +80,14 @@ const AuthenticatedUserDropdown = (props) => {
     careersMenuItem = '';
   }
 
-  if (isNewNotificationViewEnabled) {
+  if (!isNewNotificationView) {
     return null;
   }
 
   return (
     <>
       <a className="text-gray-700" href={`${getConfig().SUPPORT_URL}`}>{intl.formatMessage(messages.help)}</a>
-      {showNotificationsTray && <Notifications />}
+      {showTray && <Notifications notificationAppData={notificationAppData} />}
       <Dropdown className="user-dropdown ml-3">
         <Dropdown.Toggle variant="outline-primary" id="user-dropdown">
           <FontAwesomeIcon icon={faUserCircle} size="lg" />

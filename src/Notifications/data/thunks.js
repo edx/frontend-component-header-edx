@@ -16,12 +16,12 @@ import {
 } from './api';
 
 const normalizeNotificationCounts = ({
-  countByAppName, count, showNotificationsTray, notificationExpiryDays,
+  countByAppName, count, showNotificationsTray, notificationExpiryDays, isNewNotificationViewEnabled,
 }) => {
   const appIds = Object.keys(countByAppName);
   const apps = appIds.reduce((acc, appId) => { acc[appId] = []; return acc; }, {});
   return {
-    countByAppName, appIds, apps, count, showNotificationsTray, notificationExpiryDays,
+    countByAppName, appIds, apps, count, showNotificationsTray, notificationExpiryDays, isNewNotificationViewEnabled,
   };
 };
 
