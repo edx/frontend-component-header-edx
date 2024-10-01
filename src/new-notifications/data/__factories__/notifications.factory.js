@@ -9,7 +9,7 @@ Factory.define('notificationsCount')
     authoring: 5,
   })
   .attr('showNotificationsTray', true)
-  .attr('isNewNotificationViewEnabled', false);
+  .attr('isNewNotificationViewEnabled', true);
 
 Factory.define('notification')
   .sequence('id')
