@@ -9,6 +9,7 @@ import { AppContext, AppProvider } from '@edx/frontend-platform/react';
 import classNames from 'classnames';
 import AnonymousUserMenu from './AnonymousUserMenu';
 import AuthenticatedUserDropdown from './AuthenticatedUserDropdown';
+import NewAuthenticatedUserDropdown from './New-AuthenticatedUserDropdown';
 import messages from './messages';
 import lightning from '../lightning';
 import store from '../store';
@@ -89,12 +90,21 @@ const LearningHeader = ({
             <span className="d-block m-0 font-weight-bold course-title">{courseTitle}</span>
           </div>
           {showUserDropdown && authenticatedUser && (
-          <AuthenticatedUserDropdown
-            enterpriseLearnerPortalLink={enterpriseLearnerPortalLink}
-            username={authenticatedUser.username}
-            name={authenticatedUser.name}
-            email={authenticatedUser.email}
-          />
+          <>
+            <AuthenticatedUserDropdown
+              enterpriseLearnerPortalLink={enterpriseLearnerPortalLink}
+              username={authenticatedUser.username}
+              name={authenticatedUser.name}
+              email={authenticatedUser.email}
+            />
+            <NewAuthenticatedUserDropdown
+              enterpriseLearnerPortalLink={enterpriseLearnerPortalLink}
+              username={authenticatedUser.username}
+              name={authenticatedUser.name}
+              email={authenticatedUser.email}
+            />
+          </>
+
           )}
           {showUserDropdown && !authenticatedUser && (
           <AnonymousUserMenu />
