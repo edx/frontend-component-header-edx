@@ -97,7 +97,7 @@ const NotificationSections = () => {
         <div className="d-flex justify-content-center p-4">
           <Spinner animation="border" variant="primary" size="lg" data-testid="notifications-loading-spinner" />
         </div>
-      ) : (hasMorePages && notificationListStatus === RequestStatus.SUCCESSFUL && (
+      ) : (hasMorePages && notificationListStatus === RequestStatus.SUCCESSFUL && notificationList.length >= 10 && (
         <Button
           variant="primary"
           className="w-100 bg-primary-500"

@@ -19,7 +19,7 @@ export function useIsOnLargeScreen() {
 
 export function useNotification() {
   const {
-    appName, apps, tabsCount, notifications,
+    appName, apps, tabsCount, notifications, updateNotificationData,
   } = useContext(HeaderContext);
 
   const normalizeNotificationCounts = ({
@@ -89,6 +89,7 @@ export function useNotification() {
 
   const fetchNotificationList = async (app, page = 1, pageSize = 10, trayOpened = true) => {
     try {
+      updateNotificationData({ notificationListStatus: RequestStatus.IN_PROGRESS });
       const data = await getNotificationsList(app, page, pageSize, trayOpened);
       const normalizedData = normalizeNotifications((camelCaseObject(data)));
 
