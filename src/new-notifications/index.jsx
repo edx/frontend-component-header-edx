@@ -17,10 +17,10 @@ import { RequestStatus } from './data/constants';
 
 import { useIsOnLargeScreen, useIsOnMediumScreen } from './data/hook';
 import NotificationTour from './tours/NotificationTour';
-import NotificationContext from './context';
+import NotificationPopoverContext from './context/notificationPopoverContext';
 import messages from './messages';
 import NotificationTabs from './NotificationTabs';
-import { HeaderContext } from '../common/context';
+import { notificationsContext } from './context/notificationsContext';
 
 import './notification.scss';
 
@@ -97,7 +97,7 @@ const Notifications = ({ notificationAppData, showLeftMargin }) => {
     }
   }, []);
 
-  const headerContextValue = useMemo(() => ({
+  const notificationContextValue = useMemo(() => ({
     enableNotificationTray,
     appName,
     handleActiveTab,
@@ -106,7 +106,7 @@ const Notifications = ({ notificationAppData, showLeftMargin }) => {
   }));
 
   return (
-    <HeaderContext.Provider value={headerContextValue}>
+    <notificationsContext.Provider value={notificationContextValue}>
       <OverlayTrigger
         trigger="click"
         key="bottom"
@@ -148,9 +148,9 @@ const Notifications = ({ notificationAppData, showLeftMargin }) => {
                 </Popover.Title>
               </div>
               <Popover.Content className="notification-content p-0">
-                <NotificationContext.Provider value={notificationRefs}>
+                <NotificationPopoverContext.Provider value={notificationRefs}>
                   <NotificationTabs />
-                </NotificationContext.Provider>
+                </NotificationPopoverContext.Provider>
               </Popover.Content>
               {getConfig().NOTIFICATION_FEEDBACK_URL && (
                 <Button
@@ -197,7 +197,7 @@ const Notifications = ({ notificationAppData, showLeftMargin }) => {
         </div>
       </OverlayTrigger>
       <NotificationTour />
-    </HeaderContext.Provider>
+    </notificationsContext.Provider>
   );
 };
 

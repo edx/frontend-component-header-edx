@@ -10,7 +10,7 @@ import messages from './messages';
 import timeLocale from '../common/time-locale';
 import { getIconByType } from './utils';
 import { useNotification } from './data/hook';
-import { HeaderContext } from '../common/context';
+import { notificationsContext } from './context/notificationsContext';
 
 const NotificationRowItem = ({
   id, type, contentUrl, content, courseName, createdAt, lastRead,
@@ -18,7 +18,7 @@ const NotificationRowItem = ({
   timeago.register('time-locale', timeLocale);
   const intl = useIntl();
   const { markNotificationsAsRead } = useNotification();
-  const { updateNotificationData } = useContext(HeaderContext);
+  const { updateNotificationData } = useContext(notificationsContext);
 
   const handleMarkAsRead = useCallback(async () => {
     if (!lastRead) {

@@ -4,14 +4,14 @@ import { Tab, Tabs } from '@openedx/paragon';
 
 import NotificationSections from './NotificationSections';
 import { useFeedbackWrapper } from './utils';
-import { HeaderContext } from '../common/context';
+import { notificationsContext } from './context/notificationsContext';
 import { useNotification } from './data/hook';
 
 const NotificationTabs = () => {
   useFeedbackWrapper();
   const {
     appName, handleActiveTab, tabsCount, appsId, updateNotificationData,
-  } = useContext(HeaderContext);
+  } = useContext(notificationsContext);
   const { fetchNotificationList, markNotificationsAsSeen } = useNotification();
 
   useEffect(() => {
