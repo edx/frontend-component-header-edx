@@ -5,14 +5,14 @@ import messages from '../messages';
 import tourCheckpoints from '../constants';
 import { getNotificationsTours, updateNotificationsTour } from './api';
 import { RequestStatus } from '../../data/constants';
-import { HeaderContext } from '../../../common/context';
+import { notificationsContext } from '../../context/notificationsContext';
 
 export function camelToConstant(string) {
   return string.replace(/[A-Z]/g, (match) => `_${match}`).toUpperCase();
 }
 
 export function useNotificationTour() {
-  const { tours, updateNotificationData } = useContext(HeaderContext);
+  const { tours, updateNotificationData } = useContext(notificationsContext);
 
   function normaliseTourData(data) {
     return data.map(tour => ({ ...tour, enabled: true }));
