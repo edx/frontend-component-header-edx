@@ -8,12 +8,12 @@ import { Button, Icon, Spinner } from '@openedx/paragon';
 import { AutoAwesome, CheckCircleLightOutline } from '@openedx/paragon/icons';
 
 import { RequestStatus } from './data/constants';
-import NotificationContext from './context';
+import NotificationPopoverContext from './context/notificationPopoverContext';
 import messages from './messages';
 import NotificationEmptySection from './NotificationEmptySection';
 import NotificationRowItem from './NotificationRowItem';
 import { splitNotificationsByTime } from './utils';
-import { HeaderContext } from '../common/context';
+import { notificationsContext } from './context/notificationsContext';
 import { useNotification } from './data/hook';
 
 const NotificationSections = () => {
@@ -21,11 +21,11 @@ const NotificationSections = () => {
   const {
     appName, notificationListStatus, pagination,
     notificationExpiryDays, appsId, updateNotificationData,
-  } = useContext(HeaderContext);
+  } = useContext(notificationsContext);
   const { getNotifications, markAllNotificationsAsRead, fetchNotificationList } = useNotification();
   const notificationList = getNotifications();
   const { hasMorePages, currentPage } = pagination || {};
-  const { popoverHeaderRef, notificationRef } = useContext(NotificationContext);
+  const { popoverHeaderRef, notificationRef } = useContext(NotificationPopoverContext);
   const { today = [], earlier = [] } = useMemo(
     () => splitNotificationsByTime(notificationList),
     [notificationList],

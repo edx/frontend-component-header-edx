@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import { camelCaseObject } from '@edx/frontend-platform';
 import { breakpoints, useWindowSize } from '@openedx/paragon';
 import { RequestStatus } from './constants';
-import { HeaderContext } from '../../common/context';
+import { notificationsContext } from '../context/notificationsContext';
 import {
   getNotificationsList, getNotificationCounts, markNotificationSeen, markAllNotificationRead, markNotificationRead,
 } from './api';
@@ -20,22 +20,17 @@ export function useIsOnLargeScreen() {
 export function useNotification() {
   const {
     appName, apps, tabsCount, notifications, updateNotificationData,
-  } = useContext(HeaderContext);
+  } = useContext(notificationsContext);
 
-  const normalizeNotificationCounts = ({
-    countByAppName, count, showNotificationsTray, notificationExpiryDays, isNewNotificationViewEnabled,
-  }) => {
+  const normalizeNotificationCounts = ({ countByAppName, ...countData }) => {
     const appIds = Object.keys(countByAppName);
     const notificationApps = appIds.reduce((acc, appId) => { acc[appId] = []; return acc; }, {});
 
     return {
-      countByAppName,
+      ...countData,
       appIds,
       notificationApps,
-      count,
-      showNotificationsTray,
-      notificationExpiryDays,
-      isNewNotificationViewEnabled,
+      countByAppName,
     };
   };
 

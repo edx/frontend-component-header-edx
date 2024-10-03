@@ -4,12 +4,12 @@ import { useIntl } from '@edx/frontend-platform/i18n';
 import { Icon, IconButton } from '@openedx/paragon';
 import { NotificationsNone } from '@openedx/paragon/icons';
 
-import NotificationContext from './context';
+import NotificationPopoverContext from './context/notificationPopoverContext';
 import messages from './messages';
 
 const EmptyNotifications = () => {
   const intl = useIntl();
-  const { popoverHeaderRef, notificationRef } = useContext(NotificationContext);
+  const { popoverHeaderRef, notificationRef } = useContext(NotificationPopoverContext);
 
   return (
     <div

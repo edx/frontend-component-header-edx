@@ -1,5 +1,5 @@
 import React from 'react';
-import { RequestStatus } from '../new-notifications/data/constants';
+import { RequestStatus } from '../data/constants';
 
 export const initialState = {
   notificationStatus: RequestStatus.IDLE,
@@ -14,4 +14,4 @@ export const initialState = {
   trayOpened: false,
 };
 
-export const HeaderContext = React.createContext(initialState);
+export const notificationsContext = React.createContext(initialState);
