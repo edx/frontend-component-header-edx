@@ -13,7 +13,7 @@ import Notifications from '../new-notifications';
 import UserMenuItem from '../common/UserMenuItem';
 import { useNotification } from '../new-notifications/data/hook';
 
-const AuthenticatedUserDropdown = (props) => {
+const NewAuthenticatedUserDropdown = (props) => {
   const {
     intl,
     enterpriseLearnerPortalLink,
@@ -120,7 +120,7 @@ const AuthenticatedUserDropdown = (props) => {
   );
 };
 
-AuthenticatedUserDropdown.propTypes = {
+NewAuthenticatedUserDropdown.propTypes = {
   enterpriseLearnerPortalLink: PropTypes.string,
   intl: intlShape.isRequired,
   username: PropTypes.string.isRequired,
@@ -128,10 +128,10 @@ AuthenticatedUserDropdown.propTypes = {
   email: PropTypes.string,
 };
 
-AuthenticatedUserDropdown.defaultProps = {
+NewAuthenticatedUserDropdown.defaultProps = {
   enterpriseLearnerPortalLink: '',
   name: '',
   email: '',
 };
 
-export default injectIntl(AuthenticatedUserDropdown);
+export default injectIntl(NewAuthenticatedUserDropdown);
