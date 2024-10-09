@@ -46,7 +46,7 @@ const NotificationSections = () => {
 
     return (
       <div className="pb-2">
-        <div className="d-flex justify-content-between align-items-center py-10px mb-2">
+        <div className="d-flex justify-content-between align-items-center py-2 mb-2">
           <span className="text-gray-500 line-height-10">
             {section === 'today' && intl.formatMessage(messages.notificationTodayHeading)}
             {section === 'earlier' && intl.formatMessage(messages.notificationEarlierHeading)}
@@ -54,7 +54,7 @@ const NotificationSections = () => {
           {notificationList?.length > 0 && (section === 'earlier' ? today.length === 0 : true) && (
             <Button
               variant="link"
-              className="font-size-14 line-height-10 text-decoration-none p-0 border-0 text-info-500"
+              className="small line-height-10 text-decoration-none p-0 border-0 text-info-500"
               onClick={handleMarkAllAsRead}
               data-testid="mark-all-read"
             >
@@ -115,12 +115,12 @@ const NotificationSections = () => {
             data-testid="notifications-list-complete"
           >
             <Icon className="mx-auto icon-size-56" src={CheckCircleLightOutline} />
-            <div className="mx-auto mb-3 font-size-22 notification-end-title line-height-24">
+            <div className="mx-auto mb-3  mt-3.5 lead notification-end-title line-height-24">
               {intl.formatMessage(messages.allRecentNotificationsMessage)}
             </div>
             <div className="d-flex flex-row mx-auto text-gray-500">
               <Icon src={AutoAwesome} />
-              <span className="font-size-14 line-height-normal">
+              <span className="small line-height-normal">
                 {intl.formatMessage(messages.expiredNotificationsDeleteMessage, { days: notificationExpiryDays })}
               </span>
             </div>

@@ -3,6 +3,7 @@ import React from 'react';
 import {
   act, fireEvent, render, screen, waitFor, within,
 } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
 import { Context as ResponsiveContext } from 'react-responsive';
 import { Factory } from 'rosie';
 
@@ -16,11 +17,13 @@ import './data/__factories__';
 
 async function renderComponent() {
   render(
-    <ResponsiveContext.Provider>
-      <IntlProvider locale="en" messages={{}}>
-        <AuthenticatedUserDropdown />
-      </IntlProvider>
-    </ResponsiveContext.Provider>,
+    <MemoryRouter>
+      <ResponsiveContext.Provider>
+        <IntlProvider locale="en" messages={{}}>
+          <AuthenticatedUserDropdown />
+        </IntlProvider>
+      </ResponsiveContext.Provider>
+    </MemoryRouter>,
   );
 }
 

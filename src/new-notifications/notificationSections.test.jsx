@@ -3,6 +3,7 @@ import React from 'react';
 import {
   act, fireEvent, render, screen, waitFor, within,
 } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
 import MockAdapter from 'axios-mock-adapter';
 import { Context as ResponsiveContext } from 'react-responsive';
 import { Factory } from 'rosie';
@@ -25,11 +26,13 @@ let axiosMock;
 
 async function renderComponent() {
   render(
-    <ResponsiveContext.Provider>
-      <IntlProvider locale="en" messages={{}}>
-        <AuthenticatedUserDropdown />
-      </IntlProvider>
-    </ResponsiveContext.Provider>,
+    <MemoryRouter>
+      <ResponsiveContext.Provider>
+        <IntlProvider locale="en" messages={{}}>
+          <AuthenticatedUserDropdown />
+        </IntlProvider>
+      </ResponsiveContext.Provider>
+    </MemoryRouter>,
   );
 }
 
