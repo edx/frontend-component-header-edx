@@ -12,6 +12,8 @@ export const selectSelectedAppNotificationIds = (appName) => state => state.noti
 
 export const selectShowNotificationTray = state => state.notifications.showNotificationsTray;
 
+export const selectIsNewNotificationViewEnabled = state => state.notifications.isNewNotificationViewEnabled;
+
 export const selectNotifications = state => state.notifications.notifications;
 
 export const selectNotificationsByIds = (appName) => createSelector(
