@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useCallback } from 'react';
 import { camelCaseObject } from '@edx/frontend-platform';
 import { breakpoints, useWindowSize } from '@openedx/paragon';
 import { RequestStatus } from './constants';
@@ -22,7 +22,7 @@ export function useNotification() {
     appName, apps, tabsCount, notifications, updateNotificationData,
   } = useContext(notificationsContext);
 
-  const normalizeNotificationCounts = ({ countByAppName, ...countData }) => {
+  const normalizeNotificationCounts = useCallback(({ countByAppName, ...countData }) => {
     const appIds = Object.keys(countByAppName);
     const notificationApps = appIds.reduce((acc, appId) => { acc[appId] = []; return acc; }, {});
 
@@ -32,7 +32,7 @@ export function useNotification() {
       notificationApps,
       countByAppName,
     };
-  };
+  }, []);
 
   const normalizeNotifications = (data) => {
     const newNotificationIds = data.results.map(notification => notification.id.toString());
@@ -48,7 +48,7 @@ export function useNotification() {
     };
   };
 
-  const getNotifications = () => {
+  const getNotifications = useCallback(() => {
     try {
       const notificationIds = apps[appName] || [];
 
@@ -56,9 +56,9 @@ export function useNotification() {
     } catch (error) {
       return { notificationStatus: RequestStatus.FAILED };
     }
-  };
+  }, [apps, appName, notifications]);
 
-  const fetchAppsNotificationCount = async () => {
+  const fetchAppsNotificationCount = useCallback(async () => {
     try {
       const data = await getNotificationCounts();
       const normalisedData = normalizeNotificationCounts(camelCaseObject(data));
@@ -80,9 +80,9 @@ export function useNotification() {
     } catch (error) {
       return { notificationStatus: RequestStatus.FAILED };
     }
-  };
+  }, [normalizeNotificationCounts]);
 
-  const fetchNotificationList = async (app, page = 1, pageSize = 10, trayOpened = true) => {
+  const fetchNotificationList = useCallback(async (app, page = 1, pageSize = 10, trayOpened = true) => {
     try {
       updateNotificationData({ notificationListStatus: RequestStatus.IN_PROGRESS });
       const data = await getNotificationsList(app, page, pageSize, trayOpened);
@@ -112,9 +112,9 @@ export function useNotification() {
     } catch (error) {
       return { notificationStatus: RequestStatus.FAILED };
     }
-  };
+  }, [appName, apps, tabsCount, notifications, updateNotificationData]);
 
-  const markNotificationsAsSeen = async (app) => {
+  const markNotificationsAsSeen = useCallback(async (app) => {
     try {
       await markNotificationSeen(app);
 
@@ -122,9 +122,9 @@ export function useNotification() {
     } catch (error) {
       return { notificationStatus: RequestStatus.FAILED };
     }
-  };
+  }, []);
 
-  const markAllNotificationsAsRead = async (app) => {
+  const markAllNotificationsAsRead = useCallback(async (app) => {
     try {
       await markAllNotificationRead(app);
       const updatedNotifications = Object.fromEntries(
@@ -140,9 +140,9 @@ export function useNotification() {
     } catch (error) {
       return { notificationStatus: RequestStatus.FAILED };
     }
-  };
+  }, [notifications]);
 
-  const markNotificationsAsRead = async (notificationId) => {
+  const markNotificationsAsRead = useCallback(async (notificationId) => {
     try {
       const data = camelCaseObject(await markNotificationRead(notificationId));
 
@@ -157,7 +157,7 @@ export function useNotification() {
     } catch (error) {
       return { notificationStatus: RequestStatus.FAILED };
     }
-  };
+  }, [notifications]);
 
   return {
     fetchAppsNotificationCount,

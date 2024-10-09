@@ -1,7 +1,5 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, {
-  useCallback, useEffect, useMemo,
-  useRef, useState,
+  useCallback, useEffect, useMemo, useRef, useState,
 } from 'react';
 
 import classNames from 'classnames';
@@ -39,7 +37,7 @@ const Notifications = ({ notificationAppData, showLeftMargin }) => {
 
   const toggleNotificationTray = useCallback(() => {
     setEnableNotificationTray(prevState => !prevState);
-  }, [enableNotificationTray]);
+  }, []);
 
   const handleClickOutsideNotificationTray = useCallback((event) => {
     if (!popoverRef.current?.contains(event.target) && !buttonRef.current?.contains(event.target)) {
@@ -68,7 +66,7 @@ const Notifications = ({ notificationAppData, showLeftMargin }) => {
       window.removeEventListener('scroll', handleScroll);
       setAppName('discussion');
     };
-  }, []);
+  }, [handleClickOutsideNotificationTray]);
 
   const enableFeedback = useCallback(() => {
     window.usabilla_live('click');
@@ -103,7 +101,7 @@ const Notifications = ({ notificationAppData, showLeftMargin }) => {
     handleActiveTab,
     updateNotificationData,
     ...notificationData,
-  }));
+  }), [enableNotificationTray, appName, handleActiveTab, updateNotificationData, notificationData]);
 
   return (
     <notificationsContext.Provider value={notificationContextValue}>
@@ -116,7 +114,7 @@ const Notifications = ({ notificationAppData, showLeftMargin }) => {
           <Popover
             id="notificationTray"
             data-testid="notification-tray"
-            className={classNames('overflow-auto rounded-0 border-0 position-fixed', {
+            className={classNames('overflow-auto rounded-0 border-0 position-fixed ml-1.5 mt-2', {
               'w-100': !isOnMediumScreen && !isOnLargeScreen,
               'medium-screen': isOnMediumScreen,
               'large-screen': isOnLargeScreen,
@@ -127,20 +125,19 @@ const Notifications = ({ notificationAppData, showLeftMargin }) => {
             <div ref={popoverRef} className="height-inherit">
               <div ref={headerRef}>
                 <Popover.Title
-                  as="h2"
-                  className={`d-flex justify-content-between px-4 pt-4 pb-14px m-0 border-0 text-primary-500 zIndex-2 font-size-18
+                  as="h1"
+                  className={`d-flex justify-content-between px-4 pt-4 pb-2.5 m-0 border-0 text-primary-500 zIndex-2 font-size-18
                   line-height-24 bg-white position-sticky`}
                 >
                   {intl.formatMessage(messages.notificationTitle)}
                   <Hyperlink
                     destination={`${getConfig().ACCOUNT_SETTINGS_URL}/notifications`}
                     target="_blank"
-                    rel="noopener noreferrer"
                     showLaunchIcon={false}
                   >
                     <Icon
                       src={Settings}
-                      className="icon-size-20 text-primary-500"
+                      className="text-primary-500 icon-size-20"
                       data-testid="setting-icon"
                       screenReaderText="preferences settings icon"
                     />
@@ -175,6 +172,7 @@ const Notifications = ({ notificationAppData, showLeftMargin }) => {
             iconAs={Icon}
             variant="light"
             iconClassNames="text-primary-500"
+            size="inline"
             className={classNames('mr-1 notification-button', {
               'ml-4': showLeftMargin,
             })}
@@ -184,8 +182,8 @@ const Notifications = ({ notificationAppData, showLeftMargin }) => {
           <Bubble
             variant="error"
             data-testid="notification-count"
-            className={classNames('notification-badge zindex-1 cursor-pointer', {
-              'notification-badge-unrounded': tabsCount.count >= 10,
+            className={classNames('notification-badge zindex-1 cursor-pointer p-1', {
+              'notification-badge-unrounded mt-1': tabsCount.count >= 10,
               'notification-badge-rounded': tabsCount.count < 10,
             })}
             onClick={toggleNotificationTray}

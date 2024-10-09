@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
+import { useLocation } from 'react-router-dom';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
@@ -13,7 +14,7 @@ import Notifications from '../new-notifications';
 import UserMenuItem from '../common/UserMenuItem';
 import { useNotification } from '../new-notifications/data/hook';
 
-const AuthenticatedUserDropdown = (props) => {
+const NewAuthenticatedUserDropdown = (props) => {
   const {
     intl,
     enterpriseLearnerPortalLink,
@@ -25,8 +26,9 @@ const AuthenticatedUserDropdown = (props) => {
   const [isNewNotificationView, setIsNewNotificationView] = useState(false);
   const [notificationAppData, setNotificationAppData] = useState();
   const { fetchAppsNotificationCount } = useNotification();
+  const location = useLocation();
 
-  const fetchNotifications = useCallback(async () => {
+  const fetchNotificationData = useCallback(async () => {
     const data = await fetchAppsNotificationCount();
     const { showNotificationsTray, isNewNotificationViewEnabled } = data;
 
@@ -36,10 +38,11 @@ const AuthenticatedUserDropdown = (props) => {
   }, [fetchAppsNotificationCount]);
 
   useEffect(() => {
+    const fetchNotifications = async () => {
+      await fetchNotificationData();
+    };
     fetchNotifications();
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [window.location.href]);
+  }, [fetchNotificationData, location.pathname]);
 
   let dashboardMenuItem = (
     <Dropdown.Item href={`${getConfig().LMS_BASE_URL}/dashboard`}>
@@ -48,7 +51,7 @@ const AuthenticatedUserDropdown = (props) => {
   );
 
   let careersMenuItem = (
-    <Dropdown.Item href="https://careers.edx.org/">
+    <Dropdown.Item href={`${getConfig().CAREERS_URL}`}>
       {intl.formatMessage(messages.career)}
       <Badge className="px-2 mx-2" variant="warning">
         {intl.formatMessage(messages.newAlert)}
@@ -120,7 +123,7 @@ const AuthenticatedUserDropdown = (props) => {
   );
 };
 
-AuthenticatedUserDropdown.propTypes = {
+NewAuthenticatedUserDropdown.propTypes = {
   enterpriseLearnerPortalLink: PropTypes.string,
   intl: intlShape.isRequired,
   username: PropTypes.string.isRequired,
@@ -128,10 +131,10 @@ AuthenticatedUserDropdown.propTypes = {
   email: PropTypes.string,
 };
 
-AuthenticatedUserDropdown.defaultProps = {
+NewAuthenticatedUserDropdown.defaultProps = {
   enterpriseLearnerPortalLink: '',
   name: '',
   email: '',
 };
 
-export default injectIntl(AuthenticatedUserDropdown);
+export default injectIntl(NewAuthenticatedUserDropdown);
