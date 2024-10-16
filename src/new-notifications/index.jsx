@@ -154,7 +154,6 @@ const Notifications = ({ notificationAppData, showLeftMargin }) => {
                   onClick={enableFeedback}
                   variant="warning"
                   className="notification-feedback-widget"
-                  alt="feedback button"
                 >
                   {intl.formatMessage(messages.feedback)}
                 </Button>
