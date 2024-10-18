@@ -1,6 +1,5 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { useLocation } from 'react-router-dom';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
@@ -10,9 +9,7 @@ import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import { Dropdown, Badge } from '@openedx/paragon';
 
 import messages from './messages';
-import Notifications from '../new-notifications';
 import UserMenuItem from '../common/UserMenuItem';
-import { useNotification } from '../new-notifications/data/hook';
 
 const NewAuthenticatedUserDropdown = (props) => {
   const {
@@ -22,27 +19,6 @@ const NewAuthenticatedUserDropdown = (props) => {
     name,
     email,
   } = props;
-  const [showTray, setShowTray] = useState();
-  const [isNewNotificationView, setIsNewNotificationView] = useState(false);
-  const [notificationAppData, setNotificationAppData] = useState();
-  const { fetchAppsNotificationCount } = useNotification();
-  const location = useLocation();
-
-  const fetchNotificationData = useCallback(async () => {
-    const data = await fetchAppsNotificationCount();
-    const { showNotificationsTray, isNewNotificationViewEnabled } = data;
-
-    setShowTray(showNotificationsTray);
-    setIsNewNotificationView(isNewNotificationViewEnabled);
-    setNotificationAppData(data);
-  }, [fetchAppsNotificationCount]);
-
-  useEffect(() => {
-    const fetchNotifications = async () => {
-      await fetchNotificationData();
-    };
-    fetchNotifications();
-  }, [fetchNotificationData, location.pathname]);
 
   let dashboardMenuItem = (
     <Dropdown.Item href={`${getConfig().LMS_BASE_URL}/dashboard`}>
@@ -83,43 +59,39 @@ const NewAuthenticatedUserDropdown = (props) => {
     careersMenuItem = '';
   }
 
-  if (!isNewNotificationView) {
-    return null;
-  }
+  // if (!isNewNotificationView) {
+  //   return null;
+  // }
 
   return (
-    <>
-      <a className="text-gray-700" href={`${getConfig().SUPPORT_URL}`}>{intl.formatMessage(messages.help)}</a>
-      {showTray && <Notifications notificationAppData={notificationAppData} />}
-      <Dropdown className="user-dropdown ml-3">
-        <Dropdown.Toggle variant="outline-primary" id="user-dropdown">
-          <FontAwesomeIcon icon={faUserCircle} size="lg" />
-        </Dropdown.Toggle>
-        <Dropdown.Menu className="dropdown-menu-right zIndex-2">
-          {userMenuItem}
-          {dashboardMenuItem}
-          {careersMenuItem}
-          <Dropdown.Item href={`${getConfig().ACCOUNT_PROFILE_URL}/u/${username}`}>
-            {intl.formatMessage(messages.profile)}
+    <Dropdown className="user-dropdown ml-3">
+      <Dropdown.Toggle variant="outline-primary" id="user-dropdown">
+        <FontAwesomeIcon icon={faUserCircle} size="lg" />
+      </Dropdown.Toggle>
+      <Dropdown.Menu className="dropdown-menu-right zIndex-2">
+        {userMenuItem}
+        {dashboardMenuItem}
+        {careersMenuItem}
+        <Dropdown.Item href={`${getConfig().ACCOUNT_PROFILE_URL}/u/${username}`}>
+          {intl.formatMessage(messages.profile)}
+        </Dropdown.Item>
+        <Dropdown.Item href={getConfig().ACCOUNT_SETTINGS_URL}>
+          {intl.formatMessage(messages.account)}
+        </Dropdown.Item>
+        {!enterpriseLearnerPortalLink && getConfig().ORDER_HISTORY_URL && (
+          // Users should only see Order History if they do not have an available
+          // learner portal, because an available learner portal currently means
+          // that they access content via B2B Subscriptions, in which context an "order"
+          // is not relevant.
+          <Dropdown.Item href={getConfig().ORDER_HISTORY_URL}>
+            {intl.formatMessage(messages.orderHistory)}
           </Dropdown.Item>
-          <Dropdown.Item href={getConfig().ACCOUNT_SETTINGS_URL}>
-            {intl.formatMessage(messages.account)}
-          </Dropdown.Item>
-          {!enterpriseLearnerPortalLink && getConfig().ORDER_HISTORY_URL && (
-            // Users should only see Order History if they do not have an available
-            // learner portal, because an available learner portal currently means
-            // that they access content via B2B Subscriptions, in which context an "order"
-            // is not relevant.
-            <Dropdown.Item href={getConfig().ORDER_HISTORY_URL}>
-              {intl.formatMessage(messages.orderHistory)}
-            </Dropdown.Item>
-          )}
-          <Dropdown.Item href={getConfig().LOGOUT_URL}>
-            {intl.formatMessage(messages.signOut)}
-          </Dropdown.Item>
-        </Dropdown.Menu>
-      </Dropdown>
-    </>
+        )}
+        <Dropdown.Item href={getConfig().LOGOUT_URL}>
+          {intl.formatMessage(messages.signOut)}
+        </Dropdown.Item>
+      </Dropdown.Menu>
+    </Dropdown>
   );
 };
 
