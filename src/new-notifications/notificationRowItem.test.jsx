@@ -5,25 +5,38 @@ import {
   waitFor,
 } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import { Context as ResponsiveContext } from 'react-responsive';
 import { Factory } from 'rosie';
 
 import { initializeMockApp } from '@edx/frontend-platform';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
+import { AppContext } from '@edx/frontend-platform/react';
 
-import AuthenticatedUserDropdown from '../learning-header/New-AuthenticatedUserDropdown';
+import LearningHeader from '../learning-header/LearningHeader';
 import mockNotificationsResponse from './test-utils';
 
 import './data/__factories__';
 
+const authenticatedUser = {
+  userId: 'abc123',
+  username: 'edX',
+  name: 'edX',
+  email: 'test@example.com',
+  roles: [],
+  administrator: false,
+};
+const contextValue = {
+  authenticatedUser,
+  config: {},
+};
+
 async function renderComponent() {
   render(
     <MemoryRouter>
-      <ResponsiveContext.Provider>
+      <AppContext.Provider value={contextValue}>
         <IntlProvider locale="en" messages={{}}>
-          <AuthenticatedUserDropdown />
+          <LearningHeader />
         </IntlProvider>
-      </ResponsiveContext.Provider>
+      </AppContext.Provider>
     </MemoryRouter>,
   );
 }
