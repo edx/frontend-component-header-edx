@@ -1,4 +1,6 @@
-import React, { useEffect, useContext, useCallback } from 'react';
+import React, {
+  useEffect, useContext, useCallback, useRef,
+} from 'react';
 
 import { Tab, Tabs } from '@openedx/paragon';
 
@@ -23,12 +25,14 @@ const NotificationTabs = () => {
     }
   }, [appName, fetchNotificationList, updateNotificationData, markNotificationsAsSeen, tabsCount]);
 
+  const fetchNotificationsRef = useRef(fetchNotificationsList);
+  fetchNotificationsRef.current = fetchNotificationsList;
+
   useEffect(() => {
     const fetchNotifications = async () => {
-      await fetchNotificationsList();
+      await fetchNotificationsRef.current();
     };
     fetchNotifications();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [appName]);
 
   return (

@@ -200,17 +200,19 @@ const Notifications = ({ notificationAppData, showLeftMargin }) => {
 
 Notifications.propTypes = {
   showLeftMargin: PropTypes.bool,
-  notificationAppData: {
-    apps: PropTypes.object.isRequired,
-    appsId: PropTypes.arrayOf(PropTypes.string).isRequired, // Array of strings
-    isNewNotificationViewEnabled: PropTypes.bool.isRequired, // Boolean
-    notificationExpiryDays: PropTypes.number.isRequired, // Number
-    notificationStatus: PropTypes.string.isRequired, // String
-    showNotificationsTray: PropTypes.bool.isRequired, // Boolean
+  notificationAppData: PropTypes.shape({
+    apps: PropTypes.objectOf(
+      PropTypes.arrayOf(PropTypes.string),
+    ).isRequired,
+    appsId: PropTypes.arrayOf(PropTypes.string).isRequired,
+    isNewNotificationViewEnabled: PropTypes.bool.isRequired,
+    notificationExpiryDays: PropTypes.number.isRequired,
+    notificationStatus: PropTypes.string.isRequired,
+    showNotificationsTray: PropTypes.bool.isRequired,
     tabsCount: PropTypes.shape({
-      count: PropTypes.number.isRequired, // Assuming count is a number
+      count: PropTypes.number.isRequired,
     }).isRequired,
-  },
+  }),
 };
 
 Notifications.defaultProps = {
