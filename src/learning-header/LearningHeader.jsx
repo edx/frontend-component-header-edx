@@ -1,5 +1,9 @@
-import React, { useContext } from 'react';
+import React, {
+  useEffect, useState, useCallback, useContext,
+} from 'react';
 import PropTypes from 'prop-types';
+import { useLocation } from 'react-router-dom';
+
 import { useEnterpriseConfig } from '@edx/frontend-enterprise-utils';
 import {
   APP_CONFIG_INITIALIZED, getConfig, ensureConfig, subscribe, mergeConfig,
@@ -9,13 +13,17 @@ import { AppContext, AppProvider } from '@edx/frontend-platform/react';
 import classNames from 'classnames';
 import AnonymousUserMenu from './AnonymousUserMenu';
 import AuthenticatedUserDropdown from './AuthenticatedUserDropdown';
+import NewAuthenticatedUserDropdown from './New-AuthenticatedUserDropdown';
 import messages from './messages';
 import lightning from '../lightning';
 import store from '../store';
+import { useNotification } from '../new-notifications/data/hook';
+import Notifications from '../new-notifications';
 
 ensureConfig([
   'ACCOUNT_SETTINGS_URL',
   'NOTIFICATION_FEEDBACK_URL',
+  'CAREERS_URL',
 ], 'Learning Header component');
 
 subscribe(APP_CONFIG_INITIALIZED, () => {
@@ -23,6 +31,7 @@ subscribe(APP_CONFIG_INITIALIZED, () => {
   mergeConfig({
     ACCOUNT_SETTINGS_URL: process.env.ACCOUNT_SETTINGS_URL || '',
     NOTIFICATION_FEEDBACK_URL: process.env.NOTIFICATION_FEEDBACK_URL || '',
+    CAREERS_URL: process.env.CAREERS_URL || '',
   }, 'Learning Header additional config');
 });
 
@@ -47,6 +56,27 @@ const LearningHeader = ({
   courseOrg, courseNumber, courseTitle, intl, showUserDropdown,
 }) => {
   const { authenticatedUser } = useContext(AppContext);
+  const [showTray, setShowTray] = useState();
+  const [isNewNotificationView, setIsNewNotificationView] = useState(false);
+  const [notificationAppData, setNotificationAppData] = useState();
+  const { fetchAppsNotificationCount } = useNotification();
+  const location = useLocation();
+
+  const fetchNotificationData = useCallback(async () => {
+    const data = await fetchAppsNotificationCount();
+    const { showNotificationsTray, isNewNotificationViewEnabled } = data;
+
+    setShowTray(showNotificationsTray);
+    setIsNewNotificationView(isNewNotificationViewEnabled);
+    setNotificationAppData(data);
+  }, [fetchAppsNotificationCount]);
+
+  useEffect(() => {
+    const fetchNotifications = async () => {
+      await fetchNotificationData();
+    };
+    fetchNotifications();
+  }, [fetchNotificationData, location.pathname]);
 
   const { enterpriseLearnerPortalLink, enterpriseCustomerBrandingConfig } = useEnterpriseConfig(
     authenticatedUser,
@@ -88,14 +118,28 @@ const LearningHeader = ({
             <span className="d-block small m-0">{courseOrg} {courseNumber}</span>
             <span className="d-block m-0 font-weight-bold course-title">{courseTitle}</span>
           </div>
-          {showUserDropdown && authenticatedUser && (
-          <AuthenticatedUserDropdown
-            enterpriseLearnerPortalLink={enterpriseLearnerPortalLink}
-            username={authenticatedUser.username}
-            name={authenticatedUser.name}
-            email={authenticatedUser.email}
-          />
-          )}
+          {showUserDropdown && authenticatedUser
+          && isNewNotificationView ? (
+            <>
+              <a className="text-gray-700" href={getConfig().SUPPORT_URL}>
+                {intl.formatMessage(messages.help)}
+              </a>
+              {showTray && <Notifications notificationAppData={notificationAppData} />}
+              <NewAuthenticatedUserDropdown
+                enterpriseLearnerPortalLink={enterpriseLearnerPortalLink}
+                username={authenticatedUser.username}
+                name={authenticatedUser.name}
+                email={authenticatedUser.email}
+              />
+            </>
+            ) : (
+              <AuthenticatedUserDropdown
+                enterpriseLearnerPortalLink={enterpriseLearnerPortalLink}
+                username={authenticatedUser.username}
+                name={authenticatedUser.name}
+                email={authenticatedUser.email}
+              />
+            )}
           {showUserDropdown && !authenticatedUser && (
           <AnonymousUserMenu />
           )}

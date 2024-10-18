@@ -12,7 +12,7 @@ import { Dropdown, Badge } from '@openedx/paragon';
 import messages from './messages';
 import Notifications from '../Notifications';
 import UserMenuItem from '../common/UserMenuItem';
-import { selectShowNotificationTray } from '../Notifications/data/selectors';
+import { selectShowNotificationTray, selectIsNewNotificationViewEnabled } from '../Notifications/data/selectors';
 import { fetchAppsNotificationCount } from '../Notifications/data/thunks';
 
 const AuthenticatedUserDropdown = (props) => {
@@ -25,6 +25,7 @@ const AuthenticatedUserDropdown = (props) => {
   } = props;
   const dispatch = useDispatch();
   const showNotificationsTray = useSelector(selectShowNotificationTray);
+  const isNewNotificationViewEnabled = useSelector(selectIsNewNotificationViewEnabled);
 
   useEffect(() => {
     dispatch(fetchAppsNotificationCount());
@@ -68,6 +69,10 @@ const AuthenticatedUserDropdown = (props) => {
       </Dropdown.Item>
     );
     careersMenuItem = '';
+  }
+
+  if (isNewNotificationViewEnabled) {
+    return null;
   }
 
   return (
