@@ -59,10 +59,6 @@ const NewAuthenticatedUserDropdown = (props) => {
     careersMenuItem = '';
   }
 
-  // if (!isNewNotificationView) {
-  //   return null;
-  // }
-
   return (
     <Dropdown className="user-dropdown ml-3">
       <Dropdown.Toggle variant="outline-primary" id="user-dropdown">

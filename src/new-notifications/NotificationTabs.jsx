@@ -14,6 +14,7 @@ const NotificationTabs = () => {
   const {
     appName, handleActiveTab, tabsCount, appsId, updateNotificationData,
   } = useContext(notificationsContext);
+  const fetchNotificationsRef = useRef(null);
   const { fetchNotificationList, markNotificationsAsSeen } = useNotification();
 
   const fetchNotificationsList = useCallback(async () => {
@@ -25,8 +26,9 @@ const NotificationTabs = () => {
     }
   }, [appName, fetchNotificationList, updateNotificationData, markNotificationsAsSeen, tabsCount]);
 
-  const fetchNotificationsRef = useRef(fetchNotificationsList);
-  fetchNotificationsRef.current = fetchNotificationsList;
+  useEffect(() => {
+    fetchNotificationsRef.current = fetchNotificationsList;
+  }, [fetchNotificationsList]);
 
   useEffect(() => {
     const fetchNotifications = async () => {
