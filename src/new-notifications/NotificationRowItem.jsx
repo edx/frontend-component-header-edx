@@ -58,6 +58,7 @@ const NotificationRowItem = ({
           <div className="py-2 w-100 px-0 cursor-pointer">
             <span
               className="line-height-24 text-gray-700 mb-2 notification-item-content overflow-hidden content"
+              // eslint-disable-next-line react/no-danger
               dangerouslySetInnerHTML={{ __html: sanitizedContent }}
               data-testid={`notification-content-${id}`}
             />

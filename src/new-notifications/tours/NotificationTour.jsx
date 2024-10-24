@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useContext } from 'react';
 import isEmpty from 'lodash/isEmpty';
 import { ProductTour } from '@openedx/paragon';
@@ -17,7 +16,7 @@ const NotificationTour = () => {
     };
 
     fetchTourData();
-  }, []);
+  }, [fetchNotificationTours, updateNotificationData]);
 
   return (
     !isEmpty(config) && (

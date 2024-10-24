@@ -1,8 +1,5 @@
-import React, {
-  useEffect, useState, useCallback, useContext,
-} from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import { useLocation } from 'react-router-dom';
 
 import { useEnterpriseConfig } from '@edx/frontend-enterprise-utils';
 import {
@@ -12,13 +9,10 @@ import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import { AppContext, AppProvider } from '@edx/frontend-platform/react';
 import classNames from 'classnames';
 import AnonymousUserMenu from './AnonymousUserMenu';
-import AuthenticatedUserDropdown from './AuthenticatedUserDropdown';
-import NewAuthenticatedUserDropdown from './New-AuthenticatedUserDropdown';
 import messages from './messages';
 import lightning from '../lightning';
 import store from '../store';
-import { useNotification } from '../new-notifications/data/hook';
-import Notifications from '../new-notifications';
+import AuthenticatedUser from './AuthenticatedUser';
 
 ensureConfig([
   'ACCOUNT_SETTINGS_URL',
@@ -56,27 +50,6 @@ const LearningHeader = ({
   courseOrg, courseNumber, courseTitle, intl, showUserDropdown,
 }) => {
   const { authenticatedUser } = useContext(AppContext);
-  const [showTray, setShowTray] = useState();
-  const [isNewNotificationView, setIsNewNotificationView] = useState(false);
-  const [notificationAppData, setNotificationAppData] = useState();
-  const { fetchAppsNotificationCount } = useNotification();
-  const location = useLocation();
-
-  const fetchNotificationData = useCallback(async () => {
-    const data = await fetchAppsNotificationCount();
-    const { showNotificationsTray, isNewNotificationViewEnabled } = data;
-
-    setShowTray(showNotificationsTray);
-    setIsNewNotificationView(isNewNotificationViewEnabled);
-    setNotificationAppData(data);
-  }, [fetchAppsNotificationCount]);
-
-  useEffect(() => {
-    const fetchNotifications = async () => {
-      await fetchNotificationData();
-    };
-    fetchNotifications();
-  }, [fetchNotificationData, location.pathname]);
 
   const { enterpriseLearnerPortalLink, enterpriseCustomerBrandingConfig } = useEnterpriseConfig(
     authenticatedUser,
@@ -118,30 +91,14 @@ const LearningHeader = ({
             <span className="d-block small m-0">{courseOrg} {courseNumber}</span>
             <span className="d-block m-0 font-weight-bold course-title">{courseTitle}</span>
           </div>
-          {showUserDropdown && authenticatedUser
-          && isNewNotificationView ? (
-            <>
-              <a className="text-gray-700" href={getConfig().SUPPORT_URL}>
-                {intl.formatMessage(messages.help)}
-              </a>
-              {showTray && <Notifications notificationAppData={notificationAppData} />}
-              <NewAuthenticatedUserDropdown
-                enterpriseLearnerPortalLink={enterpriseLearnerPortalLink}
-                username={authenticatedUser.username}
-                name={authenticatedUser.name}
-                email={authenticatedUser.email}
-              />
-            </>
-            ) : (
-              <AuthenticatedUserDropdown
-                enterpriseLearnerPortalLink={enterpriseLearnerPortalLink}
-                username={authenticatedUser.username}
-                name={authenticatedUser.name}
-                email={authenticatedUser.email}
-              />
-            )}
+          {authenticatedUser && (
+            <AuthenticatedUser
+              showUserDropdown={showUserDropdown}
+              enterpriseLearnerPortalLink={enterpriseLearnerPortalLink}
+            />
+          )}
           {showUserDropdown && !authenticatedUser && (
-          <AnonymousUserMenu />
+            <AnonymousUserMenu />
           )}
         </div>
       </header>

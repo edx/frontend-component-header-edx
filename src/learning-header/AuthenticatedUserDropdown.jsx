@@ -77,7 +77,6 @@ const AuthenticatedUserDropdown = (props) => {
 
   return (
     <>
-      <a className="text-gray-700" href={`${getConfig().SUPPORT_URL}`}>{intl.formatMessage(messages.help)}</a>
       {showNotificationsTray && <Notifications />}
       <Dropdown className="user-dropdown ml-3">
         <Dropdown.Toggle variant="outline-primary" id="user-dropdown">

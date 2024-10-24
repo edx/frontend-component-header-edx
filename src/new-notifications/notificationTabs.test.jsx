@@ -94,7 +94,7 @@ describe('Notification Tabs test cases.', () => {
 
       expect(selectedTab).not.toHaveClass('active');
 
-      await act(async () => { fireEvent.click(notificationTab[0], { dataset: { rbEventKey: 'reminders' } }); });
+      fireEvent.click(notificationTab[0], { dataset: { rbEventKey: 'reminders' } });
       selectedTab = screen.queryByTestId('notification-tab-reminders');
 
       expect(selectedTab).toHaveClass('active');
