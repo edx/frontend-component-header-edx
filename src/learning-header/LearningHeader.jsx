@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
+
 import { useEnterpriseConfig } from '@edx/frontend-enterprise-utils';
 import {
   APP_CONFIG_INITIALIZED, getConfig, ensureConfig, subscribe, mergeConfig,
@@ -8,14 +9,15 @@ import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import { AppContext, AppProvider } from '@edx/frontend-platform/react';
 import classNames from 'classnames';
 import AnonymousUserMenu from './AnonymousUserMenu';
-import AuthenticatedUserDropdown from './AuthenticatedUserDropdown';
 import messages from './messages';
 import lightning from '../lightning';
 import store from '../store';
+import AuthenticatedUser from './AuthenticatedUser';
 
 ensureConfig([
   'ACCOUNT_SETTINGS_URL',
   'NOTIFICATION_FEEDBACK_URL',
+  'CAREERS_URL',
 ], 'Learning Header component');
 
 subscribe(APP_CONFIG_INITIALIZED, () => {
@@ -23,6 +25,7 @@ subscribe(APP_CONFIG_INITIALIZED, () => {
   mergeConfig({
     ACCOUNT_SETTINGS_URL: process.env.ACCOUNT_SETTINGS_URL || '',
     NOTIFICATION_FEEDBACK_URL: process.env.NOTIFICATION_FEEDBACK_URL || '',
+    CAREERS_URL: process.env.CAREERS_URL || '',
   }, 'Learning Header additional config');
 });
 
@@ -88,16 +91,14 @@ const LearningHeader = ({
             <span className="d-block small m-0">{courseOrg} {courseNumber}</span>
             <span className="d-block m-0 font-weight-bold course-title">{courseTitle}</span>
           </div>
-          {showUserDropdown && authenticatedUser && (
-          <AuthenticatedUserDropdown
-            enterpriseLearnerPortalLink={enterpriseLearnerPortalLink}
-            username={authenticatedUser.username}
-            name={authenticatedUser.name}
-            email={authenticatedUser.email}
-          />
+          {authenticatedUser && (
+            <AuthenticatedUser
+              showUserDropdown={showUserDropdown}
+              enterpriseLearnerPortalLink={enterpriseLearnerPortalLink}
+            />
           )}
           {showUserDropdown && !authenticatedUser && (
-          <AnonymousUserMenu />
+            <AnonymousUserMenu />
           )}
         </div>
       </header>
