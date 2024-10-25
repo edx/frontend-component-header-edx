@@ -27,11 +27,6 @@ export function useNotification() {
   const {
     appName, apps, tabsCount, notifications, updateNotificationData,
   } = useContext(notificationsContext);
-  const { authenticatedUser } = useContext(AppContext);
-  const [showTray, setShowTray] = useState();
-  const [isNewNotificationView, setIsNewNotificationView] = useState(false);
-  const [notificationAppData, setNotificationAppData] = useState();
-  const location = useLocation();
 
   const normalizeNotificationCounts = useCallback(({ countByAppName, ...countData }) => {
     const appIds = Object.keys(countByAppName);
@@ -170,6 +165,24 @@ export function useNotification() {
     }
   }, [notifications]);
 
+  return {
+    fetchAppsNotificationCount,
+    fetchNotificationList,
+    getNotifications,
+    markNotificationsAsSeen,
+    markAllNotificationsAsRead,
+    markNotificationsAsRead,
+  };
+}
+
+export function useAppNotifications() {
+  const { authenticatedUser } = useContext(AppContext);
+  const [showTray, setShowTray] = useState();
+  const [isNewNotificationView, setIsNewNotificationView] = useState(false);
+  const [notificationAppData, setNotificationAppData] = useState();
+  const { fetchAppsNotificationCount } = useNotification();
+  const location = useLocation();
+
   const fetchNotificationData = useCallback(async () => {
     const data = await fetchAppsNotificationCount();
     const { showNotificationsTray, isNewNotificationViewEnabled } = data;
@@ -183,19 +196,12 @@ export function useNotification() {
     const fetchNotifications = async () => {
       await fetchNotificationData();
     };
-    // Only fetch notifications when user is authenticated
     if (authenticatedUser) {
       fetchNotifications();
     }
   }, [fetchNotificationData, authenticatedUser, location.pathname]);
 
   return {
-    fetchAppsNotificationCount,
-    fetchNotificationList,
-    getNotifications,
-    markNotificationsAsSeen,
-    markAllNotificationsAsRead,
-    markNotificationsAsRead,
     showTray,
     isNewNotificationView,
     notificationAppData,
