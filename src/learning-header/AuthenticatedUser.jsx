@@ -24,7 +24,7 @@ const BaseAuthenticatedUser = ({ children }) => {
 };
 
 BaseAuthenticatedUser.propTypes = {
-  children: PropTypes.arrayOf(PropTypes.node).isRequired,
+  children: PropTypes.node.isRequired,
 };
 
 const AuthenticatedUser = ({
@@ -73,7 +73,4 @@ AuthenticatedUser.propTypes = {
   showUserDropdown: PropTypes.bool.isRequired,
 };
 
-AuthenticatedUser.defaultProps = {
-};
-
-export default React.memo(AuthenticatedUser);
+export default AuthenticatedUser;
