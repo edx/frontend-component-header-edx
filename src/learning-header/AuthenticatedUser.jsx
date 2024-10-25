@@ -8,7 +8,7 @@ import { AppContext } from '@edx/frontend-platform/react';
 import AuthenticatedUserDropdown from './AuthenticatedUserDropdown';
 import NewAuthenticatedUserDropdown from './New-AuthenticatedUserDropdown';
 import messages from './messages';
-import { useNotification } from '../new-notifications/data/hook';
+import { useAppNotifications } from '../new-notifications/data/hook';
 import Notifications from '../new-notifications';
 
 const BaseAuthenticatedUser = ({ children }) => {
@@ -36,7 +36,7 @@ const AuthenticatedUser = ({
     showTray,
     isNewNotificationView,
     notificationAppData,
-  } = useNotification();
+  } = useAppNotifications();
 
   if (isNewNotificationView) {
     return (
