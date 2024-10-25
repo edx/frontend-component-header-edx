@@ -19,6 +19,7 @@ const initialState = {
   showNotificationsTray: false,
   pagination: {},
   trayOpened: false,
+  isNewNotificationViewEnabled: false,
 };
 const slice = createSlice({
   name: 'notifications',
@@ -54,6 +55,7 @@ const slice = createSlice({
     fetchNotificationsCountSuccess: (state, { payload }) => {
       const {
         countByAppName, appIds, apps, count, showNotificationsTray, notificationExpiryDays,
+        isNewNotificationViewEnabled,
       } = payload;
       state.tabsCount = { count, ...countByAppName };
       state.appsId = appIds;
@@ -61,6 +63,7 @@ const slice = createSlice({
       state.showNotificationsTray = showNotificationsTray;
       state.notificationStatus = RequestStatus.SUCCESSFUL;
       state.notificationExpiryDays = notificationExpiryDays;
+      state.isNewNotificationViewEnabled = isNewNotificationViewEnabled;
     },
     markAllNotificationsAsReadSuccess: (state) => {
       const updatedNotifications = Object.fromEntries(

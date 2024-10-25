@@ -48,7 +48,6 @@
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-redux": "7.2.9",
-    "react-router-dom": "^6.25.1",
     "react-test-renderer": "17.0.2",
     "reactifex": "1.1.1",
     "redux": "4.2.1",
@@ -68,6 +67,7 @@
     "babel-polyfill": "6.26.0",
     "classnames": "2.5.1",
     "core-js": "3.37.1",
+    "dompurify": "^3.1.7",
     "lodash": "4.17.21",
     "react-redux": "7.2.9",
     "react-responsive": "^10.0.0",
@@ -81,6 +81,7 @@
     "@openedx/paragon": "^21.11.0",
     "prop-types": "^15.5.10",
     "react": "^16.9.0 || ^17.0.0",
-    "react-dom": "^16.9.0 || ^17.0.0"
+    "react-dom": "^16.9.0 || ^17.0.0",
+    "react-router-dom": "^6.0.0"
   }
 }
