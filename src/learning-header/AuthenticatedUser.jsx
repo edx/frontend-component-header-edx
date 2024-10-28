@@ -7,8 +7,8 @@ import { useIntl } from '@edx/frontend-platform/i18n';
 import { AppContext } from '@edx/frontend-platform/react';
 import AuthenticatedUserDropdown from './AuthenticatedUserDropdown';
 import messages from './messages';
-import { useAppNotifications } from '../notifications/data/hook';
-import Notifications from '../notifications';
+import { useAppNotifications } from '../Notification/data/hook';
+import Notifications from '../Notification';
 
 const BaseAuthenticatedUser = ({ children }) => {
   const intl = useIntl();
