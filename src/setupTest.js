@@ -14,7 +14,6 @@ import { configure as configureAuth, MockAuthService } from '@edx/frontend-platf
 import { render as rtlRender } from '@testing-library/react';
 import AppProvider from '@edx/frontend-platform/react/AppProvider';
 import { IntlProvider } from 'react-intl';
-import ResizeObserver from 'resize-observer-polyfill';
 import appMessages from './i18n';
 
 // These configuration values are usually set in webpack's EnvironmentPlugin however
@@ -40,7 +39,6 @@ process.env.LOGO_URL = 'https://edx-cdn.org/v3/prod/logo.svg';
 process.env.LOGO_TRADEMARK_URL = 'https://edx-cdn.org/v3/prod/logo-trademark.svg';
 process.env.LOGO_WHITE_URL = 'https://edx-cdn.org/v3/prod/logo-white.svg';
 process.env.FAVICON_URL = 'https://edx-cdn.org/v3/prod/favicon.ico';
-global.ResizeObserver = ResizeObserver;
 
 class MockLoggingService {
   logInfo = jest.fn();

@@ -48,8 +48,7 @@
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-test-renderer": "17.0.2",
-    "reactifex": "1.1.1",
-    "resize-observer-polyfill": "^1.5.1"
+    "reactifex": "1.1.1"
   },
   "dependencies": {
     "@edx/frontend-enterprise-utils": "9.1.0",
