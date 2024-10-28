@@ -6,10 +6,9 @@ import { useIntl } from '@edx/frontend-platform/i18n';
 
 import { AppContext } from '@edx/frontend-platform/react';
 import AuthenticatedUserDropdown from './AuthenticatedUserDropdown';
-import NewAuthenticatedUserDropdown from './New-AuthenticatedUserDropdown';
 import messages from './messages';
-import { useAppNotifications } from '../new-notifications/data/hook';
-import Notifications from '../new-notifications';
+import { useAppNotifications } from '../notifications/data/hook';
+import Notifications from '../notifications';
 
 const BaseAuthenticatedUser = ({ children }) => {
   const intl = useIntl();
@@ -32,37 +31,18 @@ const AuthenticatedUser = ({
   enterpriseLearnerPortalLink,
 }) => {
   const { authenticatedUser } = useContext(AppContext);
-  const {
-    showTray,
-    isNewNotificationView,
-    notificationAppData,
-  } = useAppNotifications();
+  const { showTray, notificationAppData } = useAppNotifications();
 
-  if (isNewNotificationView) {
-    return (
-      <BaseAuthenticatedUser>
-        {showTray && <Notifications notificationAppData={notificationAppData} />}
-        {showUserDropdown && (
-        <NewAuthenticatedUserDropdown
+  return (
+    <BaseAuthenticatedUser>
+      {showTray && <Notifications notificationAppData={notificationAppData} />}
+      {showUserDropdown && (
+        <AuthenticatedUserDropdown
           enterpriseLearnerPortalLink={enterpriseLearnerPortalLink}
           username={authenticatedUser.username}
           name={authenticatedUser.name}
           email={authenticatedUser.email}
         />
-        )}
-      </BaseAuthenticatedUser>
-    );
-  }
-
-  return (
-    <BaseAuthenticatedUser>
-      {showUserDropdown && (
-      <AuthenticatedUserDropdown
-        enterpriseLearnerPortalLink={enterpriseLearnerPortalLink}
-        username={authenticatedUser.username}
-        name={authenticatedUser.name}
-        email={authenticatedUser.email}
-      />
       )}
     </BaseAuthenticatedUser>
   );

@@ -2,62 +2,59 @@ import React, { useCallback, useContext, useMemo } from 'react';
 
 import classNames from 'classnames';
 import isEmpty from 'lodash/isEmpty';
-import { useDispatch, useSelector } from 'react-redux';
 
 import { useIntl } from '@edx/frontend-platform/i18n';
 import { Button, Icon, Spinner } from '@openedx/paragon';
 import { AutoAwesome, CheckCircleLightOutline } from '@openedx/paragon/icons';
 
-import {
-  selectExpiryDays, selectNotificationListStatus, selectNotificationsByIds, selectNotificationTabs,
-  selectPaginationData,
-  selectSelectedAppName,
-} from './data/selectors';
-import { RequestStatus } from './data/slice';
-import { fetchNotificationList, markAllNotificationsAsRead } from './data/thunks';
-import NotificationContext from './context';
+import { RequestStatus } from './data/constants';
+import NotificationPopoverContext from './context/notificationPopoverContext';
 import messages from './messages';
 import NotificationEmptySection from './NotificationEmptySection';
 import NotificationRowItem from './NotificationRowItem';
 import { splitNotificationsByTime } from './utils';
+import { notificationsContext } from './context/notificationsContext';
+import { useNotification } from './data/hook';
 
 const NotificationSections = () => {
   const intl = useIntl();
-  const dispatch = useDispatch();
-  const selectedAppName = useSelector(selectSelectedAppName);
-  const notificationRequestStatus = useSelector(selectNotificationListStatus);
-  const notifications = useSelector(selectNotificationsByIds(selectedAppName));
-  const { hasMorePages, currentPage } = useSelector(selectPaginationData);
-  const notificationTabs = useSelector(selectNotificationTabs);
-  const expiryDays = useSelector(selectExpiryDays);
-  const { popoverHeaderRef, notificationRef } = useContext(NotificationContext);
+  const {
+    appName, notificationListStatus, pagination,
+    notificationExpiryDays, appsId, updateNotificationData,
+  } = useContext(notificationsContext);
+  const { getNotifications, markAllNotificationsAsRead, fetchNotificationList } = useNotification();
+  const notificationList = getNotifications();
+  const { hasMorePages, currentPage } = pagination || {};
+  const { popoverHeaderRef, notificationRef } = useContext(NotificationPopoverContext);
   const { today = [], earlier = [] } = useMemo(
-    () => splitNotificationsByTime(notifications),
-    [notifications],
+    () => splitNotificationsByTime(notificationList),
+    [notificationList],
   );
 
-  const handleMarkAllAsRead = useCallback(() => {
-    dispatch(markAllNotificationsAsRead(selectedAppName));
-  }, [dispatch, selectedAppName]);
+  const handleMarkAllAsRead = useCallback(async () => {
+    const data = await markAllNotificationsAsRead(appName);
+    updateNotificationData(data);
+  }, [appName, markAllNotificationsAsRead, updateNotificationData]);
 
-  const loadMoreNotifications = useCallback(() => {
-    dispatch(fetchNotificationList({ appName: selectedAppName, page: currentPage + 1 }));
-  }, [currentPage, dispatch, selectedAppName]);
+  const loadMoreNotifications = useCallback(async () => {
+    const data = await fetchNotificationList(appName, currentPage + 1);
+    updateNotificationData(data);
+  }, [fetchNotificationList, appName, currentPage, updateNotificationData]);
 
   const renderNotificationSection = (section, items) => {
     if (isEmpty(items)) { return null; }
 
     return (
       <div className="pb-2">
-        <div className="d-flex justify-content-between align-items-center py-10px mb-2">
+        <div className="d-flex justify-content-between align-items-center py-2 mb-2">
           <span className="text-gray-500 line-height-10">
             {section === 'today' && intl.formatMessage(messages.notificationTodayHeading)}
             {section === 'earlier' && intl.formatMessage(messages.notificationEarlierHeading)}
           </span>
-          {notifications?.length > 0 && (section === 'earlier' ? today.length === 0 : true) && (
+          {notificationList?.length > 0 && (section === 'earlier' ? today.length === 0 : true) && (
             <Button
               variant="link"
-              className="font-size-14 line-height-10 text-decoration-none p-0 border-0 text-info-500"
+              className="small line-height-10 text-decoration-none p-0 border-0 text-info-500"
               onClick={handleMarkAllAsRead}
               data-testid="mark-all-read"
             >
@@ -81,26 +78,26 @@ const NotificationSections = () => {
     );
   };
 
-  const shouldRenderEmptyNotifications = notifications.length === 0
-    && notificationRequestStatus === RequestStatus.SUCCESSFUL
+  const shouldRenderEmptyNotifications = notificationList?.length === 0
+    && notificationListStatus === RequestStatus.SUCCESSFUL
     && notificationRef?.current
     && popoverHeaderRef?.current;
 
   return (
     <div
       className={classNames('px-4', {
-        'mt-4': notificationTabs.length > 1,
-        'pb-3.5': notifications.length > 0,
+        'mt-4': appsId.length > 1,
+        'pb-3.5': appsId.length > 0,
       })}
       data-testid="notification-tray-section"
     >
       {renderNotificationSection('today', today)}
       {renderNotificationSection('earlier', earlier)}
-      {(hasMorePages === undefined || hasMorePages) && notificationRequestStatus === RequestStatus.IN_PROGRESS ? (
+      {(hasMorePages === undefined || hasMorePages) && notificationListStatus === RequestStatus.IN_PROGRESS ? (
         <div className="d-flex justify-content-center p-4">
           <Spinner animation="border" variant="primary" size="lg" data-testid="notifications-loading-spinner" />
         </div>
-      ) : (hasMorePages && notificationRequestStatus === RequestStatus.SUCCESSFUL && (
+      ) : (hasMorePages && notificationListStatus === RequestStatus.SUCCESSFUL && notificationList.length >= 10 && (
         <Button
           variant="primary"
           className="w-100 bg-primary-500"
@@ -112,19 +109,19 @@ const NotificationSections = () => {
       )
       )}
       {
-        notifications.length > 0 && !hasMorePages && notificationRequestStatus === RequestStatus.SUCCESSFUL && (
+        notificationList.length > 0 && !hasMorePages && notificationListStatus === RequestStatus.SUCCESSFUL && (
           <div
             className="d-flex flex-column my-5"
             data-testid="notifications-list-complete"
           >
             <Icon className="mx-auto icon-size-56" src={CheckCircleLightOutline} />
-            <div className="mx-auto mb-3 font-size-22 notification-end-title line-height-24">
+            <div className="mx-auto mb-3  mt-3.5 lead notification-end-title line-height-24">
               {intl.formatMessage(messages.allRecentNotificationsMessage)}
             </div>
             <div className="d-flex flex-row mx-auto text-gray-500">
               <Icon src={AutoAwesome} />
-              <span className="font-size-14 line-height-normal">
-                {intl.formatMessage(messages.expiredNotificationsDeleteMessage, { days: expiryDays })}
+              <span className="small line-height-normal">
+                {intl.formatMessage(messages.expiredNotificationsDeleteMessage, { days: notificationExpiryDays })}
               </span>
             </div>
           </div>

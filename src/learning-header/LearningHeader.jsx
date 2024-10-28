@@ -6,12 +6,11 @@ import {
   APP_CONFIG_INITIALIZED, getConfig, ensureConfig, subscribe, mergeConfig,
 } from '@edx/frontend-platform';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
-import { AppContext, AppProvider } from '@edx/frontend-platform/react';
+import { AppContext } from '@edx/frontend-platform/react';
 import classNames from 'classnames';
 import AnonymousUserMenu from './AnonymousUserMenu';
 import messages from './messages';
 import lightning from '../lightning';
-import store from '../store';
 import AuthenticatedUser from './AuthenticatedUser';
 
 ensureConfig([
@@ -77,32 +76,30 @@ const LearningHeader = ({
   }
 
   return (
-    <AppProvider store={store} wrapWithRouter={false}>
-      <header className="learning-header">
-        <a className="sr-only sr-only-focusable" href="#main-content">{intl.formatMessage(messages.skipNavLink)}</a>
-        <div className="px-4 py-2.5 d-flex align-items-center learning-header-container">
-          {headerLogo}
-          <div
-            className={classNames('flex-grow-1', {
-              'course-title-lockup': courseTitle || courseOrg || courseNumber,
-            })}
-            style={{ lineHeight: 1 }}
-          >
-            <span className="d-block small m-0">{courseOrg} {courseNumber}</span>
-            <span className="d-block m-0 font-weight-bold course-title">{courseTitle}</span>
-          </div>
-          {authenticatedUser && (
-            <AuthenticatedUser
-              showUserDropdown={showUserDropdown}
-              enterpriseLearnerPortalLink={enterpriseLearnerPortalLink}
-            />
-          )}
-          {showUserDropdown && !authenticatedUser && (
-            <AnonymousUserMenu />
-          )}
+    <header className="learning-header">
+      <a className="sr-only sr-only-focusable" href="#main-content">{intl.formatMessage(messages.skipNavLink)}</a>
+      <div className="px-4 py-2.5 d-flex align-items-center learning-header-container">
+        {headerLogo}
+        <div
+          className={classNames('flex-grow-1', {
+            'course-title-lockup': courseTitle || courseOrg || courseNumber,
+          })}
+          style={{ lineHeight: 1 }}
+        >
+          <span className="d-block small m-0">{courseOrg} {courseNumber}</span>
+          <span className="d-block m-0 font-weight-bold course-title">{courseTitle}</span>
         </div>
-      </header>
-    </AppProvider>
+        {authenticatedUser && (
+        <AuthenticatedUser
+          showUserDropdown={showUserDropdown}
+          enterpriseLearnerPortalLink={enterpriseLearnerPortalLink}
+        />
+        )}
+        {showUserDropdown && !authenticatedUser && (
+        <AnonymousUserMenu />
+        )}
+      </div>
+    </header>
   );
 };
 

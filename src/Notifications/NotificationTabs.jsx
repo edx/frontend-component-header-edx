@@ -1,57 +1,61 @@
-import React, { useCallback, useEffect } from 'react';
-
-import { useDispatch, useSelector } from 'react-redux';
+import React, {
+  useEffect, useContext, useCallback, useRef,
+} from 'react';
 
 import { Tab, Tabs } from '@openedx/paragon';
 
-import {
-  selectNotificationTabs, selectNotificationTabsCount, selectSelectedAppName, selectTrayOpened,
-} from './data/selectors';
-import { toggleTrayEvent, updateAppNameRequest } from './data/slice';
-import { fetchNotificationList, markNotificationsAsSeen } from './data/thunks';
 import NotificationSections from './NotificationSections';
 import { useFeedbackWrapper } from './utils';
+import { notificationsContext } from './context/notificationsContext';
+import { useNotification } from './data/hook';
 
 const NotificationTabs = () => {
   useFeedbackWrapper();
-  const dispatch = useDispatch();
-  const selectedAppName = useSelector(selectSelectedAppName);
-  const notificationUnseenCounts = useSelector(selectNotificationTabsCount);
-  const notificationTabs = useSelector(selectNotificationTabs);
-  const trayOpened = useSelector(selectTrayOpened);
+  const {
+    appName, handleActiveTab, tabsCount, appsId, updateNotificationData,
+  } = useContext(notificationsContext);
+  const fetchNotificationsRef = useRef(null);
+  const { fetchNotificationList, markNotificationsAsSeen } = useNotification();
+
+  const fetchNotificationsList = useCallback(async () => {
+    const data = await fetchNotificationList(appName);
+    updateNotificationData(data);
+
+    if (tabsCount[appName]) {
+      await markNotificationsAsSeen(appName);
+    }
+  }, [appName, fetchNotificationList, updateNotificationData, markNotificationsAsSeen, tabsCount]);
 
   useEffect(() => {
-    dispatch(fetchNotificationList({ appName: selectedAppName, trayOpened }));
-    if (notificationUnseenCounts[selectedAppName]) {
-      dispatch(markNotificationsAsSeen(selectedAppName));
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedAppName]);
+    fetchNotificationsRef.current = fetchNotificationsList;
+  }, [fetchNotificationsList]);
 
-  const handleActiveTab = useCallback((appName) => {
-    dispatch(updateAppNameRequest({ appName }));
-    dispatch(toggleTrayEvent(false));
-  }, [dispatch]);
+  useEffect(() => {
+    const fetchNotifications = async () => {
+      await fetchNotificationsRef.current();
+    };
+    fetchNotifications();
+  }, [appName]);
 
   return (
-    notificationTabs.length > 1
+    appsId.length > 1
       ? (
         <Tabs
           variant="tabs"
-          defaultActiveKey={selectedAppName}
+          defaultActiveKey={appName}
           onSelect={handleActiveTab}
           className="px-2.5 text-primary-500 tabs position-sticky zIndex-2 bg-white"
         >
-          {notificationTabs?.map((appName) => (
+          {appsId.map((app) => (
             <Tab
-              key={appName}
-              eventKey={appName}
-              title={appName}
-              notification={notificationUnseenCounts[appName]}
-              tabClassName="pt-0 py-10px px-2.5 d-flex border-top-0 mb-0 align-items-center line-height-24 text-capitalize"
-              data-testid={`notification-tab-${appName}`}
+              key={app}
+              eventKey={app}
+              title={app}
+              notification={tabsCount[app]}
+              tabClassName="pt-0 py-2 px-2.5 d-flex border-top-0 mb-0 align-items-center line-height-24 text-capitalize"
+              data-testid={`notification-tab-${app}`}
             >
-              {selectedAppName === appName && <NotificationSections />}
+              {appName === app && <NotificationSections />}
             </Tab>
           ))}
         </Tabs>

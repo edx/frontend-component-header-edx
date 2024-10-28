@@ -1,34 +1,42 @@
 import React from 'react';
 
 import {
-  act, fireEvent, render, screen, within,
+  act, fireEvent, render, screen, waitFor, within,
 } from '@testing-library/react';
-import { Context as ResponsiveContext } from 'react-responsive';
+import { MemoryRouter } from 'react-router-dom';
 import { Factory } from 'rosie';
 
 import { initializeMockApp } from '@edx/frontend-platform';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
-import { AppContext, AppProvider } from '@edx/frontend-platform/react';
+import { AppContext } from '@edx/frontend-platform/react';
 
-import AuthenticatedUserDropdown from '../learning-header/AuthenticatedUserDropdown';
-import { initializeStore } from '../store';
+import LearningHeader from '../learning-header/LearningHeader';
 import mockNotificationsResponse from './test-utils';
 
 import './data/__factories__';
 
-let store;
+const authenticatedUser = {
+  userId: 'abc123',
+  username: 'edX',
+  name: 'edX',
+  email: 'test@example.com',
+  roles: [],
+  administrator: false,
+};
+const contextValue = {
+  authenticatedUser,
+  config: {},
+};
 
-function renderComponent() {
+async function renderComponent() {
   render(
-    <ResponsiveContext.Provider>
-      <IntlProvider locale="en" messages={{}}>
-        <AppProvider store={store}>
-          <AppContext.Provider>
-            <AuthenticatedUserDropdown />
-          </AppContext.Provider>
-        </AppProvider>
-      </IntlProvider>
-    </ResponsiveContext.Provider>,
+    <MemoryRouter>
+      <AppContext.Provider value={contextValue}>
+        <IntlProvider locale="en" messages={{}}>
+          <LearningHeader />
+        </IntlProvider>
+      </AppContext.Provider>
+    </MemoryRouter>,
   );
 }
 
@@ -44,48 +52,52 @@ describe('Notification Tabs test cases.', () => {
     });
 
     Factory.resetAll();
-    store = initializeStore();
 
-    ({ store } = await mockNotificationsResponse());
+    await mockNotificationsResponse();
   });
 
-  it('Notification tabs displayed with default discussion tab selected and no unseen counts.', async () => {
-    renderComponent();
+  it('Successfully displayed with default discussion tab selected under notification tabs .', async () => {
+    await renderComponent();
 
-    const bellIcon = screen.queryByTestId('notification-bell-icon');
-    await act(async () => { fireEvent.click(bellIcon); });
+    await waitFor(async () => {
+      const bellIcon = screen.queryByTestId('notification-bell-icon');
+      await act(async () => { fireEvent.click(bellIcon); });
 
-    const tabs = screen.queryAllByRole('tab');
-    const selectedTab = tabs.find(tab => tab.getAttribute('aria-selected') === 'true');
+      const tabs = screen.queryAllByRole('tab');
+      const selectedTab = tabs.find(tab => tab.getAttribute('aria-selected') === 'true');
 
-    expect(tabs.length).toEqual(5);
-    expect(within(selectedTab).queryByText('discussion')).toBeInTheDocument();
-    expect(within(selectedTab).queryByRole('status')).not.toBeInTheDocument();
+      expect(tabs.length).toEqual(5);
+      expect(within(selectedTab).queryByText('discussion')).toBeInTheDocument();
+    });
   });
 
   it('Successfully showed unseen counts for unselected tabs.', async () => {
-    renderComponent();
-    const bellIcon = screen.queryByTestId('notification-bell-icon');
-    await act(async () => { fireEvent.click(bellIcon); });
+    await renderComponent();
+    await waitFor(async () => {
+      const bellIcon = screen.queryByTestId('notification-bell-icon');
+      await act(async () => { fireEvent.click(bellIcon); });
 
-    const tabs = screen.getAllByRole('tab');
+      const tabs = screen.getAllByRole('tab');
 
-    expect(within(tabs[0]).queryByRole('status')).toBeInTheDocument();
+      expect(within(tabs[0]).queryByRole('status')).toBeInTheDocument();
+    });
   });
 
   it('Successfully selected reminder tab.', async () => {
-    renderComponent();
+    await renderComponent();
 
-    const bellIcon = screen.queryByTestId('notification-bell-icon');
-    await act(async () => { fireEvent.click(bellIcon); });
-    const notificationTab = screen.getAllByRole('tab');
-    let selectedTab = screen.queryByTestId('notification-tab-reminders');
+    await waitFor(async () => {
+      const bellIcon = screen.queryByTestId('notification-bell-icon');
+      await act(async () => { fireEvent.click(bellIcon); });
+      const notificationTab = screen.getAllByRole('tab');
+      let selectedTab = screen.queryByTestId('notification-tab-reminders');
 
-    expect(selectedTab).not.toHaveClass('active');
+      expect(selectedTab).not.toHaveClass('active');
 
-    await act(async () => { fireEvent.click(notificationTab[0], { dataset: { rbEventKey: 'reminders' } }); });
-    selectedTab = screen.queryByTestId('notification-tab-reminders');
+      fireEvent.click(notificationTab[0], { dataset: { rbEventKey: 'reminders' } });
+      selectedTab = screen.queryByTestId('notification-tab-reminders');
 
-    expect(selectedTab).toHaveClass('active');
+      expect(selectedTab).toHaveClass('active');
+    });
   });
 });

@@ -2,39 +2,42 @@ import React from 'react';
 
 import {
   act, fireEvent, render, screen,
+  waitFor,
 } from '@testing-library/react';
-import MockAdapter from 'axios-mock-adapter';
-import { Context as ResponsiveContext } from 'react-responsive';
+import { MemoryRouter } from 'react-router-dom';
 import { Factory } from 'rosie';
 
 import { initializeMockApp } from '@edx/frontend-platform';
-import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
-import { AppContext, AppProvider } from '@edx/frontend-platform/react';
+import { AppContext } from '@edx/frontend-platform/react';
 
-import AuthenticatedUserDropdown from '../learning-header/AuthenticatedUserDropdown';
-import { initializeStore } from '../store';
-import { markNotificationAsReadApiUrl } from './data/api';
+import LearningHeader from '../learning-header/LearningHeader';
 import mockNotificationsResponse from './test-utils';
 
 import './data/__factories__';
 
-const markedNotificationAsReadApiUrl = markNotificationAsReadApiUrl();
+const authenticatedUser = {
+  userId: 'abc123',
+  username: 'edX',
+  name: 'edX',
+  email: 'test@example.com',
+  roles: [],
+  administrator: false,
+};
+const contextValue = {
+  authenticatedUser,
+  config: {},
+};
 
-let axiosMock;
-let store;
-
-function renderComponent() {
+async function renderComponent() {
   render(
-    <ResponsiveContext.Provider>
-      <IntlProvider locale="en" messages={{}}>
-        <AppProvider store={store}>
-          <AppContext.Provider>
-            <AuthenticatedUserDropdown />
-          </AppContext.Provider>
-        </AppProvider>
-      </IntlProvider>
-    </ResponsiveContext.Provider>,
+    <MemoryRouter>
+      <AppContext.Provider value={contextValue}>
+        <IntlProvider locale="en" messages={{}}>
+          <LearningHeader />
+        </IntlProvider>
+      </AppContext.Provider>
+    </MemoryRouter>,
   );
 }
 
@@ -49,39 +52,40 @@ describe('Notification row item test cases.', () => {
       },
     });
 
-    axiosMock = new MockAdapter(getAuthenticatedHttpClient());
     Factory.resetAll();
-    store = initializeStore();
 
-    ({ store, axiosMock } = await mockNotificationsResponse());
+    await mockNotificationsResponse();
   });
 
   it(
     'Successfully viewed notification icon, notification context, unread , course name and notification time.',
     async () => {
-      renderComponent();
+      await renderComponent();
 
-      const bellIcon = screen.queryByTestId('notification-bell-icon');
-      await act(async () => { fireEvent.click(bellIcon); });
+      await waitFor(async () => {
+        const bellIcon = screen.queryByTestId('notification-bell-icon');
+        await act(async () => { fireEvent.click(bellIcon); });
 
-      expect(screen.queryByTestId('notification-icon-1')).toBeInTheDocument();
-      expect(screen.queryByTestId('notification-content-1')).toBeInTheDocument();
-      expect(screen.queryByTestId('notification-course-1')).toBeInTheDocument();
-      expect(screen.queryByTestId('notification-created-date-1')).toBeInTheDocument();
-      expect(screen.queryByTestId('unread-notification-1')).toBeInTheDocument();
+        expect(screen.queryByTestId('notification-icon-1')).toBeInTheDocument();
+        expect(screen.queryByTestId('notification-content-1')).toBeInTheDocument();
+        expect(screen.queryByTestId('notification-course-1')).toBeInTheDocument();
+        expect(screen.queryByTestId('notification-created-date-1')).toBeInTheDocument();
+        expect(screen.queryByTestId('unread-notification-1')).toBeInTheDocument();
+      });
     },
   );
 
   it('Successfully marked notification as read.', async () => {
-    axiosMock.onPatch(markedNotificationAsReadApiUrl).reply(200, { message: 'Notification marked read.' });
-    renderComponent();
+    await renderComponent();
 
-    const bellIcon = screen.queryByTestId('notification-bell-icon');
-    await act(async () => { fireEvent.click(bellIcon); });
+    await waitFor(async () => {
+      const bellIcon = screen.queryByTestId('notification-bell-icon');
+      await act(async () => { fireEvent.click(bellIcon); });
 
-    const notification = screen.queryByTestId('notification-1');
-    await act(async () => { fireEvent.click(notification); });
+      const notification = screen.queryByTestId('notification-1');
+      await act(async () => { fireEvent.click(notification); });
 
-    expect(screen.queryByTestId('unread-notification-1')).not.toBeInTheDocument();
+      expect(screen.queryByTestId('unread-notification-1')).not.toBeInTheDocument();
+    });
   });
 });

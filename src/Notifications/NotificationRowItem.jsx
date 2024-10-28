@@ -1,38 +1,52 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useContext } from 'react';
 import PropTypes from 'prop-types';
 
-import { useDispatch } from 'react-redux';
 import * as timeago from 'timeago.js';
+import DOMPurify from 'dompurify';
 
 import { useIntl } from '@edx/frontend-platform/i18n';
-import { Icon } from '@openedx/paragon';
+import { Icon, Hyperlink } from '@openedx/paragon';
 
-import { markNotificationsAsRead } from './data/thunks';
 import messages from './messages';
 import timeLocale from '../common/time-locale';
 import { getIconByType } from './utils';
+import { useNotification } from './data/hook';
+import { notificationsContext } from './context/notificationsContext';
 
 const NotificationRowItem = ({
   id, type, contentUrl, content, courseName, createdAt, lastRead,
 }) => {
   timeago.register('time-locale', timeLocale);
   const intl = useIntl();
-  const dispatch = useDispatch();
+  const { markNotificationsAsRead } = useNotification();
+  const { updateNotificationData } = useContext(notificationsContext);
+  const sanitizedContent = DOMPurify.sanitize(content);
 
-  const handleMarkAsRead = useCallback(() => {
-    if (!lastRead) { dispatch(markNotificationsAsRead(id)); }
-  }, [dispatch, id, lastRead]);
+  const handleMarkAsRead = useCallback(async () => {
+    if (!lastRead) {
+      const data = await markNotificationsAsRead(id);
+      updateNotificationData(data);
+    }
+  }, [id, lastRead, markNotificationsAsRead, updateNotificationData]);
+
+  const handleNotificationClick = async (event) => {
+    event.preventDefault();
+
+    await handleMarkAsRead();
+
+    window.open(contentUrl, '_blank');
+  };
 
   const { icon: iconComponent, class: iconClass } = getIconByType(type);
 
   return (
-    <a
+    <Hyperlink
       target="_blank"
       className="d-flex mb-2 align-items-center text-decoration-none"
-      href={contentUrl}
-      onClick={handleMarkAsRead}
+      destination={contentUrl}
+      onClick={(event) => handleNotificationClick(event, contentUrl)}
       data-testid={`notification-${id}`}
-      rel="noopener noreferrer"
+      showLaunchIcon={false}
     >
       <Icon
         src={iconComponent}
@@ -41,15 +55,15 @@ const NotificationRowItem = ({
       />
       <div className="d-flex w-100" data-testid="notification-contents">
         <div className="d-flex align-items-center w-100">
-          <div className="py-10px w-100 px-0 cursor-pointer">
+          <div className="py-2 w-100 px-0 cursor-pointer">
             <span
               className="line-height-24 text-gray-700 mb-2 notification-item-content overflow-hidden content"
               // eslint-disable-next-line react/no-danger
-              dangerouslySetInnerHTML={{ __html: content }}
+              dangerouslySetInnerHTML={{ __html: sanitizedContent }}
               data-testid={`notification-content-${id}`}
             />
             <div className="py-0 d-flex">
-              <span className="font-size-12 text-gray-500 line-height-20">
+              <span className="x-small text-gray-500 line-height-20">
                 <span data-testid={`notification-course-${id}`}>{courseName}
                 </span>
                 <span className="text-light-700 px-1.5">{intl.formatMessage(messages.fullStop)}</span>
@@ -65,7 +79,7 @@ const NotificationRowItem = ({
           )}
         </div>
       </div>
-    </a>
+    </Hyperlink>
   );
 };
 
