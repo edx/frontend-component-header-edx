@@ -12,7 +12,7 @@ import { IntlProvider } from '@edx/frontend-platform/i18n';
 import { AppContext } from '@edx/frontend-platform/react';
 
 import LearningHeader from '../learning-header/LearningHeader';
-import mockNotificationsResponse from './data/api';
+import mockNotificationsResponse from './test-utils';
 
 import './data/__factories__';
 
