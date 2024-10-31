@@ -10,7 +10,8 @@ import UserMenuGroupItemSlot from './plugin-slots/UserMenuGroupItemSlot';
 import { Menu, MenuTrigger, MenuContent } from './Menu';
 import { LinkedLogo, Logo } from './Logo';
 import UserMenuItem from './common/UserMenuItem';
-
+import withNotifications from './Notification/withNotifications';
+import Notifications from './Notification';
 // i18n
 import messages from './Header.messages';
 
@@ -135,6 +136,8 @@ class MobileHeader extends React.Component {
       mainMenu,
       userMenu,
       loggedOutItems,
+      showTray,
+      notificationAppData,
     } = this.props;
     const logoProps = { src: logo, alt: logoAltText, href: logoDestination };
     const stickyClassName = stickyOnMobile ? 'sticky-top' : '';
@@ -173,6 +176,7 @@ class MobileHeader extends React.Component {
         </div>
         {userMenu.length > 0 || loggedOutItems.length > 0 ? (
           <div className="w-100 d-flex justify-content-end align-items-center">
+            {showTray && <Notifications notificationAppData={notificationAppData} />}
             <Menu tag="nav" aria-label={intl.formatMessage(messages['header.label.secondary.nav'])} className="position-static">
               <MenuTrigger
                 tag={AvatarButton}
@@ -227,7 +231,20 @@ MobileHeader.propTypes = {
   email: PropTypes.string,
   loggedIn: PropTypes.bool,
   stickyOnMobile: PropTypes.bool,
-
+  showTray: PropTypes.bool,
+  notificationAppData: PropTypes.shape({
+    apps: PropTypes.objectOf(
+      PropTypes.arrayOf(PropTypes.string),
+    ).isRequired,
+    appsId: PropTypes.arrayOf(PropTypes.string).isRequired,
+    isNewNotificationViewEnabled: PropTypes.bool.isRequired,
+    notificationExpiryDays: PropTypes.number.isRequired,
+    notificationStatus: PropTypes.string.isRequired,
+    showNotificationsTray: PropTypes.bool.isRequired,
+    tabsCount: PropTypes.shape({
+      count: PropTypes.number.isRequired,
+    }).isRequired,
+  }),
   // i18n
   intl: intlShape.isRequired,
 };
@@ -245,7 +262,16 @@ MobileHeader.defaultProps = {
   email: '',
   loggedIn: false,
   stickyOnMobile: true,
-
+  showTray: false,
+  notificationAppData: {
+    apps: { },
+    tabsCount: { },
+    appsId: [],
+    isNewNotificationViewEnabled: false,
+    notificationExpiryDays: 0,
+    notificationStatus: '',
+    showNotificationsTray: false,
+  },
 };
 
-export default injectIntl(MobileHeader);
+export default injectIntl(withNotifications(MobileHeader));

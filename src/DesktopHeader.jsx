@@ -10,6 +10,8 @@ import UserMenuGroupSlot from './plugin-slots/UserMenuGroupSlot';
 import UserMenuItem from './common/UserMenuItem';
 import { Menu, MenuTrigger, MenuContent } from './Menu';
 import { LinkedLogo, Logo } from './Logo';
+import withNotifications from './Notification/withNotifications';
+import Notifications from './Notification';
 
 // i18n
 import messages from './Header.messages';
@@ -153,6 +155,8 @@ class DesktopHeader extends React.Component {
       logoDestination,
       loggedIn,
       intl,
+      showTray,
+      notificationAppData,
     } = this.props;
     const logoProps = { src: logo, alt: logoAltText, href: logoDestination };
     const logoClasses = getConfig().AUTHN_MINIMAL_HEADER ? 'mw-100' : null;
@@ -177,6 +181,7 @@ class DesktopHeader extends React.Component {
                 ? (
                   <>
                     {this.renderSecondaryMenu()}
+                    {showTray && <Notifications notificationAppData={notificationAppData} showLeftMargin={false} />}
                     {this.renderUserMenu()}
                   </>
                 ) : this.renderLoggedOutItems()}
@@ -220,7 +225,20 @@ DesktopHeader.propTypes = {
   name: PropTypes.string,
   email: PropTypes.string,
   loggedIn: PropTypes.bool,
-
+  showTray: PropTypes.bool,
+  notificationAppData: PropTypes.shape({
+    apps: PropTypes.objectOf(
+      PropTypes.arrayOf(PropTypes.string),
+    ).isRequired,
+    appsId: PropTypes.arrayOf(PropTypes.string).isRequired,
+    isNewNotificationViewEnabled: PropTypes.bool.isRequired,
+    notificationExpiryDays: PropTypes.number.isRequired,
+    notificationStatus: PropTypes.string.isRequired,
+    showNotificationsTray: PropTypes.bool.isRequired,
+    tabsCount: PropTypes.shape({
+      count: PropTypes.number.isRequired,
+    }).isRequired,
+  }),
   // i18n
   intl: intlShape.isRequired,
 };
@@ -237,6 +255,16 @@ DesktopHeader.defaultProps = {
   name: '',
   email: '',
   loggedIn: false,
+  showTray: false,
+  notificationAppData: {
+    apps: { },
+    tabsCount: { },
+    appsId: [],
+    isNewNotificationViewEnabled: false,
+    notificationExpiryDays: 0,
+    notificationStatus: '',
+    showNotificationsTray: false,
+  },
 };
 
-export default injectIntl(DesktopHeader);
+export default injectIntl(withNotifications(DesktopHeader));
