@@ -177,7 +177,6 @@ export function useNotification() {
 
 export function useAppNotifications() {
   const { authenticatedUser } = useContext(AppContext);
-  const [showTray, setShowTray] = useState();
   const [isNewNotificationView, setIsNewNotificationView] = useState(false);
   const [notificationAppData, setNotificationAppData] = useState();
   const { fetchAppsNotificationCount } = useNotification();
@@ -185,9 +184,8 @@ export function useAppNotifications() {
 
   const fetchNotificationData = useCallback(async () => {
     const data = await fetchAppsNotificationCount();
-    const { showNotificationsTray, isNewNotificationViewEnabled } = data;
+    const { isNewNotificationViewEnabled } = data;
 
-    setShowTray(showNotificationsTray);
     setIsNewNotificationView(isNewNotificationViewEnabled);
     setNotificationAppData(data);
   }, [fetchAppsNotificationCount]);
@@ -202,7 +200,6 @@ export function useAppNotifications() {
   }, [fetchNotificationData, authenticatedUser, location.pathname]);
 
   return {
-    showTray,
     isNewNotificationView,
     notificationAppData,
   };

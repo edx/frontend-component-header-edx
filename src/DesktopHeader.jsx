@@ -155,7 +155,6 @@ class DesktopHeader extends React.Component {
       logoDestination,
       loggedIn,
       intl,
-      showTray,
       notificationAppData,
     } = this.props;
     const logoProps = { src: logo, alt: logoAltText, href: logoDestination };
@@ -181,7 +180,8 @@ class DesktopHeader extends React.Component {
                 ? (
                   <>
                     {this.renderSecondaryMenu()}
-                    {showTray && <Notifications notificationAppData={notificationAppData} showLeftMargin={false} />}
+                    {notificationAppData?.showNotificationsTray
+                     && <Notifications notificationAppData={notificationAppData} showLeftMargin={false} />}
                     {this.renderUserMenu()}
                   </>
                 ) : this.renderLoggedOutItems()}
@@ -225,7 +225,6 @@ DesktopHeader.propTypes = {
   name: PropTypes.string,
   email: PropTypes.string,
   loggedIn: PropTypes.bool,
-  showTray: PropTypes.bool,
   notificationAppData: PropTypes.shape({
     apps: PropTypes.objectOf(
       PropTypes.arrayOf(PropTypes.string),
@@ -255,7 +254,6 @@ DesktopHeader.defaultProps = {
   name: '',
   email: '',
   loggedIn: false,
-  showTray: false,
   notificationAppData: {
     apps: { },
     tabsCount: { },

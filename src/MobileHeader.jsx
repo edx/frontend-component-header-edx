@@ -136,7 +136,6 @@ class MobileHeader extends React.Component {
       mainMenu,
       userMenu,
       loggedOutItems,
-      showTray,
       notificationAppData,
     } = this.props;
     const logoProps = { src: logo, alt: logoAltText, href: logoDestination };
@@ -176,7 +175,7 @@ class MobileHeader extends React.Component {
         </div>
         {userMenu.length > 0 || loggedOutItems.length > 0 ? (
           <div className="w-100 d-flex justify-content-end align-items-center">
-            {showTray && <Notifications notificationAppData={notificationAppData} />}
+            {notificationAppData?.showNotificationsTray && <Notifications notificationAppData={notificationAppData} />}
             <Menu tag="nav" aria-label={intl.formatMessage(messages['header.label.secondary.nav'])} className="position-static">
               <MenuTrigger
                 tag={AvatarButton}
@@ -231,7 +230,6 @@ MobileHeader.propTypes = {
   email: PropTypes.string,
   loggedIn: PropTypes.bool,
   stickyOnMobile: PropTypes.bool,
-  showTray: PropTypes.bool,
   notificationAppData: PropTypes.shape({
     apps: PropTypes.objectOf(
       PropTypes.arrayOf(PropTypes.string),
@@ -262,10 +260,9 @@ MobileHeader.defaultProps = {
   email: '',
   loggedIn: false,
   stickyOnMobile: true,
-  showTray: false,
   notificationAppData: {
-    apps: { },
-    tabsCount: { },
+    apps: {},
+    tabsCount: {},
     appsId: [],
     isNewNotificationViewEnabled: false,
     notificationExpiryDays: 0,
