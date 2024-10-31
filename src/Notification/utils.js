@@ -53,7 +53,6 @@ export function useFeedbackWrapper() {
     try {
       const url = getConfig().NOTIFICATION_FEEDBACK_URL;
       if (url) {
-        // eslint-disable-next-line no-undef
         window.usabilla_live = lightningjs.require('usabilla_live', getConfig().NOTIFICATION_FEEDBACK_URL);
         window.usabilla_live('hide');
       }
