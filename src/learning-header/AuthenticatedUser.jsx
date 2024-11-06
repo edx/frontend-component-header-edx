@@ -31,11 +31,11 @@ const AuthenticatedUser = ({
   enterpriseLearnerPortalLink,
 }) => {
   const { authenticatedUser } = useContext(AppContext);
-  const { showTray, notificationAppData } = useAppNotifications();
+  const { notificationAppData } = useAppNotifications();
 
   return (
     <BaseAuthenticatedUser>
-      {showTray && <Notifications notificationAppData={notificationAppData} />}
+      {notificationAppData?.showNotificationsTray && <Notifications notificationAppData={notificationAppData} />}
       {showUserDropdown && (
         <AuthenticatedUserDropdown
           enterpriseLearnerPortalLink={enterpriseLearnerPortalLink}

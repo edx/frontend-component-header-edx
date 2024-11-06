@@ -56,6 +56,7 @@ const NotificationSections = () => {
               variant="link"
               className="small line-height-10 text-decoration-none p-0 border-0 text-info-500"
               onClick={handleMarkAllAsRead}
+              size="sm"
               data-testid="mark-all-read"
             >
               {intl.formatMessage(messages.notificationMarkAsRead)}
