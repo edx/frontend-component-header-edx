@@ -42,7 +42,7 @@ const NotificationRowItem = ({
   return (
     <Hyperlink
       target="_blank"
-      className="d-flex mb-2 align-items-center text-decoration-none"
+      className="d-flex mb-2 align-items-center text-decoration-none notification-post-link"
       destination={contentUrl}
       onClick={(event) => handleNotificationClick(event, contentUrl)}
       data-testid={`notification-${id}`}
