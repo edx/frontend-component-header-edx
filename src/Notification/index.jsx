@@ -81,9 +81,9 @@ const Notifications = ({ notificationAppData, showLeftMargin }) => {
     setAppName(selectedAppName);
     setNotificationData(prevData => ({
       ...prevData,
-      ...{ notificationListStatus: RequestStatus.IDLE },
+      ...{ notificationListStatus: appName === selectedAppName ? RequestStatus.SUCCESSFUL : RequestStatus.IN_PROGRESS },
     }));
-  }, []);
+  }, [appName]);
 
   const updateNotificationData = useCallback((data) => {
     setNotificationData(prevData => ({
@@ -150,13 +150,13 @@ const Notifications = ({ notificationAppData, showLeftMargin }) => {
                 </NotificationPopoverContext.Provider>
               </Popover.Content>
               {getConfig().NOTIFICATION_FEEDBACK_URL && (
-                <Button
-                  onClick={enableFeedback}
-                  variant="warning"
-                  className="notification-feedback-widget"
-                >
-                  {intl.formatMessage(messages.feedback)}
-                </Button>
+              <Button
+                onClick={enableFeedback}
+                variant="warning"
+                className="notification-feedback-widget"
+              >
+                {intl.formatMessage(messages.feedback)}
+              </Button>
               )}
             </div>
           </Popover>
@@ -178,18 +178,18 @@ const Notifications = ({ notificationAppData, showLeftMargin }) => {
             data-testid="notification-bell-icon"
           />
           {tabsCount?.count > 0 && (
-          <Bubble
-            variant="error"
-            data-testid="notification-count"
-            className={classNames('notification-badge zindex-1 cursor-pointer p-1', {
-              'notification-badge-unrounded mt-1': tabsCount.count >= 10,
-              'notification-badge-rounded': tabsCount.count < 10,
-            })}
-            onClick={toggleNotificationTray}
-          >
-            {tabsCount.count >= 100 ? <div className="d-flex">99<p className="mb-0 plus-icon">+</p></div>
-              : tabsCount.count}
-          </Bubble>
+            <Bubble
+              variant="error"
+              data-testid="notification-count"
+              className={classNames('notification-badge zindex-1 cursor-pointer p-1', {
+                'notification-badge-unrounded mt-1': tabsCount.count >= 10,
+                'notification-badge-rounded': tabsCount.count < 10,
+              })}
+              onClick={toggleNotificationTray}
+            >
+              {tabsCount.count >= 100 ? <div className="d-flex">99<p className="mb-0 plus-icon">+</p></div>
+                : tabsCount.count}
+            </Bubble>
           )}
         </div>
       </OverlayTrigger>

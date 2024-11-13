@@ -94,7 +94,7 @@ const NotificationSections = () => {
     >
       {renderNotificationSection('today', today)}
       {renderNotificationSection('earlier', earlier)}
-      {(hasMorePages === undefined || hasMorePages) && notificationListStatus === RequestStatus.IN_PROGRESS ? (
+      {notificationListStatus === RequestStatus.IN_PROGRESS ? (
         <div className="d-flex justify-content-center p-4">
           <Spinner animation="border" variant="primary" size="lg" data-testid="notifications-loading-spinner" />
         </div>
