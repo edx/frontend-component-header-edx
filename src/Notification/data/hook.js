@@ -98,7 +98,7 @@ export function useNotification() {
         newNotificationIds, notificationsKeyValuePair, pagination,
       } = normalizedData;
 
-      const existingNotificationIds = apps[appName];
+      const existingNotificationIds = apps[appName] || [];
       const { count } = tabsCount;
 
       return {

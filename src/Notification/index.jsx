@@ -4,6 +4,7 @@ import React, {
 
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
+import { useSearchParams } from 'react-router-dom';
 
 import { getConfig } from '@edx/frontend-platform';
 import { useIntl } from '@edx/frontend-platform/i18n';
@@ -26,12 +27,14 @@ const Notifications = ({ notificationAppData, showLeftMargin }) => {
   const intl = useIntl();
   const popoverRef = useRef(null);
   const headerRef = useRef(null);
+  const [searchParams] = useSearchParams();
   const buttonRef = useRef(null);
   const [enableNotificationTray, setEnableNotificationTray] = useState(false);
   const [appName, setAppName] = useState('discussion');
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
   const [notificationData, setNotificationData] = useState({});
   const [tabsCount, setTabsCount] = useState(notificationAppData?.tabsCount);
+  const [openFlag, setOpenFlag] = useState(false);
   const isOnMediumScreen = useIsOnMediumScreen();
   const isOnLargeScreen = useIsOnLargeScreen();
 
@@ -44,6 +47,16 @@ const Notifications = ({ notificationAppData, showLeftMargin }) => {
       setEnableNotificationTray(false);
     }
   }, []);
+
+  useEffect(() => {
+    const openTray = searchParams.get('showNotifications') === 'true';
+    const app = searchParams.get('app') || 'discussion';
+    if (!openFlag && Object.keys(tabsCount).length > 0) {
+      setAppName(app);
+      setEnableNotificationTray(openTray);
+      setOpenFlag(true);
+    }
+  }, [tabsCount, openFlag, searchParams]);
 
   useEffect(() => {
     setTabsCount(notificationAppData.tabsCount);
@@ -97,10 +110,10 @@ const Notifications = ({ notificationAppData, showLeftMargin }) => {
 
   const notificationContextValue = useMemo(() => ({
     enableNotificationTray,
-    appName,
     handleActiveTab,
     updateNotificationData,
     ...notificationData,
+    appName,
   }), [enableNotificationTray, appName, handleActiveTab, updateNotificationData, notificationData]);
 
   return (
