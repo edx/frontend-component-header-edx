@@ -71,16 +71,13 @@ describe('Notification test cases.', () => {
   }
 
   it.each(['true', 'false', null])(
-    'Notification tray opens when showNotifications query param is %s',
+    'Ensures correct rendering of the notification tray based on the showNotifications query parameter value %s',
     async (showNotifications) => {
       await setupMockNotificationCountResponse();
 
-      let url = '/';
-      if (showNotifications !== null) {
-        url = `/?showNotifications=${showNotifications}`;
-      }
+      const url = showNotifications ? `/?showNotifications=${showNotifications}` : '/';
       await renderComponent(url);
-      await waitFor(async () => {
+      await waitFor(() => {
         expect(screen.queryByTestId('notification-bell-icon')).toBeInTheDocument();
         if (showNotifications === 'true') {
           expect(screen.queryByTestId('notification-tray')).toBeInTheDocument();

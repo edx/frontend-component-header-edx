@@ -49,13 +49,12 @@ const Notifications = ({ notificationAppData, showLeftMargin }) => {
   }, []);
 
   useEffect(() => {
-    const openTray = searchParams.get('showNotifications') === 'true';
-    const app = searchParams.get('app') || 'discussion';
-    if (!openFlag && Object.keys(tabsCount).length > 0) {
-      setAppName(app);
-      setEnableNotificationTray(openTray);
-      setOpenFlag(true);
+    if (openFlag || Object.keys(tabsCount).length === 0) {
+      return;
     }
+    setAppName(searchParams.get('app') || 'discussion');
+    setEnableNotificationTray(searchParams.get('showNotifications') === 'true');
+    setOpenFlag(true);
   }, [tabsCount, openFlag, searchParams]);
 
   useEffect(() => {
