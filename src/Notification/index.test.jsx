@@ -34,9 +34,9 @@ const contextValue = {
   config: {},
 };
 
-async function renderComponent() {
+async function renderComponent(url = '/') {
   render(
-    <MemoryRouter>
+    <MemoryRouter initialEntries={[url]}>
       <AppContext.Provider value={contextValue}>
         <IntlProvider locale="en" messages={{}}>
           <LearningHeader />
@@ -69,6 +69,38 @@ describe('Notification test cases.', () => {
     axiosMock.onGet(notificationCountsApiUrl)
       .reply(200, (Factory.build('notificationsCount', { count, showNotificationsTray })));
   }
+
+  it.each(['true', 'false', null])(
+    'Ensures correct rendering of the notification tray based on the showNotifications query parameter value %s',
+    async (showNotifications) => {
+      await setupMockNotificationCountResponse();
+
+      const url = showNotifications ? `/?showNotifications=${showNotifications}` : '/';
+      await renderComponent(url);
+      await waitFor(() => {
+        expect(screen.queryByTestId('notification-bell-icon')).toBeInTheDocument();
+        if (showNotifications === 'true') {
+          expect(screen.queryByTestId('notification-tray')).toBeInTheDocument();
+        } else {
+          expect(screen.queryByTestId('notification-tray')).not.toBeInTheDocument();
+        }
+      });
+    },
+  );
+
+  it.each(['discussion', 'grades'])(
+    'Notification tray opens tab if app param is %s',
+    async (app) => {
+      await setupMockNotificationCountResponse();
+      const url = `/?showNotifications=true&app=${app}`;
+      await renderComponent(url);
+      await waitFor(() => {
+        expect(screen.queryByTestId('notification-bell-icon')).toBeInTheDocument();
+        expect(screen.queryByTestId('notification-tray')).toBeInTheDocument();
+        expect(screen.queryByTestId(`notification-tab-${app}`)).toHaveClass('active');
+      });
+    },
+  );
 
   it('Successfully showed bell icon and unseen count on it if unseen count is greater then 0.', async () => {
     await setupMockNotificationCountResponse();
