@@ -47,7 +47,7 @@ NavDropdownMenu.propTypes = {
   id: PropTypes.string.isRequired,
   email: PropTypes.string,
   name: PropTypes.string,
-  buttonTitle: PropTypes.string.isRequired,
+  buttonTitle: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
   items: PropTypes.arrayOf(PropTypes.shape({
     href: PropTypes.string,
     title: PropTypes.string,
