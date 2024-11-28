@@ -84,7 +84,15 @@ export function useNotification() {
         isNewNotificationViewEnabled,
       };
     } catch (error) {
-      return { notificationStatus: RequestStatus.FAILED };
+      return {
+        notificationStatus: RequestStatus.FAILED,
+        apps: {},
+        appsId: [],
+        isNewNotificationViewEnabled: false,
+        notificationExpiryDays: 0,
+        showNotificationsTray: false,
+        tabsCount: { count: 0 },
+      };
     }
   }, [normalizeNotificationCounts]);
 

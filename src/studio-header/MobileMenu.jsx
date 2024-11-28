@@ -20,7 +20,7 @@ const MobileMenu = ({
           >
             <ul className="p-0" style={{ listStyleType: 'none' }}>
               {items.map(item => (
-                <li className="mobile-menu-item">
+                <li className="mobile-menu-item" key={`${id}-${item.title}`}>
                   <a href={item.href}>
                     {item.title}
                   </a>
