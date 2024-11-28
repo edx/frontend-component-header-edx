@@ -28,6 +28,7 @@ ensureConfig([
   'LOGO_URL',
   'ACCOUNT_SETTINGS_URL',
   'NOTIFICATION_FEEDBACK_URL',
+  'STUDIO_BASE_URL',
 ], 'Header component');
 
 subscribe(APP_CONFIG_INITIALIZED, () => {
@@ -188,6 +189,7 @@ const Header = ({
     secondaryMenu: getConfig().MINIMAL_HEADER || getConfig().AUTHN_MINIMAL_HEADER ? [] : secondaryMenu,
     userMenu: getConfig().AUTHN_MINIMAL_HEADER ? [] : userMenu,
     loggedOutItems: getConfig().AUTHN_MINIMAL_HEADER ? [] : loggedOutItems,
+    studioBaseUrl: config.STUDIO_BASE_URL,
   };
 
   if (enterpriseCustomerBrandingConfig) {

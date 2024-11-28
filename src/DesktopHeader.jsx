@@ -207,7 +207,7 @@ DesktopHeader.propTypes = {
     items: PropTypes.arrayOf(PropTypes.shape({
       type: PropTypes.oneOf(['item', 'menu']),
       href: PropTypes.string,
-      content: PropTypes.string,
+      content: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
       disabled: PropTypes.bool,
       isActive: PropTypes.bool,
       onClick: PropTypes.func,
@@ -255,8 +255,8 @@ DesktopHeader.defaultProps = {
   email: '',
   loggedIn: false,
   notificationAppData: {
-    apps: { },
-    tabsCount: { },
+    apps: {},
+    tabsCount: {},
     appsId: [],
     isNewNotificationViewEnabled: false,
     notificationExpiryDays: 0,
