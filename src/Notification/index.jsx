@@ -230,8 +230,8 @@ Notifications.propTypes = {
 Notifications.defaultProps = {
   showLeftMargin: true,
   notificationAppData: {
-    apps: { },
-    tabsCount: { },
+    apps: {},
+    tabsCount: { count: 0 },
     appsId: [],
     isNewNotificationViewEnabled: false,
     notificationExpiryDays: 0,
