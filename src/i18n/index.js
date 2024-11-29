@@ -4,11 +4,12 @@
 // the file and use the Micro-frontend i18n pattern in new repositories.
 //
 
-// Skipped import due to missing 'frontend-component-header-edx/index.js' likely due to empty translations..
+import messagesFromFrontendComponentHeader from './messages/frontend-component-header';
 import messagesFromFrontendPlatform from './messages/frontend-platform';
 import messagesFromParagon from './messages/paragon';
 
 export default [
+  messagesFromFrontendComponentHeader,
   messagesFromFrontendPlatform,
   messagesFromParagon,
 ];
