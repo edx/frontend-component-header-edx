@@ -3,4 +3,3 @@ dist
 example
 node_modules
 src/lightning.js
-src/i18n/messages/
