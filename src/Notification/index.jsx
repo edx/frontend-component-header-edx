@@ -143,7 +143,7 @@ const Notifications = ({ notificationAppData, showLeftMargin }) => {
                 >
                   {intl.formatMessage(messages.notificationTitle)}
                   <Hyperlink
-                    destination={`${getConfig().ACCOUNT_SETTINGS_URL}/notifications`}
+                    destination={`${getConfig().ACCOUNT_SETTINGS_URL}/#notifications`}
                     target="_blank"
                     showLaunchIcon={false}
                   >
