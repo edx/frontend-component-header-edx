@@ -5,13 +5,13 @@ import { getConfig } from '@edx/frontend-platform';
 
 // Local Components
 import { AvatarButton } from '@openedx/paragon';
+import NotificationsSlot from './plugin-slots/NotificationsSlot';
 import UserMenuGroupSlot from './plugin-slots/UserMenuGroupSlot';
 import UserMenuGroupItemSlot from './plugin-slots/UserMenuGroupItemSlot';
 import { Menu, MenuTrigger, MenuContent } from './Menu';
 import { LinkedLogo, Logo } from './Logo';
 import UserMenuItem from './common/UserMenuItem';
-import withNotifications from './Notification/withNotifications';
-import Notifications from './Notification';
+
 // i18n
 import messages from './Header.messages';
 
@@ -136,7 +136,6 @@ class MobileHeader extends React.Component {
       mainMenu,
       userMenu,
       loggedOutItems,
-      notificationAppData,
     } = this.props;
     const logoProps = { src: logo, alt: logoAltText, href: logoDestination };
     const stickyClassName = stickyOnMobile ? 'sticky-top' : '';
@@ -175,7 +174,7 @@ class MobileHeader extends React.Component {
         </div>
         {userMenu.length > 0 || loggedOutItems.length > 0 ? (
           <div className="w-100 d-flex justify-content-end align-items-center">
-            {notificationAppData?.showNotificationsTray && <Notifications notificationAppData={notificationAppData} />}
+            <NotificationsSlot />
             <Menu tag="nav" aria-label={intl.formatMessage(messages['header.label.secondary.nav'])} className="position-static">
               <MenuTrigger
                 tag={AvatarButton}
@@ -271,4 +270,4 @@ MobileHeader.defaultProps = {
   },
 };
 
-export default injectIntl(withNotifications(MobileHeader));
+export default injectIntl(MobileHeader);

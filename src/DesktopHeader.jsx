@@ -5,13 +5,12 @@ import { getConfig } from '@edx/frontend-platform';
 import { AvatarButton, Dropdown } from '@openedx/paragon';
 
 // Local Components
+import NotificationsSlot from './plugin-slots/NotificationsSlot';
 import UserMenuGroupItemSlot from './plugin-slots/UserMenuGroupItemSlot';
 import UserMenuGroupSlot from './plugin-slots/UserMenuGroupSlot';
 import UserMenuItem from './common/UserMenuItem';
 import { Menu, MenuTrigger, MenuContent } from './Menu';
 import { LinkedLogo, Logo } from './Logo';
-import withNotifications from './Notification/withNotifications';
-import Notifications from './Notification';
 
 // i18n
 import messages from './Header.messages';
@@ -155,7 +154,6 @@ class DesktopHeader extends React.Component {
       logoDestination,
       loggedIn,
       intl,
-      notificationAppData,
     } = this.props;
     const logoProps = { src: logo, alt: logoAltText, href: logoDestination };
     const logoClasses = getConfig().AUTHN_MINIMAL_HEADER ? 'mw-100' : null;
@@ -180,8 +178,7 @@ class DesktopHeader extends React.Component {
                 ? (
                   <>
                     {this.renderSecondaryMenu()}
-                    {notificationAppData?.showNotificationsTray
-                     && <Notifications notificationAppData={notificationAppData} showLeftMargin={false} />}
+                    <NotificationsSlot />
                     {this.renderUserMenu()}
                   </>
                 ) : this.renderLoggedOutItems()}
@@ -265,4 +262,4 @@ DesktopHeader.defaultProps = {
   },
 };
 
-export default injectIntl(withNotifications(DesktopHeader));
+export default injectIntl(DesktopHeader);

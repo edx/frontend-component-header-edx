@@ -7,8 +7,7 @@ import { useIntl } from '@edx/frontend-platform/i18n';
 import { AppContext } from '@edx/frontend-platform/react';
 import AuthenticatedUserDropdown from './AuthenticatedUserDropdown';
 import messages from './messages';
-import { useAppNotifications } from '../Notification/data/hook';
-import Notifications from '../Notification';
+import NotificationsSlot from '../plugin-slots/NotificationsSlot';
 
 const BaseAuthenticatedUser = ({ children }) => {
   const intl = useIntl();
@@ -31,11 +30,10 @@ const AuthenticatedUser = ({
   enterpriseLearnerPortalLink,
 }) => {
   const { authenticatedUser } = useContext(AppContext);
-  const { notificationAppData } = useAppNotifications();
 
   return (
     <BaseAuthenticatedUser>
-      {notificationAppData?.showNotificationsTray && <Notifications notificationAppData={notificationAppData} />}
+      <NotificationsSlot />
       {showUserDropdown && (
         <AuthenticatedUserDropdown
           enterpriseLearnerPortalLink={enterpriseLearnerPortalLink}
