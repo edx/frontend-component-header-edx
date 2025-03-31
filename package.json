@@ -52,7 +52,7 @@
     "resize-observer-polyfill": "^1.5.1"
   },
   "dependencies": {
-    "@edx/frontend-enterprise-utils": "9.1.1",
+    "@edx/frontend-enterprise-utils": "10.0.0",
     "@fortawesome/fontawesome-svg-core": "^6.6.0",
     "@fortawesome/free-brands-svg-icons": "^6.6.0",
     "@fortawesome/free-regular-svg-icons": "^6.6.0",
