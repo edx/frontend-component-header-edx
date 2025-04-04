@@ -36,6 +36,7 @@ const MobileHeader = ({
 };
 
 MobileHeader.propTypes = {
+  /* eslint-disable react/no-unused-prop-types */
   studioBaseUrl: PropTypes.string.isRequired,
   logoutUrl: PropTypes.string.isRequired,
   number: PropTypes.string,
