@@ -2,15 +2,16 @@ import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { AppContext, AppProvider } from '@edx/frontend-platform/react';
 import { initialize, getConfig, subscribe, APP_READY } from '@edx/frontend-platform';
 import Header, { StudioHeader } from '@edx/frontend-component-header';
 
 import './index.scss';
+import { createRoot } from "react-dom/client";
 
+const rootNode = createRoot(document.getElementById('root'));
 subscribe(APP_READY, () => {
-  ReactDOM.render(
+  rootNode.render(
     <AppProvider>
       {/* We can fake out authentication by including another provider here with the data we want */}
       <AppContext.Provider value={{
