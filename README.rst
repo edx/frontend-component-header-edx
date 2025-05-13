@@ -8,10 +8,12 @@ frontend-component-header-edx
 Purpose
 ********
 
-This is the standard edX header for use in React applications. It has two exports:
+This is the standard edX header for use in React applications. It has four exports:
 
 - **default**: The Header Component
 - **messages**: for i18n in the form of ``{ locale: { key: translatedString } }``
+- **LearnerHeader** Header component for the Learner MFE
+- **StudioHeader** Header component for Studio
 
 Cloning and Startup
 ===================
@@ -56,6 +58,13 @@ Development
 - Install peer dependencies `npm install @edx/frontend-analytics @edx/frontend-platform @edx/frontend-i18n prop-types react`
 - Start the example server `npm start`
 - Visit http://localhost:1234
+
+Contributing
+============
+
+Since the exports from this package are used throughout many micro-frontends, it is important that updates are communicated effectively throughout the organization.
+
+When making updates to this repo, pull requests should be shared on the **#edx-fedx** Slack channel for soliciting review.
 
 License
 =======
