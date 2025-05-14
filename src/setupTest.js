@@ -1,7 +1,3 @@
-/* eslint-disable import/no-extraneous-dependencies */
-import 'core-js/stable';
-import 'regenerator-runtime/runtime';
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import '@testing-library/jest-dom';
@@ -9,11 +5,10 @@ import '@testing-library/jest-dom/extend-expect';
 import 'jest-chain';
 import { getConfig, mergeConfig } from '@edx/frontend-platform';
 import { configure as configureLogging } from '@edx/frontend-platform/logging';
-import { configure as configureI18n } from '@edx/frontend-platform/i18n';
+import { configure as configureI18n, IntlProvider } from '@edx/frontend-platform/i18n';
 import { configure as configureAuth, MockAuthService } from '@edx/frontend-platform/auth';
 import { render as rtlRender } from '@testing-library/react';
 import AppProvider from '@edx/frontend-platform/react/AppProvider';
-import { IntlProvider } from 'react-intl';
 import ResizeObserver from 'resize-observer-polyfill';
 import appMessages from './i18n';
 

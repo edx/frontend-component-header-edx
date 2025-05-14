@@ -1,6 +1,3 @@
-import 'core-js/stable';
-import 'regenerator-runtime/runtime';
-
 import React, {StrictMode} from 'react';
 import { AppContext, AppProvider } from '@edx/frontend-platform/react';
 import { initialize, getConfig, subscribe, APP_READY } from '@edx/frontend-platform';
