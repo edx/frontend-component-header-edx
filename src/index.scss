@@ -67,7 +67,7 @@
 
 .site-header-desktop {
   box-shadow: 0 1px 0 0 rgba(0,0,0,.1);
-  background: var(--pgn-color-white);
+  background: var(--pgn-color-white, $white);
   .nav-link {
     text-decoration: none;
   }
@@ -89,8 +89,8 @@
     .nav-link:focus,
     .nav-link.active,
     .expanded .nav-link {
-      background: var(--pgn-color-bg-active);
-      color: var(--pgn-color-active);
+      background: var(--pgn-color-bg-active, $component-active-bg);
+      color: var(--pgn-color-active, $component-active-color);
     }
   }
   .main-nav {
@@ -104,13 +104,13 @@
     .nav-link:focus,
     .nav-link.active,
     .expanded .nav-link {
-      background: var(--pgn-color-bg-active);
-      color: var(--pgn-color-active);
+      background: var(--pgn-color-bg-active, $component-active-bg);
+      color: var(--pgn-color-active, $component-active-color);
     }
     .menu {
       position: static;
       .menu-content {
-        border-top: solid 2px var(--pgn-color-bg-active);
+        border-top: solid 2px var(--pgn-color-bg-active, $component-active-bg);
         left: 0;
         right: 0;
         box-shadow: 0 1px 2px rgba(0,0,0,.25);
@@ -121,6 +121,6 @@
     }
   }
   .search-input {
-    border-radius: var(--pgn-size-rounded-pill);
+    border-radius: var(--pgn-size-rounded-pill, $rounded-pill);
   }
 }

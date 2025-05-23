@@ -33,7 +33,7 @@
   },
   "homepage": "https://github.com/edx/frontend-component-header-edx#readme",
   "devDependencies": {
-    "@edx/brand": "npm:@edx/elm-theme@1.8.2",
+    "@edx/brand": "npm:@edx/elm-theme@^1.8.2",
     "@edx/browserslist-config": "1.5.0",
     "@edx/frontend-platform": "^8.3.4",
     "@edx/reactifex": "2.2.0",
@@ -67,7 +67,7 @@
   },
   "peerDependencies": {
     "@edx/frontend-platform": "^7.0.1 || ^8.0.0",
-    "@openedx/paragon": "^23.0.0",
+    "@openedx/paragon": ">= 22.0.0 < 24.0.0",
     "prop-types": "^15.5.10",
     "react": "^16.9.0 || ^17.0.0 || ^18.0.0",
     "react-dom": "^16.9.0 || ^17.0.0 || ^18.0.0",
