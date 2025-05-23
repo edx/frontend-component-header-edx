@@ -1,6 +1,7 @@
-@import "@edx/brand/paragon/fonts";
-@import "@edx/brand/paragon/variables";
-@import "@openedx/paragon/scss/core/core";
-@import "@edx/brand/paragon/overrides";
+@use "@openedx/paragon/styles/css/core/custom-media-breakpoints" as paragonCustomMediaBreakpoints;
+@use "@openedx/paragon/dist/core" as paragonCore;
+@use "@openedx/paragon/dist/light" as paragonLight;
+@use "@edx/brand/dist/core" as elmCore;
+@use "@edx/brand/dist/light" as elmLight;
 
 @import "@edx/frontend-component-header/index";
