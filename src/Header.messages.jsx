@@ -21,6 +21,11 @@ const messages = defineMessages({
     defaultMessage: 'Schools & Partners',
     description: 'Link to the schools and partners landing page',
   },
+  'header.links.help': {
+    id: 'header.links.help',
+    defaultMessage: 'Help',
+    description: 'The text for the link to the Help Center',
+  },
   'header.user.menu.career': {
     id: 'header.user.menu.career',
     defaultMessage: 'Career',

@@ -8,6 +8,7 @@ import { AvatarButton } from '@openedx/paragon';
 import NotificationsSlot from './plugin-slots/NotificationsSlot';
 import UserMenuGroupSlot from './plugin-slots/UserMenuGroupSlot';
 import UserMenuGroupItemSlot from './plugin-slots/UserMenuGroupItemSlot';
+import UserDashboardMenu from './common/UserDashboardMenu';
 import { Menu, MenuTrigger, MenuContent } from './Menu';
 import { LinkedLogo, Logo } from './Logo';
 import UserMenuItem from './common/UserMenuItem';
@@ -77,7 +78,14 @@ class MobileHeader extends React.Component {
   }
 
   renderUserMenuItems() {
-    const { userMenu, name, email } = this.props;
+    const {
+      userMenu,
+      name,
+      email,
+      hasEnterpriseAccount,
+      logoAltText,
+      logoDestination,
+    } = this.props;
     const userInfoItem = (name || email) ? (
       <li className="nav-item user-info__menu-item" key="user-info">
         <UserMenuItem name={name} email={email} />
@@ -102,9 +110,16 @@ class MobileHeader extends React.Component {
 
     const userMenuGroupSlot = <UserMenuGroupSlot />;
     const userMenuGroupItemSlot = <UserMenuGroupItemSlot />;
+    const userDashboardMenu = (
+      <UserDashboardMenu
+        hasEnterpriseAccount={hasEnterpriseAccount}
+        enterpriseOrg={logoAltText}
+        enterpriseSrc={logoDestination}
+      />
+    );
 
     return userInfoItem
-      ? [userInfoItem, userMenuGroupSlot, userMenuGroupItemSlot, ...userMenuItems]
+      ? [userInfoItem, userDashboardMenu, userMenuGroupSlot, userMenuGroupItemSlot, ...userMenuItems]
       : [userMenuGroupSlot, userMenuGroupItemSlot, ...userMenuItems];
   }
 
@@ -227,6 +242,7 @@ MobileHeader.propTypes = {
   avatar: PropTypes.string,
   name: PropTypes.string,
   email: PropTypes.string,
+  hasEnterpriseAccount: PropTypes.bool,
   loggedIn: PropTypes.bool,
   stickyOnMobile: PropTypes.bool,
   notificationAppData: PropTypes.shape({
@@ -257,6 +273,7 @@ MobileHeader.defaultProps = {
   avatar: null,
   name: '',
   email: '',
+  hasEnterpriseAccount: false,
   loggedIn: false,
   stickyOnMobile: true,
   notificationAppData: {
