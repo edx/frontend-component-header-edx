@@ -15,8 +15,11 @@ for both mobile and desktop screens.
 
 **Default Behaviour:**
 
-Desktop:
-![Screenshot of Default Header_User_Menu_Desktop](./images/default_user_menu_desktop.png)
+Desktop (non-enterprise):
+![Screenshot of Default Header_User_Menu_Desktop_Non_Enterprise](./images/default_user_menu_desktop_non_enterprise.png)
+
+Desktop (enterprise):
+![Screenshot of Default Header_User_Menu_Desktop_Enterprise](./images/default_user_menu_desktop_enterprise.png)
 
 Mobile:
 ![Screenshot of Default Header_User_Menu_Mobile](./images/default_user_menu_mobile.png)

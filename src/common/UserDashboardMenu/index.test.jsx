@@ -5,11 +5,9 @@ import {
   screen,
   render,
 } from '@testing-library/react';
-import { useEnterpriseConfig } from '@edx/frontend-enterprise-utils';
 
 import UserDashboardMenu from './index'; // eslint-disable-line
 
-jest.mock('@edx/frontend-enterprise-utils');
 mergeConfig({ ENABLE_EDX_PERSONAL_DASHBOARD: true });
 const IntlUserDashboardMenu = injectIntl(UserDashboardMenu);
 
@@ -21,25 +19,24 @@ describe('User Dashboard Menu', () => {
     </IntlProvider>
   );
 
-  it('should render dashboard menu in the user menu dropdown', () => {
-    useEnterpriseConfig.mockReturnValue({
-      enterpriseLearnerPortalLink: {
-        type: 'item',
-        href: 'http://localhost:8000',
-        content: 'Dashboard',
-      },
-      enterpriseCustomerBrandingConfig: {
-        logoAltText: 'fake-enterprise-name',
-        logoDestination: 'http://fake.url',
-        logo: 'http://fake-logo.url',
-      },
-    });
-
-    render(Wrapper(<IntlUserDashboardMenu />));
+  it('should render enterprise dashboard menu in the user menu dropdown', () => {
+    render(Wrapper(<IntlUserDashboardMenu
+      enterpriseOrg="Fake Enterprise"
+      enterpriseSrc="http://fake.url"
+      hasEnterpriseAccount
+    />));
 
     const dashboardSwitchMenu = screen.getByText('SWITCH DASHBOARD');
-    const dashboardMenu = screen.getByText('Personal');
-    expect(dashboardMenu).toBeTruthy();
+    const personalDashboard = screen.getByText('Personal');
+    const enterpriseDashboard = screen.getByText('Fake Enterprise Dashboard');
     expect(dashboardSwitchMenu).toBeTruthy();
+    expect(personalDashboard).toBeTruthy();
+    expect(enterpriseDashboard).toBeTruthy();
+  });
+  it('should render only one dashboard menu in the user menu dropdown when not enterprise user', () => {
+    render(Wrapper(<IntlUserDashboardMenu />));
+
+    const personalDashboard = screen.getByText('Dashboard');
+    expect(personalDashboard).toBeTruthy();
   });
 });

@@ -73,7 +73,7 @@ const Header = ({
       type: 'item',
       href: `${config.LMS_BASE_URL}/dashboard`,
       content: intl.formatMessage(messages['header.links.courses']),
-      isActive: document.title.includes('Learner Home'),
+      isActive: document.title.includes(intl.formatMessage(messages['header.pages.learner.home'])),
     },
     {
       type: 'item',
@@ -93,25 +93,11 @@ const Header = ({
     },
   ];
 
-  // const dashboardMenuItem = {
-  //   type: 'item',
-  //   href: `${config.LMS_BASE_URL}/dashboard`,
-  //   content: intl.formatMessage(messages['header.user.menu.dashboard']),
-  // };
-
   const logoutMenuItem = {
     type: 'item',
     href: config.LOGOUT_URL,
     content: intl.formatMessage(messages['header.user.menu.logout']),
   };
-
-  // If there is an Enterprise LP link, use that instead of the B2C Dashboard
-  // let baseUserMenuDashboardLinks = [];
-  // if (enterpriseLearnerPortalLink) {
-  //   baseUserMenuDashboardLinks = [enterpriseLearnerPortalLink];
-  // } else {
-  //   baseUserMenuDashboardLinks = [dashboardMenuItem];
-  // }
 
   const defaultSecondaryMenu = [
     ...(getConfig().SUPPORT_URL ? [{
@@ -125,7 +111,10 @@ const Header = ({
   const defaultUserMenu = authenticatedUser === null ? [] : [{
     heading: '',
     items: [
-      // ...baseUserMenuDashboardLinks,
+      // Users should only see Career button if they do not have an available
+      // learner portal, because an available learner portal currently means
+      // that they access content via B2B Subscriptions, in which context "career" button
+      // is not relevant.
       ...(!enterpriseLearnerPortalLink ? [{
         type: 'item',
         href: 'https://careers.edx.org/',
@@ -141,13 +130,13 @@ const Header = ({
         type: 'item',
         href: `${config.ACCOUNT_PROFILE_URL}/u/${authenticatedUser.username}`,
         content: intl.formatMessage(messages['header.user.menu.profile']),
-        isActive: document.title.includes('Profile'),
+        isActive: document.title.includes(intl.formatMessage(messages['header.user.menu.profile'])),
       },
       {
         type: 'item',
         href: config.ACCOUNT_SETTINGS_URL,
         content: intl.formatMessage(messages['header.user.menu.account.settings']),
-        isActive: document.title.includes('Account'),
+        isActive: document.title.includes(intl.formatMessage(messages['header.user.menu.account.settings'])),
       },
       // Users should only see Order History if they do not have an available
       // learner portal and have a ORDER_HISTORY_URL define in the environment,
@@ -167,11 +156,17 @@ const Header = ({
   const secondaryMenu = secondaryMenuItems || defaultSecondaryMenu;
   let userMenu = authenticatedUser === null ? [] : userMenuItems || defaultUserMenu;
 
+  const minimalDashboardMenuItem = {
+    type: 'item',
+    href: `${config.LMS_BASE_URL}/dashboard`,
+    content: intl.formatMessage(messages['header.user.menu.dashboard']),
+  };
+
   if (getConfig().MINIMAL_HEADER && authenticatedUser !== null) {
     userMenu = [{
       heading: '',
       items: [
-        // dashboardMenuItem,
+        minimalDashboardMenuItem,
         logoutMenuItem,
       ],
     }];

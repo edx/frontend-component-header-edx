@@ -8,7 +8,6 @@ import { AvatarButton } from '@openedx/paragon';
 import NotificationsSlot from './plugin-slots/NotificationsSlot';
 import UserMenuGroupSlot from './plugin-slots/UserMenuGroupSlot';
 import UserMenuGroupItemSlot from './plugin-slots/UserMenuGroupItemSlot';
-import UserDashboardMenu from './common/UserDashboardMenu';
 import { Menu, MenuTrigger, MenuContent } from './Menu';
 import { LinkedLogo, Logo } from './Logo';
 import UserMenuItem from './common/UserMenuItem';
@@ -108,18 +107,17 @@ class MobileHeader extends React.Component {
       ))
     ));
 
-    const userMenuGroupSlot = <UserMenuGroupSlot />;
-    const userMenuGroupItemSlot = <UserMenuGroupItemSlot />;
-    const userDashboardMenu = (
-      <UserDashboardMenu
+    const userMenuGroupSlot = (
+      <UserMenuGroupSlot
         hasEnterpriseAccount={hasEnterpriseAccount}
-        enterpriseOrg={logoAltText}
-        enterpriseSrc={logoDestination}
+        logoAltText={logoAltText}
+        logoDestination={logoDestination}
       />
     );
+    const userMenuGroupItemSlot = <UserMenuGroupItemSlot />;
 
     return userInfoItem
-      ? [userInfoItem, userDashboardMenu, userMenuGroupSlot, userMenuGroupItemSlot, ...userMenuItems]
+      ? [userInfoItem, userMenuGroupSlot, userMenuGroupItemSlot, ...userMenuItems]
       : [userMenuGroupSlot, userMenuGroupItemSlot, ...userMenuItems];
   }
 

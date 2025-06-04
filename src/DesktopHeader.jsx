@@ -9,7 +9,6 @@ import NotificationsSlot from './plugin-slots/NotificationsSlot';
 import UserMenuGroupItemSlot from './plugin-slots/UserMenuGroupItemSlot';
 import UserMenuGroupSlot from './plugin-slots/UserMenuGroupSlot';
 import UserMenuItem from './common/UserMenuItem';
-import UserDashboardMenu from './common/UserDashboardMenu';
 import { Menu, MenuTrigger, MenuContent } from './Menu';
 import { LinkedLogo, Logo } from './Logo';
 
@@ -111,11 +110,10 @@ class DesktopHeader extends React.Component {
               />
             </Dropdown.Item>
           )}
-          <UserMenuGroupSlot />
-          <UserDashboardMenu
+          <UserMenuGroupSlot
             hasEnterpriseAccount={hasEnterpriseAccount}
-            enterpriseOrg={logoAltText}
-            enterpriseSrc={logoDestination}
+            logoAltText={logoAltText}
+            logoDestination={logoDestination}
           />
           {userMenu.map((group, index) => (
             // eslint-disable-next-line react/jsx-no-comment-textnodes,react/no-array-index-key

@@ -161,6 +161,13 @@ exports[`<Header /> renders correctly for authenticated users on desktop 1`] = `
         aria-label="Secondary"
         className="nav secondary-menu-container align-items-center ml-auto"
       >
+        <a
+          className="nav-link"
+          href="http://localhost:18000/support"
+          onClick={null}
+        >
+          Help
+        </a>
         <div
           className="pgn__dropdown pgn__dropdown-light dropdown"
           data-testid="dropdown"
