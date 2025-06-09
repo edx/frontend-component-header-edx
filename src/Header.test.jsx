@@ -3,7 +3,7 @@ import React from 'react';
 import { act } from 'react-dom/test-utils';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
 import TestRenderer from 'react-test-renderer';
-import { useEnterpriseConfig } from '@edx/frontend-enterprise-utils';
+import { isEnterpriseUser, useEnterpriseConfig } from '@edx/frontend-enterprise-utils';
 import { AppContext } from '@edx/frontend-platform/react';
 import { getConfig } from '@edx/frontend-platform';
 import { Context as ResponsiveContext } from 'react-responsive';
@@ -44,6 +44,10 @@ const HeaderContext = ({ width, contextValue }) => (
 describe('<Header />', () => {
   beforeEach(() => {
     useEnterpriseConfig.mockReturnValue({});
+    getConfig.mockReturnValue({
+      ENABLE_EDX_PERSONAL_DASHBOARD: true,
+      SUPPORT_URL: 'http://localhost:18000/support',
+    });
   });
 
   beforeAll(async () => {
@@ -64,6 +68,10 @@ describe('<Header />', () => {
         logo: 'http://fake-logo.url',
       },
     });
+  };
+
+  const mockIsEnterpriseUser = () => {
+    isEnterpriseUser.mockReturnValue(true);
   };
 
   it('renders correctly for unauthenticated users on desktop', () => {
@@ -138,14 +146,17 @@ describe('<Header />', () => {
     });
 
     expect(screen.getByText('Order History')).toBeInTheDocument();
+    expect(screen.queryByText('Career')).toBeInTheDocument();
+    expect(screen.getByText('Help')).toBeInTheDocument();
     expect(screen.getByText('Dashboard')).toBeInTheDocument();
 
     wrapper.unmount();
 
-    // When learner portal links are present, Order History should not be a dropdown item
+    // When learner portal links are present, Order History and Career should not be a dropdown item
     // We do this in the same test to avoid weird things about jest wanting you to use
     // the "correct" act() function (even though it gives the same warning regardless
     // of where you import it from, be it react-dom/test-utils or react-test-renderer).
+    mockIsEnterpriseUser();
     mockUseEnterpriseConfig();
     wrapper = render(component);
     await act(async () => {
@@ -153,7 +164,8 @@ describe('<Header />', () => {
       fireEvent.click(wrapper.container.querySelector('#menu-dropdown'));
     });
     expect(screen.queryByText('Order History')).not.toBeInTheDocument();
-    expect(screen.getByText('Dashboard')).toBeInTheDocument();
+    expect(screen.queryByText('Career')).not.toBeInTheDocument();
+    expect(screen.getByText('Personal')).toBeInTheDocument();
   });
 
   it('renders correctly for unauthenticated users on mobile', () => {
