@@ -1,6 +1,11 @@
 import { defineMessages } from '@edx/frontend-platform/i18n';
 
 const messages = defineMessages({
+  'header.pages.learner.home': {
+    id: 'header.pages.learner.home',
+    defaultMessage: 'Learner Home',
+    description: 'Title of the page in learner dashboard',
+  },
   'header.links.courses': {
     id: 'header.links.courses',
     defaultMessage: 'Courses',
@@ -20,6 +25,11 @@ const messages = defineMessages({
     id: 'header.links.schools',
     defaultMessage: 'Schools & Partners',
     description: 'Link to the schools and partners landing page',
+  },
+  'header.links.help': {
+    id: 'header.links.help',
+    defaultMessage: 'Help',
+    description: 'The text for the link to the Help Center',
   },
   'header.user.menu.career': {
     id: 'header.user.menu.career',
