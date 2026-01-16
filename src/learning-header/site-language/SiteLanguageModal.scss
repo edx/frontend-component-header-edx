@@ -1,0 +1,12 @@
+.listbox-container {
+  max-height: 400px;
+  overflow: scroll;
+
+  :last-child {
+    margin-bottom: 5px;
+  }
+}
+
+.inline-image {
+  height: 1em;
+}

@@ -1,0 +1,17 @@
+.translation-selection-button {
+  color: #0A3055;
+  border-color: #0A3055;
+  border-radius: 0.375rem;
+  background-color: transparent;
+  font-weight: 400;
+
+  &:focus::before {
+    border: solid 2px #0A3055;
+    border-radius: calc(0.375rem + 4px);
+  }
+}
+
+.toolbar-divider {
+  padding-left: 8px;
+  border-left: 1px solid #eaeaea;
+}

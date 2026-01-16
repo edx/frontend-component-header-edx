@@ -8,6 +8,7 @@ import { AppContext } from '@edx/frontend-platform/react';
 import AuthenticatedUserDropdown from './AuthenticatedUserDropdown';
 import messages from './messages';
 import NotificationsSlot from '../plugin-slots/NotificationsSlot';
+import SiteLanguageButton from './site-language/SiteLanguageButton.tsx';
 
 const BaseAuthenticatedUser = ({ children }) => {
   const intl = useIntl();
@@ -34,6 +35,7 @@ const AuthenticatedUser = ({
   return (
     <BaseAuthenticatedUser>
       <NotificationsSlot />
+      <SiteLanguageButton />
       {showUserDropdown && (
         <AuthenticatedUserDropdown
           enterpriseLearnerPortalLink={enterpriseLearnerPortalLink}
