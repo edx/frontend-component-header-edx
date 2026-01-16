@@ -13,7 +13,7 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({
   selectedLanguage,
   setSelectedLanguage,
 }) => {
-  const handleChange = (e) => setSelectedLanguage(e.target.value);
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => setSelectedLanguage(e.target.value);
   return (
     <div className="pgn__card small">
       <SelectableBox.Set

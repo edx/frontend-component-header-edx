@@ -1,17 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
+import { useIntl } from '@edx/frontend-platform/i18n';
 import { sendTrackEvent } from '@edx/frontend-platform/analytics';
 import { IconButton } from '@openedx/paragon';
 import { Language } from '@openedx/paragon/icons';
 
 import SiteLanguageModal from './SiteLanguageModal.tsx';
 import { fetchToggleEnabled } from './data.ts';
+import messages from './messages';
 import './index.scss';
 
 const logButtonProperties = 'properties';
 
 const SiteLanguageButton = () => {
+  const { formatMessage } = useIntl();
   const [isFeatureEnabled, setIsFeatureEnabled] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -47,7 +50,7 @@ const SiteLanguageButton = () => {
       <IconButton
         className="site-language-selection-button"
         src={Language}
-        alt="Change site language"
+        alt={formatMessage(messages.buttonScreenReaderLabel)}
         onClick={handleButtonClick}
       />
       <SiteLanguageModal

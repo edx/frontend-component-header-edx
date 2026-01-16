@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useMemo } from 'react';
 
 import './SiteLanguageModal.scss';
 import { useIntl } from '@edx/frontend-platform/i18n';
@@ -64,7 +64,8 @@ interface SiteLanguageModalProps {
 const SiteLanguageModal = ({ isOpen, close }: SiteLanguageModalProps) => {
   const { formatMessage } = useIntl();
 
-  const [selectedLanguage, setSelectedLanguage] = useState(getSiteLanguage());
+  const siteLanguage = useMemo(() => getSiteLanguage(), []);
+  const [selectedLanguage, setSelectedLanguage] = useState(siteLanguage);
   const [isLoading, setIsLoading] = useState(false);
   const [showError, setShowError] = useState(false);
 
@@ -74,7 +75,7 @@ const SiteLanguageModal = ({ isOpen, close }: SiteLanguageModalProps) => {
   const username = appContext?.authenticatedUser?.username;
 
   const onSubmit = async () => {
-    if (selectedLanguage === getSiteLanguage()) {
+    if (selectedLanguage === siteLanguage) {
       close();
       return;
     }

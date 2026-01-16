@@ -60,5 +60,11 @@ export async function setSiteLanguage(languageCode: string, username: string): P
 
 export async function fetchToggleEnabled(courseId: string): Promise<boolean> {
   const url = `${getConfig().LMS_BASE_URL}/courses/${courseId}/unified-translations/enabled/`;
-  return getAuthenticatedHttpClient().get(url).then(response => response.data.enabled).catch(() => false);
+  return getAuthenticatedHttpClient()
+    .get(url)
+    .then(response => response.data.enabled)
+    .catch((error) => {
+      console.error('Failed to fetch unified translations toggle state', { courseId, error });
+      return false;
+    });
 }

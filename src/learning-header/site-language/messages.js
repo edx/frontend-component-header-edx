@@ -3,8 +3,13 @@ import { defineMessages } from '@edx/frontend-platform/i18n';
 const messages = defineMessages({
   modalTitle: {
     id: 'header.sitelanguage.modal.title',
-    defaultMessage: 'Translate Course',
+    defaultMessage: 'Site language',
     description: 'The title for the translation modal.',
+  },
+  buttonScreenReaderLabel: {
+    id: 'header.sitelanguage.modal.button.aria.label',
+    defaultMessage: 'Change site language',
+    description: 'Button label for changing the site language.',
   },
   popoverDisclaimerTitle: {
     id: 'header.sitelanguage.modal.popover.disclaimer.title',
