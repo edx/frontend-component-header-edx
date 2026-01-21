@@ -5,7 +5,7 @@ import {
 } from '../setupTest';
 import { LearningHeader as Header } from '../index';
 
-jest.mock('./site-language/SiteLanguageButton', () => ({
+jest.mock('./site-language/components/SiteLanguageButton', () => ({
   __esModule: true,
   default: (_props) => (<div data-testid="site-language-button">Site Language Button</div>),
 }));

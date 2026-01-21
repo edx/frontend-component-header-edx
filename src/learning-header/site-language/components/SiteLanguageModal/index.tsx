@@ -12,9 +12,9 @@ import {
   StandardModal,
 } from '@openedx/paragon';
 
-import messages from './messages';
-import { LanguageSelector } from './LanguageSelector';
-import { getSiteLanguage, setSiteLanguage } from './data';
+import messages from '../../messages';
+import { LanguageSelector } from '../LanguageSelector';
+import { getSiteLanguage, setSiteLanguage } from '../../data';
 
 interface ModalFooterProps {
   isLoading: boolean;

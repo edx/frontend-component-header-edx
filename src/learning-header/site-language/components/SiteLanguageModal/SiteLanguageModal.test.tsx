@@ -4,14 +4,14 @@ import {
 } from '@testing-library/react';
 import { AppContext } from '@edx/frontend-platform/react';
 import { logError } from '@edx/frontend-platform/logging';
-import { SiteLanguageModal } from './SiteLanguageModal';
-import { render, initializeMockApp } from '../../setupTest';
+import { SiteLanguageModal } from '.';
+import { render, initializeMockApp } from '../../../../setupTest';
 
 jest.mock('@edx/frontend-platform/logging', () => ({
   logError: jest.fn(),
 }));
 
-jest.mock('./LanguageSelector', () => ({
+jest.mock('../LanguageSelector', () => ({
   // eslint-disable-next-line react/prop-types
   LanguageSelector: ({ selectedLanguage, setSelectedLanguage }) => (
     <div data-testid="language-selector">
@@ -29,7 +29,7 @@ jest.mock('./LanguageSelector', () => ({
 
 const mockGetSiteLanguage = jest.fn();
 const mockSetSiteLanguage = jest.fn();
-jest.mock('./data', () => ({
+jest.mock('../../data', () => ({
   getSiteLanguage: () => mockGetSiteLanguage(),
   setSiteLanguage: (languageCode, username) => mockSetSiteLanguage(languageCode, username),
 }));

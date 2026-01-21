@@ -6,9 +6,9 @@ import { sendTrackEvent } from '@edx/frontend-platform/analytics';
 import { IconButton } from '@openedx/paragon';
 import { Language } from '@openedx/paragon/icons';
 
-import { SiteLanguageModal } from './SiteLanguageModal';
-import { fetchToggleEnabled } from './data';
-import messages from './messages';
+import { SiteLanguageModal } from '../SiteLanguageModal';
+import { fetchToggleEnabled } from '../../data';
+import messages from '../../messages';
 import './index.scss';
 
 /**

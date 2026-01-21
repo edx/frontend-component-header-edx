@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import { LanguageSelector } from './LanguageSelector';
+import { LanguageSelector } from '.';
 
 jest.mock('./TranslationDisclaimer', () => ({
   TranslationDisclaimer: () => <div data-testid="translation-disclaimer">Disclaimer</div>,

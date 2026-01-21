@@ -3,8 +3,8 @@ import {
   screen, fireEvent, waitFor,
 } from '@testing-library/react';
 import { sendTrackEvent } from '@edx/frontend-platform/analytics';
-import { SiteLanguageButton } from './SiteLanguageButton';
-import { initializeMockApp, render } from '../../setupTest';
+import { SiteLanguageButton } from '.';
+import { initializeMockApp, render } from '../../../../setupTest';
 
 const courseId = 'course-v1:edX+Demo+2024';
 jest.mock('react-redux', () => ({
@@ -15,13 +15,13 @@ jest.mock('@edx/frontend-platform/analytics', () => ({
   sendTrackEvent: jest.fn(),
 }));
 
-jest.mock('./SiteLanguageModal', () => ({
+jest.mock('../SiteLanguageModal', () => ({
   // eslint-disable-next-line react/prop-types
   SiteLanguageModal: ({ isOpen }) => (isOpen ? <div data-testid="site-language-modal">Modal Open</div> : null),
 }));
 
 const mockFetchToggleEnabled = jest.fn();
-jest.mock('./data', () => ({
+jest.mock('../../data', () => ({
   fetchToggleEnabled: (courseKey) => mockFetchToggleEnabled(courseKey),
 }));
 
