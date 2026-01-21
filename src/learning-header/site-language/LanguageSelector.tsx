@@ -1,7 +1,7 @@
 import React from 'react';
 import { SelectableBox, Stack, Icon } from '@openedx/paragon';
 import { Check } from '@openedx/paragon/icons';
-import TranslationDisclaimer from './TranslationDisclaimer.tsx';
+import { TranslationDisclaimer } from './TranslationDisclaimer';
 import { TRANSLATION_LANGUAGES } from './languagesList';
 
 interface LanguageSelectorProps {
@@ -9,7 +9,16 @@ interface LanguageSelectorProps {
   setSelectedLanguage: (_language: string) => void;
 }
 
-const LanguageSelector: React.FC<LanguageSelectorProps> = ({
+/**
+ * LanguageSelector component for selecting a site language.
+ *
+ * @param selectedLanguage - The currently selected language.
+ * @param setSelectedLanguage - Callback to update the selected language.
+ *
+ * @returns {JSX.Element} The rendered LanguageSelector component.
+ */
+
+export const LanguageSelector: React.FC<LanguageSelectorProps> = ({
   selectedLanguage,
   setSelectedLanguage,
 }) => {
@@ -26,6 +35,7 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({
       >
         {TRANSLATION_LANGUAGES.map(({ code, label, localeName }) => (
           <SelectableBox
+            data-testid={`language-option-${code}`}
             key={code}
             value={code}
             aria-label={`${label} radio`}
@@ -44,5 +54,3 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({
     </div>
   );
 };
-
-export default LanguageSelector;

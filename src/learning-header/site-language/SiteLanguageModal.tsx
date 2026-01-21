@@ -3,6 +3,7 @@ import { useState, useContext, useMemo } from 'react';
 import './SiteLanguageModal.scss';
 import { useIntl } from '@edx/frontend-platform/i18n';
 import { AppContext } from '@edx/frontend-platform/react';
+import { logError } from '@edx/frontend-platform/logging';
 import {
   ActionRow,
   Alert,
@@ -12,8 +13,8 @@ import {
 } from '@openedx/paragon';
 
 import messages from './messages';
-import LanguageSelector from './LanguageSelector.tsx';
-import { getSiteLanguage, setSiteLanguage } from './data.ts';
+import { LanguageSelector } from './LanguageSelector';
+import { getSiteLanguage, setSiteLanguage } from './data';
 
 interface ModalFooterProps {
   isLoading: boolean;
@@ -22,6 +23,16 @@ interface ModalFooterProps {
   onSubmit: () => void;
 }
 
+/**
+ * ModalFooter component for the SiteLanguageModal.
+ *
+ * @param isLoading - Whether the save operation is in progress.
+ * @param error - Whether an error occurred during the save operation.
+ * @param close - Callback to close the modal.
+ * @param onSubmit - Callback to submit the selected language.
+ *
+ * @returns {JSX.Element} The rendered ModalFooter component.
+ */
 const ModalFooter = ({
   isLoading, error, close, onSubmit,
 }: ModalFooterProps) => {
@@ -60,8 +71,10 @@ interface SiteLanguageModalProps {
  * @param isOpen - Whether the modal is open.
  * @param close - Callback to close the modal.
  *
+ * @returns {JSX.Element} A modal that allows the user to change their site language. On successful save,
+ * reloads the page to apply the new language; on failure, displays an error message in the modal.
  */
-const SiteLanguageModal = ({ isOpen, close }: SiteLanguageModalProps) => {
+export const SiteLanguageModal = ({ isOpen, close }: SiteLanguageModalProps) => {
   const { formatMessage } = useIntl();
 
   const siteLanguage = useMemo(() => getSiteLanguage(), []);
@@ -85,6 +98,7 @@ const SiteLanguageModal = ({ isOpen, close }: SiteLanguageModalProps) => {
       await setSiteLanguage(selectedLanguage, username);
       window.location.reload();
     } catch (error) {
+      logError('Failed to set site language', { error });
       setShowError(true);
       setIsLoading(false);
     }
@@ -117,5 +131,3 @@ const SiteLanguageModal = ({ isOpen, close }: SiteLanguageModalProps) => {
     </StandardModal>
   );
 };
-
-export default SiteLanguageModal;

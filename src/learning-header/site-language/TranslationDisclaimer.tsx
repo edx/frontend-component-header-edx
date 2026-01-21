@@ -7,7 +7,7 @@ import {
 
 import messages from './messages';
 
-const TranslationDisclaimer = () => {
+export const TranslationDisclaimer = () => {
   // @ts-ignore: getLocale expects one argument, but it is valid for it to be undefined
   const siteLanguage = getLocale();
   const dir = isRtl(siteLanguage) ? 'rtl' : 'ltr';
@@ -44,5 +44,3 @@ const TranslationDisclaimer = () => {
     </div>
   );
 };
-
-export default TranslationDisclaimer;

@@ -1,6 +1,6 @@
 .listbox-container {
   max-height: 400px;
-  overflow: scroll;
+  overflow: auto;
 
   :last-child {
     margin-bottom: 5px;

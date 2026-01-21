@@ -14,5 +14,15 @@ module.exports = createConfig('eslint', {
       },
     ],
     'react/jsx-filename-extension': [1, { extensions: ['.tsx', '.jsx'] }],
+    'import/extensions': [
+      'error',
+      'ignorePackages',
+      {
+        js: 'never',
+        jsx: 'never',
+        ts: 'never',
+        tsx: 'never',
+      },
+    ],
   },
 });

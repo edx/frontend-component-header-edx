@@ -5,6 +5,11 @@ import {
 } from '../setupTest';
 import { LearningHeader as Header } from '../index';
 
+jest.mock('./site-language/SiteLanguageButton', () => ({
+  __esModule: true,
+  default: (_props) => (<div data-testid="site-language-button">Site Language Button</div>),
+}));
+
 describe('Header', () => {
   beforeAll(async () => {
     // We need to mock AuthService to implicitly use `getAuthenticatedUser` within `AppContext.Provider`.
@@ -13,7 +18,7 @@ describe('Header', () => {
 
   it('displays user button', () => {
     render(<Header />);
-    expect(screen.getByRole('button', { className: 'dropdown-toggle' })).toBeInTheDocument();
+    expect(screen.getByTestId('user-dropdown-toggle')).toBeInTheDocument();
   });
 
   it('displays user menu in dropdown', () => {
@@ -39,7 +44,7 @@ describe('Header', () => {
 
     render(component);
 
-    const button = screen.getByRole('button', { className: 'dropdown-toggle' });
+    const button = screen.getByTestId('user-dropdown-toggle');
     fireEvent.click(button);
     const userMenuItem = screen.queryByTestId('user-item');
     expect(userMenuItem).toBeInTheDocument();
