@@ -1,19 +1,35 @@
 import React from 'react';
 import { AppContext } from '@edx/frontend-platform/react';
 import {
-  fireEvent, initializeMockApp, render, screen,
+  fireEvent, initializeMockApp, render, screen, waitFor,
 } from '../setupTest';
 import { LearningHeader as Header } from '../index';
 
+jest.mock('react-redux', () => ({
+  useSelector: (_selector) => 'course-v1:org+course+run',
+}));
+
 jest.mock('./site-language/components/SiteLanguageButton', () => ({
-  __esModule: true,
-  default: (_props) => (<div data-testid="site-language-button">Site Language Button</div>),
+  SiteLanguageButton: (_props) => (<div data-testid="site-language-button">Site Language Button</div>),
+}));
+
+const mockFetchUnifiedTranslationToggleEnabled = jest.fn();
+jest.mock('./site-language/data', () => ({
+  fetchUnifiedTranslationToggleEnabled: () => mockFetchUnifiedTranslationToggleEnabled(),
 }));
 
 describe('Header', () => {
   beforeAll(async () => {
     // We need to mock AuthService to implicitly use `getAuthenticatedUser` within `AppContext.Provider`.
     await initializeMockApp();
+  });
+
+  beforeEach(() => {
+    mockFetchUnifiedTranslationToggleEnabled.mockResolvedValue(false);
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
   });
 
   it('displays user button', () => {
@@ -60,5 +76,31 @@ describe('Header', () => {
 
     expect(screen.getByText(`${courseData.courseOrg} ${courseData.courseNumber}`)).toBeInTheDocument();
     expect(screen.getByText(courseData.courseTitle)).toBeInTheDocument();
+  });
+
+  it('shows site language button when feature is enabled', async () => {
+    mockFetchUnifiedTranslationToggleEnabled.mockResolvedValue(true);
+    render(<Header />);
+
+    await waitFor(() => {
+      expect(mockFetchUnifiedTranslationToggleEnabled).toHaveBeenCalled();
+    });
+
+    await waitFor(() => {
+      expect(screen.getByTestId('site-language-button')).toBeInTheDocument();
+    });
+  });
+
+  it('does not show site language button when feature is disabled', async () => {
+    mockFetchUnifiedTranslationToggleEnabled.mockResolvedValue(false);
+    render(<Header />);
+
+    await waitFor(() => {
+      expect(mockFetchUnifiedTranslationToggleEnabled).toHaveBeenCalled();
+    });
+
+    await waitFor(() => {
+      expect(screen.queryByTestId('site-language-button')).not.toBeInTheDocument();
+    });
   });
 });

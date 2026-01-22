@@ -1,6 +1,6 @@
 // Tests for site language data functions
 import { logError } from '@edx/frontend-platform/logging';
-import { getSiteLanguage, setSiteLanguage, fetchToggleEnabled } from './data';
+import { setSiteLanguage, fetchUnifiedTranslationToggleEnabled } from './data';
 
 const mockGetMethod = jest.fn();
 const mockPostMethod = jest.fn();
@@ -14,7 +14,6 @@ jest.mock('@edx/frontend-platform/auth', () => ({
 }));
 jest.mock('@edx/frontend-platform', () => ({
   getConfig: jest.fn(() => ({
-    LANGUAGE_PREFERENCE_COOKIE_NAME: 'edxlang',
     LMS_BASE_URL: 'http://test',
   })),
 }));
@@ -31,18 +30,6 @@ describe('site-language/data', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     document.cookie = '';
-  });
-
-  describe('getSiteLanguage', () => {
-    it('returns language from cookie', () => {
-      document.cookie = 'foo=bar; edxlang=es; another=val';
-      expect(getSiteLanguage()).toBe('es');
-    });
-
-    it('returns default "en" if cookie not set', () => {
-      document.cookie = 'foo=bar; another=val';
-      expect(getSiteLanguage()).toBe('en');
-    });
   });
 
   describe('setSiteLanguage', () => {
@@ -64,24 +51,24 @@ describe('site-language/data', () => {
     });
   });
 
-  describe('fetchToggleEnabled', () => {
+  describe('fetchUnifiedTranslationToggleEnabled', () => {
     it('returns true if enabled', async () => {
       mockGetMethod.mockResolvedValueOnce({ data: { enabled: true } });
-      await expect(fetchToggleEnabled('course-v1:edX+Demo+2024')).resolves.toBe(true);
+      await expect(fetchUnifiedTranslationToggleEnabled()).resolves.toBe(true);
     });
 
     it('returns false if not enabled', async () => {
       mockGetMethod.mockResolvedValueOnce({ data: { enabled: false } });
-      await expect(fetchToggleEnabled('course-v1:edX+Demo+2024')).resolves.toBe(false);
+      await expect(fetchUnifiedTranslationToggleEnabled()).resolves.toBe(false);
     });
 
     it('returns false and logs error on failure', async () => {
       const error = new Error('fail');
       mockGetMethod.mockRejectedValueOnce(error);
-      await expect(fetchToggleEnabled('course-v1:edX+Demo+2024')).resolves.toBe(false);
+      await expect(fetchUnifiedTranslationToggleEnabled()).resolves.toBe(false);
       expect(logError).toHaveBeenCalledWith(
         'Failed to fetch unified translations toggle state',
-        expect.objectContaining({ courseId: 'course-v1:edX+Demo+2024', error }),
+        expect.objectContaining({ error }),
       );
     });
   });

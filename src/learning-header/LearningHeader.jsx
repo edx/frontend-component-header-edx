@@ -1,5 +1,6 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 
 import { useEnterpriseConfig } from '@edx/frontend-enterprise-utils';
 import {
@@ -12,6 +13,7 @@ import AnonymousUserMenu from './AnonymousUserMenu';
 import messages from './messages';
 import lightning from '../lightning';
 import AuthenticatedUser from './AuthenticatedUser';
+import { fetchUnifiedTranslationToggleEnabled } from './site-language/data';
 
 ensureConfig([
   'ACCOUNT_SETTINGS_URL',
@@ -49,6 +51,12 @@ const LearningHeader = ({
   courseOrg, courseNumber, courseTitle, intl, showUserDropdown,
 }) => {
   const { authenticatedUser } = useContext(AppContext);
+  const courseId = useSelector(state => state.courseware?.courseId || state.courseHome?.courseId);
+  const [showSiteLanguageButton, setShowSiteLanguageButton] = useState(false);
+
+  useEffect(() => {
+    fetchUnifiedTranslationToggleEnabled().then(setShowSiteLanguageButton);
+  }, []);
 
   const { enterpriseLearnerPortalLink, enterpriseCustomerBrandingConfig } = useEnterpriseConfig(
     authenticatedUser,
@@ -93,6 +101,8 @@ const LearningHeader = ({
         <AuthenticatedUser
           showUserDropdown={showUserDropdown}
           enterpriseLearnerPortalLink={enterpriseLearnerPortalLink}
+          showSiteLanguageButton={showSiteLanguageButton}
+          courseId={courseId}
         />
         )}
         {showUserDropdown && !authenticatedUser && (

@@ -1,7 +1,7 @@
 import { useState, useContext, useMemo } from 'react';
 
 import './SiteLanguageModal.scss';
-import { useIntl } from '@edx/frontend-platform/i18n';
+import { useIntl, getLocale } from '@edx/frontend-platform/i18n';
 import { AppContext } from '@edx/frontend-platform/react';
 import { logError } from '@edx/frontend-platform/logging';
 import {
@@ -14,7 +14,7 @@ import {
 
 import messages from '../../messages';
 import { LanguageSelector } from '../LanguageSelector';
-import { getSiteLanguage, setSiteLanguage } from '../../data';
+import { setSiteLanguage } from '../../data';
 
 interface ModalFooterProps {
   isLoading: boolean;
@@ -77,7 +77,7 @@ interface SiteLanguageModalProps {
 export const SiteLanguageModal = ({ isOpen, close }: SiteLanguageModalProps) => {
   const { formatMessage } = useIntl();
 
-  const siteLanguage = useMemo(() => getSiteLanguage(), []);
+  const siteLanguage = useMemo(getLocale, []) as string;
   const [selectedLanguage, setSelectedLanguage] = useState(siteLanguage);
   const [isLoading, setIsLoading] = useState(false);
   const [showError, setShowError] = useState(false);
@@ -105,7 +105,7 @@ export const SiteLanguageModal = ({ isOpen, close }: SiteLanguageModalProps) => 
   };
 
   const onClose = () => {
-    setSelectedLanguage(getSiteLanguage());
+    setSelectedLanguage(siteLanguage);
     close();
   };
 
