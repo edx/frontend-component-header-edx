@@ -6,7 +6,7 @@ import { TRANSLATION_LANGUAGES } from './languagesList';
 
 interface LanguageSelectorProps {
   selectedLanguage: string;
-  setSelectedLanguage: (_language: string) => void;
+  setSelectedLanguage: (language: string) => void;
 }
 
 /**

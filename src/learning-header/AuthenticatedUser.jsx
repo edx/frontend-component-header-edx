@@ -14,7 +14,7 @@ const BaseAuthenticatedUser = ({ children }) => {
   const intl = useIntl();
   return (
     <>
-      <a className="text-gray-700" href={getConfig().SUPPORT_URL}>
+      <a className="text-gray-700 user-header-secondary-item" href={getConfig().SUPPORT_URL}>
         {intl.formatMessage(messages.help)}
       </a>
       {children}
@@ -39,10 +39,8 @@ const AuthenticatedUser = ({
       <NotificationsSlot />
       {showSiteLanguageButton && (
         <SiteLanguageButton
-          trackingProps={{
-            courseId,
-            userId: authenticatedUser.userId,
-          }}
+          courseId={courseId}
+          userId={authenticatedUser.userId}
         />
       )}
       {showUserDropdown && (

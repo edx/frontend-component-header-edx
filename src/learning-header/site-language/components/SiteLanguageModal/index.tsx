@@ -65,6 +65,14 @@ interface SiteLanguageModalProps {
   close: () => void;
 }
 
+interface AuthenticatedUser {
+  username: string;
+}
+
+interface AppContextType {
+  authenticatedUser?: AuthenticatedUser;
+}
+
 /**
  * Renders a modal dialog for selecting and updating the user's preferred site language.
  *
@@ -77,15 +85,13 @@ interface SiteLanguageModalProps {
 export const SiteLanguageModal = ({ isOpen, close }: SiteLanguageModalProps) => {
   const { formatMessage } = useIntl();
 
-  const siteLanguage = useMemo(getLocale, []) as string;
+  const siteLanguage = useMemo(() => getLocale(), []);
   const [selectedLanguage, setSelectedLanguage] = useState(siteLanguage);
   const [isLoading, setIsLoading] = useState(false);
   const [showError, setShowError] = useState(false);
 
-  const appContext = useContext(AppContext);
-  // @ts-ignore: AuthenticatedUser won't be null because this is only being used within the context of an
-  // authenticated user's header
-  const username = appContext?.authenticatedUser?.username;
+  const appContext = useContext(AppContext) as AppContextType;
+  const username = appContext.authenticatedUser?.username ?? '';
 
   const onSubmit = async () => {
     if (selectedLanguage === siteLanguage) {

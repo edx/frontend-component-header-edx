@@ -49,6 +49,59 @@ describe('site-language/data', () => {
       );
       expect(mockPostMethod.mock.calls[0][1].get('language')).toBe('fr');
     });
+
+    it('encodes special characters in username', async () => {
+      mockPatchMethod.mockResolvedValueOnce({});
+      mockPostMethod.mockResolvedValueOnce({});
+      await setSiteLanguage('es-419', 'test+user@example.com');
+      expect(mockPatchMethod).toHaveBeenCalledWith(
+        'http://test/api/user/v1/preferences/test%2Buser%40example.com',
+        { 'pref-lang': 'es-419' },
+        { headers: { 'Content-Type': 'application/merge-patch+json' } },
+      );
+    });
+
+    it('encodes spaces in username', async () => {
+      mockPatchMethod.mockResolvedValueOnce({});
+      mockPostMethod.mockResolvedValueOnce({});
+      await setSiteLanguage('de-de', 'test user');
+      expect(mockPatchMethod).toHaveBeenCalledWith(
+        'http://test/api/user/v1/preferences/test%20user',
+        { 'pref-lang': 'de-de' },
+        { headers: { 'Content-Type': 'application/merge-patch+json' } },
+      );
+    });
+
+    it('throws error for invalid language code', async () => {
+      await expect(setSiteLanguage('invalid-lang', 'testuser'))
+        .rejects
+        .toThrow('Invalid language code: invalid-lang. Must be one of the supported languages.');
+      expect(mockPatchMethod).not.toHaveBeenCalled();
+      expect(mockPostMethod).not.toHaveBeenCalled();
+    });
+
+    it('throws error for empty language code', async () => {
+      await expect(setSiteLanguage('', 'testuser'))
+        .rejects
+        .toThrow('Invalid language code: . Must be one of the supported languages.');
+      expect(mockPatchMethod).not.toHaveBeenCalled();
+      expect(mockPostMethod).not.toHaveBeenCalled();
+    });
+
+    it('accepts valid language codes', async () => {
+      mockPatchMethod.mockResolvedValue({});
+      mockPostMethod.mockResolvedValue({});
+
+      const validLanguageCodes = ['en', 'es-419', 'fr', 'pt-br', 'zh-cn', 'ar', 'es-es', 'tr-tr', 'de-de', 'it-it', 'id', 'ko-kr', 'el', 'th'];
+
+      for (const langCode of validLanguageCodes) {
+        // eslint-disable-next-line no-await-in-loop
+        await expect(setSiteLanguage(langCode, 'testuser')).resolves.not.toThrow();
+      }
+
+      expect(mockPatchMethod).toHaveBeenCalledTimes(validLanguageCodes.length);
+      expect(mockPostMethod).toHaveBeenCalledTimes(validLanguageCodes.length);
+    });
   });
 
   describe('fetchUnifiedTranslationToggleEnabled', () => {

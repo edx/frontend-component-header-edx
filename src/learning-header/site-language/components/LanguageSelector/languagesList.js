@@ -1,3 +1,13 @@
+/**
+ * NOTE: This is a hardcoded list of the languages we are currently supporting for this
+ *       language selector component. It is copied from the languages that are currently widely
+ *       supported by the xpert translation feature. This list is not intended to be a permanent
+ *       solution and should be replaced with a dynamic
+ *       list of languages from a backend API in later iterations.
+ *
+ * TODO: Replace this hardcoded list with a dynamic list from a config endpoint
+ */
+
 export const TRANSLATION_LANGUAGES = [
   {
     code: 'en',

@@ -16,7 +16,7 @@ jest.mock('../SiteLanguageModal', () => ({
 }));
 
 describe('SiteLanguageButton', () => {
-  const trackingProps = {
+  const props = {
     courseId: 'course-v1:edX+Demo+2024',
     userId: 'user-123',
   };
@@ -29,23 +29,23 @@ describe('SiteLanguageButton', () => {
   });
 
   it('renders and tracks display', async () => {
-    render(<SiteLanguageButton trackingProps={trackingProps} />);
+    render(<SiteLanguageButton {...props} />);
     await waitFor(() => {
       expect(screen.getByRole('button')).toBeInTheDocument();
     });
     expect(sendTrackEvent).toHaveBeenCalledWith(
       'edx.whole_course_translations.unified_translations_button.displayed',
-      trackingProps,
+      { courseId: props.courseId, userId: props.userId },
     );
   });
 
   it('opens modal and tracks click when button is clicked', async () => {
-    render(<SiteLanguageButton trackingProps={trackingProps} />);
+    render(<SiteLanguageButton {...props} />);
     const button = screen.getByRole('button');
     fireEvent.click(button);
     expect(sendTrackEvent).toHaveBeenCalledWith(
       'edx.whole_course_translations.unified_translations_button.clicked',
-      trackingProps,
+      { courseId: props.courseId, userId: props.userId },
     );
     expect(screen.getByTestId('site-language-modal')).toBeInTheDocument();
   });

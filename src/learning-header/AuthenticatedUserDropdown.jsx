@@ -60,7 +60,7 @@ const AuthenticatedUserDropdown = (props) => {
   }
 
   return (
-    <Dropdown className="user-dropdown ml-3">
+    <Dropdown className="user-dropdown user-header-secondary-item">
       <Dropdown.Toggle variant="outline-primary" id="user-dropdown" data-testid="user-dropdown-toggle">
         <FontAwesomeIcon icon={faUserCircle} size="lg" />
       </Dropdown.Toggle>

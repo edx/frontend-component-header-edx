@@ -5,7 +5,7 @@ import {
   Stack,
 } from '@openedx/paragon';
 
-import messages from '../../../messages';
+import messages from '../../messages';
 
 export const TranslationDisclaimer = () => {
   // @ts-ignore: getLocale expects one argument, but it is valid for it to be undefined

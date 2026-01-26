@@ -9,10 +9,10 @@ import { Language } from '@openedx/paragon/icons';
 
 import { SiteLanguageModal } from '../SiteLanguageModal';
 import messages from '../../messages';
-import './index.scss';
 
 interface SiteLanguageButtonProps {
-  trackingProps: Record<string, string>;
+  courseId: string | null;
+  userId: string;
 }
 
 /**
@@ -20,26 +20,31 @@ interface SiteLanguageButtonProps {
  *
  * @returns {JSX.Element} The rendered SiteLanguageButton component.
  */
-export const SiteLanguageButton = ({ trackingProps }: SiteLanguageButtonProps) => {
+export const SiteLanguageButton = ({ courseId, userId }: SiteLanguageButtonProps) => {
   const { formatMessage } = useIntl();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const closeModal = () => setIsModalOpen(false);
 
   useEffect(() => {
-    sendTrackEvent('edx.whole_course_translations.unified_translations_button.displayed', trackingProps);
-  }, [trackingProps]);
+    if (courseId && userId) {
+      sendTrackEvent('edx.whole_course_translations.unified_translations_button.displayed', { courseId, userId });
+    }
+  }, [courseId, userId]);
 
   const handleButtonClick = useCallback(() => {
-    sendTrackEvent('edx.whole_course_translations.unified_translations_button.clicked', trackingProps);
+    sendTrackEvent('edx.whole_course_translations.unified_translations_button.clicked', { courseId, userId });
     setIsModalOpen(true);
-  }, [trackingProps]);
+  }, [courseId, userId]);
 
   return (
-    <div className="site-language-selector-header-icon">
+    <div className="site-language-selector-header-icon user-header-secondary-item">
       <IconButton
         className="site-language-selection-button"
         src={Language}
+        size="inline"
+        variant="light"
+        iconClassNames="text-primary-500"
         alt={formatMessage(messages.buttonScreenReaderLabel)}
         onClick={handleButtonClick}
       />
