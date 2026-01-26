@@ -19,6 +19,10 @@ import messages from './Header.messages';
 import { MenuIcon } from './Icons';
 
 class MobileHeader extends React.Component {
+  constructor(props) { // eslint-disable-line no-useless-constructor, @typescript-eslint/no-useless-constructor
+    super(props);
+  }
+
   renderMenu(menu) {
     // Nodes are accepted as a prop
     if (!Array.isArray(menu)) {
