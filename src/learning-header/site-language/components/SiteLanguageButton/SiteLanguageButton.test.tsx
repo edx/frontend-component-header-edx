@@ -15,6 +15,17 @@ jest.mock('../SiteLanguageModal', () => ({
   SiteLanguageModal: ({ isOpen }) => (isOpen ? <div data-testid="site-language-modal">Modal Open</div> : null),
 }));
 
+jest.mock('../ProductTour/useSiteLanguageTour', () => ({
+  __esModule: true,
+  default: jest.fn(() => ({
+    siteLanguageTour: {
+      tourId: 'site-language-button',
+      enabled: false,
+      checkpoints: [],
+    },
+  })),
+}));
+
 describe('SiteLanguageButton', () => {
   const props = {
     courseId: 'course-v1:edX+Demo+2024',
@@ -24,6 +35,7 @@ describe('SiteLanguageButton', () => {
   beforeEach(async () => {
     await initializeMockApp();
   });
+
   afterEach(() => {
     jest.clearAllMocks();
   });
