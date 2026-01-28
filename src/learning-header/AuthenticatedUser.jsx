@@ -8,12 +8,13 @@ import { AppContext } from '@edx/frontend-platform/react';
 import AuthenticatedUserDropdown from './AuthenticatedUserDropdown';
 import messages from './messages';
 import NotificationsSlot from '../plugin-slots/NotificationsSlot';
+import { SiteLanguageButton } from './site-language/components/SiteLanguageButton';
 
 const BaseAuthenticatedUser = ({ children }) => {
   const intl = useIntl();
   return (
     <>
-      <a className="text-gray-700" href={getConfig().SUPPORT_URL}>
+      <a className="text-gray-700 user-header-secondary-item" href={getConfig().SUPPORT_URL}>
         {intl.formatMessage(messages.help)}
       </a>
       {children}
@@ -28,12 +29,20 @@ BaseAuthenticatedUser.propTypes = {
 const AuthenticatedUser = ({
   showUserDropdown,
   enterpriseLearnerPortalLink,
+  showSiteLanguageButton,
+  courseId,
 }) => {
   const { authenticatedUser } = useContext(AppContext);
 
   return (
     <BaseAuthenticatedUser>
       <NotificationsSlot />
+      {showSiteLanguageButton && (
+        <SiteLanguageButton
+          courseId={courseId}
+          userId={authenticatedUser.userId}
+        />
+      )}
       {showUserDropdown && (
         <AuthenticatedUserDropdown
           enterpriseLearnerPortalLink={enterpriseLearnerPortalLink}
@@ -46,9 +55,15 @@ const AuthenticatedUser = ({
   );
 };
 
+AuthenticatedUser.defaultProps = {
+  courseId: null,
+};
+
 AuthenticatedUser.propTypes = {
   enterpriseLearnerPortalLink: PropTypes.string.isRequired,
   showUserDropdown: PropTypes.bool.isRequired,
+  showSiteLanguageButton: PropTypes.bool.isRequired,
+  courseId: PropTypes.string,
 };
 
 export default AuthenticatedUser;

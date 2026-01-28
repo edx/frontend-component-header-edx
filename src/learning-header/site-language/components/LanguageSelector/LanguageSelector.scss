@@ -1,0 +1,18 @@
+.language-set {
+  outline: none;
+  &.pgn__selectable_box-set {
+    grid-gap: 0;
+  }
+
+  .option {
+    border-radius: 0;
+
+    &.pgn__selectable_box-active {
+      z-index: 1;
+    }
+
+    &.pgn__selectable_box {
+      border-bottom: 1px solid #E7E4DB;
+    }
+ }
+}
