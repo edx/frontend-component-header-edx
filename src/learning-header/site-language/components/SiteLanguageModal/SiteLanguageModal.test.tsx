@@ -45,8 +45,8 @@ describe('SiteLanguageModal', () => {
     administrator: false,
   };
 
-  beforeEach(async () => {
-    await initializeMockApp();
+  beforeEach(() => {
+    initializeMockApp();
     mockGetSiteLanguage.mockReturnValue('en');
     mockSetSiteLanguage.mockResolvedValue(undefined);
   });
