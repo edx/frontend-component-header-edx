@@ -15,6 +15,12 @@ jest.mock('react-redux', () => ({
 
 describe('useSiteLanguageTour', () => {
   const mockFormatMessage = jest.fn((msg) => msg.defaultMessage);
+  const mockToursState = {
+    showExistingUserCourseHomeTour: false,
+    showNewUserCourseHomeModal: false,
+    showNewUserCourseHomeTour: false,
+    toursEnabled: true,
+  };
 
   beforeEach(() => {
     initializeMockApp();
@@ -22,7 +28,7 @@ describe('useSiteLanguageTour', () => {
       formatMessage: mockFormatMessage,
     });
     useSelector.mockReturnValue({
-      showCoursewareTour: false,
+      ...mockToursState,
     });
     global.localStorage.clear();
   });
@@ -32,11 +38,25 @@ describe('useSiteLanguageTour', () => {
     jest.clearAllMocks();
   });
 
-  it('enables tour when not seen before and courseware tour is not showing', () => {
-    useSelector.mockReturnValue({
-      showCoursewareTour: false,
-    });
+  it('enables tour when not seen before, base tours are not showing, and base tours are loaded', () => {
     const { result } = renderHook(() => useSiteLanguageTour());
+    expect(result.current.siteLanguageTour.enabled).toBe(true);
+  });
+
+  it('does not show tour until base tours are successfully loaded', () => {
+    useSelector.mockReturnValue({
+      ...mockToursState,
+      toursEnabled: false,
+    });
+    const { result, rerender } = renderHook(() => useSiteLanguageTour());
+    expect(result.current.siteLanguageTour.enabled).toBe(false);
+
+    // Simulate tours being loaded
+    useSelector.mockReturnValue({
+      ...mockToursState,
+      toursEnabled: true,
+    });
+    rerender();
     expect(result.current.siteLanguageTour.enabled).toBe(true);
   });
 
@@ -46,30 +66,33 @@ describe('useSiteLanguageTour', () => {
     expect(result.current.siteLanguageTour.enabled).toBe(false);
   });
 
-  it('disables tour when courseware tour is showing', () => {
-    useSelector.mockReturnValue({
-      showCoursewareTour: true,
+  describe('disables tour when base tours are showing ', () => {
+    it('existing user course home tour', () => {
+      useSelector.mockReturnValue({
+        ...mockToursState,
+        showExistingUserCourseHomeTour: true,
+      });
+      const { result } = renderHook(() => useSiteLanguageTour());
+      expect(result.current.siteLanguageTour.enabled).toBe(false);
     });
-    const { result } = renderHook(() => useSiteLanguageTour());
-    expect(result.current.siteLanguageTour.enabled).toBe(false);
-  });
 
-  it('re-enables tour when courseware tour stops showing', () => {
-    const { result, rerender } = renderHook(() => useSiteLanguageTour());
-
-    // Initially, courseware tour is showing
-    useSelector.mockReturnValue({
-      showCoursewareTour: true,
+    it('new user course home modal', () => {
+      useSelector.mockReturnValue({
+        ...mockToursState,
+        showNewUserCourseHomeModal: true,
+      });
+      const { result } = renderHook(() => useSiteLanguageTour());
+      expect(result.current.siteLanguageTour.enabled).toBe(false);
     });
-    rerender();
-    expect(result.current.siteLanguageTour.enabled).toBe(false);
 
-    // Courseware tour stops showing
-    useSelector.mockReturnValue({
-      showCoursewareTour: false,
+    it('new user course home tour', () => {
+      useSelector.mockReturnValue({
+        ...mockToursState,
+        showNewUserCourseHomeTour: true,
+      });
+      const { result } = renderHook(() => useSiteLanguageTour());
+      expect(result.current.siteLanguageTour.enabled).toBe(false);
     });
-    rerender();
-    expect(result.current.siteLanguageTour.enabled).toBe(true);
   });
 
   it('closeTour sets localStorage and disables tour', () => {
@@ -92,13 +115,15 @@ describe('useSiteLanguageTour', () => {
     });
     expect(result.current.siteLanguageTour.enabled).toBe(false);
 
-    // Try to trigger a re-render by changing courseware tour state
+    // Try to trigger a re-render by changing tour state
     useSelector.mockReturnValue({
-      showCoursewareTour: true,
+      ...mockToursState,
+      showExistingUserCourseHomeTour: true,
     });
     rerender();
     useSelector.mockReturnValue({
-      showCoursewareTour: false,
+      ...mockToursState,
+      showExistingUserCourseHomeTour: false,
     });
     rerender();
 
