@@ -10,7 +10,13 @@ const hasSeenSiteLanguageTourKey = 'hasSeenSiteLanguageTour';
 
 const useSiteLanguageTour = () => {
   const { formatMessage } = useIntl();
-  const { showCoursewareTour } = useSelector(state => state.tours);
+  const {
+    showExistingUserCourseHomeTour = false,
+    showNewUserCourseHomeModal = false,
+    showNewUserCourseHomeTour = false,
+    toursEnabled = false,
+  } = useSelector(state => state.tours) || {};
+
   const [isTourEnabled, setIsTourEnabled] = useState(false);
 
   const closeTour = useCallback(() => {
@@ -34,11 +40,13 @@ const useSiteLanguageTour = () => {
   }), [isTourEnabled, closeTour, formatMessage]);
 
   useEffect(() => {
-    setIsTourEnabled(
-      !showCoursewareTour
-        && global.localStorage.getItem(hasSeenSiteLanguageTourKey) !== 'true',
-    );
-  }, [showCoursewareTour]);
+    const shouldEnableTour = toursEnabled
+      && !showExistingUserCourseHomeTour
+      && !showNewUserCourseHomeModal
+      && !showNewUserCourseHomeTour
+      && global.localStorage.getItem(hasSeenSiteLanguageTourKey) !== 'true';
+    setIsTourEnabled(shouldEnableTour);
+  }, [toursEnabled, showExistingUserCourseHomeTour, showNewUserCourseHomeModal, showNewUserCourseHomeTour]);
 
   return {
     siteLanguageTour,
