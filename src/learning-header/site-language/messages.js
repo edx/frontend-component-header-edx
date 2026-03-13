@@ -18,7 +18,7 @@ const messages = defineMessages({
   },
   popoverDisclaimerContent: {
     id: 'header.sitelanguage.modal.popover.disclaimer.content',
-    defaultMessage: 'Eligible content includes most video transcripts, quizzes, and on platform text.',
+    defaultMessage: 'Eligible content includes most video transcripts, quizzes, and on platform text. Translations are generated using AI tools and may contain inaccuracies or error.',
     description: 'Line explaining the content to be translated in popover.',
   },
   popoverDisclaimerWarranties: {
