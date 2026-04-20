@@ -11,7 +11,8 @@ import {
   getConfig,
   subscribe,
 } from '@edx/frontend-platform';
-import { useEnterpriseConfig } from '@edx/frontend-enterprise-utils';
+import { useEnterpriseConfig, isEnterpriseUser } from '@edx/frontend-enterprise-utils';
+import './index.scss';
 
 import PropTypes from 'prop-types';
 import DesktopHeader from './DesktopHeader';
@@ -35,6 +36,7 @@ subscribe(APP_CONFIG_INITIALIZED, () => {
   mergeConfig({
     MINIMAL_HEADER: !!process.env.MINIMAL_HEADER,
     ENTERPRISE_LEARNER_PORTAL_HOSTNAME: process.env.ENTERPRISE_LEARNER_PORTAL_HOSTNAME,
+    ENABLE_EDX_PERSONAL_DASHBOARD: process.env.ENABLE_EDX_PERSONAL_DASHBOARD,
     AUTHN_MINIMAL_HEADER: !!process.env.AUTHN_MINIMAL_HEADER,
     ACCOUNT_SETTINGS_URL: process.env.ACCOUNT_SETTINGS_URL,
     NOTIFICATION_FEEDBACK_URL: process.env.NOTIFICATION_FEEDBACK_URL,
@@ -64,12 +66,14 @@ const Header = ({
     enterpriseLearnerPortalLink,
     enterpriseCustomerBrandingConfig,
   } = useEnterpriseConfig(authenticatedUser, config.ENTERPRISE_LEARNER_PORTAL_HOSTNAME, config.LMS_BASE_URL);
+  const hasEnterpriseAccount = isEnterpriseUser(authenticatedUser);
 
   const defaultMainMenu = [
     {
       type: 'item',
       href: `${config.LMS_BASE_URL}/dashboard`,
       content: intl.formatMessage(messages['header.links.courses']),
+      isActive: document.title.includes(intl.formatMessage(messages['header.pages.learner.home'])),
     },
     {
       type: 'item',
@@ -89,32 +93,29 @@ const Header = ({
     },
   ];
 
-  const dashboardMenuItem = {
-    type: 'item',
-    href: `${config.LMS_BASE_URL}/dashboard`,
-    content: intl.formatMessage(messages['header.user.menu.dashboard']),
-  };
-
   const logoutMenuItem = {
     type: 'item',
     href: config.LOGOUT_URL,
     content: intl.formatMessage(messages['header.user.menu.logout']),
   };
 
-  // If there is an Enterprise LP link, use that instead of the B2C Dashboard
-  let baseUserMenuDashboardLinks = [];
-  if (enterpriseLearnerPortalLink) {
-    baseUserMenuDashboardLinks = [enterpriseLearnerPortalLink];
-  } else {
-    baseUserMenuDashboardLinks = [dashboardMenuItem];
-  }
+  const defaultSecondaryMenu = [
+    ...(getConfig().SUPPORT_URL ? [{
+      type: 'item',
+      href: `${getConfig().SUPPORT_URL}`,
+      content: intl.formatMessage(messages['header.links.help']),
+    }] : []),
+  ];
 
   const careerItemContent = <>{intl.formatMessage(messages['header.user.menu.career'])}<Badge className="px-2 mx-2" variant="warning">{intl.formatMessage(messages['header.user.menu.newAlert'])}</Badge></>;
   const defaultUserMenu = authenticatedUser === null ? [] : [{
     heading: '',
     items: [
-      ...baseUserMenuDashboardLinks,
-      {
+      // Users should only see Career button if they do not have an available
+      // learner portal, because an available learner portal currently means
+      // that they access content via B2B Subscriptions, in which context "career" button
+      // is not relevant.
+      ...(!enterpriseLearnerPortalLink ? [{
         type: 'item',
         href: 'https://careers.edx.org/',
         content: careerItemContent,
@@ -124,16 +125,18 @@ const Header = ({
             { category: 'header', label: 'header' },
           );
         },
-      },
+      }] : []),
       {
         type: 'item',
         href: `${config.ACCOUNT_PROFILE_URL}/u/${authenticatedUser.username}`,
         content: intl.formatMessage(messages['header.user.menu.profile']),
+        isActive: document.title.includes(intl.formatMessage(messages['header.user.menu.profile'])),
       },
       {
         type: 'item',
         href: config.ACCOUNT_SETTINGS_URL,
         content: intl.formatMessage(messages['header.user.menu.account.settings']),
+        isActive: document.title.includes(intl.formatMessage(messages['header.user.menu.account.settings'])),
       },
       // Users should only see Order History if they do not have an available
       // learner portal and have a ORDER_HISTORY_URL define in the environment,
@@ -150,14 +153,20 @@ const Header = ({
   }];
 
   const mainMenu = mainMenuItems || defaultMainMenu;
-  const secondaryMenu = secondaryMenuItems || [];
+  const secondaryMenu = secondaryMenuItems || defaultSecondaryMenu;
   let userMenu = authenticatedUser === null ? [] : userMenuItems || defaultUserMenu;
+
+  const minimalDashboardMenuItem = {
+    type: 'item',
+    href: `${config.LMS_BASE_URL}/dashboard`,
+    content: intl.formatMessage(messages['header.user.menu.dashboard']),
+  };
 
   if (getConfig().MINIMAL_HEADER && authenticatedUser !== null) {
     userMenu = [{
       heading: '',
       items: [
-        dashboardMenuItem,
+        minimalDashboardMenuItem,
         logoutMenuItem,
       ],
     }];
@@ -190,6 +199,7 @@ const Header = ({
     userMenu: getConfig().AUTHN_MINIMAL_HEADER ? [] : userMenu,
     loggedOutItems: getConfig().AUTHN_MINIMAL_HEADER ? [] : loggedOutItems,
     studioBaseUrl: config.STUDIO_BASE_URL,
+    hasEnterpriseAccount,
   };
 
   if (enterpriseCustomerBrandingConfig) {

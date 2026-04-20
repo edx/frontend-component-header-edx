@@ -77,7 +77,14 @@ class MobileHeader extends React.Component {
   }
 
   renderUserMenuItems() {
-    const { userMenu, name, email } = this.props;
+    const {
+      userMenu,
+      name,
+      email,
+      hasEnterpriseAccount,
+      logoAltText,
+      logoDestination,
+    } = this.props;
     const userInfoItem = (name || email) ? (
       <li className="nav-item user-info__menu-item" key="user-info">
         <UserMenuItem name={name} email={email} />
@@ -100,7 +107,13 @@ class MobileHeader extends React.Component {
       ))
     ));
 
-    const userMenuGroupSlot = <UserMenuGroupSlot />;
+    const userMenuGroupSlot = (
+      <UserMenuGroupSlot
+        hasEnterpriseAccount={hasEnterpriseAccount}
+        logoAltText={logoAltText}
+        logoDestination={logoDestination}
+      />
+    );
     const userMenuGroupItemSlot = <UserMenuGroupItemSlot />;
 
     return userInfoItem
@@ -227,6 +240,7 @@ MobileHeader.propTypes = {
   avatar: PropTypes.string,
   name: PropTypes.string,
   email: PropTypes.string,
+  hasEnterpriseAccount: PropTypes.bool,
   loggedIn: PropTypes.bool,
   stickyOnMobile: PropTypes.bool,
   notificationAppData: PropTypes.shape({
@@ -257,6 +271,7 @@ MobileHeader.defaultProps = {
   avatar: null,
   name: '',
   email: '',
+  hasEnterpriseAccount: false,
   loggedIn: false,
   stickyOnMobile: true,
   notificationAppData: {

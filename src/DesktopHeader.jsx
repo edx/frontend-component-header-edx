@@ -83,6 +83,9 @@ class DesktopHeader extends React.Component {
       name,
       email,
       intl,
+      hasEnterpriseAccount,
+      logoAltText,
+      logoDestination,
     } = this.props;
 
     return (
@@ -107,7 +110,11 @@ class DesktopHeader extends React.Component {
               />
             </Dropdown.Item>
           )}
-          <UserMenuGroupSlot />
+          <UserMenuGroupSlot
+            hasEnterpriseAccount={hasEnterpriseAccount}
+            logoAltText={logoAltText}
+            logoDestination={logoDestination}
+          />
           {userMenu.map((group, index) => (
             // eslint-disable-next-line react/jsx-no-comment-textnodes,react/no-array-index-key
             <React.Fragment key={index}>
@@ -221,6 +228,7 @@ DesktopHeader.propTypes = {
   avatar: PropTypes.string,
   name: PropTypes.string,
   email: PropTypes.string,
+  hasEnterpriseAccount: PropTypes.bool,
   loggedIn: PropTypes.bool,
   notificationAppData: PropTypes.shape({
     apps: PropTypes.objectOf(
@@ -251,6 +259,7 @@ DesktopHeader.defaultProps = {
   name: '',
   email: '',
   loggedIn: false,
+  hasEnterpriseAccount: false,
   notificationAppData: {
     apps: {},
     tabsCount: {},
