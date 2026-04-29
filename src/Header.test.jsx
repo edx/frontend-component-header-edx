@@ -3,7 +3,7 @@ import React from 'react';
 import { act } from 'react-dom/test-utils';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
 import TestRenderer from 'react-test-renderer';
-import { useEnterpriseConfig } from '@edx/frontend-enterprise-utils';
+import { useEnterpriseConfig } from '@2uinc/frontend-enterprise-utils';
 import { AppContext } from '@edx/frontend-platform/react';
 import { getConfig } from '@edx/frontend-platform';
 import { Context as ResponsiveContext } from 'react-responsive';
@@ -14,7 +14,7 @@ import Header from './index';
 import { initializeMockApp } from './setupTest';
 
 jest.mock('@edx/frontend-platform');
-jest.mock('@edx/frontend-enterprise-utils');
+jest.mock('@2uinc/frontend-enterprise-utils');
 
 getConfig.mockReturnValue({});
 
