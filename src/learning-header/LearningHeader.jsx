@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 
-import { useEnterpriseConfig } from '@edx/frontend-enterprise-utils';
+import { useEnterpriseConfig } from '@2uinc/frontend-enterprise-utils';
 import {
   APP_CONFIG_INITIALIZED, getConfig, ensureConfig, subscribe, mergeConfig,
 } from '@edx/frontend-platform';
