@@ -11,7 +11,7 @@ import {
   getConfig,
   subscribe,
 } from '@edx/frontend-platform';
-import { useEnterpriseConfig } from '@edx/frontend-enterprise-utils';
+import { useEnterpriseConfig } from '@2uinc/frontend-enterprise-utils';
 
 import PropTypes from 'prop-types';
 import DesktopHeader from './DesktopHeader';

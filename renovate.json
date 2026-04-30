@@ -24,7 +24,7 @@
       "automerge": true
     },
     {
-      "matchPackagePatterns": ["@edx", "@openedx"],
+      "matchPackagePatterns": ["@edx", "@openedx", "@2uinc"],
       "matchUpdateTypes": ["minor", "patch"],
       "automerge": true
     }
