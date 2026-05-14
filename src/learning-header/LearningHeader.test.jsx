@@ -1,5 +1,6 @@
 import React from 'react';
 import { AppContext } from '@edx/frontend-platform/react';
+import { mergeConfig } from '@edx/frontend-platform';
 import {
   fireEvent, initializeMockApp, render, screen, waitFor,
 } from '../setupTest';
@@ -101,6 +102,58 @@ describe('Header', () => {
 
     await waitFor(() => {
       expect(screen.queryByTestId('site-language-button')).not.toBeInTheDocument();
+    });
+  });
+
+  describe('status alert', () => {
+    const STATUS_ALERT_MESSAGE = 'System maintenance in progress';
+
+    afterEach(() => {
+      mergeConfig({
+        ENV_STATUS_ALERT_ENABLED: false,
+        STATUS_ALERT_ENABLED: false,
+        STATUS_ALERT_MESSAGE: null,
+      });
+    });
+
+    it('shows the banner when env toggle and runtime settings are all enabled', () => {
+      mergeConfig({
+        ENV_STATUS_ALERT_ENABLED: true,
+        STATUS_ALERT_ENABLED: true,
+        STATUS_ALERT_MESSAGE,
+      });
+      render(<Header />);
+      expect(screen.getByText(STATUS_ALERT_MESSAGE)).toBeInTheDocument();
+    });
+
+    it('hides the banner when env toggle is off', () => {
+      mergeConfig({
+        ENV_STATUS_ALERT_ENABLED: false,
+        STATUS_ALERT_ENABLED: true,
+        STATUS_ALERT_MESSAGE,
+      });
+      render(<Header />);
+      expect(screen.queryByText(STATUS_ALERT_MESSAGE)).not.toBeInTheDocument();
+    });
+
+    it('hides the banner when runtime config disables it', () => {
+      mergeConfig({
+        ENV_STATUS_ALERT_ENABLED: true,
+        STATUS_ALERT_ENABLED: false,
+        STATUS_ALERT_MESSAGE,
+      });
+      render(<Header />);
+      expect(screen.queryByText(STATUS_ALERT_MESSAGE)).not.toBeInTheDocument();
+    });
+
+    it('hides the banner when the message is absent', () => {
+      mergeConfig({
+        ENV_STATUS_ALERT_ENABLED: true,
+        STATUS_ALERT_ENABLED: true,
+        STATUS_ALERT_MESSAGE: null,
+      });
+      render(<Header />);
+      expect(screen.queryByText(STATUS_ALERT_MESSAGE)).not.toBeInTheDocument();
     });
   });
 });

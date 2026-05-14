@@ -14,6 +14,7 @@ import messages from './messages';
 import lightning from '../lightning';
 import AuthenticatedUser from './AuthenticatedUser';
 import { fetchUnifiedTranslationToggleEnabled } from './site-language/data';
+import { StatusAlert } from '../status-alert';
 
 ensureConfig([
   'ACCOUNT_SETTINGS_URL',
@@ -27,6 +28,9 @@ subscribe(APP_CONFIG_INITIALIZED, () => {
     ACCOUNT_SETTINGS_URL: process.env.ACCOUNT_SETTINGS_URL || '',
     NOTIFICATION_FEEDBACK_URL: process.env.NOTIFICATION_FEEDBACK_URL || '',
     CAREERS_URL: process.env.CAREERS_URL || '',
+    // Temporary per-MFE rollout toggle. The ENV_ prefix distinguishes the
+    // build-time env var from the runtime config setting STATUS_ALERT_ENABLED.
+    ENV_STATUS_ALERT_ENABLED: !!process.env.ENV_STATUS_ALERT_ENABLED,
   }, 'Learning Header additional config');
 });
 
@@ -83,8 +87,14 @@ const LearningHeader = ({
     );
   }
 
+  const showStatusAlert = getConfig().ENV_STATUS_ALERT_ENABLED
+    && getConfig().STATUS_ALERT_ENABLED
+    && getConfig().STATUS_ALERT_MESSAGE;
+  const statusAlertMessage = getConfig().STATUS_ALERT_MESSAGE;
+
   return (
     <header className="learning-header">
+      {showStatusAlert && <StatusAlert message={statusAlertMessage} />}
       <a className="sr-only sr-only-focusable" href="#main-content">{intl.formatMessage(messages.skipNavLink)}</a>
       <div className="px-4 py-2.5 d-flex align-items-center learning-header-container">
         {headerLogo}
