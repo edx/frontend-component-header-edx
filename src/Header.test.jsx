@@ -229,4 +229,42 @@ describe('<Header />', () => {
       expect(wrapper.toJSON()).toMatchSnapshot();
     });
   });
+
+  describe('status alert', () => {
+    afterEach(() => {
+      getConfig.mockReturnValue({});
+    });
+
+    const STATUS_ALERT_MESSAGE = 'System maintenance in progress';
+    const contextValue = {
+      authenticatedUser: null,
+      config: APP_CONTEXT_CONFIG,
+    };
+
+    it('shows the banner when runtime settings are enabled', () => {
+      getConfig.mockReturnValue({
+        STATUS_ALERT_ENABLED: true,
+        STATUS_ALERT_MESSAGE,
+      });
+      render(<HeaderContext width={{ width: 1280 }} contextValue={contextValue} />);
+      expect(screen.getByText(STATUS_ALERT_MESSAGE)).toBeVisible();
+    });
+
+    it('hides the banner when runtime config disables it', () => {
+      getConfig.mockReturnValue({
+        STATUS_ALERT_ENABLED: false,
+        STATUS_ALERT_MESSAGE,
+      });
+      render(<HeaderContext width={{ width: 1280 }} contextValue={contextValue} />);
+      expect(screen.queryByText(STATUS_ALERT_MESSAGE)).not.toBeInTheDocument();
+    });
+
+    it('hides the banner when the message is absent', () => {
+      getConfig.mockReturnValue({
+        STATUS_ALERT_ENABLED: true,
+      });
+      render(<HeaderContext width={{ width: 1280 }} contextValue={contextValue} />);
+      expect(screen.queryByText(STATUS_ALERT_MESSAGE)).not.toBeInTheDocument();
+    });
+  });
 });

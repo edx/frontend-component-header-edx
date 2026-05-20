@@ -24,6 +24,7 @@ const authenticatedUser = {
 };
 let currentUser;
 let screenWidth = 1280;
+let extraConfig = {};
 
 const RootWrapper = ({
   ...props
@@ -36,6 +37,7 @@ const RootWrapper = ({
       SITE_NAME: process.env.SITE_NAME,
       STUDIO_BASE_URL: process.env.STUDIO_BASE_URL,
       LOGIN_URL: process.env.LOGIN_URL,
+      ...extraConfig,
     },
   }), []);
   const responsiveContextValue = useMemo(() => ({ width: screenWidth }), []);
@@ -77,6 +79,7 @@ describe('Header', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     currentUser = authenticatedUser;
+    extraConfig = {};
   });
   describe('desktop', () => {
     it('course lock up should be visible', () => {
@@ -208,6 +211,38 @@ describe('Header', () => {
       expect(mobileMenuButton).toBeNull();
 
       expect(desktopMenu).toBeNull();
+    });
+  });
+
+  describe('status alert', () => {
+    const STATUS_ALERT_MESSAGE = 'System maintenance in progress';
+
+    beforeEach(() => { screenWidth = 1280; });
+
+    it('shows the banner when runtime settings are enabled', () => {
+      extraConfig = {
+        STATUS_ALERT_ENABLED: true,
+        STATUS_ALERT_MESSAGE,
+      };
+      const { getByText } = render(<RootWrapper {...props} />);
+      expect(getByText(STATUS_ALERT_MESSAGE)).toBeVisible();
+    });
+
+    it('hides the banner when runtime config disables it', () => {
+      extraConfig = {
+        STATUS_ALERT_ENABLED: false,
+        STATUS_ALERT_MESSAGE,
+      };
+      const { queryByText } = render(<RootWrapper {...props} />);
+      expect(queryByText(STATUS_ALERT_MESSAGE)).toBeNull();
+    });
+
+    it('hides the banner when the message is absent', () => {
+      extraConfig = {
+        STATUS_ALERT_ENABLED: true,
+      };
+      const { queryByText } = render(<RootWrapper {...props} />);
+      expect(queryByText(STATUS_ALERT_MESSAGE)).toBeNull();
     });
   });
 });

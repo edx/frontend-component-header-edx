@@ -16,6 +16,7 @@ import { useEnterpriseConfig } from '@2uinc/frontend-enterprise-utils';
 import PropTypes from 'prop-types';
 import DesktopHeader from './DesktopHeader';
 import MobileHeader from './MobileHeader';
+import { StatusAlert } from './status-alert';
 
 import messages from './Header.messages';
 
@@ -199,8 +200,13 @@ const Header = ({
     };
   }
 
+  const showStatusAlert = getConfig().STATUS_ALERT_ENABLED
+    && getConfig().STATUS_ALERT_MESSAGE;
+  const statusAlertMessage = getConfig().STATUS_ALERT_MESSAGE;
+
   return (
     <>
+      {showStatusAlert && <StatusAlert message={statusAlertMessage} />}
       <Responsive maxWidth={769}>
         <MobileHeader {...props} />
       </Responsive>
