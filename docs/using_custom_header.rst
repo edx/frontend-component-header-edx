@@ -113,9 +113,12 @@ Some Important Notes
 Status Alert
 ------------
 
-A site-wide status banner can be displayed above the header to surface maintenance notices or other operational messages. The same behavior is available in the ``Header``, ``StudioHeader``, and ``LearningHeader`` components.
+A site-wide status banner can be displayed above the header to surface maintenance notices or other operational messages.
 
-These settings are supplied at runtime via the MFE config endpoint and can be set per-MFE or globally.
+- The banner cannot be dismissed.
+- The same behavior is available in the ``Header``, ``StudioHeader``, and ``LearningHeader`` components.
+
+The following settings are supplied at runtime via the MFE config endpoint, which allows it to be set globally or as a per-MFE override.
 
 ``STATUS_ALERT_ENABLED``
 ************************

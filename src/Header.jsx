@@ -39,7 +39,6 @@ subscribe(APP_CONFIG_INITIALIZED, () => {
     AUTHN_MINIMAL_HEADER: !!process.env.AUTHN_MINIMAL_HEADER,
     ACCOUNT_SETTINGS_URL: process.env.ACCOUNT_SETTINGS_URL,
     NOTIFICATION_FEEDBACK_URL: process.env.NOTIFICATION_FEEDBACK_URL,
-
   }, 'Header additional config');
 });
 

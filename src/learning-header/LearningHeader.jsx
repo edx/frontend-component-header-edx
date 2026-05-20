@@ -28,7 +28,6 @@ subscribe(APP_CONFIG_INITIALIZED, () => {
     ACCOUNT_SETTINGS_URL: process.env.ACCOUNT_SETTINGS_URL || '',
     NOTIFICATION_FEEDBACK_URL: process.env.NOTIFICATION_FEEDBACK_URL || '',
     CAREERS_URL: process.env.CAREERS_URL || '',
-
   }, 'Learning Header additional config');
 });
 
