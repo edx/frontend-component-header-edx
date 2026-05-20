@@ -8,4 +8,9 @@ describe('StatusAlert', () => {
     render(<StatusAlert message="System maintenance in progress" />);
     expect(screen.getByText('System maintenance in progress')).toBeVisible();
   });
+
+  it('renders the warning icon', () => {
+    const { container } = render(<StatusAlert message="System maintenance in progress" />);
+    expect(container.querySelector('svg')).toBeInTheDocument();
+  });
 });

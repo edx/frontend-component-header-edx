@@ -1,9 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { PageBanner } from '@openedx/paragon';
+import { Icon, PageBanner } from '@openedx/paragon';
+import { WarningFilled } from '@openedx/paragon/icons';
 
 const StatusAlert = ({ message }) => (
-  <PageBanner variant="warning">{message}</PageBanner>
+  <PageBanner variant="warning">
+    <Icon src={WarningFilled} className="mie-2" />
+    {message}
+  </PageBanner>
 );
 
 StatusAlert.propTypes = {
