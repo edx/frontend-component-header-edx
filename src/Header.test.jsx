@@ -247,7 +247,7 @@ describe('<Header />', () => {
         STATUS_ALERT_MESSAGE,
       });
       render(<HeaderContext width={{ width: 1280 }} contextValue={contextValue} />);
-      expect(screen.getByText(STATUS_ALERT_MESSAGE)).toBeInTheDocument();
+      expect(screen.getByText(STATUS_ALERT_MESSAGE)).toBeVisible();
     });
 
     it('hides the banner when runtime config disables it', () => {
