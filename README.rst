@@ -59,6 +59,9 @@ Development
 - Start the example server `npm start`
 - Visit http://localhost:1234
 
+Alternatively, you can develop and test the header from within a consuming MFE (e.g. to test ``LearningHeader`` in ``frontend-app-learning`` or ``StudioHeader`` in
+``frontend-app-course-authoring``). See `docs/testing_in_mfe.rst <docs/testing_in_mfe.rst>`_ for instructions.
+
 Contributing
 ============
 
