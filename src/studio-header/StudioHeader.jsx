@@ -16,7 +16,6 @@ ensureConfig([
   'LOGO_URL',
 ], 'Studio Header component');
 
-
 const StudioHeader = ({
   number, org, title, isHiddenMainMenu, mainMenuDropdowns, outlineLink,
 }) => {
