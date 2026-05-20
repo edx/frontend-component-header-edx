@@ -9,6 +9,7 @@ Overview
 This guide describes how to test local changes to ``frontend-component-header-edx`` by wiring the component source directly into a consuming MFE using a webpack alias — no build or publish step required.
 
 This approach should work with any MFE that imports ``@edx/frontend-component-header``.
+
 .. note::
    These instructions assume you are running the MFE inside the edX devstack (Docker). If you are running the MFE from your host machine, the changes are the same except the header source path in ``webpack.dev.config.js`` should be the absolute local path to the header repo's ``src/`` directory (e.g. ``/Users/yourname/edx/src/frontend-component-header-edx/src``) instead of the Docker path shown below.
 
