@@ -28,9 +28,7 @@ subscribe(APP_CONFIG_INITIALIZED, () => {
     ACCOUNT_SETTINGS_URL: process.env.ACCOUNT_SETTINGS_URL || '',
     NOTIFICATION_FEEDBACK_URL: process.env.NOTIFICATION_FEEDBACK_URL || '',
     CAREERS_URL: process.env.CAREERS_URL || '',
-    // Temporary per-MFE rollout toggle. The ENV_ prefix distinguishes the
-    // build-time env var from the runtime config setting STATUS_ALERT_ENABLED.
-    ENV_STATUS_ALERT_ENABLED: !!process.env.ENV_STATUS_ALERT_ENABLED,
+
   }, 'Learning Header additional config');
 });
 
@@ -87,8 +85,7 @@ const LearningHeader = ({
     );
   }
 
-  const showStatusAlert = getConfig().ENV_STATUS_ALERT_ENABLED
-    && getConfig().STATUS_ALERT_ENABLED
+  const showStatusAlert = getConfig().STATUS_ALERT_ENABLED
     && getConfig().STATUS_ALERT_MESSAGE;
   const statusAlertMessage = getConfig().STATUS_ALERT_MESSAGE;
 

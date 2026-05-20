@@ -219,9 +219,8 @@ describe('Header', () => {
 
     beforeEach(() => { screenWidth = 1280; });
 
-    it('shows the banner when env toggle and runtime settings are all enabled', () => {
+    it('shows the banner when runtime settings are enabled', () => {
       extraConfig = {
-        ENV_STATUS_ALERT_ENABLED: true,
         STATUS_ALERT_ENABLED: true,
         STATUS_ALERT_MESSAGE,
       };
@@ -229,19 +228,8 @@ describe('Header', () => {
       expect(getByText(STATUS_ALERT_MESSAGE)).toBeVisible();
     });
 
-    it('hides the banner when env toggle is off', () => {
-      extraConfig = {
-        ENV_STATUS_ALERT_ENABLED: false,
-        STATUS_ALERT_ENABLED: true,
-        STATUS_ALERT_MESSAGE,
-      };
-      const { queryByText } = render(<RootWrapper {...props} />);
-      expect(queryByText(STATUS_ALERT_MESSAGE)).toBeNull();
-    });
-
     it('hides the banner when runtime config disables it', () => {
       extraConfig = {
-        ENV_STATUS_ALERT_ENABLED: true,
         STATUS_ALERT_ENABLED: false,
         STATUS_ALERT_MESSAGE,
       };
@@ -251,7 +239,6 @@ describe('Header', () => {
 
     it('hides the banner when the message is absent', () => {
       extraConfig = {
-        ENV_STATUS_ALERT_ENABLED: true,
         STATUS_ALERT_ENABLED: true,
       };
       const { queryByText } = render(<RootWrapper {...props} />);

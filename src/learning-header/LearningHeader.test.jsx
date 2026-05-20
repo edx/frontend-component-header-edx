@@ -110,15 +110,13 @@ describe('Header', () => {
 
     afterEach(() => {
       mergeConfig({
-        ENV_STATUS_ALERT_ENABLED: false,
         STATUS_ALERT_ENABLED: false,
         STATUS_ALERT_MESSAGE: null,
       });
     });
 
-    it('shows the banner when env toggle and runtime settings are all enabled', () => {
+    it('shows the banner when runtime settings are enabled', () => {
       mergeConfig({
-        ENV_STATUS_ALERT_ENABLED: true,
         STATUS_ALERT_ENABLED: true,
         STATUS_ALERT_MESSAGE,
       });
@@ -126,19 +124,8 @@ describe('Header', () => {
       expect(screen.getByText(STATUS_ALERT_MESSAGE)).toBeInTheDocument();
     });
 
-    it('hides the banner when env toggle is off', () => {
-      mergeConfig({
-        ENV_STATUS_ALERT_ENABLED: false,
-        STATUS_ALERT_ENABLED: true,
-        STATUS_ALERT_MESSAGE,
-      });
-      render(<Header />);
-      expect(screen.queryByText(STATUS_ALERT_MESSAGE)).not.toBeInTheDocument();
-    });
-
     it('hides the banner when runtime config disables it', () => {
       mergeConfig({
-        ENV_STATUS_ALERT_ENABLED: true,
         STATUS_ALERT_ENABLED: false,
         STATUS_ALERT_MESSAGE,
       });
@@ -148,7 +135,6 @@ describe('Header', () => {
 
     it('hides the banner when the message is absent', () => {
       mergeConfig({
-        ENV_STATUS_ALERT_ENABLED: true,
         STATUS_ALERT_ENABLED: true,
         STATUS_ALERT_MESSAGE: null,
       });

@@ -241,9 +241,8 @@ describe('<Header />', () => {
       config: APP_CONTEXT_CONFIG,
     };
 
-    it('shows the banner when env toggle and runtime settings are all enabled', () => {
+    it('shows the banner when runtime settings are enabled', () => {
       getConfig.mockReturnValue({
-        ENV_STATUS_ALERT_ENABLED: true,
         STATUS_ALERT_ENABLED: true,
         STATUS_ALERT_MESSAGE,
       });
@@ -251,19 +250,8 @@ describe('<Header />', () => {
       expect(screen.getByText(STATUS_ALERT_MESSAGE)).toBeInTheDocument();
     });
 
-    it('hides the banner when env toggle is off', () => {
-      getConfig.mockReturnValue({
-        ENV_STATUS_ALERT_ENABLED: false,
-        STATUS_ALERT_ENABLED: true,
-        STATUS_ALERT_MESSAGE,
-      });
-      render(<HeaderContext width={{ width: 1280 }} contextValue={contextValue} />);
-      expect(screen.queryByText(STATUS_ALERT_MESSAGE)).not.toBeInTheDocument();
-    });
-
     it('hides the banner when runtime config disables it', () => {
       getConfig.mockReturnValue({
-        ENV_STATUS_ALERT_ENABLED: true,
         STATUS_ALERT_ENABLED: false,
         STATUS_ALERT_MESSAGE,
       });
@@ -273,7 +261,6 @@ describe('<Header />', () => {
 
     it('hides the banner when the message is absent', () => {
       getConfig.mockReturnValue({
-        ENV_STATUS_ALERT_ENABLED: true,
         STATUS_ALERT_ENABLED: true,
       });
       render(<HeaderContext width={{ width: 1280 }} contextValue={contextValue} />);
