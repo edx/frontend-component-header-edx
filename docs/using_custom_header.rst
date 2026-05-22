@@ -118,14 +118,14 @@ A site-wide status banner can be displayed above the header to surface maintenan
 - The banner cannot be dismissed.
 - The same behavior is available in the ``Header``, ``StudioHeader``, and ``LearningHeader`` components.
 
-The following settings are supplied at runtime via the MFE config endpoint, which allows it to be set globally or as a per-MFE override.
+The following settings are supplied at runtime via the MFE config api, which allows it to be set globally (using LMS setting ``MFE_CONFIG``) or as a per-MFE override (using LMS setting ``MFE_CONFIG_OVERRIDES``).
 
 ``STATUS_ALERT_ENABLED``
 ************************
 
-Runtime setting supplied via the MFE config endpoint. Set to ``true`` to activate the banner. Defaults to off when absent.
+Runtime setting supplied via the MFE config api. Set to ``true`` to activate the banner. Defaults to off when absent.
 
 ``STATUS_ALERT_MESSAGE``
 ************************
 
-Runtime setting supplied via the MFE config endpoint. The text shown in the banner. The banner is suppressed when this is empty or absent.
+Runtime setting supplied via the MFE config api. The text shown in the banner. The banner is suppressed when this is empty or absent.
