@@ -12,7 +12,7 @@ This is the standard edX header for use in React applications. It has four expor
 
 - **default**: The Header Component
 - **messages**: for i18n in the form of ``{ locale: { key: translatedString } }``
-- **LearnerHeader** Header component for the Learner MFE
+- **LearningHeader** Header component for the Learning MFE
 - **StudioHeader** Header component for Studio
 
 Cloning and Startup

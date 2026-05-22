@@ -52,7 +52,7 @@ The changes below assume the existing config uses the mutation pattern (calling 
    ];
 
    const headerPeerAliases = Object.fromEntries(
-     headerPeerDeps.map(pkg => [pkg, path.resolve(__dirname, 'node_modules', pkg)])
+     headerPeerDeps.map(pkg => [pkg, path.resolve(__dirname, 'node_modules', pkg)]),
    );
 
    // Add after the createConfig(...) call:
