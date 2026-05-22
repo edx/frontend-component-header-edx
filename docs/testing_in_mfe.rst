@@ -56,6 +56,15 @@ The changes below assume the existing config uses the mutation pattern (calling 
    );
 
    // Add after the createConfig(...) call:
+   // Option 1: If config.resolve.alias already exists, add the frontend-component-header
+   //   and headerPeerAliases lines to the end like this frontend-app-learning example.
+   config.resolve.alias = {
+     ...config.resolve.alias,
+     '@src': path.resolve(__dirname, 'src'),
+     '@edx/frontend-component-header': '/edx/app/src/frontend-component-header-edx/src',
+     ...headerPeerAliases,
+   };
+   // Option 2: If config.resolve.alias doesn't already exist, use the following directly.
    config.resolve.alias = {
      ...config.resolve.alias,
      '@edx/frontend-component-header': '/edx/app/src/frontend-component-header-edx/src',
