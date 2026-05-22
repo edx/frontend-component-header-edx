@@ -57,7 +57,7 @@ The changes below assume the existing config uses the mutation pattern (calling 
 
    // Add after the createConfig(...) call:
    // Option 1: If config.resolve.alias already exists, add the frontend-component-header
-   //   and headerPeerAliases lines to the end like this frontend-app-learning example.
+   //   and headerPeerAliases lines to the end, like this frontend-app-learning example.
    config.resolve.alias = {
      ...config.resolve.alias,
      '@src': path.resolve(__dirname, 'src'),
