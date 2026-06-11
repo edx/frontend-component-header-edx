@@ -22,7 +22,7 @@ Prerequisites
 -------------
 
 - The edX devstack is running.
-- ``frontend-component-header-edx`` is checked out locally on the branch you want to test. On the host machine, clone it to ``<DEVSTACK_DIR>/src/frontend-component-header-edx``, where ``<DEVSTACK_DIR>`` is the directory containing your devstack installation. The devstack mounts this location inside the MFE container at ``/edx/app/src/frontend-component-header-edx/``.
+- ``frontend-component-header-edx`` is checked out locally on the branch you want to test. On the host machine, clone it to ``<DEVSTACK_WORKSPACE>/src/frontend-component-header-edx``, where ``<DEVSTACK_WORKSPACE>`` is the directory where devstack and all the devstack cloned repos live. The devstack mounts this location inside the MFE container at ``/edx/app/src/frontend-component-header-edx/``.
 
 Step 1: Install dependencies in the header repo
 ------------------------------------------------
