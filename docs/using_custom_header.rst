@@ -109,3 +109,23 @@ Some Important Notes
 - Intl formatted strings should be passed in content attribute.
 - Only menu items in the main menu can be disabled.
 - Menu items in the main menu and user menu can have ``isActive`` prop.
+
+Status Alert
+------------
+
+A site-wide status banner can be displayed above the header to surface maintenance notices or other operational messages.
+
+- The banner cannot be dismissed.
+- The same behavior is available in the ``Header``, ``StudioHeader``, and ``LearningHeader`` components.
+
+The following settings are supplied at runtime via the MFE config api, which allows it to be set globally (using LMS setting ``MFE_CONFIG``) or as a per-MFE override (using LMS setting ``MFE_CONFIG_OVERRIDES``).
+
+``STATUS_ALERT_ENABLED``
+************************
+
+Runtime setting supplied via the MFE config api. Set to ``true`` to activate the banner. Defaults to off when absent.
+
+``STATUS_ALERT_MESSAGE``
+************************
+
+Runtime setting supplied via the MFE config api. The text shown in the banner. The banner is suppressed when this is empty or absent.

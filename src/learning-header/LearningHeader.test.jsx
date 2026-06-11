@@ -1,5 +1,6 @@
 import React from 'react';
 import { AppContext } from '@edx/frontend-platform/react';
+import { mergeConfig } from '@edx/frontend-platform';
 import {
   fireEvent, initializeMockApp, render, screen, waitFor,
 } from '../setupTest';
@@ -101,6 +102,44 @@ describe('Header', () => {
 
     await waitFor(() => {
       expect(screen.queryByTestId('site-language-button')).not.toBeInTheDocument();
+    });
+  });
+
+  describe('status alert', () => {
+    const STATUS_ALERT_MESSAGE = 'System maintenance in progress';
+
+    afterEach(() => {
+      mergeConfig({
+        STATUS_ALERT_ENABLED: false,
+        STATUS_ALERT_MESSAGE: null,
+      });
+    });
+
+    it('shows the banner when runtime settings are enabled', () => {
+      mergeConfig({
+        STATUS_ALERT_ENABLED: true,
+        STATUS_ALERT_MESSAGE,
+      });
+      render(<Header />);
+      expect(screen.getByText(STATUS_ALERT_MESSAGE)).toBeVisible();
+    });
+
+    it('hides the banner when runtime config disables it', () => {
+      mergeConfig({
+        STATUS_ALERT_ENABLED: false,
+        STATUS_ALERT_MESSAGE,
+      });
+      render(<Header />);
+      expect(screen.queryByText(STATUS_ALERT_MESSAGE)).not.toBeInTheDocument();
+    });
+
+    it('hides the banner when the message is absent', () => {
+      mergeConfig({
+        STATUS_ALERT_ENABLED: true,
+        STATUS_ALERT_MESSAGE: null,
+      });
+      render(<Header />);
+      expect(screen.queryByText(STATUS_ALERT_MESSAGE)).not.toBeInTheDocument();
     });
   });
 });

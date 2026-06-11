@@ -6,6 +6,7 @@ import { ensureConfig } from '@edx/frontend-platform';
 
 import MobileHeader from './MobileHeader';
 import HeaderBody from './HeaderBody';
+import { StatusAlert } from '../status-alert';
 
 ensureConfig([
   'STUDIO_BASE_URL',
@@ -36,16 +37,23 @@ const StudioHeader = ({
     outlineLink,
   };
 
+  const showStatusAlert = config.STATUS_ALERT_ENABLED
+    && config.STATUS_ALERT_MESSAGE;
+  const statusAlertMessage = config.STATUS_ALERT_MESSAGE;
+
   return (
-    <div className="studio-header">
-      <a className="nav-skip sr-only sr-only-focusable" href="#main">Skip to content</a>
-      <Responsive maxWidth={841}>
-        <MobileHeader {...props} />
-      </Responsive>
-      <Responsive minWidth={842}>
-        <HeaderBody {...props} />
-      </Responsive>
-    </div>
+    <>
+      {showStatusAlert && <StatusAlert message={statusAlertMessage} />}
+      <div className="studio-header">
+        <a className="nav-skip sr-only sr-only-focusable" href="#main">Skip to content</a>
+        <Responsive maxWidth={841}>
+          <MobileHeader {...props} />
+        </Responsive>
+        <Responsive minWidth={842}>
+          <HeaderBody {...props} />
+        </Responsive>
+      </div>
+    </>
   );
 };
 
