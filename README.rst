@@ -12,7 +12,7 @@ This is the standard edX header for use in React applications. It has four expor
 
 - **default**: The Header Component
 - **messages**: for i18n in the form of ``{ locale: { key: translatedString } }``
-- **LearnerHeader** Header component for the Learner MFE
+- **LearningHeader** Header component for the Learning MFE
 - **StudioHeader** Header component for Studio
 
 Cloning and Startup
@@ -58,6 +58,9 @@ Development
 - Install peer dependencies `npm install @edx/frontend-analytics @edx/frontend-platform @edx/frontend-i18n prop-types react`
 - Start the example server `npm start`
 - Visit http://localhost:1234
+
+Alternatively, you can develop and test the header from within a consuming MFE (e.g. to test ``LearningHeader`` in ``frontend-app-learning`` or ``StudioHeader`` in
+``frontend-app-course-authoring``). See `docs/testing_in_mfe.rst <docs/testing_in_mfe.rst>`_ for instructions.
 
 Contributing
 ============
