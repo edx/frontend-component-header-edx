@@ -65,10 +65,8 @@ export async function setSiteLanguage(languageCode: string, username: string): P
 
   // Update the user's language preference by making API calls to the
   // user preferences API and the i18n API
-  await Promise.all([
-    patchPreferences(username, languageCode),
-    postSetLang(languageCode),
-  ]);
+  await patchPreferences(username, languageCode);
+  await postSetLang(languageCode);
 }
 
 /**
