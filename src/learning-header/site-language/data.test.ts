@@ -33,9 +33,17 @@ describe('site-language/data', () => {
   });
 
   describe('setSiteLanguage', () => {
-    it('calls patchPreferences and postSetLang', async () => {
-      mockPatchMethod.mockResolvedValueOnce({});
-      mockPostMethod.mockResolvedValueOnce({});
+    it('calls patchPreferences and postSetLang sequentially (patch first)', async () => {
+      const callOrder: string[] = [];
+
+      mockPatchMethod.mockImplementationOnce(() => {
+        callOrder.push('patch');
+        return Promise.resolve({});
+      });
+      mockPostMethod.mockImplementationOnce(() => {
+        callOrder.push('post');
+        return Promise.resolve({});
+      });
       await setSiteLanguage('fr', 'testuser');
       expect(mockPatchMethod).toHaveBeenCalledWith(
         'http://test/api/user/v1/preferences/testuser',
@@ -48,6 +56,7 @@ describe('site-language/data', () => {
         expect.objectContaining({ headers: expect.any(Object) }),
       );
       expect(mockPostMethod.mock.calls[0][1].get('language')).toBe('fr');
+      expect(callOrder).toEqual(['patch', 'post']);
     });
 
     it('encodes special characters in username', async () => {
