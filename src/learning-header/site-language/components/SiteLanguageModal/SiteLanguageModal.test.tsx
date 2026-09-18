@@ -12,9 +12,9 @@ jest.mock('@edx/frontend-platform/logging', () => ({
 }));
 
 jest.mock('../LanguageSelector', () => ({
-  // eslint-disable-next-line react/prop-types
-  LanguageSelector: ({ selectedLanguage, setSelectedLanguage }) => (
-    <div data-testid="language-selector">
+  /* eslint-disable react/prop-types */
+  LanguageSelector: ({ languages, selectedLanguage, setSelectedLanguage }) => (
+    <div data-testid="language-selector" data-language-count={languages.length}>
       <button
         type="button"
         onClick={() => setSelectedLanguage('es')}
@@ -25,14 +25,20 @@ jest.mock('../LanguageSelector', () => ({
       <div data-testid="selected-language">{selectedLanguage}</div>
     </div>
   ),
+  /* eslint-enable react/prop-types */
 }));
 
-const mockGetSiteLanguage = jest.fn();
+const mockFetchReleasedLanguages = jest.fn();
 const mockSetSiteLanguage = jest.fn();
 jest.mock('../../data', () => ({
-  getSiteLanguage: () => mockGetSiteLanguage(),
-  setSiteLanguage: (languageCode, username) => mockSetSiteLanguage(languageCode, username),
+  fetchReleasedLanguages: () => mockFetchReleasedLanguages(),
+  setSiteLanguage: (...args) => mockSetSiteLanguage(...args),
 }));
+
+const releasedLanguages = [
+  { code: 'en', name: 'English', released: true },
+  { code: 'es', name: 'Español', released: true },
+];
 
 describe('SiteLanguageModal', () => {
   const mockClose = jest.fn();
@@ -47,7 +53,7 @@ describe('SiteLanguageModal', () => {
 
   beforeEach(() => {
     initializeMockApp();
-    mockGetSiteLanguage.mockReturnValue('en');
+    mockFetchReleasedLanguages.mockResolvedValue(releasedLanguages);
     mockSetSiteLanguage.mockResolvedValue(undefined);
   });
 
@@ -55,7 +61,7 @@ describe('SiteLanguageModal', () => {
     jest.clearAllMocks();
   });
 
-  it('renders the modal when open', () => {
+  it('fetches the released languages when opened and passes them to the selector', async () => {
     const contextValue = {
       authenticatedUser,
       config: {},
@@ -65,10 +71,109 @@ describe('SiteLanguageModal', () => {
         <SiteLanguageModal isOpen close={mockClose} />
       </AppContext.Provider>,
     );
-    expect(screen.getByTestId('language-selector')).toBeInTheDocument();
+    expect(screen.getByTestId('site-language-loading')).toBeInTheDocument();
+    expect(screen.queryByTestId('language-selector')).not.toBeInTheDocument();
+
+    const selector = await screen.findByTestId('language-selector');
+    expect(selector).toHaveAttribute('data-language-count', String(releasedLanguages.length));
+    expect(mockFetchReleasedLanguages).toHaveBeenCalledTimes(1);
+    expect(screen.queryByTestId('site-language-loading')).not.toBeInTheDocument();
   });
 
-  it('does not render when closed', () => {
+  it('shows an error and logs when the released languages cannot be loaded', async () => {
+    const contextValue = {
+      authenticatedUser,
+      config: {},
+    };
+    const error = new Error('Network error');
+    mockFetchReleasedLanguages.mockRejectedValue(error);
+
+    render(
+      <AppContext.Provider value={contextValue}>
+        <SiteLanguageModal isOpen close={mockClose} />
+      </AppContext.Provider>,
+    );
+
+    expect(await screen.findByText('An error occurred while loading the available languages', { exact: false })).toBeInTheDocument();
+    expect(logError).toHaveBeenCalledWith(
+      'Failed to fetch released site languages',
+      expect.objectContaining({ error }),
+    );
+    expect(screen.queryByTestId('language-selector')).not.toBeInTheDocument();
+    expect(screen.queryByTestId('site-language-loading')).not.toBeInTheDocument();
+  });
+
+  it('falls back to the first available language when the site language is no longer released', async () => {
+    const contextValue = {
+      authenticatedUser,
+      config: {},
+    };
+    // The site language ("en" under the test app) has been retired from DarkLangConfig.
+    mockFetchReleasedLanguages.mockResolvedValue([
+      { code: 'fr', name: 'Français', released: true },
+      { code: 'de-de', name: 'Deutsch (Deutschland)', released: true },
+    ]);
+
+    render(
+      <AppContext.Provider value={contextValue}>
+        <SiteLanguageModal isOpen close={mockClose} />
+      </AppContext.Provider>,
+    );
+
+    await screen.findByTestId('language-selector');
+    expect(screen.getByTestId('selected-language')).toHaveTextContent('fr');
+  });
+
+  it('keeps the site language selected when it is still released', async () => {
+    const contextValue = {
+      authenticatedUser,
+      config: {},
+    };
+    render(
+      <AppContext.Provider value={contextValue}>
+        <SiteLanguageModal isOpen close={mockClose} />
+      </AppContext.Provider>,
+    );
+
+    await screen.findByTestId('language-selector');
+    expect(screen.getByTestId('selected-language')).toHaveTextContent('en');
+  });
+
+  it('shows an empty state and disables submit when no languages are released', async () => {
+    const contextValue = {
+      authenticatedUser,
+      config: {},
+    };
+    mockFetchReleasedLanguages.mockResolvedValue([]);
+
+    render(
+      <AppContext.Provider value={contextValue}>
+        <SiteLanguageModal isOpen close={mockClose} />
+      </AppContext.Provider>,
+    );
+
+    expect(await screen.findByTestId('site-language-empty')).toBeInTheDocument();
+    expect(screen.queryByTestId('language-selector')).not.toBeInTheDocument();
+    expect(screen.getByText('Submit').closest('button')).toBeDisabled();
+  });
+
+  it('disables submit until the languages have loaded', async () => {
+    const contextValue = {
+      authenticatedUser,
+      config: {},
+    };
+    render(
+      <AppContext.Provider value={contextValue}>
+        <SiteLanguageModal isOpen close={mockClose} />
+      </AppContext.Provider>,
+    );
+
+    expect(screen.getByText('Submit').closest('button')).toBeDisabled();
+    await screen.findByTestId('language-selector');
+    expect(screen.getByText('Submit').closest('button')).not.toBeDisabled();
+  });
+
+  it('does not fetch or render when closed', () => {
     const contextValue = {
       authenticatedUser,
       config: {},
@@ -79,6 +184,7 @@ describe('SiteLanguageModal', () => {
       </AppContext.Provider>,
     );
     expect(screen.queryByTestId('language-selector')).not.toBeInTheDocument();
+    expect(mockFetchReleasedLanguages).not.toHaveBeenCalled();
   });
 
   it('closes modal without saving when cancel is clicked', () => {
@@ -107,6 +213,8 @@ describe('SiteLanguageModal', () => {
         <SiteLanguageModal isOpen close={mockClose} />
       </AppContext.Provider>,
     );
+    // Submit is disabled until the languages have loaded.
+    await screen.findByTestId('language-selector');
     const submitButton = screen.getByText('Submit');
     fireEvent.click(submitButton);
     await waitFor(() => {
@@ -130,7 +238,7 @@ describe('SiteLanguageModal', () => {
     );
 
     // Change language
-    const selectSpanishButton = screen.getByTestId('select-spanish');
+    const selectSpanishButton = await screen.findByTestId('select-spanish');
     fireEvent.click(selectSpanishButton);
 
     // Submit
@@ -138,7 +246,7 @@ describe('SiteLanguageModal', () => {
     fireEvent.click(submitButton);
 
     await waitFor(() => {
-      expect(mockSetSiteLanguage).toHaveBeenCalledWith('es', 'testuser');
+      expect(mockSetSiteLanguage).toHaveBeenCalledWith('es', 'testuser', releasedLanguages);
     });
     await waitFor(() => {
       expect(window.location.reload).toHaveBeenCalled();
@@ -160,7 +268,7 @@ describe('SiteLanguageModal', () => {
     );
 
     // Change language
-    const selectSpanishButton = screen.getByTestId('select-spanish');
+    const selectSpanishButton = await screen.findByTestId('select-spanish');
     fireEvent.click(selectSpanishButton);
 
     // Submit
@@ -168,7 +276,7 @@ describe('SiteLanguageModal', () => {
     fireEvent.click(submitButton);
 
     await waitFor(() => {
-      expect(mockSetSiteLanguage).toHaveBeenCalledWith('es', 'testuser');
+      expect(mockSetSiteLanguage).toHaveBeenCalledWith('es', 'testuser', releasedLanguages);
     });
     await waitFor(() => {
       expect(logError).toHaveBeenCalledWith(
@@ -180,7 +288,7 @@ describe('SiteLanguageModal', () => {
     expect(mockClose).not.toHaveBeenCalled();
   });
 
-  it('resets selected language when modal is closed', () => {
+  it('resets selected language when modal is closed', async () => {
     const contextValue = {
       authenticatedUser,
       config: {},
@@ -192,7 +300,7 @@ describe('SiteLanguageModal', () => {
     );
 
     // Change language
-    const selectSpanishButton = screen.getByTestId('select-spanish');
+    const selectSpanishButton = await screen.findByTestId('select-spanish');
     fireEvent.click(selectSpanishButton);
     expect(screen.getByTestId('selected-language')).toHaveTextContent('es');
 
