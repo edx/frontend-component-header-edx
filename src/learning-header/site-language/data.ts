@@ -1,18 +1,47 @@
 // Helper functions to handle loading and setting the site language setting
 
-import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
+import { getAuthenticatedHttpClient, getHttpClient } from '@edx/frontend-platform/auth';
 import { getConfig } from '@edx/frontend-platform';
 import { logError } from '@edx/frontend-platform/logging';
-import { TRANSLATION_LANGUAGES } from './components/LanguageSelector/languagesList';
 
 /**
- * Validate that the language code is supported.
+ * A site language as returned by the LMS released-languages endpoint.
+ * `released` is false for beta languages (DarkLangConfig.beta_languages).
+ */
+export interface SiteLanguage {
+  code: string;
+  name: string;
+  released: boolean;
+}
+
+/**
+ * Fetch the site languages that have been released via DarkLangConfig on the LMS.
+ *
+ * Beta languages are dropped: the header has no way to label them as beta, and
+ * they are not meant to be selectable here.
+ *
+ * The endpoint is public and returns the same list for every caller, so this uses the
+ * unauthenticated client: sending a JWT would gain nothing and would couple a public
+ * read to the user's auth state.
+ *
+ * @returns A promise that resolves to the released languages, in the order the LMS returns them.
+ * @throws If the request fails, so the caller can render an error state.
+ */
+export async function fetchReleasedLanguages(): Promise<SiteLanguage[]> {
+  const url = `${getConfig().LMS_BASE_URL}/api/lang_pref/v1/released_languages`;
+  const { data } = await getHttpClient().get(url);
+  return (data as SiteLanguage[]).filter(language => language.released);
+}
+
+/**
+ * Validate that the language code is one of the given languages.
  *
  * @param languageCode - The language code to validate.
+ * @param languages - The languages the user may choose from.
  * @returns True if the language code is valid, false otherwise.
  */
-function isValidLanguageCode(languageCode: string): boolean {
-  return TRANSLATION_LANGUAGES.some(lang => lang.code === languageCode);
+function isValidLanguageCode(languageCode: string, languages: SiteLanguage[]): boolean {
+  return languages.some(lang => lang.code === languageCode);
 }
 
 /**
@@ -55,11 +84,16 @@ async function postSetLang(languageCode: string): Promise<void> {
  *
  * @param languageCode - The new language code to set.
  * @param username - The username of the user.
- * @throws {Error} If the language code is not supported.
+ * @param languages - The released languages the code must belong to (see fetchReleasedLanguages).
+ * @throws {Error} If the language code is not one of the released languages.
  */
-export async function setSiteLanguage(languageCode: string, username: string): Promise<void> {
+export async function setSiteLanguage(
+  languageCode: string,
+  username: string,
+  languages: SiteLanguage[],
+): Promise<void> {
   // Validate the language code
-  if (!isValidLanguageCode(languageCode)) {
+  if (!isValidLanguageCode(languageCode, languages)) {
     throw new Error(`Invalid language code: ${languageCode}. Must be one of the supported languages.`);
   }
 

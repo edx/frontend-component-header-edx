@@ -2,9 +2,10 @@ import React from 'react';
 import { SelectableBox, Stack, Icon } from '@openedx/paragon';
 import { Check } from '@openedx/paragon/icons';
 import { TranslationDisclaimer } from './TranslationDisclaimer';
-import { TRANSLATION_LANGUAGES } from './languagesList';
+import { SiteLanguage } from '../../data';
 
 interface LanguageSelectorProps {
+  languages: SiteLanguage[];
   selectedLanguage: string;
   setSelectedLanguage: (language: string) => void;
 }
@@ -12,6 +13,7 @@ interface LanguageSelectorProps {
 /**
  * LanguageSelector component for selecting a site language.
  *
+ * @param languages - The released site languages to offer, from the LMS released-languages endpoint.
  * @param selectedLanguage - The currently selected language.
  * @param setSelectedLanguage - Callback to update the selected language.
  *
@@ -19,6 +21,7 @@ interface LanguageSelectorProps {
  */
 
 export const LanguageSelector: React.FC<LanguageSelectorProps> = ({
+  languages,
   selectedLanguage,
   setSelectedLanguage,
 }) => {
@@ -33,16 +36,16 @@ export const LanguageSelector: React.FC<LanguageSelectorProps> = ({
         ariaLabel="language selection"
         className="language-set"
       >
-        {TRANSLATION_LANGUAGES.map(({ code, label, localeName }) => (
+        {languages.map(({ code, name }) => (
           <SelectableBox
             data-testid={`language-option-${code}`}
             key={code}
             value={code}
-            aria-label={`${label} radio`}
+            aria-label={`${name} radio`}
             className="option shadow-none"
           >
             <Stack gap={3} direction="horizontal">
-              {localeName}
+              {name}
               {selectedLanguage === code && <Icon src={Check} className="text-success" />}
             </Stack>
           </SelectableBox>

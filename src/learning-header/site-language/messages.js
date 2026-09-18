@@ -36,6 +36,21 @@ const messages = defineMessages({
     defaultMessage: 'Submit',
     description: 'Submit button text for the site language modal.',
   },
+  loadingLanguagesText: {
+    id: 'header.sitelanguage.modal.loading.languages',
+    defaultMessage: 'Loading languages',
+    description: 'Screen reader text shown while the list of available site languages is loading.',
+  },
+  loadLanguagesErrorMessage: {
+    id: 'header.sitelanguage.modal.load.error.message',
+    defaultMessage: 'An error occurred while loading the available languages. Please try again later.',
+    description: 'The error message displayed in the site language modal when the list of available languages cannot be loaded.',
+  },
+  noLanguagesMessage: {
+    id: 'header.sitelanguage.modal.no.languages.message',
+    defaultMessage: 'There are no languages available to select at this time.',
+    description: 'The message displayed in the site language modal when the site has no released languages to offer.',
+  },
   saveErrorMessage: {
     id: 'header.sitelanguage.modal.save.error.message',
     defaultMessage: 'An error occurred when attempting to save your preferred language. Please try again later.',
