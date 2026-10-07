@@ -13,6 +13,8 @@
 
     &.pgn__selectable_box {
       border-bottom: 1px solid #E7E4DB;
+      // Half of Paragon's default vertical padding, so the list is less spread out.
+      padding-block: calc(var(--pgn-spacing-selectable-box-padding) / 2);
     }
  }
 }

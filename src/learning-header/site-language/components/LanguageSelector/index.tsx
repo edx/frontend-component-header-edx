@@ -1,4 +1,5 @@
 import React from 'react';
+import './LanguageSelector.scss';
 import { SelectableBox, Stack, Icon } from '@openedx/paragon';
 import { Check } from '@openedx/paragon/icons';
 import { TranslationDisclaimer } from './TranslationDisclaimer';
