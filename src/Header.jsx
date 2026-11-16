@@ -17,6 +17,7 @@ import PropTypes from 'prop-types';
 import DesktopHeader from './DesktopHeader';
 import MobileHeader from './MobileHeader';
 import { StatusAlert } from './status-alert';
+import RefundPolicyNoticeSlot from './plugin-slots/RefundPolicyNoticeSlot';
 
 import messages from './Header.messages';
 
@@ -207,6 +208,7 @@ const Header = ({
   return (
     <>
       {showStatusAlert && <StatusAlert message={statusAlertMessage} />}
+      {authenticatedUser !== null && <RefundPolicyNoticeSlot />}
       <Responsive maxWidth={769}>
         <MobileHeader {...props} />
       </Responsive>
