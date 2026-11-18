@@ -14,8 +14,8 @@ jest.mock('./site-language/components/SiteLanguageButton', () => ({
   SiteLanguageButton: (_props) => (<div data-testid="site-language-button">Site Language Button</div>),
 }));
 
-jest.mock('../plugin-slots/RefundPolicyNoticeSlot', () => function RefundPolicyNoticeSlot() {
-  return <div data-testid="refund-policy-notice-slot" />;
+jest.mock('../plugin-slots/HeaderNoticeSlot', () => function HeaderNoticeSlot() {
+  return <div data-testid="header-notice-slot" />;
 });
 
 const mockFetchUnifiedTranslationToggleEnabled = jest.fn();
@@ -109,7 +109,7 @@ describe('Header', () => {
     });
   });
 
-  describe('refund policy notice slot', () => {
+  describe('header notice slot', () => {
     it('renders the slot once for an authenticated user', () => {
       render(
         <AppContext.Provider
@@ -118,7 +118,7 @@ describe('Header', () => {
           <Header />
         </AppContext.Provider>,
       );
-      expect(screen.getAllByTestId('refund-policy-notice-slot')).toHaveLength(1);
+      expect(screen.getAllByTestId('header-notice-slot')).toHaveLength(1);
     });
 
     it('does not render the slot for an anonymous user', () => {
@@ -127,7 +127,7 @@ describe('Header', () => {
           <Header />
         </AppContext.Provider>,
       );
-      expect(screen.queryByTestId('refund-policy-notice-slot')).not.toBeInTheDocument();
+      expect(screen.queryByTestId('header-notice-slot')).not.toBeInTheDocument();
     });
   });
 

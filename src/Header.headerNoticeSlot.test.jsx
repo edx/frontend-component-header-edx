@@ -13,8 +13,8 @@ import { initializeMockApp } from './setupTest';
 
 jest.mock('@edx/frontend-platform');
 jest.mock('@2uinc/frontend-enterprise-utils');
-jest.mock('./plugin-slots/RefundPolicyNoticeSlot', () => function RefundPolicyNoticeSlot() {
-  return <div data-testid="refund-policy-notice-slot" />;
+jest.mock('./plugin-slots/HeaderNoticeSlot', () => function HeaderNoticeSlot() {
+  return <div data-testid="header-notice-slot" />;
 });
 
 getConfig.mockReturnValue({});
@@ -40,7 +40,7 @@ const renderHeader = (width, authenticatedUser) => render(
   </MemoryRouter>,
 );
 
-describe('<Header /> refund policy notice slot', () => {
+describe('<Header /> header notice slot', () => {
   beforeAll(async () => {
     await initializeMockApp();
   });
@@ -52,18 +52,18 @@ describe('<Header /> refund policy notice slot', () => {
   it('renders the slot once for authenticated users on desktop', () => {
     renderHeader(1280, { userId: 'abc123', username: 'edX', name: 'edX User' });
 
-    expect(screen.getAllByTestId('refund-policy-notice-slot')).toHaveLength(1);
+    expect(screen.getAllByTestId('header-notice-slot')).toHaveLength(1);
   });
 
   it('renders the slot once for authenticated users on mobile', () => {
     renderHeader(500, { userId: 'abc123', username: 'edX', name: 'edX User' });
 
-    expect(screen.getAllByTestId('refund-policy-notice-slot')).toHaveLength(1);
+    expect(screen.getAllByTestId('header-notice-slot')).toHaveLength(1);
   });
 
   it('does not render the slot for unauthenticated users', () => {
     renderHeader(1280, null);
 
-    expect(screen.queryByTestId('refund-policy-notice-slot')).not.toBeInTheDocument();
+    expect(screen.queryByTestId('header-notice-slot')).not.toBeInTheDocument();
   });
 });

@@ -15,7 +15,7 @@ import lightning from '../lightning';
 import AuthenticatedUser from './AuthenticatedUser';
 import { fetchUnifiedTranslationToggleEnabled } from './site-language/data';
 import { StatusAlert } from '../status-alert';
-import RefundPolicyNoticeSlot from '../plugin-slots/RefundPolicyNoticeSlot';
+import HeaderNoticeSlot from '../plugin-slots/HeaderNoticeSlot';
 
 ensureConfig([
   'ACCOUNT_SETTINGS_URL',
@@ -116,7 +116,7 @@ const LearningHeader = ({
         <AnonymousUserMenu />
         )}
       </div>
-      {authenticatedUser && <RefundPolicyNoticeSlot />}
+      {authenticatedUser && <HeaderNoticeSlot />}
     </header>
   );
 };
