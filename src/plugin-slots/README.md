@@ -2,3 +2,4 @@
 
 * [`header_user_menu_group_slot`](./UserMenuGroupSlot/)
 * [`header_user_menu_group_item_slot`](./UserMenuGroupItemSlot/)
+* [`header_notice_slot`](./HeaderNoticeSlot/)
